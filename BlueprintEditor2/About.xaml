@@ -1,0 +1,21 @@
+﻿<Window x:Class="BlueprintEditor2.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlueprintEditor2"
+        xmlns:res="clr-namespace:BlueprintEditor2.Resource"
+        mc:Ignorable="d"
+        Title="About - SE BlueprintEditor" Height="300" Width="450" MinWidth="450" MinHeight="300" MaxWidth="450" Activated="Window_Activated" WindowStartupLocation="CenterScreen">
+    <Grid Background="Black">
+        <Image HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" VerticalAlignment="Bottom" Source="Resource/AndLogo.png"/>
+        <Image HorizontalAlignment="Right" Height="150" Margin="0,0,10,10" VerticalAlignment="Bottom" Source="Resource/map-_1_.ico"/>
+        <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="99" Foreground="White" Text="{x:Static res:Lang.About}"/>
+        <TextBlock x:Name="LinkBox" Margin="10,0,165,100" VerticalAlignment="Bottom" Foreground="White" Height="55">
+            Andromeda in <Hyperlink NavigateUri="https://vk.com/andromeda_se" Click="Hyperlink_Click">Vk.com</Hyperlink><LineBreak/>
+            Andromeda <Hyperlink NavigateUri="discord://discordapp.com/invite/3JJ7fdr" Click="Hyperlink_Click">Discord</Hyperlink>
+        </TextBlock>
+        <Label x:Name="VersionLabel" Content="" Margin="115,0,165,10" VerticalAlignment="Bottom" Width="162" Background="Black" Foreground="White"/>
+
+    </Grid>
+</Window>

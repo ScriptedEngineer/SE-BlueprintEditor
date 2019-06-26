@@ -1,0 +1,9 @@
+﻿<Application x:Class="BlueprintEditor2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BlueprintEditor2"
+             StartupUri="SelectBlueprint.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
