@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="About - SE BlueprintEditor" Height="300" Width="450" MinWidth="450" MinHeight="300" MaxWidth="450" Activated="Window_Activated" WindowStartupLocation="CenterScreen">
+        Title="About - SE BlueprintEditor" Height="300" Width="450" MinWidth="450" MinHeight="300" MaxWidth="450" Activated="Window_Activated" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Grid Background="Black">
         <Image HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" VerticalAlignment="Bottom" Source="Resource/AndLogo.png"/>
         <Image HorizontalAlignment="Right" Height="150" Margin="0,0,10,10" VerticalAlignment="Bottom" Source="Resource/map-_1_.ico"/>

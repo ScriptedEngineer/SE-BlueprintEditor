@@ -140,6 +140,12 @@
   <data name="BlueName" xml:space="preserve">
     <value>Название чертежа</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Создано</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>
@@ -149,8 +155,17 @@
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать</value>
   </data>
+  <data name="ReplaceByCurrent" xml:space="preserve">
+    <value>Заменить на текущий</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста выберите четреж для отображения иформации</value>
+  </data>
+  <data name="SelectOne" xml:space="preserve">
+    <value>Пожалуйста выберите предмет для отображения иформации</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>

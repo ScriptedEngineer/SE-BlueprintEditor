@@ -63,7 +63,6 @@ namespace BlueprintEditor2
             }
             else MessageBox.Show(Lang.AlreadyOpened);
         }
-
         private void PicMenuItemNormalize_Click(object sender, RoutedEventArgs e)
         {
             BluePicture.Source = CurrentBlueprint.GetPic(true);
@@ -80,12 +79,13 @@ namespace BlueprintEditor2
         {
             new About().Show();
         }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
         }
-
-        
+        private void BackupButton_Click(object sender, RoutedEventArgs e)
+        {
+            new BackupManager(CurrentBlueprint.Patch).Show();
+        }
     }
 }

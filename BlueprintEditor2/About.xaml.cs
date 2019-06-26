@@ -45,5 +45,10 @@ namespace BlueprintEditor2
         {
             if (CloseIt) Close();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            LastWindow = null;
+        }
     }
 }

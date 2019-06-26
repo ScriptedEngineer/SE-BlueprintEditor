@@ -141,6 +141,12 @@ Developed by clan "Andromeda"
   <data name="BlueName" xml:space="preserve">
     <value>Blueprint Name</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -150,8 +156,17 @@ Developed by clan "Andromeda"
   <data name="Normalize" xml:space="preserve">
     <value>Normalize</value>
   </data>
+  <data name="ReplaceByCurrent" xml:space="preserve">
+    <value>Replace by current</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Please select blueprint to display information</value>
+  </data>
+  <data name="SelectOne" xml:space="preserve">
+    <value>Please select item to display information</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlueprintEditor2"
+        xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="BackupManager - SE BlueprintEditor" Height="450" Width="800">
+        Title="BackupManager - SE BlueprintEditor" Height="302" Width="420" Activated="Window_Activated" MinWidth="420" MinHeight="300" MaxWidth="420" MaxHeight="300" Closed="Window_Closed">
     <Grid>
-        
+        <ListBox x:Name="BackupList" Margin="10,10,10,66" SelectionChanged="BackupList_SelectionChanged"/>
+        <Button x:Name="RestoreButton" Content="{x:Static res:Lang.Restore}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="129" IsEnabled="False"/>
+        <Button x:Name="DeleteButton" Content="{x:Static res:Lang.Delete}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="80" Click="DeleteButton_Click" IsEnabled="False"/>
+        <Label x:Name="InfoLabel" Content="" Margin="10,0,10,35" VerticalAlignment="Bottom" Width="392"/>
+        <Button x:Name="ReplaceButton" Content="{x:Static res:Lang.ReplaceByCurrent}" Margin="95,0,144,10" VerticalAlignment="Bottom" IsEnabled="False"/>
+
     </Grid>
 </Window>

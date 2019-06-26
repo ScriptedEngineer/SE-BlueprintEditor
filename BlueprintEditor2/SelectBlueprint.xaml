@@ -61,7 +61,7 @@
             </ListBox.ContextMenu>
         </ListBox>
         <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="117" IsEnabled="False" Click="EditButton_Click"/>
-        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="145" Margin="0,0,132,10" IsEnabled="False"/>
+        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="145" Margin="0,0,132,10" IsEnabled="False" Click="BackupButton_Click"/>
 
     </Grid>
 </Window>
