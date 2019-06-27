@@ -1,50 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
 
 namespace BlueprintEditor2
 {
-    public class MyXmlBlock
+    internal class MyXmlBlock
     {
-        public XmlNode BlockXml;
-        private XmlNode SubTypeNode;
-        public string Type
+        private readonly XmlNode _BlockXml;
+        private readonly XmlNode _NameNode;
+        private readonly XmlNode _SubTypeNode;
+
+        internal string Type
         {
-            get => BlockXml.Attributes.GetNamedItem("xsi:type").Value +"/"+ SubTypeNode.InnerText;
+            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value + "/" + _SubTypeNode.InnerText;
             set
             {
-                string[] Types = value.Split('/');
-                if (Types.Length == 2)
-                {
-                    BlockXml.Attributes.GetNamedItem("xsi:type").Value = Types[0];
-                    SubTypeNode.InnerText = Types[1];
-                }
+                string[] types = value.Split('/');
+                if (types.Length != 2) return; //TODO: возможно, стоит выбрасывать исключение?
+                _BlockXml.Attributes.GetNamedItem("xsi:type").Value = types[0]; //TODO: возможен NullReference
+                _SubTypeNode.InnerText = types[1];
             }
         }
-        private XmlNode NameNode;
-        public string Name
+
+        internal string Name { get => _NameNode.InnerText; set => _NameNode.InnerText = value; }
+
+        internal MyXmlBlock(XmlNode block)
         {
-            get => NameNode.InnerText;
-            set => NameNode.InnerText = value;
-        }
-        public MyXmlBlock(XmlNode Block)
-        {
-            BlockXml = Block;
-            foreach (XmlNode Child in Block.ChildNodes)
-            {
-                switch (Child.Name)
+            _BlockXml = block;
+            foreach (XmlNode child in block.ChildNodes)
+                switch (child.Name)
                 {
                     case "SubtypeName":
-                        SubTypeNode = Child;
-                        break;
+                        _SubTypeNode = child;
+                        continue;
                     case "CustomName":
-                        NameNode = Child;
-                        break;
+                        _NameNode = child;
+                        continue;
                 }
-            }
         }
     }
 }

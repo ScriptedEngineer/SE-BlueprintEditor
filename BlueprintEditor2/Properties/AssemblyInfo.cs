@@ -30,16 +30,14 @@ using System.Windows;
 
 //[assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.Satellite)]
 
-
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //где расположены словари ресурсов по конкретным тематикам
-                                     //(используется, если ресурс не найден на странице,
-                                     // или в словарях ресурсов приложения)
+    //(используется, если ресурс не найден на странице,
+    // или в словарях ресурсов приложения)
     ResourceDictionaryLocation.SourceAssembly //где расположен словарь универсальных ресурсов
-                                              //(используется, если ресурс не найден на странице,
-                                              // в приложении или в каких-либо словарях ресурсов для конкретной темы)
+    //(используется, если ресурс не найден на странице,
+    // в приложении или в каких-либо словарях ресурсов для конкретной темы)
 )]
-
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //
@@ -54,4 +52,3 @@ using System.Windows;
 [assembly: AssemblyVersion("0.0.0.1")]
 [assembly: AssemblyFileVersion("0.0.0.1")]
 [assembly: NeutralResourcesLanguage("am")]
-

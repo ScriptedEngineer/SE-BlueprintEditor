@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlueprintEditor2"
         mc:Ignorable="d"
-        Title="SE BlueprintEditor" Height="500" Width="800" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinHeight="500" MinWidth="800">
+        Title="SE BlueprintEditor" Height="500" Width="800" WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing" MinHeight="500" MinWidth="800">
     <Grid>
-        <Image x:Name="BluePicture" Margin="10,10,0,0" Source="Resource/blueprints-textures_00394054.jpg" HorizontalAlignment="Left" VerticalAlignment="Top" Height="190" Width="300" Stretch="UniformToFill"/>
+        <Image x:Name="BluePicture" Margin="10,10,0,0" Source="Resource/blueprints-textures_00394054.jpg"
+               HorizontalAlignment="Left" VerticalAlignment="Top" Height="190" Width="300" Stretch="UniformToFill" />
 
     </Grid>
 </Window>

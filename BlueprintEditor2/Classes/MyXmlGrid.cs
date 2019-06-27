@@ -1,64 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Xml;
+using System.Linq;
 
 namespace BlueprintEditor2
 {
-    public class MyXmlGrid
+    internal class MyXmlGrid
     {
-        public XmlNode GridXml;
-        public MyXmlBlock[] Blocks;
-        private XmlNode NameNode;
+        public readonly MyXmlBlock[] Blocks;
+        private readonly XmlNode _DestructibleNode;
+        private readonly XmlNode _GridSizeNode;
+        //private XmlNode _GridXml;
+        private readonly XmlNode _NameNode;
+
         public string Name
         {
-            get => NameNode.InnerText;
-            set => NameNode.InnerText = value;
+            get => _NameNode.InnerText;
+            set => _NameNode.InnerText = value;
         }
-        private XmlNode GridSizeNode;
+
         public GridSizes GridSize
         {
-            get { Enum.TryParse(GridSizeNode.InnerText, out GridSizes ehum); return ehum; }
-            set => GridSizeNode.InnerText = value.ToString();
+            get
+            {
+                Enum.TryParse(_GridSizeNode.InnerText, out GridSizes @enum);
+                return @enum;
+            }
+            set => _GridSizeNode.InnerText = value.ToString();
         }
-        private XmlNode DestructibleNode;
+
         public bool Destructible
         {
-            get => bool.Parse(DestructibleNode.InnerText);
-            set => GridSizeNode.InnerText = value.ToString();
+            get => bool.Parse(_DestructibleNode.InnerText);
+            set => _GridSizeNode.InnerText = value.ToString();
         }
-        public MyXmlGrid(XmlNode Grid)
+
+        public MyXmlGrid(XmlNode grid)
         {
-            GridXml = Grid;
-            foreach (XmlNode Child in Grid.ChildNodes)
-            {
-                switch (Child.Name)
+            //_GridXml = grid;
+            foreach (XmlNode child in grid.ChildNodes) switch (child.Name)
                 {
                     case "DisplayName":
-                        NameNode = Child;
-                        break;
+                        _NameNode = child;
+                        continue;
                     case "CubeBlocks":
-                        XmlNodeList Blokes = Child.ChildNodes;
-                        Blocks = new MyXmlBlock[Blokes.Count];
-                        for (int i = 0; i < Blokes.Count; i++)
-                        {
-                            Blocks[i] = new MyXmlBlock(Blokes[i]);
-                        }
-                        break;
+                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => new MyXmlBlock(x)).ToArray();
+                        continue;
                     case "GridSizeEnum":
-                        GridSizeNode = Child;
-                        break;
+                        _GridSizeNode = child;
+                        continue;
                     case "DestructibleBlocks":
-                        DestructibleNode = Child;
-                        break;
+                        _DestructibleNode = child;
+                        continue;
                 }
-            }
         }
     }
-    public enum GridSizes
+
+    public enum GridSizes //TODO: возможно, стоит использовать КИНовское перечисление?
     {
-        Small, Large
+        Small,
+        Large
     }
 }

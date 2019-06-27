@@ -1,51 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Threading;
+using System.ComponentModel;
 using System.IO;
-using System.Reflection;
+using System.Linq;
+using System.Windows;
 
 namespace BlueprintEditor2
 {
     /// <summary>
-    /// Логика взаимодействия для EditBlueprint.xaml
+    ///     Логика взаимодействия для EditBlueprint.xaml
     /// </summary>
-    public partial class EditBlueprint : Window
+    public partial class EditBlueprint : Window, IDisposable
     {
-        static int OpenCount;
-        FileStream _lock;
-        MyXmlBlueprint EdBlueprint;
-        SelectBlueprint ItParrent;
-        public EditBlueprint(FileStream Lock, MyXmlBlueprint Blueprint, SelectBlueprint Parrent)
+        private static int _OpenCount;
+        private readonly FileStream _Lock;
+        private readonly MyXmlBlueprint CurrentBlueprint;
+        private readonly SelectBlueprint ItParrent;
+
+        public EditBlueprint(FileStream stream, MyXmlBlueprint blueprint, SelectBlueprint parrent)
         {
-            _lock = Lock;
-            ItParrent = Parrent;
-            EdBlueprint = Blueprint;
+            _Lock = stream;
+            ItParrent = parrent;
+            CurrentBlueprint = blueprint;
             InitializeComponent();
-            Title = "["+EdBlueprint.Patch.Split('\\').Last()+"] SE BlueprintEditor";
-            BluePicture.Source = EdBlueprint.GetPic(true);
-            OpenCount++;
+            Title = "[" + CurrentBlueprint.Patch.Split('\\').Last() + "] SE BlueprintEditor"; //TODO: Может загрузка через ресурсы?
+            BluePicture.Source = CurrentBlueprint.GetPic(true);
+            _OpenCount++;
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            _lock.Dispose();
-            OpenCount--;
-            if(OpenCount == 0)
+            Dispose();
+            _OpenCount--;
+            if (_OpenCount == 0)
             {
-                ItParrent.Top = SystemParameters.PrimaryScreenHeight/2-ItParrent.Height/2;
+                ItParrent.Top = SystemParameters.PrimaryScreenHeight / 2 - ItParrent.Height / 2;
                 ItParrent.Left = SystemParameters.PrimaryScreenWidth / 2 - ItParrent.Width / 2;
             }
+        }
+
+        public void Dispose()
+        {
+            _Lock?.Dispose();
         }
     }
 }

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BlueprintEditor2"
              StartupUri="SelectBlueprint.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>
