@@ -25,37 +25,40 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class SelectBlueprint : Window
     {
+        static public SelectBlueprint window;
         readonly string BluePatch = @"C:\Users\Денис\AppData\Roaming\SpaceEngineers\Blueprints\local\";
         MyXmlBlueprint CurrentBlueprint;
         public SelectBlueprint()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
             InitializeComponent();
+            window = this;
             foreach (string dir in Directory.GetDirectories(BluePatch)) {
                 BlueList.Items.Add(dir.Split('\\').Last());
             }
             BlueText.Text = Lang.SelectBlue;
         }
-
         private void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CurrentBlueprint = new MyXmlBlueprint(BluePatch + BlueList.SelectedItem);
             BluePicture.Source = CurrentBlueprint.GetPic();
             BlueText.Text = Lang.BlueName+ ": "+CurrentBlueprint.Name+"\n"+
                 Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n"+
-                Lang.BlockCount + ": " + CurrentBlueprint.BlockCount + "\n";
+                Lang.BlockCount + ": " + CurrentBlueprint.BlockCount + "\n" +
+                Lang.Owner + ": " + CurrentBlueprint.DisplayName+"("+ CurrentBlueprint.Owner + ")\n";
+            CalculateButton.IsEnabled = true;
             EditButton.IsEnabled = true;
             BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
         }
-
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            Left = SystemParameters.PrimaryScreenWidth/2 - ((360+800)/2);
-            Top = SystemParameters.PrimaryScreenHeight/2-(Height/2);
+            //MessageBox.Show(Lang.ComingSoon); return;
             if (!File.Exists(CurrentBlueprint.Patch+"/~lock.dat"))
             {
+                Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
+                Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 CurrentBlueprint.SaveBackup();
-                EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose),CurrentBlueprint,this);
+                EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose),CurrentBlueprint);
                 Form.Show();
                 Form.Left = Left+360;
                 Form.Top = Top;
@@ -85,7 +88,27 @@ namespace BlueprintEditor2
         }
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
-            new BackupManager(CurrentBlueprint.Patch).Show();
+            if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
+            {
+                new BackupManager(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose),CurrentBlueprint).Show();
+            }
+            else MessageBox.Show(Lang.AlreadyOpened);
+            
+        }
+        private void CalculateButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(Lang.ComingSoon);return;
+            if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
+            {
+                Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
+                Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
+                Form.Show();
+                Form.Left = Left + 360;
+                Form.Top = Top;
+                Form.Height = Height;
+            }
+            else MessageBox.Show(Lang.AlreadyOpened);
         }
     }
 }

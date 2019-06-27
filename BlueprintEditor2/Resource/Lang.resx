@@ -141,6 +141,15 @@ Developed by clan "Andromeda"
   <data name="BlueName" xml:space="preserve">
     <value>Blueprint Name</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Coming soon...</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
@@ -153,8 +162,17 @@ Developed by clan "Andromeda"
   <data name="GridCount" xml:space="preserve">
     <value>Number of grids</value>
   </data>
+  <data name="ItWillDelete" xml:space="preserve">
+    <value>This action will delete the current blueprint file, do you really want to do this?</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Owner</value>
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Replace by current</value>
@@ -168,10 +186,16 @@ Developed by clan "Andromeda"
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
   </data>
+  <data name="UnsafeAction" xml:space="preserve">
+    <value>Unsafe action</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>View blueprint folder</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

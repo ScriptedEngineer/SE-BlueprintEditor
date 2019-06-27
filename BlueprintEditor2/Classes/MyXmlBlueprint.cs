@@ -53,20 +53,22 @@ namespace BlueprintEditor2
                     return;
                 }
                 bool save = true;
+                string Lastest = "";
+                List<string> Files = new List<string>();
                 foreach (string file in Directory.GetFiles(Patch + "/Backups"))
                 {
-                    if (file.Contains("Lastest-")) continue;
+                    if (file.Contains("Lastest-")) { Lastest = File.ReadAllText(file);continue; }
                     DateTime FileDate = DateTime.FromFileTimeUtc(long.Parse(file.Split('\\').Last().Replace(".sbc", "")));
-                    if((DateTime.UtcNow-FileDate).TotalMinutes < 5)
-                    {
-                        save = false;
-                    }
-                    else if (new TimeSpan(FileDate.Ticks).TotalDays > 2)
+                    if (Files.Contains(File.ReadAllText(file)))
                     {
                         File.Delete(file);
                     }
+                    else
+                    {
+                        Files.Add(File.ReadAllText(file));
+                    }
                 }
-                if(save) File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\" + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
+                if (save && Lastest != File.ReadAllText(Patch + "\\bp.sbc")) File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\"+(Lastest != ""?"": "Lastest-") + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
             }
             else
             {
@@ -74,7 +76,7 @@ namespace BlueprintEditor2
                 File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\Lastest-" + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
             }
         }
-        public BitmapSource GetPic(bool badOpac = false)
+        public BitmapImage GetPic(bool badOpac = false)
         {
             if (badOpac)
             {

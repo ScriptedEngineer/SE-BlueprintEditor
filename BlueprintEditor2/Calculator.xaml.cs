@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,37 +12,33 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Threading;
-using System.IO;
-using System.Reflection;
 
 namespace BlueprintEditor2
 {
     /// <summary>
-    /// Логика взаимодействия для EditBlueprint.xaml
+    /// Логика взаимодействия для Calculator.xaml
     /// </summary>
-    public partial class EditBlueprint : Window
+    public partial class Calculator : Window
     {
-        static public int OpenCount;
         FileStream _lock;
         MyXmlBlueprint EdBlueprint;
-        public EditBlueprint(FileStream Lock, MyXmlBlueprint Blueprint)
+        public Calculator(FileStream Lock, MyXmlBlueprint Blueprint)
         {
             _lock = Lock;
             EdBlueprint = Blueprint;
             InitializeComponent();
-            Title = "["+EdBlueprint.Patch.Split('\\').Last()+"] Editor - SE BlueprintEditor";
+            Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
             BluePicture.Source = EdBlueprint.GetPic(true);
-            OpenCount++;
+            EditBlueprint.OpenCount++;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _lock.Dispose();
-            OpenCount--;
-            if(OpenCount == 0)
+            EditBlueprint.OpenCount--;
+            if (EditBlueprint.OpenCount == 0)
             {
-                SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight/2- SelectBlueprint.window.Height/2;
+                SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
                 SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
         }

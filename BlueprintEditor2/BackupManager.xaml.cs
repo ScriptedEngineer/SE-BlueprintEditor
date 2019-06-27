@@ -21,29 +21,21 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class BackupManager : Window
     {
-        static BackupManager LastWindow;
-        private bool CloseIt = false;
         string Patch;
-        public BackupManager(string _pathc)
+        FileStream _lock;
+        MyXmlBlueprint Blueprint;
+        public BackupManager(FileStream Lock, MyXmlBlueprint _blueprint)
         {
-            Patch = _pathc+ "\\Backups";
-            if (LastWindow != null)
-            {
-                LastWindow.Show();
-                LastWindow.Focus();
-                CloseIt = true;
-            }
-            else LastWindow = this;
+            _lock = Lock;
+            Blueprint = _blueprint;
+            Patch = Blueprint.Patch + "\\Backups";
             InitializeComponent();
             InfoLabel.Content = Lang.SelectOne;
             foreach (string file in Directory.GetFiles(Patch))
             {
                 BackupList.Items.Add(file.Split('\\').Last());   
             }
-        }
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            if (CloseIt) Close();
+            Title = "[" + Blueprint.Patch.Split('\\').Last() + "] BackupManager - SE BlueprintEditor";
         }
 
         private void BackupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,9 +57,9 @@ namespace BlueprintEditor2
             }
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closing(object sender, EventArgs e)
         {
-            LastWindow = null;
+            _lock.Dispose();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -78,6 +70,27 @@ namespace BlueprintEditor2
             {
                 BackupList.Items.Add(file.Split('\\').Last());
             }
+        }
+
+        private void ReplaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            File.Delete(Patch + "\\" + BackupList.SelectedItem.ToString());
+            Blueprint.SaveBackup();
+            BackupList.Items.Clear();
+            foreach (string file in Directory.GetFiles(Patch))
+            {
+                BackupList.Items.Add(file.Split('\\').Last());
+            }
+        }
+
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,() => 
+            {
+                File.Delete(Blueprint.Patch + "\\bp.sbc");
+                File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
+                Close();
+            }).Show();
         }
     }
 }

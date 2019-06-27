@@ -140,6 +140,15 @@
   <data name="BlueName" xml:space="preserve">
     <value>Название чертежа</value>
   </data>
+  <data name="Calculate" xml:space="preserve">
+    <value>Посчитать</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ComingSoon" xml:space="preserve">
+    <value>Скоро...</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
@@ -152,8 +161,17 @@
   <data name="GridCount" xml:space="preserve">
     <value>Колличество сеток</value>
   </data>
+  <data name="ItWillDelete" xml:space="preserve">
+    <value>Это действие приведет к удалению текущего файла чертежа, вы действительно хотите это сделать?</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Владелец</value>
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Заменить на текущий</value>
@@ -167,10 +185,16 @@
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста выберите предмет для отображения иформации</value>
   </data>
+  <data name="UnsafeAction" xml:space="preserve">
+    <value>Небезопастное действие</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>Посмотреть папку чартежа</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
   </data>
 </root>
