@@ -61,10 +61,9 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SE Blueprint Editor - Program for editing blueprints of the game &quot;Space Engineers&quot; outside the game.
-        ///This program allows you to quickly edit the necessary parts of the blueprints (Armor blocks, etc.) without starting the game.
-        ///Developed by clan &quot;Andromeda&quot;
-        ///.
+        ///   Ищет локализованную строку, похожую на SE Blueprint Editor - program for editing blueprints of the game &quot;Space Engineers&quot; outside the game
+        ///This program allows you to quickly change the necessary parts of the blueprints(blocks, their settings, etc.), without starting the game.
+        ///Developed by clan &quot;Andromeda&quot;.
         /// </summary>
         public static string About {
             get {
@@ -190,6 +189,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Image files.
+        /// </summary>
+        public static string ImFiles {
+            get {
+                return ResourceManager.GetString("ImFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на This action will delete the current blueprint file, do you really want to do this?.
         /// </summary>
         public static string ItWillDelete {
@@ -204,6 +212,25 @@ namespace BlueprintEditor2.Resource {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No thumbnail.
+        /// </summary>
+        public static string NoPic {
+            get {
+                return ResourceManager.GetString("NoPic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Looks like this blueprint doesn&apos;t have a thumbnail!
+        ///Do you want set a thumbnail?.
+        /// </summary>
+        public static string NoPicture {
+            get {
+                return ResourceManager.GetString("NoPicture", resourceCulture);
             }
         }
         

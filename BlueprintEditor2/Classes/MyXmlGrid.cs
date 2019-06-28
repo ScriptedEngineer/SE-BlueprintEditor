@@ -12,18 +12,18 @@ namespace BlueprintEditor2
         public XmlNode GridXml;
         public MyXmlBlock[] Blocks;
         private XmlNode NameNode;
+        private XmlNode GridSizeNode;
+        private XmlNode DestructibleNode;
         public string Name
         {
             get => NameNode.InnerText;
             set => NameNode.InnerText = value;
         }
-        private XmlNode GridSizeNode;
         public GridSizes GridSize
         {
             get { Enum.TryParse(GridSizeNode.InnerText, out GridSizes ehum); return ehum; }
             set => GridSizeNode.InnerText = value.ToString();
         }
-        private XmlNode DestructibleNode;
         public bool Destructible
         {
             get => bool.Parse(DestructibleNode.InnerText);
@@ -32,26 +32,21 @@ namespace BlueprintEditor2
         public MyXmlGrid(XmlNode Grid)
         {
             GridXml = Grid;
-            foreach (XmlNode Child in Grid.ChildNodes)
+            foreach (XmlNode child in Grid.ChildNodes)
             {
-                switch (Child.Name)
+                switch (child.Name)
                 {
                     case "DisplayName":
-                        NameNode = Child;
+                        NameNode = child;
                         break;
                     case "CubeBlocks":
-                        XmlNodeList Blokes = Child.ChildNodes;
-                        Blocks = new MyXmlBlock[Blokes.Count];
-                        for (int i = 0; i < Blokes.Count; i++)
-                        {
-                            Blocks[i] = new MyXmlBlock(Blokes[i]);
-                        }
+                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => new MyXmlBlock(x)).ToArray();
                         break;
                     case "GridSizeEnum":
-                        GridSizeNode = Child;
+                        GridSizeNode = child;
                         break;
                     case "DestructibleBlocks":
-                        DestructibleNode = Child;
+                        DestructibleNode = child;
                         break;
                 }
             }

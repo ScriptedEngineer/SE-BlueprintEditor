@@ -178,5 +178,8 @@
     <Resource Include="Resource\question.png" />
     <Resource Include="Resource\warn.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\thumbDefault.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -85,11 +85,14 @@ namespace BlueprintEditor2
 
         private void RestoreButton_Click(object sender, RoutedEventArgs e)
         {
-            new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,() => 
+            new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 
             {
-                File.Delete(Blueprint.Patch + "\\bp.sbc");
-                File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
-                Close();
+                if (Dial == DialоgResult.Yes)
+                {
+                    File.Delete(Blueprint.Patch + "\\bp.sbc");
+                    File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
+                    Close();
+                }
             }).Show();
         }
     }

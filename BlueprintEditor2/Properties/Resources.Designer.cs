@@ -59,5 +59,15 @@ namespace BlueprintEditor2.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap thumbDefault {
+            get {
+                object obj = ResourceManager.GetObject("thumbDefault", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

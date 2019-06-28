@@ -19,31 +19,29 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class Dialog : Window
     {
-        private Action OnYes, OnNo, OnCancel;
+        private Action<DialоgResult> OnClick;
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
-            OnYes?.Invoke();
+            OnClick?.Invoke(DialоgResult.Yes);
             Close();
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            OnNo?.Invoke();
+            OnClick?.Invoke(DialоgResult.No);
             Close();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            OnCancel?.Invoke();
+            OnClick?.Invoke(DialоgResult.Cancel);
             Close();
         }
 
-        public Dialog(DialogPicture Pic, string _Title, string Text, Action _OnYes = null, Action _OnNo = null, Action _OnCancel = null, int _Width = 300, int _Height = 200)
+        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, int _Width = 300, int _Height = 200)
         {
-            OnYes = _OnYes;
-            OnNo = _OnNo;
-            OnCancel = _OnCancel;
+            OnClick = _Run;
             InitializeComponent();
             Title = _Title;
             Width = _Width;
@@ -65,7 +63,7 @@ namespace BlueprintEditor2
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            OnCancel?.Invoke();
+            OnClick?.Invoke(DialоgResult.Closed);
         }
     }
     public enum DialogPicture
@@ -73,5 +71,13 @@ namespace BlueprintEditor2
         warn,
         attention,
         question
+    }
+    public enum DialоgResult
+    {
+        Yes,
+        No,
+        Cancel,
+        Closed,
+        Data
     }
 }

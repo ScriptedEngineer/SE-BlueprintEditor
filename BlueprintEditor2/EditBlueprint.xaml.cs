@@ -23,21 +23,21 @@ namespace BlueprintEditor2
     public partial class EditBlueprint : Window
     {
         static public int OpenCount;
-        FileStream _lock;
+        FileStream _Lock;
         MyXmlBlueprint EdBlueprint;
         public EditBlueprint(FileStream Lock, MyXmlBlueprint Blueprint)
         {
-            _lock = Lock;
+            _Lock = Lock;
             EdBlueprint = Blueprint;
             InitializeComponent();
             Title = "["+EdBlueprint.Patch.Split('\\').Last()+"] Editor - SE BlueprintEditor";
-            BluePicture.Source = EdBlueprint.GetPic(true);
+            BluePicture.Source = EdBlueprint.GetPic(false, false);
             OpenCount++;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _lock.Dispose();
+            _Lock?.Dispose();
             OpenCount--;
             if(OpenCount == 0)
             {

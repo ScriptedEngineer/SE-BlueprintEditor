@@ -28,7 +28,7 @@ namespace BlueprintEditor2
             EdBlueprint = Blueprint;
             InitializeComponent();
             Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
-            BluePicture.Source = EdBlueprint.GetPic(true);
+            BluePicture.Source = EdBlueprint.GetPic(false, false);
             EditBlueprint.OpenCount++;
         }
 

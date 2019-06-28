@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Threading;
 using BlueprintEditor2.Resource;
 using System.Diagnostics;
+using Path = System.IO.Path;
 
 namespace BlueprintEditor2
 {
@@ -26,8 +27,8 @@ namespace BlueprintEditor2
     public partial class SelectBlueprint : Window
     {
         static public SelectBlueprint window;
-        readonly string BluePatch = @"C:\Users\Денис\AppData\Roaming\SpaceEngineers\Blueprints\local\";
-        MyXmlBlueprint CurrentBlueprint;
+        readonly string BluePatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Blueprints\local\";
+        internal MyXmlBlueprint CurrentBlueprint;
         public SelectBlueprint()
         {
             //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
@@ -42,13 +43,17 @@ namespace BlueprintEditor2
         {
             CurrentBlueprint = new MyXmlBlueprint(BluePatch + BlueList.SelectedItem);
             BluePicture.Source = CurrentBlueprint.GetPic();
-            BlueText.Text = Lang.BlueName+ ": "+CurrentBlueprint.Name+"\n"+
-                Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n"+
+            BlueText.Text = Lang.BlueName + ": " + CurrentBlueprint.Name + "\n" +
+                Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n" +
                 Lang.BlockCount + ": " + CurrentBlueprint.BlockCount + "\n" +
-                Lang.Owner + ": " + CurrentBlueprint.DisplayName+"("+ CurrentBlueprint.Owner + ")\n";
+                Lang.Owner + ": " + CurrentBlueprint.DisplayName + "(" + CurrentBlueprint.Owner + ")\n";
             CalculateButton.IsEnabled = true;
             EditButton.IsEnabled = true;
             BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
+            foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*",SearchOption.TopDirectoryOnly))
+            {
+                if(Path.GetFileName(file) != "bp.sbc") File.Delete(file);
+            }
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -68,24 +73,12 @@ namespace BlueprintEditor2
         }
         private void PicMenuItemNormalize_Click(object sender, RoutedEventArgs e)
         {
-            BluePicture.Source = CurrentBlueprint.GetPic(true);
+            if (CurrentBlueprint != null) BluePicture.Source = CurrentBlueprint.GetPic(true);
         }
-        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(BluePatch);
-        }
-        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(CurrentBlueprint.Patch);
-        }
-        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
-        {
-            new About().Show();
-        }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => Process.Start(BluePatch);
+        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e) => Process.Start(CurrentBlueprint.Patch);
+        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e) => new About().Show();
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => Application.Current.Shutdown();
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))

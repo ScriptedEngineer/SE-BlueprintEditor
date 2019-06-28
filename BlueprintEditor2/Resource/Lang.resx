@@ -118,10 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>SE Blueprint Editor - Program for editing blueprints of the game "Space Engineers" outside the game.
-This program allows you to quickly edit the necessary parts of the blueprints (Armor blocks, etc.) without starting the game.
-Developed by clan "Andromeda"
-</value>
+    <value>SE Blueprint Editor - program for editing blueprints of the game "Space Engineers" outside the game
+This program allows you to quickly change the necessary parts of the blueprints(blocks, their settings, etc.), without starting the game.
+Developed by clan "Andromeda"</value>
   </data>
   <data name="AboutProg" xml:space="preserve">
     <value>About program</value>
@@ -162,11 +161,21 @@ Developed by clan "Andromeda"
   <data name="GridCount" xml:space="preserve">
     <value>Number of grids</value>
   </data>
+  <data name="ImFiles" xml:space="preserve">
+    <value>Image files</value>
+  </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>This action will delete the current blueprint file, do you really want to do this?</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="NoPic" xml:space="preserve">
+    <value>No thumbnail</value>
+  </data>
+  <data name="NoPicture" xml:space="preserve">
+    <value>Looks like this blueprint doesn't have a thumbnail!
+Do you want set a thumbnail?</value>
   </data>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize</value>

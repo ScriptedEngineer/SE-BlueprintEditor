@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
+using System.Reflection;
+using BlueprintEditor2.Resource;
 
 namespace BlueprintEditor2
 {
@@ -20,16 +22,16 @@ namespace BlueprintEditor2
         public MyXmlGrid[] Grids;
         public string Name
         {
-            get => BlueprintXml.GetElementsByTagName("Id")[0].Attributes["Subtype"].Value;
-            set => BlueprintXml.GetElementsByTagName("Id")[0].Attributes["Subtype"].Value = value;
+            get => BlueprintXml.GetElementsByTagName("Id").Item(0).Attributes["Subtype"].Value;
+            set => BlueprintXml.GetElementsByTagName("Id").Item(0).Attributes["Subtype"].Value = value;
         }
         public string DisplayName
         {
-            get => BlueprintXml.GetElementsByTagName("DisplayName")[0].InnerText;
+            get => BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
         }
         public string Owner
         {
-            get => BlueprintXml.GetElementsByTagName("OwnerSteamId")[0].InnerText;
+            get => BlueprintXml.GetElementsByTagName("OwnerSteamId").Item(0).InnerText;
         }
         public MyXmlBlueprint(string patch)
         {
@@ -76,24 +78,57 @@ namespace BlueprintEditor2
                 File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\Lastest-" + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
             }
         }
-        public BitmapImage GetPic(bool badOpac = false)
+        public BitmapImage GetPic(bool badOpac = false,bool useDialog = true)
         {
-            if (badOpac)
+            if (!File.Exists(Patch + "\\thumb.png") || new FileInfo(Patch + "\\thumb.png").Length == 0)
             {
-                Image raw = Image.FromFile(Patch + "\\thumb.png");
-                Image img = SetImgOpacity(raw, 1);
-                raw.Dispose();
-                img.Save(Patch + "\\thumb.png");
-                img.Dispose();
+                if (useDialog)
+                {
+                    SelectBlueprint.window.Hide();
+                    new Dialog(DialogPicture.question, Lang.NoPic, Lang.NoPicture, (Dial) =>
+                        {
+                            switch (Dial)
+                            {
+                                case DialоgResult.Yes:
+                                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                                    dlg.DefaultExt = ".png";
+                                    dlg.Filter = Lang.ImFiles + "|*.png;*.jpeg;*.jpg";
+                                    bool? result = dlg.ShowDialog();
+                                    if (result == true)
+                                    {
+                                        string filename = dlg.FileName;
+                                        File.Copy(filename, Patch + "\\thumb.png");
+                                    }
+                                    SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
+                                    break;
+                                case DialоgResult.No:
+                                    Properties.Resources.thumbDefault.Save(Patch + "\\thumb.png");
+                                    SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
+                                    break;
+                            }
+                            SelectBlueprint.window.Show();
+                        }).Show();
+                }
+                return new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
             }
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-            image.UriSource = new Uri(Patch + "\\thumb.png");
-            image.EndInit();
-            return image;
-            //return new BitmapImage(new Uri(Patch + "\\thumb.png"));
+            else
+            {
+                if (badOpac)
+                {
+                    Image raw = Image.FromFile(Patch + "\\thumb.png");
+                    Image img = SetImgOpacity(raw, 1);
+                    raw.Dispose();
+                    img.Save(Patch + "\\thumb.png");
+                    img.Dispose();
+                }
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.UriSource = new Uri(Patch + "\\thumb.png");
+                image.EndInit();
+                return image;
+            }
         }
         private static Image SetImgOpacity(Image imgPic, float imgOpac)
         {

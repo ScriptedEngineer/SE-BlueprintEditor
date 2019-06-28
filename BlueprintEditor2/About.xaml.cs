@@ -36,10 +36,7 @@ namespace BlueprintEditor2
             VersionLabel.Content = Lang.Version+": "+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            Process.Start(((Hyperlink)sender).NavigateUri.ToString());
-        }
+        private void Hyperlink_Click(object sender, RoutedEventArgs e) => Process.Start(((Hyperlink)sender).NavigateUri.ToString());
 
         private void Window_Activated(object sender, EventArgs e)
         {
@@ -48,7 +45,7 @@ namespace BlueprintEditor2
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            LastWindow = null;
+            if(this.Equals(LastWindow))LastWindow = null;
         }
     }
 }
