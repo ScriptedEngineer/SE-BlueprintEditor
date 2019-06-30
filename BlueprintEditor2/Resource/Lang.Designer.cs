@@ -99,7 +99,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Number of blocks.
+        ///   Ищет локализованную строку, похожую на Blocks.
         /// </summary>
         public static string BlockCount {
             get {
@@ -126,6 +126,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Blueprint.
+        /// </summary>
+        public static string Blueprint {
+            get {
+                return ResourceManager.GetString("Blueprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Calculate.
         /// </summary>
         public static string Calculate {
@@ -140,6 +149,15 @@ namespace BlueprintEditor2.Resource {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Changed.
+        /// </summary>
+        public static string Changed {
+            get {
+                return ResourceManager.GetString("Changed", resourceCulture);
             }
         }
         
@@ -171,6 +189,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all backups of all blueprints.
+        /// </summary>
+        public static string DeleteAllBackups {
+            get {
+                return ResourceManager.GetString("DeleteAllBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Edit.
         /// </summary>
         public static string Edit {
@@ -180,7 +207,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Number of grids.
+        ///   Ищет локализованную строку, похожую на Grids.
         /// </summary>
         public static string GridCount {
             get {
@@ -203,6 +230,15 @@ namespace BlueprintEditor2.Resource {
         public static string ItWillDelete {
             get {
                 return ResourceManager.GetString("ItWillDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This action will delete all backup files, do you really want to do this?.
+        /// </summary>
+        public static string ItWillDeleteAllBackps {
+            get {
+                return ResourceManager.GetString("ItWillDeleteAllBackps", resourceCulture);
             }
         }
         

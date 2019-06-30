@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="SE BlueprintEditor" Height="500" Width="680" MinHeight="500" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="660">
+        Title="SE BlueprintEditor" Height="500" Width="920" MinHeight="500" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="920">
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click">
@@ -17,9 +17,9 @@
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
-        <Rectangle Fill="Black" Margin="365,10,10,284" Stroke="Black"/>
+        <Rectangle Fill="Black" Margin="591,10,10,284" Stroke="Black"/>
 
-        <Image x:Name="BluePicture" Margin="365,10,10,284" Source="Resource/blueprints-textures_00394054.jpg">
+        <Image x:Name="BluePicture" Margin="591,10,10,284" Source="Resource/blueprints-textures_00394054.jpg">
             <Image.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
@@ -37,9 +37,28 @@
             </Image.ContextMenu>
         </Image>
 
-        <TextBlock x:Name="BlueText" Margin="365,0,10,35" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="244" Text=""/>
-        <ListBox x:Name="BlueList" HorizontalAlignment="Left" Margin="10,10,0,10" Width="343" SelectionChanged="BlueList_SelectionChanged">
-            <ListBox.ContextMenu>
+        <TextBlock x:Name="BlueText" Margin="591,0,10,35" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="244"/>
+        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click"/>
+        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static res:Lang.DeleteAllBackups}" Click="BackupsMenuItemDelete_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Resource\img_252744.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click">
+                        <MenuItem.Icon>
+                            <Image Source="Resource\about.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+        <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click"/>
+        <ListView x:Name="BlueList" HorizontalAlignment="Left" Height="449" Margin="10,10,0,0" VerticalAlignment="Top" Width="576" SelectionChanged="BlueList_SelectionChanged">
+            <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="{x:Static res:Lang.ViewFold}" Click="SelectorMenuItemFolder2_Click">
                         <MenuItem.Icon>
@@ -58,11 +77,18 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-            </ListBox.ContextMenu>
-        </ListBox>
-        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click"/>
-        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click"/>
-        <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click"/>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[0]}" Header="{x:Static res:Lang.Blueprint}" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[1]}" Header="{x:Static res:Lang.BlueName}" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[4]}" Header="{x:Static res:Lang.BlockCount}" Width="40"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[2]}" Header="{x:Static res:Lang.Created}" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[3]}" Header="{x:Static res:Lang.Changed}" Width="120"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.2" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown"/>
 
     </Grid>
 </Window>

@@ -54,6 +54,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -69,6 +72,8 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MyExtensions.cs" />
+    <Compile Include="Classes\MyListElement.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
     <Compile Include="Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
@@ -85,6 +90,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="_EasterEggs\CreatorNickname.xaml.cs">
+      <DependentUpon>CreatorNickname.xaml</DependentUpon>
     </Compile>
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
@@ -120,6 +128,10 @@
       <DependentUpon>SelectBlueprint.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="_EasterEggs\CreatorNickname.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -147,6 +159,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -180,6 +193,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\thumbDefault.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="_EasterEggs\1561835613_SE.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\img_252744.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\WhiteDot.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

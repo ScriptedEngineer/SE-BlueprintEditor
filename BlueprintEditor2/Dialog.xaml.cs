@@ -20,25 +20,7 @@ namespace BlueprintEditor2
     public partial class Dialog : Window
     {
         private Action<DialоgResult> OnClick;
-
-        private void YesButton_Click(object sender, RoutedEventArgs e)
-        {
-            OnClick?.Invoke(DialоgResult.Yes);
-            Close();
-        }
-
-        private void NoButton_Click(object sender, RoutedEventArgs e)
-        {
-            OnClick?.Invoke(DialоgResult.No);
-            Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            OnClick?.Invoke(DialоgResult.Cancel);
-            Close();
-        }
-
+        internal static Dialog Last;
         public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, int _Width = 300, int _Height = 200)
         {
             OnClick = _Run;
@@ -59,25 +41,31 @@ namespace BlueprintEditor2
                     DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/question.png"));
                     break;
             }
+            Last = this;
         }
-
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnClick?.Invoke(DialоgResult.Yes);
+            OnClick = null;
+            Close();
+        }
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnClick?.Invoke(DialоgResult.No);
+            OnClick = null;
+            Close();
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnClick?.Invoke(DialоgResult.Cancel);
+            OnClick = null;
+            Close();
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             OnClick?.Invoke(DialоgResult.Closed);
+            OnClick = null;
+            Last = null;
         }
-    }
-    public enum DialogPicture
-    {
-        warn,
-        attention,
-        question
-    }
-    public enum DialоgResult
-    {
-        Yes,
-        No,
-        Cancel,
-        Closed,
-        Data
     }
 }

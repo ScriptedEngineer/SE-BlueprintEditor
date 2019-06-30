@@ -11,13 +11,14 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 using BlueprintEditor2.Resource;
+using System.Threading;
+using System.Windows;
 
 namespace BlueprintEditor2
 {
     public class MyXmlBlueprint
     {
         public string Patch;
-        public readonly int BlockCount;
         private XmlDocument BlueprintXml = new XmlDocument();
         public MyXmlGrid[] Grids;
         public string Name
@@ -42,7 +43,6 @@ namespace BlueprintEditor2
             for (int i = 0; i < Grides.Count; i++)
             {
                 Grids[i] = new MyXmlGrid(Grides[i]);
-                BlockCount += Grids[i].Blocks.Length;
             }
         }
         public void SaveBackup(bool forced = false)
@@ -84,30 +84,37 @@ namespace BlueprintEditor2
             {
                 if (useDialog)
                 {
-                    SelectBlueprint.window.Hide();
-                    new Dialog(DialogPicture.question, Lang.NoPic, Lang.NoPicture, (Dial) =>
-                        {
-                            switch (Dial)
+                    SelectBlueprint.window.Lock.Height = SystemParameters.PrimaryScreenHeight;
+                    MyExtensions.AsyncWorker(() =>
+                    {
+                        new Dialog(DialogPicture.question, Lang.NoPic, Lang.NoPicture, (Dial) =>
                             {
-                                case DialоgResult.Yes:
-                                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                                    dlg.DefaultExt = ".png";
-                                    dlg.Filter = Lang.ImFiles + "|*.png;*.jpeg;*.jpg";
-                                    bool? result = dlg.ShowDialog();
-                                    if (result == true)
-                                    {
-                                        string filename = dlg.FileName;
-                                        File.Copy(filename, Patch + "\\thumb.png");
-                                    }
-                                    SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
-                                    break;
-                                case DialоgResult.No:
-                                    Properties.Resources.thumbDefault.Save(Patch + "\\thumb.png");
-                                    SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
-                                    break;
-                            }
-                            SelectBlueprint.window.Show();
-                        }).Show();
+                                switch (Dial)
+                                {
+                                    case DialоgResult.Yes:
+                                        Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                                        dlg.DefaultExt = ".png";
+                                        dlg.Filter = Lang.ImFiles + "|*.png;*.jpeg;*.jpg";
+                                        bool? result = dlg.ShowDialog();
+                                        if (result == true)
+                                        {
+                                            string filename = dlg.FileName;
+                                            File.Copy(filename, Patch + "\\thumb.png");
+                                        }
+                                        SelectBlueprint.window.Lock.Height = 0;
+                                        SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
+                                        break;
+                                    case DialоgResult.No:
+                                        Properties.Resources.thumbDefault.Save(Patch + "\\thumb.png");
+                                        SelectBlueprint.window.Lock.Height = 0;
+                                        SelectBlueprint.window.BluePicture.Source = SelectBlueprint.window.CurrentBlueprint.GetPic();
+                                        break;
+                                    default:
+                                        SelectBlueprint.window.Lock.Height = 0;
+                                        break;
+                                }
+                            }).Show();
+                    });
                 }
                 return new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
             }

@@ -35,17 +35,20 @@ namespace BlueprintEditor2
             InitializeComponent();
             window = this;
             foreach (string dir in Directory.GetDirectories(BluePatch)) {
-                BlueList.Items.Add(dir.Split('\\').Last());
+                BlueList.Items.Add(MyListElement.fromBlueprint(dir));
             }
             BlueText.Text = Lang.SelectBlue;
         }
-        private void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CurrentBlueprint = new MyXmlBlueprint(BluePatch + BlueList.SelectedItem);
+            MyListElement Selected = (MyListElement)BlueList.SelectedItem;
+            CurrentBlueprint = new MyXmlBlueprint(BluePatch + Selected.Elements[0]);
             BluePicture.Source = CurrentBlueprint.GetPic();
-            BlueText.Text = Lang.BlueName + ": " + CurrentBlueprint.Name + "\n" +
+            BlueText.Text = Lang.BlueName + ": " + Selected.Elements[1] + "\n" +
+                Lang.Created + ": " + Selected.Elements[2] + "\n" +
+                Lang.Changed + ": " + Selected.Elements[3] + "\n" +
                 Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n" +
-                Lang.BlockCount + ": " + CurrentBlueprint.BlockCount + "\n" +
+                Lang.BlockCount + ": " + Selected.Elements[4] + "\n" +
                 Lang.Owner + ": " + CurrentBlueprint.DisplayName + "(" + CurrentBlueprint.Owner + ")\n";
             CalculateButton.IsEnabled = true;
             EditButton.IsEnabled = true;
@@ -60,14 +63,11 @@ namespace BlueprintEditor2
             //MessageBox.Show(Lang.ComingSoon); return;
             if (!File.Exists(CurrentBlueprint.Patch+"/~lock.dat"))
             {
-                Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
+                Left = 0;
                 Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 CurrentBlueprint.SaveBackup();
                 EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose),CurrentBlueprint);
                 Form.Show();
-                Form.Left = Left+360;
-                Form.Top = Top;
-                Form.Height = Height;
             }
             else MessageBox.Show(Lang.AlreadyOpened);
         }
@@ -77,7 +77,11 @@ namespace BlueprintEditor2
         }
         private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => Process.Start(BluePatch);
         private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e) => Process.Start(CurrentBlueprint.Patch);
-        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e) => new About().Show();
+        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+            if (About.LastWindow == null) new About().Show();
+            else About.LastWindow.Focus();
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => Application.Current.Shutdown();
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
@@ -102,6 +106,26 @@ namespace BlueprintEditor2
                 Form.Height = Height;
             }
             else MessageBox.Show(Lang.AlreadyOpened);
+        }
+        private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Lock.Height = SystemParameters.PrimaryScreenHeight;
+            new Dialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteAllBackps, (Dial) =>
+            {
+                if (Dial == DialоgResult.Yes)
+                {
+                    foreach (string dir in Directory.GetDirectories(BluePatch))
+                    {
+                        if (Directory.Exists(dir + "\\Backups")) Directory.Delete(dir + "\\Backups", true);
+                    }
+                    BlueList_SelectionChanged(null, null);
+                }
+                Lock.Height = 0;
+            }).Show();
+        }
+        private void Lock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(Dialog.Last != null) Dialog.Last.Focus();
         }
     }
 }

@@ -132,7 +132,7 @@ Developed by clan "Andromeda"</value>
     <value>Backups</value>
   </data>
   <data name="BlockCount" xml:space="preserve">
-    <value>Number of blocks</value>
+    <value>Blocks</value>
   </data>
   <data name="BlueFolder" xml:space="preserve">
     <value>Blueprints folder</value>
@@ -140,11 +140,17 @@ Developed by clan "Andromeda"</value>
   <data name="BlueName" xml:space="preserve">
     <value>Blueprint Name</value>
   </data>
+  <data name="Blueprint" xml:space="preserve">
+    <value>Blueprint</value>
+  </data>
   <data name="Calculate" xml:space="preserve">
     <value>Calculate</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Changed" xml:space="preserve">
+    <value>Changed</value>
   </data>
   <data name="ComingSoon" xml:space="preserve">
     <value>Coming soon...</value>
@@ -155,17 +161,23 @@ Developed by clan "Andromeda"</value>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DeleteAllBackups" xml:space="preserve">
+    <value>Delete all backups of all blueprints</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="GridCount" xml:space="preserve">
-    <value>Number of grids</value>
+    <value>Grids</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
   </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>This action will delete the current blueprint file, do you really want to do this?</value>
+  </data>
+  <data name="ItWillDeleteAllBackps" xml:space="preserve">
+    <value>This action will delete all backup files, do you really want to do this?</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>

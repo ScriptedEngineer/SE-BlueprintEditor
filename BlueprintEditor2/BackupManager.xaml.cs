@@ -56,12 +56,10 @@ namespace BlueprintEditor2
                 ReplaceButton.IsEnabled = false;
             }
         }
-
         private void Window_Closing(object sender, EventArgs e)
         {
             _lock.Dispose();
         }
-
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(Patch + "\\" + BackupList.SelectedItem.ToString());
@@ -71,7 +69,6 @@ namespace BlueprintEditor2
                 BackupList.Items.Add(file.Split('\\').Last());
             }
         }
-
         private void ReplaceButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(Patch + "\\" + BackupList.SelectedItem.ToString());
@@ -82,9 +79,10 @@ namespace BlueprintEditor2
                 BackupList.Items.Add(file.Split('\\').Last());
             }
         }
-
         private void RestoreButton_Click(object sender, RoutedEventArgs e)
         {
+            Hide();
+            SelectBlueprint.window.Lock.Height = SystemParameters.PrimaryScreenHeight;
             new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 
             {
                 if (Dial == DialоgResult.Yes)
@@ -92,7 +90,8 @@ namespace BlueprintEditor2
                     File.Delete(Blueprint.Patch + "\\bp.sbc");
                     File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
                     Close();
-                }
+                }else Show();
+                SelectBlueprint.window.Lock.Height = 0;
             }).Show();
         }
     }

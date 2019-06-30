@@ -21,31 +21,29 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class About : Window
     {
-        static About LastWindow;
+        static internal About LastWindow;
         private bool CloseIt = false;
         public About()
         {
-            if (LastWindow != null)
-            {
-                LastWindow.Show();
-                LastWindow.Focus();
-                CloseIt = true;
-            }
-            else LastWindow = this;
+            LastWindow = this;
             InitializeComponent();
             VersionLabel.Content = Lang.Version+": "+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e) => Process.Start(((Hyperlink)sender).NavigateUri.ToString());
 
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            if (CloseIt) Close();
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
-            if(this.Equals(LastWindow))LastWindow = null;
+            LastWindow = null;
+        }
+
+        private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            #if !DEBUG
+            if (_EasterEggs.CreatorNickname.LastWindow == null)
+                new _EasterEggs.CreatorNickname().Show();
+            else _EasterEggs.CreatorNickname.LastWindow.Focus();
+            #endif
         }
     }
 }

@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="About - SE BlueprintEditor" Height="300" Width="450" MinWidth="450" MinHeight="300" MaxWidth="450" Activated="Window_Activated" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+        Title="About - SE BlueprintEditor" Height="300" Width="450" MinWidth="450" MinHeight="300" MaxWidth="450" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Grid Background="Black">
-        <Image HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" VerticalAlignment="Bottom" Source="Resource/AndLogo.png"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="10,0,0,0" VerticalAlignment="Bottom" Source="Resource/AndLogo.png" MouseWheel="Image_MouseWheel"/>
         <Image HorizontalAlignment="Right" Height="150" Margin="0,0,10,10" VerticalAlignment="Bottom" Source="Resource/map-_1_.ico"/>
         <TextBlock Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="99" Foreground="White" Text="{x:Static res:Lang.About}"/>
         <TextBlock x:Name="LinkBox" Margin="10,0,165,100" VerticalAlignment="Bottom" Foreground="White" Height="55">
