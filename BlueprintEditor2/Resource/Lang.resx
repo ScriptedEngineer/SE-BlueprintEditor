@@ -137,9 +137,6 @@ Developed by clan "Andromeda"</value>
   <data name="BlueFolder" xml:space="preserve">
     <value>Blueprints folder</value>
   </data>
-  <data name="BlueName" xml:space="preserve">
-    <value>Blueprint Name</value>
-  </data>
   <data name="Blueprint" xml:space="preserve">
     <value>Blueprint</value>
   </data>
@@ -158,11 +155,17 @@ Developed by clan "Andromeda"</value>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="CurrentVer" xml:space="preserve">
+    <value>Current version</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Delete all backups of all blueprints</value>
+  </data>
+  <data name="DownNewVer" xml:space="preserve">
+    <value>Downloading new version</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -179,6 +182,9 @@ Developed by clan "Andromeda"</value>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>This action will delete all backup files, do you really want to do this?</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -190,10 +196,16 @@ Developed by clan "Andromeda"</value>
 Do you want set a thumbnail?</value>
   </data>
   <data name="Normalize" xml:space="preserve">
-    <value>Normalize</value>
+    <value>Normalize thumbnail (fix transparency)</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Owner</value>
+  </data>
+  <data name="PleaseWaitServers" xml:space="preserve">
+    <value>Please wait,  it's just that our servers work on potato electricity</value>
+  </data>
+  <data name="RemLater" xml:space="preserve">
+    <value>Remind me later</value>
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Replace by current</value>
@@ -204,17 +216,29 @@ Do you want set a thumbnail?</value>
   <data name="SelectBlue" xml:space="preserve">
     <value>Please select blueprint to display information</value>
   </data>
+  <data name="SelectBlueForOpen" xml:space="preserve">
+    <value>Please select blueprint to open folder</value>
+  </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Unsafe action</value>
   </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Available version</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update now (auto)</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>View blueprint folder</value>
+  </data>
+  <data name="WhatNew" xml:space="preserve">
+    <value>What's new:</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

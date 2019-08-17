@@ -1,0 +1,18 @@
+﻿<Window x:Class="BlueprintEditor2._EasterEggs.CreatorNickname"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlueprintEditor2._EasterEggs"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d"
+        Title="EasterEgg" Height="200" Width="941" Closed="Window_Closed" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Image gif:ImageBehavior.AnimatedSource="1561835613_SE.gif"/>
+
+    </Grid>
+</Window>

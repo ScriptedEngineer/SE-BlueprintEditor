@@ -117,15 +117,6 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Blueprint Name.
-        /// </summary>
-        public static string BlueName {
-            get {
-                return ResourceManager.GetString("BlueName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Blueprint.
         /// </summary>
         public static string Blueprint {
@@ -180,6 +171,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Current version.
+        /// </summary>
+        public static string CurrentVer {
+            get {
+                return ResourceManager.GetString("CurrentVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete.
         /// </summary>
         public static string Delete {
@@ -194,6 +194,15 @@ namespace BlueprintEditor2.Resource {
         public static string DeleteAllBackups {
             get {
                 return ResourceManager.GetString("DeleteAllBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Downloading new version.
+        /// </summary>
+        public static string DownNewVer {
+            get {
+                return ResourceManager.GetString("DownNewVer", resourceCulture);
             }
         }
         
@@ -243,6 +252,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No.
         /// </summary>
         public static string No {
@@ -271,7 +289,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Normalize.
+        ///   Ищет локализованную строку, похожую на Normalize thumbnail (fix transparency).
         /// </summary>
         public static string Normalize {
             get {
@@ -285,6 +303,24 @@ namespace BlueprintEditor2.Resource {
         public static string Owner {
             get {
                 return ResourceManager.GetString("Owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Please wait,  it&apos;s just that our servers work on potato electricity.
+        /// </summary>
+        public static string PleaseWaitServers {
+            get {
+                return ResourceManager.GetString("PleaseWaitServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Remind me later.
+        /// </summary>
+        public static string RemLater {
+            get {
+                return ResourceManager.GetString("RemLater", resourceCulture);
             }
         }
         
@@ -316,6 +352,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select blueprint to open folder.
+        /// </summary>
+        public static string SelectBlueForOpen {
+            get {
+                return ResourceManager.GetString("SelectBlueForOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please select item to display information.
         /// </summary>
         public static string SelectOne {
@@ -334,6 +379,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Available version.
+        /// </summary>
+        public static string UpdateAvailable {
+            get {
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Update now (auto).
+        /// </summary>
+        public static string UpdateNow {
+            get {
+                return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Version.
         /// </summary>
         public static string Version {
@@ -348,6 +411,15 @@ namespace BlueprintEditor2.Resource {
         public static string ViewFold {
             get {
                 return ResourceManager.GetString("ViewFold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на What&apos;s new:.
+        /// </summary>
+        public static string WhatNew {
+            get {
+                return ResourceManager.GetString("WhatNew", resourceCulture);
             }
         }
         

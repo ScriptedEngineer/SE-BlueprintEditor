@@ -137,9 +137,6 @@
   <data name="BlueFolder" xml:space="preserve">
     <value>Папка с чертежами</value>
   </data>
-  <data name="BlueName" xml:space="preserve">
-    <value>Название чертежа</value>
-  </data>
   <data name="Blueprint" xml:space="preserve">
     <value>Чертеж</value>
   </data>
@@ -158,11 +155,17 @@
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
+  <data name="CurrentVer" xml:space="preserve">
+    <value>Текущая версия</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Удалить все резервные копии всех чертежей</value>
+  </data>
+  <data name="DownNewVer" xml:space="preserve">
+    <value>Скачиваем новую версию</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
@@ -179,6 +182,9 @@
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>Это действие приведет к удалению всех резервных копий файлов, вы действительно хотите это сделать?</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>Нет</value>
   </data>
@@ -190,10 +196,16 @@
 Вы хотите установить миниатюру?</value>
   </data>
   <data name="Normalize" xml:space="preserve">
-    <value>Нормализовать</value>
+    <value>Нормализовать миниатюру (исправить прозрачность)</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Владелец</value>
+  </data>
+  <data name="PleaseWaitServers" xml:space="preserve">
+    <value>Пожалуйста ждите, наши сервера работают от картошки</value>
+  </data>
+  <data name="RemLater" xml:space="preserve">
+    <value>Напомнить позже</value>
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Заменить на текущий</value>
@@ -204,17 +216,29 @@
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста, выберите четреж для отображения иформации</value>
   </data>
+  <data name="SelectBlueForOpen" xml:space="preserve">
+    <value>Пожалуйста, выберите чертеж, чтобы открыть папку</value>
+  </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста, выберите предмет для отображения иформации</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Небезопастное действие</value>
   </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Доступна версия</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Обновить сейчас (автоматически)</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>Открыть папку чартежа…</value>
+  </data>
+  <data name="WhatNew" xml:space="preserve">
+    <value>Что нового:</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>

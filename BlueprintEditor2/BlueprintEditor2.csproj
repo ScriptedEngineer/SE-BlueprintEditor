@@ -7,7 +7,7 @@
     <ProjectGuid>{51809FD9-2A2D-4FA7-B10D-91808CCA854B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>BlueprintEditor2</RootNamespace>
-    <AssemblyName>SE BlueprintEditor</AssemblyName>
+    <AssemblyName>SE-BlueprintEditor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -91,6 +91,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="UpdateAvailable.xaml.cs">
+      <DependentUpon>UpdateAvailable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Updater.xaml.cs">
+      <DependentUpon>Updater.xaml</DependentUpon>
+    </Compile>
     <Compile Include="_EasterEggs\CreatorNickname.xaml.cs">
       <DependentUpon>CreatorNickname.xaml</DependentUpon>
     </Compile>
@@ -128,6 +134,14 @@
       <DependentUpon>SelectBlueprint.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UpdateAvailable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Updater.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="_EasterEggs\CreatorNickname.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

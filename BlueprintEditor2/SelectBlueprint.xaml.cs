@@ -31,20 +31,30 @@ namespace BlueprintEditor2
         internal MyXmlBlueprint CurrentBlueprint;
         public SelectBlueprint()
         {
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+            if(File.Exists("update.vbs"))File.Delete("update.vbs");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr");
             InitializeComponent();
             window = this;
             foreach (string dir in Directory.GetDirectories(BluePatch)) {
                 BlueList.Items.Add(MyListElement.fromBlueprint(dir));
             }
             BlueText.Text = Lang.SelectBlue;
+            MyExtensions.AsyncWorker(() =>
+            {
+                string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
+                if (Vers.Length == 3 && Vers[0] == "0")//0 xyzs.ru 0.000.1.028
+                {
+                    new UpdateAvailable(Vers[2], Vers[1]).Show();
+                }
+            });
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MyListElement Selected = (MyListElement)BlueList.SelectedItem;
             CurrentBlueprint = new MyXmlBlueprint(BluePatch + Selected.Elements[0]);
             BluePicture.Source = CurrentBlueprint.GetPic();
-            BlueText.Text = Lang.BlueName + ": " + Selected.Elements[1] + "\n" +
+            BlueText.Text = Lang.Blueprint + ": " + Selected.Elements[0] + "\n" +
+                Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
                 Lang.Created + ": " + Selected.Elements[2] + "\n" +
                 Lang.Changed + ": " + Selected.Elements[3] + "\n" +
                 Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n" +
@@ -68,6 +78,7 @@ namespace BlueprintEditor2
                 CurrentBlueprint.SaveBackup();
                 EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose),CurrentBlueprint);
                 Form.Show();
+                BackupButton.IsEnabled = true;
             }
             else MessageBox.Show(Lang.AlreadyOpened);
         }
@@ -76,13 +87,27 @@ namespace BlueprintEditor2
             if (CurrentBlueprint != null) BluePicture.Source = CurrentBlueprint.GetPic(true);
         }
         private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => Process.Start(BluePatch);
-        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e) => Process.Start(CurrentBlueprint.Patch);
+        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
+            else MessageBox.Show(Lang.SelectBlueForOpen);
+        }
         private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
         {
             if (About.LastWindow == null) new About().Show();
             else About.LastWindow.Focus();
         }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) => Application.Current.Shutdown();
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
+            {
+                e.Cancel = true;
+                Hide();
+                UpdateAvailable.window.Show();
+                UpdateAvailable.last_open = true;
+            }
+            else Application.Current.Shutdown();
+        }
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
