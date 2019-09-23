@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -29,6 +31,7 @@ namespace BlueprintEditor2
                 return "Error(Api unavailable)";
             }
         }
+        public static string AppFile = System.Reflection.Assembly.GetExecutingAssembly().Location;
         public static void CloseAllWindows()
         {
             for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)

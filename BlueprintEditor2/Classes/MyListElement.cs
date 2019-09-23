@@ -22,10 +22,11 @@ namespace BlueprintEditor2
                 MyListElement Elem = new MyListElement();
                 Elem.Elements = new string[5];
                 Elem.Elements[0] = Bluepath.Split('\\').Last();
-                XmlDocument BlueprintXml = new XmlDocument();
+                /*XmlDocument BlueprintXml = new XmlDocument();
                 BlueprintXml.Load(Bluepath + "\\bp.sbc");
                 Elem.Elements[1] = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
                 Elem.Elements[4] = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count.ToString();
+                */
                 FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
                 Elem.Elements[3] = Inf.LastWriteTime.ToString();
                 Elem.Elements[2] = Inf.CreationTime.ToString("dd:mm:yyyy");

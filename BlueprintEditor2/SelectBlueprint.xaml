@@ -11,30 +11,36 @@
         <ContextMenu>
             <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\img_894.png"/>
+                    <Image Source="Resource\img_894.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{x:Static res:Lang.ViewFold}" Click="SelectorMenuItemFolder2_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\img_308586.png"/>
+                    <Image Source="Resource\img_308586.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.BlueFolder}" Click="SelectorMenuItemFolder_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\img_308586.png"/>
+                    <Image Source="Resource\img_308586.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{x:Static res:Lang.DeleteAllBackups}" Click="BackupsMenuItemDelete_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\img_252744.png"/>
+                    <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
+
+            <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click">
+                <MenuItem.Icon>
+                    <Image Source="Resource\Setts.jpg" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\about.png"/>
+                    <Image Source="Resource\about.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

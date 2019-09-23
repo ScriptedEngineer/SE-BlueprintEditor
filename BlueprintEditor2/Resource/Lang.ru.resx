@@ -176,11 +176,14 @@
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
   </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Интерфейс</value>
+  </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>Это действие приведет к удалению текущего файла чертежа, вы действительно хотите это сделать?</value>
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
-    <value>Это действие приведет к удалению всех резервных копий файлов, вы действительно хотите это сделать?</value>
+    <value>Это действие приведет к удалению всех резервных копий всех чертежей, вы действительно хотите это сделать?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
@@ -200,6 +203,9 @@
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Владелец</value>
+  </data>
+  <data name="PleaseRestartApp" xml:space="preserve">
+    <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение, вы хотите перезагрузить приложение?</value>
   </data>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Пожалуйста ждите, наши сервера работают от картошки</value>
@@ -221,6 +227,12 @@
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста, выберите предмет для отображения иформации</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Система</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Небезопастное действие</value>

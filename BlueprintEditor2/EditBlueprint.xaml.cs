@@ -32,7 +32,11 @@ namespace BlueprintEditor2
             InitializeComponent();
             Title = "["+EdBlueprint.Patch.Split('\\').Last()+"] Editor - SE BlueprintEditor";
             BluePicture.Source = EdBlueprint.GetPic(false, false);
+            for(int i = 0;i < EdBlueprint.Grids.Length;i++)
+                GridList.Items.Add(EdBlueprint.Grids[i].Name);
+            //if(GridList.Items.Count > 0) GridList.SelectedIndex = 0;
             OpenCount++;
+            //Viewport3D myViewport3D = new Viewport3D();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -44,6 +48,12 @@ namespace BlueprintEditor2
                 SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight/2- SelectBlueprint.window.Height/2;
                 SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
+            if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
+        }
+
+        private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

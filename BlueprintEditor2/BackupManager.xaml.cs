@@ -26,6 +26,7 @@ namespace BlueprintEditor2
         MyXmlBlueprint Blueprint;
         public BackupManager(FileStream Lock, MyXmlBlueprint _blueprint)
         {
+            if (!MySettings.Current.MultiWindow) SelectBlueprint.window.SetLock(true, this);
             _lock = Lock;
             Blueprint = _blueprint;
             Patch = Blueprint.Patch + "\\Backups";
@@ -58,6 +59,7 @@ namespace BlueprintEditor2
         }
         private void Window_Closing(object sender, EventArgs e)
         {
+            if (!MySettings.Current.MultiWindow) SelectBlueprint.window.SetLock(false, null);
             _lock.Dispose();
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -82,7 +84,7 @@ namespace BlueprintEditor2
         private void RestoreButton_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-            SelectBlueprint.window.Lock.Height = SystemParameters.PrimaryScreenHeight;
+            SelectBlueprint.window.SetLock(true, 0);
             new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 
             {
                 if (Dial == DialоgResult.Yes)
@@ -90,8 +92,13 @@ namespace BlueprintEditor2
                     File.Delete(Blueprint.Patch + "\\bp.sbc");
                     File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
                     Close();
-                }else Show();
-                SelectBlueprint.window.Lock.Height = 0;
+                    SelectBlueprint.window.SetLock(false, null);
+                }
+                else
+                {
+                    Show();
+                    SelectBlueprint.window.SetLock(true, this);
+                }
             }).Show();
         }
     }

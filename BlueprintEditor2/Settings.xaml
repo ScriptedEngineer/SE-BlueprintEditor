@@ -1,0 +1,35 @@
+﻿<Window x:Class="BlueprintEditor2.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BlueprintEditor2"
+        xmlns:res="clr-namespace:BlueprintEditor2.Resource"
+        mc:Ignorable="d"
+        Title="Settings - SE BlueprintEditor" Height="300" Width="600" MinWidth="600" MinHeight="300" Closing="Window_Closing">
+    <Grid>
+        <TabControl>
+            <TabItem Header="{x:Static res:Lang.System}">
+                <Grid Background="#FFE5E5E5">
+                    <Rectangle Height="23" Margin="10,10,10,0" Stroke="Black" VerticalAlignment="Top"/>
+                    <TextBox x:Name="BlueprintFolderSetting" Height="23" Margin="133,10,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="BlueprintFolderSetting_TextChanged"/>
+                    <Label Content="{x:Static res:Lang.BlueFolder}" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+                    <Button Content="..." HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{x:Static res:Lang.Interface}">
+                <Grid Background="#FFE5E5E5">
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="130"/>
+                    <Rectangle HorizontalAlignment="Right" Height="22" Margin="0,10,10,0" Stroke="Black" VerticalAlignment="Top" Width="180"/>
+                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="100" SelectedIndex="1" SelectionChanged="LangSelect_SelectionChanged">
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="Русский"/>
+                    </ComboBox>
+                    <Label Content="Язык" HorizontalAlignment="Right" Margin="0,8,153,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="MultiWindowCheckBox" Content="Многооконность" HorizontalAlignment="Left" Margin="13,14,0,0" VerticalAlignment="Top" Height="16" Checked="MultiWindowCheckBox_Checked"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

@@ -176,11 +176,14 @@ Developed by clan "Andromeda"</value>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
   </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>This action will delete the current blueprint file, do you really want to do this?</value>
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
-    <value>This action will delete all backup files, do you really want to do this?</value>
+    <value>This action will delete all backup files of all blueprints, do you really want to do this?</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -200,6 +203,9 @@ Do you want set a thumbnail?</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Owner</value>
+  </data>
+  <data name="PleaseRestartApp" xml:space="preserve">
+    <value>Settings saved! For apply settings need to restart app,you want to restart the app?</value>
   </data>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Please wait,  it's just that our servers work on potato electricity</value>
@@ -221,6 +227,12 @@ Do you want set a thumbnail?</value>
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Unsafe action</value>

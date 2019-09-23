@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BlueprintEditor2"
+        xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
         Title="SE BlueprintEditor" Height="600" Width="1200" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinHeight="600" MinWidth="1200">
     <Grid>
         <Image x:Name="BluePicture" Margin="10,10,0,0" Source="Resource/blueprints-textures_00394054.jpg" HorizontalAlignment="Left" VerticalAlignment="Top" Height="120" Width="200" Stretch="UniformToFill"/>
-
+        <ListBox x:Name="GridList" HorizontalAlignment="Left" Height="398" Width="200" Margin="10,161,0,10" SelectionChanged="GridList_SelectionChanged"/>
+        <Label Content="{x:Static res:Lang.GridCount}" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="398" Margin="215,161,0,0" Stroke="Black" VerticalAlignment="Top" Width="301"/>
+        <Rectangle Fill="White" HorizontalAlignment="Left" Height="146" Margin="215,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="301"/>
     </Grid>
 </Window>

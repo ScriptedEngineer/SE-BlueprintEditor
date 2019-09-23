@@ -234,6 +234,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Interface.
+        /// </summary>
+        public static string Interface {
+            get {
+                return ResourceManager.GetString("Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на This action will delete the current blueprint file, do you really want to do this?.
         /// </summary>
         public static string ItWillDelete {
@@ -243,7 +252,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This action will delete all backup files, do you really want to do this?.
+        ///   Ищет локализованную строку, похожую на This action will delete all backup files of all blueprints, do you really want to do this?.
         /// </summary>
         public static string ItWillDeleteAllBackps {
             get {
@@ -307,6 +316,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Settings saved! For apply settings need to restart app,you want to restart the app?.
+        /// </summary>
+        public static string PleaseRestartApp {
+            get {
+                return ResourceManager.GetString("PleaseRestartApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please wait,  it&apos;s just that our servers work on potato electricity.
         /// </summary>
         public static string PleaseWaitServers {
@@ -366,6 +384,24 @@ namespace BlueprintEditor2.Resource {
         public static string SelectOne {
             get {
                 return ResourceManager.GetString("SelectOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на System.
+        /// </summary>
+        public static string System {
+            get {
+                return ResourceManager.GetString("System", resourceCulture);
             }
         }
         
