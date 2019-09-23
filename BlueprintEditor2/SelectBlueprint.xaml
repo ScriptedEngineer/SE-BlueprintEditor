@@ -46,27 +46,59 @@
         </ContextMenu>
     </Window.ContextMenu>
     <Grid>
-        <Rectangle Fill="Black" Margin="591,10,10,284" Stroke="Black"/>
+        <Rectangle Fill="Black" Margin="591,26,10,268" Stroke="Black"/>
 
-        <Image x:Name="BluePicture" Margin="591,10,10,284" Source="Resource/blueprints-textures_00394054.jpg"/>
+        <Image x:Name="BluePicture" Margin="591,26,10,268" Source="Resource/blueprints-textures_00394054.jpg"/>
 
-        <TextBlock x:Name="BlueText" Margin="591,0,10,35" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="244"/>
+        <TextBlock x:Name="BlueText" Text="{x:Static res:Lang.SelectBlue}" Margin="591,0,10,56" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="207"/>
         <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click"/>
         <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click">
         </Button>
         <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click"/>
-        <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,10,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576">
+        <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,26,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[0]}" Header="{x:Static res:Lang.Blueprint}" Width="160"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[1]}" Header="{x:Static res:Lang.Owner}" Width="120"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[4]}" Header="{x:Static res:Lang.BlockCount}" Width="50"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[2]}" Header="{x:Static res:Lang.Created}" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Elements[3]}" Header="{x:Static res:Lang.Changed}" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Header="{x:Static res:Lang.GridCount}" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Header="{x:Static res:Lang.BlockCount}" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Header="{x:Static res:Lang.Created}" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastEditTimeText}" Header="{x:Static res:Lang.Changed}" Width="80"/>
                 </GridView>
             </ListView.View>
         </ListView>
         <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.2" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown"/>
+        <Menu Height="21" VerticalAlignment="Top" Width="912">
+            <MenuItem Header="{x:Static res:Lang.Menu}">
+                <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_894.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{x:Static res:Lang.ViewFold}" Click="SelectorMenuItemFolder2_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_308586.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.BlueFolder}" Click="SelectorMenuItemFolder_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_308586.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{x:Static res:Lang.DeleteAllBackups}" Click="BackupsMenuItemDelete_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="FoldersItem" Header="{x:Static res:Lang.Directories}">
 
+            </MenuItem>
+            <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click"/>
+            <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click"/>
+
+        </Menu>
     </Grid>
 </Window>

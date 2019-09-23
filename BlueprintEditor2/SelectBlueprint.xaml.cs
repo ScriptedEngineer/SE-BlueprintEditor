@@ -28,6 +28,7 @@ namespace BlueprintEditor2
     {
         public static SelectBlueprint window;
         internal MyXmlBlueprint CurrentBlueprint;
+        string currentBluePatch;
         public SelectBlueprint()
         {
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
@@ -35,50 +36,47 @@ namespace BlueprintEditor2
             MySettings.Current.ApplySettings();
             InitializeComponent();
             window = this;
-            BlueText.Text = Lang.SelectBlue;
-            
-            MyExtensions.AsyncWorker(() =>
-            {
-                foreach (string dir in Directory.GetDirectories(MySettings.Current.BlueprintPatch))
-                {
-                    MyListElement Elem = MyListElement.fromBlueprint(dir);
-                    if(Elem != null) BlueList.Items.Add(Elem);
-                }
-                
-            });
-            
-            MyExtensions.AsyncWorker(() =>
+            currentBluePatch = MySettings.Current.BlueprintPatch;
+            InitBlueprints();
+            new Task(() =>
             {
                 string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
                 if (Vers.Length == 3 && Vers[0] == "0")
                 {
-                    new UpdateAvailable(Vers[2], Vers[1]).Show();
+                    MyExtensions.AsyncWorker(()=> new UpdateAvailable(Vers[2], Vers[1]).Show());
                 }
-            });
+            }).Start();
+            
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MyListElement Selected = (MyListElement)BlueList.SelectedItem;
-            CurrentBlueprint = new MyXmlBlueprint(MySettings.Current.BlueprintPatch + Selected.Elements[0]);
-            BluePicture.Source = CurrentBlueprint.GetPic();
-            int BlockCount = 0;
-            foreach(MyXmlGrid Grd in CurrentBlueprint.Grids)
+            MyDisplayBlueprint Selected = (MyDisplayBlueprint)BlueList.SelectedItem;
+            if (Selected != null)
             {
-                BlockCount += Grd.Blocks.Length;
+                CurrentBlueprint = new MyXmlBlueprint(currentBluePatch + Selected.Name);
+                BluePicture.Source = CurrentBlueprint.GetPic();
+                BlueText.Text = Lang.Blueprint + ": " + Selected.Name + "\n" +
+                    Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
+                    Lang.Created + ": " + Selected.CreationTimeText + "\n" +
+                    Lang.Changed + ": " + Selected.LastEditTimeText + "\n" +
+                    Lang.GridCount + ": " + Selected.GridCountText + "\n" +
+                    Lang.BlockCount + ": " + Selected.BlockCountText + "\n" +
+                    Lang.Owner + ": " + Selected.Owner + "(" + CurrentBlueprint.Owner + ")\n";
+                CalculateButton.IsEnabled = true;
+                EditButton.IsEnabled = true;
+                BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
+                foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*", SearchOption.TopDirectoryOnly))
+                {
+                    if (Path.GetFileName(file) != "bp.sbc") File.Delete(file);
+                }
             }
-            BlueText.Text = Lang.Blueprint + ": " + Selected.Elements[0] + "\n" +
-                Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
-                Lang.Created + ": " + Selected.Elements[2] + "\n" +
-                Lang.Changed + ": " + Selected.Elements[3] + "\n" +
-                Lang.GridCount + ": " + CurrentBlueprint.Grids.Length + "\n" +
-                Lang.BlockCount + ": " + BlockCount + "\n" +
-                Lang.Owner + ": " + CurrentBlueprint.DisplayName + "(" + CurrentBlueprint.Owner + ")\n";
-            CalculateButton.IsEnabled = true;
-            EditButton.IsEnabled = true;
-            BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
-            foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*", SearchOption.TopDirectoryOnly))
-            {
-                if (Path.GetFileName(file) != "bp.sbc") File.Delete(file);
+            else
+            { 
+                BluePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
+                BlueText.Text = Lang.SelectBlue;
+                CalculateButton.IsEnabled = false;
+                EditButton.IsEnabled = false;
+                BackupButton.IsEnabled = false;
             }
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
@@ -155,7 +153,7 @@ namespace BlueprintEditor2
             {
                 if (Dial == DialоgResult.Yes)
                 {
-                    foreach (string dir in Directory.GetDirectories(MySettings.Current.BlueprintPatch))
+                    foreach (string dir in Directory.GetDirectories(currentBluePatch))
                     {
                         if (Directory.Exists(dir + "\\Backups")) Directory.Delete(dir + "\\Backups", true);
                     }
@@ -177,7 +175,6 @@ namespace BlueprintEditor2
                     break;
             }
         }
-
         public void SetLock(bool lockly, object DataContext)
         {
             if (lockly)
@@ -191,11 +188,71 @@ namespace BlueprintEditor2
                 Lock.DataContext = null;
             }
         }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (Settings.LastWindow == null) new Settings().Show();
             else Settings.LastWindow.Focus();
         }
+
+        private void MenuFolderItem_Click(object sender, RoutedEventArgs e)
+        {
+            currentBluePatch += ((MenuItem)sender).Header + "\\";
+            InitBlueprints();
+        }
+        private void MenuBackItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+            currentBluePatch = Path.GetDirectoryName(currentBluePatch.TrimEnd('\\')) + "\\";
+            InitBlueprints();
+        }
+        void InitBlueprints()
+        {  
+            FoldersItem.Items.Clear();
+            BlueList.Items.Clear();
+            if (currentBluePatch != MySettings.Current.BlueprintPatch)
+            {
+                MenuItem Fldr = new MenuItem();
+                Fldr.Header = Lang.GoBack;
+                Fldr.Icon = new Image
+                {
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_354138.png"))
+                };
+                Fldr.Click += MenuBackItem_Click;
+                FoldersItem.Items.Add(Fldr);
+                FoldersItem.Items.Add(new Separator());
+            }else FoldersItem.IsEnabled = false;
+            object sync = new object();
+            BitmapImage fldicn = new BitmapImage(new Uri("pack://application:,,,/Resource/img_308586.png"));
+            Parallel.ForEach(Directory.GetDirectories(currentBluePatch), x =>
+            {
+
+                MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
+                if (Elem is null)
+                {
+                    lock (sync)
+                    {
+                        MyExtensions.AsyncWorker(() =>
+                        {
+                            FoldersItem.IsEnabled = true;
+                            MenuItem Fldr = new MenuItem();
+                            Fldr.Header = Path.GetFileNameWithoutExtension(x);
+                            Fldr.Icon = new Image
+                            {
+                                Source = fldicn
+                            };
+                            Fldr.Click += MenuFolderItem_Click;
+                            FoldersItem.Items.Add(Fldr);
+                        });
+                    }
+                    return;
+                }
+                lock (sync)
+                {
+                    MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
+                }
+            });
+        }
+
+
     }
 }

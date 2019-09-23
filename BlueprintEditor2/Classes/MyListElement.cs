@@ -8,28 +8,38 @@ using System.Xml;
 
 namespace BlueprintEditor2
 {
-    class MyListElement
+    class MyDisplayBlueprint
     {
-        public string[] Elements { get; private set; }
-        private MyListElement()
-        {
+        //public string[] Elements { get; private set; }
+        public string Name { get; private set; }
+        public string Owner { get; private set; }
+        internal DateTime CreationTime;
+        public string CreationTimeText => CreationTime.ToString("d");
+        internal DateTime LastEditTime;
+        public string LastEditTimeText => LastEditTime.ToString("d");
+        internal int BlockCount;
+        public string BlockCountText => BlockCount.ToString();
+        internal int GridCount;
+        public string GridCountText => GridCount.ToString();
 
+        private MyDisplayBlueprint()
+        {
+            
         }
-        static public MyListElement fromBlueprint(string Bluepath)
+        static public MyDisplayBlueprint fromBlueprint(string Bluepath)
         {
             if (File.Exists(Bluepath + "\\bp.sbc"))
             {
-                MyListElement Elem = new MyListElement();
-                Elem.Elements = new string[5];
-                Elem.Elements[0] = Bluepath.Split('\\').Last();
-                /*XmlDocument BlueprintXml = new XmlDocument();
+                MyDisplayBlueprint Elem = new MyDisplayBlueprint();
+                Elem.Name = Bluepath.Split('\\').Last();
+                XmlDocument BlueprintXml = new XmlDocument();
                 BlueprintXml.Load(Bluepath + "\\bp.sbc");
-                Elem.Elements[1] = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
-                Elem.Elements[4] = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count.ToString();
-                */
+                Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
+                Elem.BlockCount = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count;
+                Elem.GridCount = BlueprintXml.GetElementsByTagName("CubeGrid").Count;
                 FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
-                Elem.Elements[3] = Inf.LastWriteTime.ToString();
-                Elem.Elements[2] = Inf.CreationTime.ToString("dd:mm:yyyy");
+                Elem.LastEditTime = Inf.LastWriteTime;
+                Elem.CreationTime = Inf.CreationTime;
                 return Elem;
             }
             return null;

@@ -87,7 +87,7 @@ namespace BlueprintEditor2
                     SelectBlueprint.window.Lock.Height = SystemParameters.PrimaryScreenHeight;
                     MyExtensions.AsyncWorker(() =>
                     {
-                        new Dialog(DialogPicture.question, Lang.NoPic, Lang.NoPicture, (Dial) =>
+                        new Dialog(DialogPicture.question, Lang.NoPic+" ["+ Name+"]", Lang.NoPicture, (Dial) =>
                             {
                                 switch (Dial)
                                 {
@@ -113,7 +113,7 @@ namespace BlueprintEditor2
                                         SelectBlueprint.window.Lock.Height = 0;
                                         break;
                                 }
-                            }).Show();
+                            },true).Show();
                     });
                 }
                 return new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));

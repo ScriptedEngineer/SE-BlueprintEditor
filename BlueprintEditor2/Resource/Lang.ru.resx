@@ -119,7 +119,7 @@
   </resheader>
   <data name="About" xml:space="preserve">
     <value>SE Blueprint Editor - программа для редактирования чертежей игры "Space Engineers" вне игры
-Данная программа позволяет быстро изенить необходимые части чертежей(блоки, их настройки и прочее), не запуская игру.
+Данная программа позволяет быстро изменить необходимые части чертежей(блоки, их настройки и прочее), не запуская игру.
 Разработано кланом "Андромеда"</value>
   </data>
   <data name="AboutProg" xml:space="preserve">
@@ -164,11 +164,17 @@
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Удалить все резервные копии всех чертежей</value>
   </data>
+  <data name="Directories" xml:space="preserve">
+    <value>Папки</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Скачиваем новую версию</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Назад</value>
   </data>
   <data name="GridCount" xml:space="preserve">
     <value>Сетки</value>
@@ -184,6 +190,15 @@
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>Это действие приведет к удалению всех резервных копий всех чертежей, вы действительно хотите это сделать?</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Меню</value>
+  </data>
+  <data name="MultiWindow" xml:space="preserve">
+    <value>Многооконность</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Название</value>
@@ -202,10 +217,10 @@
     <value>Нормализовать миниатюру (исправить прозрачность)</value>
   </data>
   <data name="Owner" xml:space="preserve">
-    <value>Владелец</value>
+    <value>Автор</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
-    <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение, вы хотите перезагрузить приложение?</value>
+    <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение. вы хотите перезагрузить приложение сейчас?</value>
   </data>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Пожалуйста ждите, наши сервера работают от картошки</value>
@@ -220,7 +235,7 @@
     <value>Восстановить</value>
   </data>
   <data name="SelectBlue" xml:space="preserve">
-    <value>Пожалуйста, выберите четреж для отображения иформации</value>
+    <value>Пожалуйста, выберите четреж для отображения информации</value>
   </data>
   <data name="SelectBlueForOpen" xml:space="preserve">
     <value>Пожалуйста, выберите чертеж, чтобы открыть папку</value>

@@ -23,14 +23,17 @@ namespace BlueprintEditor2
     public partial class Settings : Window
     {
         static internal Settings LastWindow;
-        readonly int[] Langs = new int[] {9, 1049}; 
+        readonly int[] Langs = new int[] {9, 1049};
+        bool hasChanged = false;
         public Settings()
         {
+            int _indexLCID = Array.IndexOf(Langs, MySettings.Current.LCID);
             InitializeComponent();
             LastWindow = this;
             BlueprintFolderSetting.Text = MySettings.Current.BlueprintPatch;
-            LangSelect.SelectedIndex = Array.IndexOf(Langs, MySettings.Current.LCID);
+            LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
+            hasChanged = false;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -40,31 +43,40 @@ namespace BlueprintEditor2
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MySettings.Serialize();
-            SelectBlueprint.window.SetLock(true, 0);
-            new Dialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
+            if (hasChanged)
             {
-                if (Dial == DialоgResult.Yes)
+                MySettings.Serialize();
+                SelectBlueprint.window.SetLock(true, 0);
+                new Dialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
                 {
-                    Process.Start(MyExtensions.AppFile);
-                    Application.Current.Shutdown();
-                }
-                else
-                {
-                    SelectBlueprint.window.SetLock(false, null);
-                    LastWindow = null;
-                }
-            }).Show();
+                    if (Dial == DialоgResult.Yes)
+                    {
+                        Process.Start(MyExtensions.AppFile);
+                        Application.Current.Shutdown();
+                    }
+                    else
+                    {
+                        SelectBlueprint.window.SetLock(false, null);
+                        LastWindow = null;
+                    }
+                }).Show();
+            }
+            else
+            {
+                LastWindow = null;
+            }
         }
 
-        private void MultiWindowCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void MultiWindowCheckBox_Click(object sender, RoutedEventArgs e)
         {
             MySettings.Current.MultiWindow = MultiWindowCheckBox.IsChecked.Value;
+            hasChanged = true;
         }
 
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MySettings.Current.LCID = Langs[LangSelect.SelectedIndex];
+            hasChanged = true;
         }
 
         private void BlueprintFolderSetting_TextChanged(object sender, TextChangedEventArgs e)
@@ -72,6 +84,7 @@ namespace BlueprintEditor2
             if (Directory.Exists(BlueprintFolderSetting.Text))
             {
                 MySettings.Current.BlueprintPatch = BlueprintFolderSetting.Text;
+                hasChanged = true;
             }
         }
 
@@ -82,7 +95,11 @@ namespace BlueprintEditor2
                 dialog.SelectedPath = BlueprintFolderSetting.Text;
                 dialog.ShowNewFolderButton = false;
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                if(result.Equals(System.Windows.Forms.DialogResult.OK)) BlueprintFolderSetting.Text = dialog.SelectedPath+"\\";
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    BlueprintFolderSetting.Text = dialog.SelectedPath + "\\";
+                    hasChanged = true;
+                }
             }
         }
     }

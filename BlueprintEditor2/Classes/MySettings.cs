@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace BlueprintEditor2
 {
+    [DataContract(Name = "SE_BlueprintEditor2_Settings")]
     public class MySettings
     {
+        private const string FILE_PATH = "settings.xml";
+
         public static MySettings Current = new MySettings();
+        [DataMember(Name = "BlueprintMainFolder")]
         public string BlueprintPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Blueprints\local\";
+        [DataMember(Name = "UseMultipleWindows")]
         public bool MultiWindow = false;
+        [DataMember(Name = "LangCultureID")]
         public int LCID;
         MySettings()
         {
@@ -26,20 +34,21 @@ namespace BlueprintEditor2
         }
         public static void Serialize()
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
-            using (FileStream fs = new FileStream("settings.xml", FileMode.OpenOrCreate))
+            DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+            //new StreamWriter("settings.xml")
+            using (Stream fs = new FileStream(FILE_PATH, FileMode.Create))
             {
-                formatter.Serialize(fs, Current);
+                formatter.WriteObject(fs, Current);
             }
         }
         public static void Deserialize()
         {
             if (File.Exists("settings.xml"))
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
-                using (FileStream fs = new FileStream("settings.xml", FileMode.Open))
+                DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+                using (Stream fs = new FileStream(FILE_PATH, FileMode.Open))
                 {
-                    Current = (MySettings)formatter.Deserialize(fs);
+                    Current = (MySettings)formatter.ReadObject(fs);
                 }
             }
         }

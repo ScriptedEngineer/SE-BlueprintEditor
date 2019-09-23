@@ -19,7 +19,7 @@ namespace BlueprintEditor2.Resource {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Lang {
@@ -198,6 +198,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Directories.
+        /// </summary>
+        public static string Directories {
+            get {
+                return ResourceManager.GetString("Directories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Downloading new version.
         /// </summary>
         public static string DownNewVer {
@@ -212,6 +221,15 @@ namespace BlueprintEditor2.Resource {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Back.
+        /// </summary>
+        public static string GoBack {
+            get {
+                return ResourceManager.GetString("GoBack", resourceCulture);
             }
         }
         
@@ -257,6 +275,33 @@ namespace BlueprintEditor2.Resource {
         public static string ItWillDeleteAllBackps {
             get {
                 return ResourceManager.GetString("ItWillDeleteAllBackps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Menu.
+        /// </summary>
+        public static string Menu {
+            get {
+                return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Multi-Window.
+        /// </summary>
+        public static string MultiWindow {
+            get {
+                return ResourceManager.GetString("MultiWindow", resourceCulture);
             }
         }
         
@@ -307,7 +352,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Owner.
+        ///   Ищет локализованную строку, похожую на Author.
         /// </summary>
         public static string Owner {
             get {

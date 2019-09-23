@@ -164,11 +164,17 @@ Developed by clan "Andromeda"</value>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Delete all backups of all blueprints</value>
   </data>
+  <data name="Directories" xml:space="preserve">
+    <value>Directories</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Downloading new version</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Back</value>
   </data>
   <data name="GridCount" xml:space="preserve">
     <value>Grids</value>
@@ -184,6 +190,15 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>This action will delete all backup files of all blueprints, do you really want to do this?</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MultiWindow" xml:space="preserve">
+    <value>Multi-Window</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -202,7 +217,7 @@ Do you want set a thumbnail?</value>
     <value>Normalize thumbnail (fix transparency)</value>
   </data>
   <data name="Owner" xml:space="preserve">
-    <value>Owner</value>
+    <value>Author</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Settings saved! For apply settings need to restart app,you want to restart the app?</value>

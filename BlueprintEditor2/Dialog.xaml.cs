@@ -21,7 +21,7 @@ namespace BlueprintEditor2
     {
         private Action<DialоgResult> OnClick;
         internal static Dialog Last;
-        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, int _Width = 300, int _Height = 200)
+        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, bool Cancelable = false, int _Width = 300, int _Height = 200)
         {
             OnClick = _Run;
             InitializeComponent();
@@ -40,6 +40,12 @@ namespace BlueprintEditor2
                 case DialogPicture.question:
                     DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/question.png"));
                     break;
+            }
+            if (!Cancelable)
+            {
+                CancelButton.Visibility = Visibility.Hidden;
+                YesButton.Margin = new Thickness(0, 0, 90, 10);
+                NoButton.Margin = new Thickness(0, 0, 10, 10);
             }
             Last = this;
         }

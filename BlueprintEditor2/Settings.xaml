@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="Settings - SE BlueprintEditor" Height="300" Width="600" MinWidth="600" MinHeight="300" Closing="Window_Closing">
+        Title="Settings - SE BlueprintEditor" Height="300" Width="600" MinWidth="600" MinHeight="300" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="{x:Static res:Lang.System}">
@@ -25,8 +25,8 @@
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Русский"/>
                     </ComboBox>
-                    <Label Content="Язык" HorizontalAlignment="Right" Margin="0,8,153,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="MultiWindowCheckBox" Content="Многооконность" HorizontalAlignment="Left" Margin="13,14,0,0" VerticalAlignment="Top" Height="16" Checked="MultiWindowCheckBox_Checked"/>
+                    <Label Content="{x:Static res:Lang.Language}" HorizontalAlignment="Right" Margin="0,8,110,0" VerticalAlignment="Top" Width="80"/>
+                    <CheckBox x:Name="MultiWindowCheckBox" Content="{x:Static res:Lang.MultiWindow}" HorizontalAlignment="Left" Margin="13,14,0,0" VerticalAlignment="Top" Height="16" Click="MultiWindowCheckBox_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
