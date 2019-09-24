@@ -108,6 +108,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Block type.
+        /// </summary>
+        public static string BlockType {
+            get {
+                return ResourceManager.GetString("BlockType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Blueprints folder.
         /// </summary>
         public static string BlueFolder {
@@ -230,6 +239,15 @@ namespace BlueprintEditor2.Resource {
         public static string GoBack {
             get {
                 return ResourceManager.GetString("GoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Home.
+        /// </summary>
+        public static string GoHome {
+            get {
+                return ResourceManager.GetString("GoHome", resourceCulture);
             }
         }
         
@@ -451,11 +469,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на System.
+        /// </summary>
+        public static string SystemLang {
+            get {
+                return ResourceManager.GetString("SystemLang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Unsafe action.
         /// </summary>
         public static string UnsafeAction {
             get {
                 return ResourceManager.GetString("UnsafeAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         

@@ -39,11 +39,6 @@ namespace BlueprintEditor2
 
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            #if !DEBUG
-            if (_EasterEggs.CreatorNickname.LastWindow == null)
-                new _EasterEggs.CreatorNickname().Show();
-            else _EasterEggs.CreatorNickname.LastWindow.Focus();
-            #endif
         }
     }
 }

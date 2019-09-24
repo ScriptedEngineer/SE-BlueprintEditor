@@ -74,6 +74,7 @@ namespace BlueprintEditor2
             else
             {
                 if (BlueList.SelectedIndex != -1) BlueList.Items.Remove(BlueList.SelectedItem);
+                CurrentBlueprint = null;
                 BluePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
                 BlueText.Text = Lang.SelectBlue;
                 CalculateButton.IsEnabled = false;
@@ -99,7 +100,8 @@ namespace BlueprintEditor2
         {
             if (CurrentBlueprint != null) BluePicture.Source = CurrentBlueprint.GetPic(true);
         }
-        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => Process.Start(MySettings.Current.BlueprintPatch);
+        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => 
+            Process.Start(MySettings.Current.BlueprintPatch);
         private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
@@ -112,15 +114,22 @@ namespace BlueprintEditor2
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MySettings.Serialize();
-            if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
+            try
             {
-                e.Cancel = true;
-                Hide();
-                UpdateAvailable.window.Show();
-                UpdateAvailable.last_open = true;
+                MySettings.Serialize();
+                if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
+                {
+                    e.Cancel = true;
+                    Hide();
+                    UpdateAvailable.window.Show();
+                    UpdateAvailable.last_open = true;
+                }
+                else Application.Current.Shutdown();
             }
-            else Application.Current.Shutdown();
+            catch
+            {
+
+            }
         }
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
@@ -134,7 +143,7 @@ namespace BlueprintEditor2
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             new Dialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
-            /*if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
+            if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
                 Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
                 Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
@@ -144,7 +153,7 @@ namespace BlueprintEditor2
                 Form.Top = Top;
                 Form.Height = Height;
             }
-            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();*/
+            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
         }
         private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -214,11 +223,14 @@ namespace BlueprintEditor2
             currentBluePatch = Path.GetDirectoryName(currentBluePatch.TrimEnd('\\')) + "\\";
             InitBlueprints();
         }
+        private void MenuHomeItem_Click(object sender, RoutedEventArgs e)
+        {
+            currentBluePatch = MySettings.Current.BlueprintPatch;
+            InitBlueprints();
+        }
         private void InitBlueprints()
         {
             Title = "SE BlueprintEditor Loading...";
-            Lock.Height = SystemParameters.PrimaryScreenHeight;
-            Lock.DataContext = 1;
             FoldersItem.Items.Clear();
             BlueList.Items.Clear();
             if (currentBluePatch != MySettings.Current.BlueprintPatch)
@@ -231,59 +243,56 @@ namespace BlueprintEditor2
                 };
                 Fldr.Click += MenuBackItem_Click;
                 FoldersItem.Items.Add(Fldr);
-                FoldersItem.Items.Add(new Separator());
+                MenuItem Fldr2 = new MenuItem();
+                Fldr2.Header = Lang.GoHome;
+                Fldr2.Icon = new Image
+                {
+                    Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_144440.png"))
+                };
+                Fldr2.Click += MenuHomeItem_Click;
+                FoldersItem.Items.Add(Fldr2);
             }
             else FoldersItem.IsEnabled = false;
-            object sync = new object();
             BitmapImage fldicn = new BitmapImage(new Uri("pack://application:,,,/Resource/img_308586.png"));
-            List<MenuItem> Folders = new List<MenuItem>();
             new Task(() =>
             {
-                ParallelLoopResult status = Parallel.ForEach(Directory.GetDirectories(currentBluePatch), x =>
+                bool First = true;
+                ParallelLoopResult status = Parallel.ForEach(Directory.GetDirectories(currentBluePatch).OrderBy(x => Path.GetFileName(x)), x =>
                 {
 
                     MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
                     if (Elem is null)
                     {
-                        lock (sync)
+                        MyExtensions.AsyncWorker(() =>
                         {
-                            MyExtensions.AsyncWorker(() =>
+                            if (First && FoldersItem.IsEnabled)
                             {
-                                FoldersItem.IsEnabled = true;
-                                MenuItem Fldr = new MenuItem();
-                                Fldr.Header = Path.GetFileNameWithoutExtension(x);
-                                Fldr.Icon = new Image
-                                {
-                                    Source = fldicn
-                                };
-                                Fldr.Click += MenuFolderItem_Click;
-                                Folders.Add(Fldr);
-                            });
-                        }
+                                FoldersItem.Items.Add(new Separator());
+                            }
+                            First = false;
+                            FoldersItem.IsEnabled = true;
+                            MenuItem Fldr = new MenuItem();
+                            Fldr.Header = Path.GetFileNameWithoutExtension(x);
+                            Fldr.Icon = new Image
+                            {
+                                Source = fldicn
+                            };
+                            Fldr.Click += MenuFolderItem_Click;
+                            FoldersItem.Items.Add(Fldr);
+                        });
                         return;
                     }
-                    lock (sync)
-                    {
-                        MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
-                    }
+                    MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
                 });
                 new Task(() =>
                 {
                     while (!status.IsCompleted) { }
-                    lock (sync)
+                    MyExtensions.AsyncWorker(() =>
                     {
-                        MyExtensions.AsyncWorker(() =>
-                        {
-                            foreach (MenuItem fldrs in Folders.OrderBy(x => x.Header))
-                            {
-                                FoldersItem.Items.Add(fldrs);
-                            }
-                            BlueList.Items.SortDescriptions.Clear();
-                            BlueList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                            Title = "SE BlueprintEditor";
-                            Lock.Height = 0;
-                        });
-                    }
+                        BlueList.Items.SortDescriptions.Clear();
+                        BlueList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                        Title = "SE BlueprintEditor";
+                    });
                 }).Start();
             }).Start();
         }
@@ -297,6 +306,9 @@ namespace BlueprintEditor2
             BlueList.Items.SortDescriptions.Clear();
             BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
         }
-
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            InitBlueprints();
+        }
     }
 }

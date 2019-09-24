@@ -14,6 +14,12 @@
     </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
+            <MenuItem Header="{x:Static res:Lang.Update}" Click="MenuItem_Click_1">
+                <MenuItem.Icon>
+                    <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator/>
             <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
                 <MenuItem.Icon>
                     <Image Source="Resource\img_894.png" Width="16" Height="16"/>
@@ -63,8 +69,8 @@
         <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,26,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="160"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="130"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Header="{x:Static res:Lang.GridCount}" Width="50"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Header="{x:Static res:Lang.BlockCount}" Width="50"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Header="{x:Static res:Lang.Created}" Width="80"/>
@@ -72,8 +78,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Menu Height="21" VerticalAlignment="Top" Width="912">
+        <Menu Height="21" VerticalAlignment="Top">
             <MenuItem Header="{x:Static res:Lang.Menu}">
+                <MenuItem Header="{x:Static res:Lang.Update}" Click="MenuItem_Click_1">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
                 <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_894.png" Width="16" Height="16"/>

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.IO;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace BlueprintEditor2
 {
@@ -52,6 +53,25 @@ namespace BlueprintEditor2
         }
 
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BlockList.Items.Clear();
+            MyXmlBlock[] TheBlocks = EdBlueprint.Grids[GridList.SelectedIndex].Blocks;
+            for (int i = 0; i < TheBlocks.Length; i++)
+                BlockList.Items.Add(TheBlocks[i]);
+            BlockList.Items.SortDescriptions.Clear();
+            BlockList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+        }
+        private void GoSort(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader SortBy = (GridViewColumnHeader)sender;
+            string PropertyPatch = ((Binding)SortBy.Column.DisplayMemberBinding).Path.Path.Replace("Text", "");
+            ListSortDirection OldDirection = ListSortDirection.Descending;
+            if (BlockList.Items.SortDescriptions[0].PropertyName == PropertyPatch) OldDirection = BlockList.Items.SortDescriptions[0].Direction;
+            ListSortDirection NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            BlockList.Items.SortDescriptions.Clear();
+            BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
+        }
+        private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
 
         }

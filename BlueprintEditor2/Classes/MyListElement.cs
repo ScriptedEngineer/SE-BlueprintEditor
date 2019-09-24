@@ -24,7 +24,7 @@ namespace BlueprintEditor2
 
         private MyDisplayBlueprint()
         {
-            
+
         }
         static public MyDisplayBlueprint fromBlueprint(string Bluepath)
         {
@@ -32,14 +32,16 @@ namespace BlueprintEditor2
             {
                 MyDisplayBlueprint Elem = new MyDisplayBlueprint();
                 Elem.Name = Bluepath.Split('\\').Last();
+                FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
+                Elem.LastEditTime = Inf.LastWriteTime;
+                Elem.CreationTime = Inf.CreationTime;
+
                 XmlDocument BlueprintXml = new XmlDocument();
                 BlueprintXml.Load(Bluepath + "\\bp.sbc");
                 Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
                 Elem.BlockCount = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count;
                 Elem.GridCount = BlueprintXml.GetElementsByTagName("CubeGrid").Count;
-                FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
-                Elem.LastEditTime = Inf.LastWriteTime;
-                Elem.CreationTime = Inf.CreationTime;
+
                 return Elem;
             }
             return null;

@@ -134,6 +134,9 @@
   <data name="BlockCount" xml:space="preserve">
     <value>Блоки</value>
   </data>
+  <data name="BlockType" xml:space="preserve">
+    <value>Тип блока</value>
+  </data>
   <data name="BlueFolder" xml:space="preserve">
     <value>Папка с чертежами</value>
   </data>
@@ -175,6 +178,9 @@
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Назад</value>
+  </data>
+  <data name="GoHome" xml:space="preserve">
+    <value>Домой</value>
   </data>
   <data name="GridCount" xml:space="preserve">
     <value>Сетки</value>
@@ -241,7 +247,7 @@
     <value>Пожалуйста, выберите чертеж, чтобы открыть папку</value>
   </data>
   <data name="SelectOne" xml:space="preserve">
-    <value>Пожалуйста, выберите предмет для отображения иформации</value>
+    <value>Пожалуйста, выберите предмет для отображения информации</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
@@ -249,8 +255,14 @@
   <data name="System" xml:space="preserve">
     <value>Система</value>
   </data>
+  <data name="SystemLang" xml:space="preserve">
+    <value>Системный</value>
+  </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Небезопастное действие</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Обновить</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Доступна версия</value>

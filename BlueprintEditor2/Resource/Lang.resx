@@ -134,6 +134,9 @@ Developed by clan "Andromeda"</value>
   <data name="BlockCount" xml:space="preserve">
     <value>Blocks</value>
   </data>
+  <data name="BlockType" xml:space="preserve">
+    <value>Block type</value>
+  </data>
   <data name="BlueFolder" xml:space="preserve">
     <value>Blueprints folder</value>
   </data>
@@ -175,6 +178,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="GoHome" xml:space="preserve">
+    <value>Home</value>
   </data>
   <data name="GridCount" xml:space="preserve">
     <value>Grids</value>
@@ -249,8 +255,14 @@ Do you want set a thumbnail?</value>
   <data name="System" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="SystemLang" xml:space="preserve">
+    <value>System</value>
+  </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Unsafe action</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Available version</value>

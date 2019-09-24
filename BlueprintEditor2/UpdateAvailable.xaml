@@ -12,7 +12,7 @@
         <Label x:Name="CurrentVer" Content="{x:Static res:Lang.CurrentVer}" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <TextBox x:Name="UpdLog" Margin="10,62,10,41" TextWrapping="Wrap" IsReadOnlyCaretVisible="True" TextChanged="UpdLog_TextChanged"/>
         <Label Content="{x:Static res:Lang.WhatNew}" Margin="10,36,0,0" VerticalAlignment="Top"/>
-        <Button Content="{x:Static res:Lang.UpdateNow}" Width="219" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="Button_Click_1"/>
-        <Button Content="{x:Static res:Lang.RemLater}" HorizontalAlignment="Right" Margin="0,0,234,10" VerticalAlignment="Bottom" Width="133" Click="Button_Click"/>
+        <Button Content="{x:Static res:Lang.UpdateNow}" Width="219" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="Button_Click_1" HorizontalAlignment="Right"/>
+        <Button Content="{x:Static res:Lang.RemLater}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="135" Click="Button_Click"/>
     </Grid>
 </Window>

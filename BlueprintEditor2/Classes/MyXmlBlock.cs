@@ -13,7 +13,7 @@ namespace BlueprintEditor2
         private readonly XmlNode _NameNode;
         private readonly XmlNode _SubTypeNode;
 
-        internal string Type
+        public string Type
         {
             get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value + "/" + _SubTypeNode.InnerText;
             set
@@ -25,8 +25,12 @@ namespace BlueprintEditor2
                 _SubTypeNode.InnerText = types[1];
             }
         }
+        public string DisplayType
+        {
+            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_","") + "/" + _SubTypeNode.InnerText;
+        }
 
-        internal string Name { get => _NameNode.InnerText; set => _NameNode.InnerText = value; }
+        public string Name { get => _NameNode?.InnerText; set { if (_NameNode != null) _NameNode.InnerText = value; } }
 
         internal MyXmlBlock(XmlNode block)
         {
