@@ -18,6 +18,7 @@ using System.Threading;
 using BlueprintEditor2.Resource;
 using System.Diagnostics;
 using Path = System.IO.Path;
+using System.ComponentModel;
 
 namespace BlueprintEditor2
 {
@@ -43,15 +44,15 @@ namespace BlueprintEditor2
                 string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
                 if (Vers.Length == 3 && Vers[0] == "0")
                 {
-                    MyExtensions.AsyncWorker(()=> new UpdateAvailable(Vers[2], Vers[1]).Show());
+                    MyExtensions.AsyncWorker(() => new UpdateAvailable(Vers[2], Vers[1]).Show());
                 }
             }).Start();
-            
+
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MyDisplayBlueprint Selected = (MyDisplayBlueprint)BlueList.SelectedItem;
-            if (Selected != null)
+            if (Selected != null && File.Exists(currentBluePatch + Selected.Name + "\\bp.sbc"))
             {
                 CurrentBlueprint = new MyXmlBlueprint(currentBluePatch + Selected.Name);
                 BluePicture.Source = CurrentBlueprint.GetPic();
@@ -71,7 +72,8 @@ namespace BlueprintEditor2
                 }
             }
             else
-            { 
+            {
+                if (BlueList.SelectedIndex != -1) BlueList.Items.Remove(BlueList.SelectedItem);
                 BluePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
                 BlueText.Text = Lang.SelectBlue;
                 CalculateButton.IsEnabled = false;
@@ -81,7 +83,6 @@ namespace BlueprintEditor2
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(Lang.ComingSoon); return;
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
                 Left = 0;
@@ -92,7 +93,7 @@ namespace BlueprintEditor2
                 if (!MySettings.Current.MultiWindow) Hide();
                 BackupButton.IsEnabled = true;
             }
-            else MessageBox.Show(Lang.AlreadyOpened);
+            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
         }
         private void PicMenuItemNormalize_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +103,7 @@ namespace BlueprintEditor2
         private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
-            else MessageBox.Show(Lang.SelectBlueForOpen);
+            else new Dialog(DialogPicture.attention, "Attention", Lang.SelectBlueForOpen, null, DialogType.Message).Show();
         }
         private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
         {
@@ -127,12 +128,12 @@ namespace BlueprintEditor2
             {
                 new BackupManager(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint).Show();
             }
-            else MessageBox.Show(Lang.AlreadyOpened);
+            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
 
         }
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Lang.ComingSoon); return;
+            new Dialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
             /*if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
                 Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
@@ -143,7 +144,7 @@ namespace BlueprintEditor2
                 Form.Top = Top;
                 Form.Height = Height;
             }
-            else MessageBox.Show(Lang.AlreadyOpened);*/
+            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();*/
         }
         private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -169,9 +170,11 @@ namespace BlueprintEditor2
                 case 0:
                     if (Dialog.Last != null) Dialog.Last.Focus();
                     break;
+                case 1:
+                    break;
                 default:
                     Window wind = (Window)Lock.DataContext;
-                    if(wind != null) wind.Focus();
+                    if (wind != null) wind.Focus();
                     break;
             }
         }
@@ -193,20 +196,29 @@ namespace BlueprintEditor2
             if (Settings.LastWindow == null) new Settings().Show();
             else Settings.LastWindow.Focus();
         }
-
         private void MenuFolderItem_Click(object sender, RoutedEventArgs e)
         {
-            currentBluePatch += ((MenuItem)sender).Header + "\\";
-            InitBlueprints();
+            string newDir = currentBluePatch + ((MenuItem)sender).Header + "\\";
+            if (Directory.Exists(newDir))
+            {
+                currentBluePatch = newDir;
+                InitBlueprints();
+            }
+            else
+            {
+                ((MenuItem)sender).Visibility = Visibility.Collapsed;
+            }
         }
         private void MenuBackItem_Click(object sender, RoutedEventArgs e)
         {
-            
             currentBluePatch = Path.GetDirectoryName(currentBluePatch.TrimEnd('\\')) + "\\";
             InitBlueprints();
         }
-        void InitBlueprints()
-        {  
+        private void InitBlueprints()
+        {
+            Title = "SE BlueprintEditor Loading...";
+            Lock.Height = SystemParameters.PrimaryScreenHeight;
+            Lock.DataContext = 1;
             FoldersItem.Items.Clear();
             BlueList.Items.Clear();
             if (currentBluePatch != MySettings.Current.BlueprintPatch)
@@ -220,39 +232,71 @@ namespace BlueprintEditor2
                 Fldr.Click += MenuBackItem_Click;
                 FoldersItem.Items.Add(Fldr);
                 FoldersItem.Items.Add(new Separator());
-            }else FoldersItem.IsEnabled = false;
+            }
+            else FoldersItem.IsEnabled = false;
             object sync = new object();
             BitmapImage fldicn = new BitmapImage(new Uri("pack://application:,,,/Resource/img_308586.png"));
-            Parallel.ForEach(Directory.GetDirectories(currentBluePatch), x =>
+            List<MenuItem> Folders = new List<MenuItem>();
+            new Task(() =>
             {
-
-                MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
-                if (Elem is null)
+                ParallelLoopResult status = Parallel.ForEach(Directory.GetDirectories(currentBluePatch), x =>
                 {
+
+                    MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
+                    if (Elem is null)
+                    {
+                        lock (sync)
+                        {
+                            MyExtensions.AsyncWorker(() =>
+                            {
+                                FoldersItem.IsEnabled = true;
+                                MenuItem Fldr = new MenuItem();
+                                Fldr.Header = Path.GetFileNameWithoutExtension(x);
+                                Fldr.Icon = new Image
+                                {
+                                    Source = fldicn
+                                };
+                                Fldr.Click += MenuFolderItem_Click;
+                                Folders.Add(Fldr);
+                            });
+                        }
+                        return;
+                    }
+                    lock (sync)
+                    {
+                        MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
+                    }
+                });
+                new Task(() =>
+                {
+                    while (!status.IsCompleted) { }
                     lock (sync)
                     {
                         MyExtensions.AsyncWorker(() =>
                         {
-                            FoldersItem.IsEnabled = true;
-                            MenuItem Fldr = new MenuItem();
-                            Fldr.Header = Path.GetFileNameWithoutExtension(x);
-                            Fldr.Icon = new Image
+                            foreach (MenuItem fldrs in Folders.OrderBy(x => x.Header))
                             {
-                                Source = fldicn
-                            };
-                            Fldr.Click += MenuFolderItem_Click;
-                            FoldersItem.Items.Add(Fldr);
+                                FoldersItem.Items.Add(fldrs);
+                            }
+                            BlueList.Items.SortDescriptions.Clear();
+                            BlueList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                            Title = "SE BlueprintEditor";
+                            Lock.Height = 0;
                         });
                     }
-                    return;
-                }
-                lock (sync)
-                {
-                    MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
-                }
-            });
+                }).Start();
+            }).Start();
         }
-
+        private void GoSort(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader SortBy = (GridViewColumnHeader)sender;
+            string PropertyPatch = ((Binding)SortBy.Column.DisplayMemberBinding).Path.Path.Replace("Text","");
+            ListSortDirection OldDirection = ListSortDirection.Descending;
+            if (BlueList.Items.SortDescriptions[0].PropertyName == PropertyPatch) OldDirection = BlueList.Items.SortDescriptions[0].Direction;
+            ListSortDirection NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            BlueList.Items.SortDescriptions.Clear();
+            BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
+        }
 
     }
 }

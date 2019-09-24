@@ -7,6 +7,11 @@
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
         Title="SE BlueprintEditor" Height="500" Width="920" MinHeight="500" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="920">
+    <Window.Resources>
+        <Style TargetType="GridViewColumnHeader">
+            <EventSetter Event="MouseUp" Handler="GoSort"/>
+        </Style>
+    </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
@@ -55,7 +60,7 @@
         <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click">
         </Button>
         <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click"/>
-        <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,26,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576">
+        <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,26,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576" SelectionMode="Single">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="160"/>
@@ -67,7 +72,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.2" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown"/>
         <Menu Height="21" VerticalAlignment="Top" Width="912">
             <MenuItem Header="{x:Static res:Lang.Menu}">
                 <MenuItem Header="{x:Static res:Lang.Normalize}" Click="PicMenuItemNormalize_Click">
@@ -100,5 +104,7 @@
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click"/>
 
         </Menu>
+        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown"/>
+
     </Grid>
 </Window>

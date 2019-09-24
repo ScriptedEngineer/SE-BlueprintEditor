@@ -13,13 +13,13 @@ namespace BlueprintEditor2
         //public string[] Elements { get; private set; }
         public string Name { get; private set; }
         public string Owner { get; private set; }
-        internal DateTime CreationTime;
+        public DateTime CreationTime { get; private set; }
         public string CreationTimeText => CreationTime.ToString("d");
-        internal DateTime LastEditTime;
+        public DateTime LastEditTime { get; private set; }
         public string LastEditTimeText => LastEditTime.ToString("d");
-        internal int BlockCount;
+        public int BlockCount { get; private set; }
         public string BlockCountText => BlockCount.ToString();
-        internal int GridCount;
+        public int GridCount { get; private set; }
         public string GridCountText => GridCount.ToString();
 
         private MyDisplayBlueprint()

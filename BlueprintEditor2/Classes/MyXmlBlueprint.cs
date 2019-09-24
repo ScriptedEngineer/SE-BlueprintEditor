@@ -37,12 +37,15 @@ namespace BlueprintEditor2
         public MyXmlBlueprint(string patch)
         {
             Patch = patch;
-            BlueprintXml.Load(Patch + "\\bp.sbc");
-            XmlNodeList Grides = BlueprintXml.GetElementsByTagName("CubeGrid");
-            Grids = new MyXmlGrid[Grides.Count];
-            for (int i = 0; i < Grides.Count; i++)
+            if (File.Exists(Patch + "\\bp.sbc"))
             {
-                Grids[i] = new MyXmlGrid(Grides[i]);
+                BlueprintXml.Load(Patch + "\\bp.sbc");
+                XmlNodeList Grides = BlueprintXml.GetElementsByTagName("CubeGrid");
+                Grids = new MyXmlGrid[Grides.Count];
+                for (int i = 0; i < Grides.Count; i++)
+                {
+                    Grids[i] = new MyXmlGrid(Grides[i]);
+                }
             }
         }
         public void SaveBackup(bool forced = false)
@@ -113,7 +116,7 @@ namespace BlueprintEditor2
                                         SelectBlueprint.window.Lock.Height = 0;
                                         break;
                                 }
-                            },true).Show();
+                            },DialogType.Cancelable).Show();
                     });
                 }
                 return new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));

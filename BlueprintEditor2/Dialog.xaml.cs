@@ -21,7 +21,7 @@ namespace BlueprintEditor2
     {
         private Action<DialоgResult> OnClick;
         internal static Dialog Last;
-        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, bool Cancelable = false, int _Width = 300, int _Height = 200)
+        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
         {
             OnClick = _Run;
             InitializeComponent();
@@ -41,11 +41,20 @@ namespace BlueprintEditor2
                     DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/question.png"));
                     break;
             }
-            if (!Cancelable)
+            switch (Type)
             {
-                CancelButton.Visibility = Visibility.Hidden;
-                YesButton.Margin = new Thickness(0, 0, 90, 10);
-                NoButton.Margin = new Thickness(0, 0, 10, 10);
+                case DialogType.Normal:
+                    CancelButton.Visibility = Visibility.Hidden;
+                    YesButton.Margin = new Thickness(0, 0, 90, 10);
+                    NoButton.Margin = new Thickness(0, 0, 10, 10);
+                    break;
+                case DialogType.Cancelable:
+                    break;
+                case DialogType.Message:
+                    CancelButton.Content = "ОК";
+                    YesButton.Visibility = Visibility.Hidden;
+                    NoButton.Visibility = Visibility.Hidden;
+                    break;
             }
             Last = this;
         }
@@ -73,5 +82,26 @@ namespace BlueprintEditor2
             OnClick = null;
             Last = null;
         }
+
+    }
+    public enum DialogPicture
+    {
+        warn,
+        attention,
+        question
+    }
+    public enum DialogType
+    {
+        Normal,
+        Cancelable,
+        Message
+    }
+    public enum DialоgResult
+    {
+        Yes,
+        No,
+        Cancel,
+        Closed,
+        Data
     }
 }
