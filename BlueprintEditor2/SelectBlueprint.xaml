@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="SE BlueprintEditor" Height="500" Width="920" MinHeight="500" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="920">
+        Title="SE BlueprintEditor" Width="920" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinHeight="500" MinWidth="920" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <Style TargetType="GridViewColumnHeader">
             <EventSetter Event="MouseUp" Handler="GoSort"/>
@@ -56,29 +56,36 @@
             </MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
-    <Grid>
-        <Rectangle Fill="Black" Margin="591,26,10,268" Stroke="Black"/>
+    <Grid Name="ControlsConteiner">
+        <Grid.RowDefinitions>
+            <RowDefinition Name="ImageRow" Height="Auto"/>
+            <RowDefinition Name="TextRow" Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="581*" MinWidth="590"/>
+            <ColumnDefinition Width="331*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="Black" Margin="10,26,10,5" Stroke="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1"/>
+        <Image x:Name="BluePicture" Margin="10,26,10,5" Source="Resource/blueprints-textures_00394054.jpg" Grid.Column="1"/>
 
-        <Image x:Name="BluePicture" Margin="591,26,10,268" Source="Resource/blueprints-textures_00394054.jpg"/>
-
-        <TextBlock x:Name="BlueText" Text="{x:Static res:Lang.SelectBlue}" Margin="591,0,10,56" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="207"/>
-        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click"/>
-        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click">
-        </Button>
-        <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click"/>
-        <ListView x:Name="BlueList" HorizontalAlignment="Left" Margin="10,26,0,10" SelectionChanged="BlueList_SelectionChanged" Width="576" SelectionMode="Single">
+        <TextBlock x:Name="BlueText" Text="{x:Static res:Lang.SelectBlue}" Margin="10,11,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click" Grid.Column="1" Height="20" Grid.Row="2"/>
+        <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click" Grid.Column="1" Height="20" Grid.Row="2"/>
+        <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click" Height="20" Grid.Row="2" Grid.Column="1"/>
+        <ListView x:Name="BlueList" Margin="10,26,2,10" SelectionChanged="BlueList_SelectionChanged" SelectionMode="Single" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="170"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="130"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Header="{x:Static res:Lang.GridCount}" Width="50"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Header="{x:Static res:Lang.BlockCount}" Width="50"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Header="{x:Static res:Lang.Created}" Width="80"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastEditTimeText}" Header="{x:Static res:Lang.Changed}" Width="80"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Header="{x:Static res:Lang.Created}" Width="75"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastEditTimeText}" Header="{x:Static res:Lang.Changed}" Width="75"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Menu Height="21" VerticalAlignment="Top">
+        <Menu Height="21" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="{x:Static res:Lang.Menu}">
                 <MenuItem Header="{x:Static res:Lang.Update}" Click="MenuItem_Click_1">
                     <MenuItem.Icon>
@@ -116,7 +123,7 @@
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click"/>
 
         </Menu>
-        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown"/>
+        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

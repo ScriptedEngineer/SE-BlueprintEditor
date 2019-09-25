@@ -108,7 +108,7 @@
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\MyExtensions.cs" />
-    <Compile Include="Classes\MyListElement.cs" />
+    <Compile Include="Classes\MyDisplayBlueprint.cs" />
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
     <Compile Include="Dialog.xaml.cs">

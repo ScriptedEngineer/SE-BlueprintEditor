@@ -47,7 +47,6 @@ namespace BlueprintEditor2
                     MyExtensions.AsyncWorker(() => new UpdateAvailable(Vers[2], Vers[1]).Show());
                 }
             }).Start();
-
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -75,12 +74,13 @@ namespace BlueprintEditor2
             {
                 if (BlueList.SelectedIndex != -1) BlueList.Items.Remove(BlueList.SelectedItem);
                 CurrentBlueprint = null;
-                BluePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/thumbDefault.png"));
+                BluePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/blueprints-textures_00394054.jpg"));
                 BlueText.Text = Lang.SelectBlue;
                 CalculateButton.IsEnabled = false;
                 EditButton.IsEnabled = false;
                 BackupButton.IsEnabled = false;
             }
+            Height++; Height--;
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -254,10 +254,11 @@ namespace BlueprintEditor2
             }
             else FoldersItem.IsEnabled = false;
             BitmapImage fldicn = new BitmapImage(new Uri("pack://application:,,,/Resource/img_308586.png"));
+            List<MenuItem> foldrmenu = new List<MenuItem>();
             new Task(() =>
             {
                 bool First = true;
-                ParallelLoopResult status = Parallel.ForEach(Directory.GetDirectories(currentBluePatch).OrderBy(x => Path.GetFileName(x)), x =>
+                ParallelLoopResult status = Parallel.ForEach(Directory.GetDirectories(currentBluePatch), x =>//.OrderBy(x => Path.GetFileName(x))
                 {
 
                     MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
@@ -278,7 +279,8 @@ namespace BlueprintEditor2
                                 Source = fldicn
                             };
                             Fldr.Click += MenuFolderItem_Click;
-                            FoldersItem.Items.Add(Fldr);
+                            foldrmenu.Add(Fldr);
+                            //FoldersItem.Items.Add(Fldr);
                         });
                         return;
                     }
@@ -289,26 +291,50 @@ namespace BlueprintEditor2
                     while (!status.IsCompleted) { }
                     MyExtensions.AsyncWorker(() =>
                     {
-                        BlueList.Items.SortDescriptions.Clear();
-                        BlueList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                        foreach (var x in foldrmenu.OrderBy(x => x.Header))
+                            FoldersItem.Items.Add(x);
+                        if (OldSortBy != null)
+                            GoSort(OldSortBy,null);
                         Title = "SE BlueprintEditor";
                     });
                 }).Start();
             }).Start();
         }
+        GridViewColumnHeader OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
+            
             GridViewColumnHeader SortBy = (GridViewColumnHeader)sender;
+            if(OldSortBy != null)
+                OldSortBy.Content = OldSortBy.Content.ToString().Trim('↓', '↑', ' ');
             string PropertyPatch = ((Binding)SortBy.Column.DisplayMemberBinding).Path.Path.Replace("Text","");
             ListSortDirection OldDirection = ListSortDirection.Descending;
-            if (BlueList.Items.SortDescriptions[0].PropertyName == PropertyPatch) OldDirection = BlueList.Items.SortDescriptions[0].Direction;
-            ListSortDirection NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            if (BlueList.Items.SortDescriptions.Count > 0 && BlueList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
+                OldDirection = BlueList.Items.SortDescriptions[0].Direction;
+            ListSortDirection NewDirection;
+            if (e != null)
+                NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            else
+                NewDirection = OldDirection;
             BlueList.Items.SortDescriptions.Clear();
             BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
+            BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
+            SortBy.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
+            OldSortBy = SortBy;
         }
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             InitBlueprints();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //new Task(() =>
+            //{
+            //    Thread.Sleep(100);
+            //    MyExtensions.AsyncWorker(() =>
+                MinHeight = (ImageRow.ActualHeight + TextRow.ActualHeight + 40 + (ActualHeight-ControlsConteiner.ActualHeight));
+            //});
         }
     }
 }
