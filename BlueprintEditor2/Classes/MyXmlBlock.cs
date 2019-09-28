@@ -12,6 +12,8 @@ namespace BlueprintEditor2
         private readonly XmlNode _BlockXml;
         private readonly XmlNode _NameNode;
         private readonly XmlNode _SubTypeNode;
+        private readonly List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
+        public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
 
         public string Type
         {
@@ -29,8 +31,14 @@ namespace BlueprintEditor2
         {
             get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_","") + "/" + _SubTypeNode.InnerText;
         }
-
-        public string Name { get => _NameNode?.InnerText; set { if (_NameNode != null) _NameNode.InnerText = value; } }
+        public string Name
+        {
+            get => _NameNode?.InnerText;
+            set
+            {
+                if (_NameNode != null) _NameNode.InnerText = value;
+            }
+        }
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -44,7 +52,11 @@ namespace BlueprintEditor2
                     case "CustomName":
                         _NameNode = child;
                         continue;
+                    default:
+                        _Properties.Add(new MyBlockProperty(child));
+                        continue;
                 }
         }
+
     }
 }

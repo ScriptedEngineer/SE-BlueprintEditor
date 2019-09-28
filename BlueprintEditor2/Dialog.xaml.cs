@@ -20,6 +20,7 @@ namespace BlueprintEditor2
     public partial class Dialog : Window
     {
         private Action<DialоgResult> OnClick;
+        private Action<string> OnInput;
         internal static Dialog Last;
         public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
         {
@@ -58,6 +59,21 @@ namespace BlueprintEditor2
             }
             Last = this;
         }
+        public Dialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
+        {
+            OnInput = _Run;
+            InitializeComponent();
+            Title = _Title;
+            Width = _Width;
+            Height = _Height;
+            DataText.Text = Text;
+            DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/92133ae17f4c9ec61407.png"));
+            Input.Visibility = Visibility.Visible;
+            YesButton.Visibility = Visibility.Hidden;
+            NoButton.Content = "ОК";
+            Last = this;
+        }
+
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             OnClick?.Invoke(DialоgResult.Yes);
@@ -67,6 +83,7 @@ namespace BlueprintEditor2
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
             OnClick?.Invoke(DialоgResult.No);
+            OnInput?.Invoke(Input.Text);
             OnClick = null;
             Close();
         }
@@ -94,7 +111,8 @@ namespace BlueprintEditor2
     {
         Normal,
         Cancelable,
-        Message
+        Message,
+        Input
     }
     public enum DialоgResult
     {

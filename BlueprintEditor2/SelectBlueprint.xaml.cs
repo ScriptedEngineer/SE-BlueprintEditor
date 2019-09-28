@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
-using System.Globalization;
-using System.Threading;
 using BlueprintEditor2.Resource;
 using System.Diagnostics;
 using Path = System.IO.Path;
@@ -46,6 +39,7 @@ namespace BlueprintEditor2
                 {
                     MyExtensions.AsyncWorker(() => new UpdateAvailable(Vers[2], Vers[1]).Show());
                 }
+                //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -143,7 +137,7 @@ namespace BlueprintEditor2
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
             new Dialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
-            if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
+            /*if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
                 Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
                 Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
@@ -154,7 +148,7 @@ namespace BlueprintEditor2
                 Form.Height = Height;
             }
             else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
-        }
+        */}
         private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             Lock.Height = SystemParameters.PrimaryScreenHeight;
@@ -318,7 +312,7 @@ namespace BlueprintEditor2
                 NewDirection = OldDirection;
             BlueList.Items.SortDescriptions.Clear();
             BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
-            BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
+            //BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
             SortBy.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
         }

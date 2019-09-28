@@ -107,10 +107,12 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
+    <Compile Include="Classes\MyXmlBlockEqualer.cs" />
     <Compile Include="Dialog.xaml.cs">
       <DependentUpon>Dialog.xaml</DependentUpon>
     </Compile>
@@ -277,6 +279,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\img_144440.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\92133ae17f4c9ec61407.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

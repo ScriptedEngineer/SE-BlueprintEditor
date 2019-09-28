@@ -108,6 +108,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Block name.
+        /// </summary>
+        public static string BlockName {
+            get {
+                return ResourceManager.GetString("BlockName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Block subtype.
+        /// </summary>
+        public static string BlockSubtype {
+            get {
+                return ResourceManager.GetString("BlockSubtype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Block type.
         /// </summary>
         public static string BlockType {
@@ -207,6 +225,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Destructible grid.
+        /// </summary>
+        public static string DestructibleGrid {
+            get {
+                return ResourceManager.GetString("DestructibleGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Directories.
         /// </summary>
         public static string Directories {
@@ -261,6 +288,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Grid name.
+        /// </summary>
+        public static string GridName {
+            get {
+                return ResourceManager.GetString("GridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Image files.
         /// </summary>
         public static string ImFiles {
@@ -302,6 +338,15 @@ namespace BlueprintEditor2.Resource {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Large grid.
+        /// </summary>
+        public static string LargeGrid {
+            get {
+                return ResourceManager.GetString("LargeGrid", resourceCulture);
             }
         }
         
@@ -397,6 +442,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Properties.
+        /// </summary>
+        public static string Properties {
+            get {
+                return ResourceManager.GetString("Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Property.
+        /// </summary>
+        public static string Property {
+            get {
+                return ResourceManager.GetString("Property", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Remind me later.
         /// </summary>
         public static string RemLater {
@@ -420,6 +483,15 @@ namespace BlueprintEditor2.Resource {
         public static string Restore {
             get {
                 return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save and сlose.
+        /// </summary>
+        public static string SaveClose {
+            get {
+                return ResourceManager.GetString("SaveClose", resourceCulture);
             }
         }
         
@@ -456,6 +528,15 @@ namespace BlueprintEditor2.Resource {
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Small grid.
+        /// </summary>
+        public static string SmallGrid {
+            get {
+                return ResourceManager.GetString("SmallGrid", resourceCulture);
             }
         }
         

@@ -13,17 +13,51 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Image x:Name="BluePicture" Margin="10,10,0,0" Source="Resource/blueprints-textures_00394054.jpg" HorizontalAlignment="Left" VerticalAlignment="Top" Height="120" Width="200" Stretch="UniformToFill"/>
-        <ListBox x:Name="GridList" HorizontalAlignment="Left" Width="200" Margin="10,161,0,10" SelectionChanged="GridList_SelectionChanged"/>
-        <Label Content="{x:Static res:Lang.GridCount}" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top"/>
-        <Label Content="{x:Static res:Lang.BlockCount}" HorizontalAlignment="Left" Margin="215,135,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="BlockList" HorizontalAlignment="Left" Width="350" Margin="215,161,0,10" SelectionChanged="BlockList_SelectionChanged_1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="149"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="249"/>
+            <ColumnDefinition Width="335*"/>
+            <ColumnDefinition Width="608*"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="BluePicture" Margin="10" Source="Resource/blueprints-textures_00394054.jpg" Height="129" Width="229"/>
+        <ListBox x:Name="GridList" Width="229" Margin="10,16,10,10" SelectionChanged="GridList_SelectionChanged" Grid.Row="1"/>
+        <Label Content="{x:Static res:Lang.GridCount}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Height="16" Width="36" Grid.Row="1"/>
+        <Label Content="{x:Static res:Lang.BlockCount}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2,0,2,1" Height="16" Width="37" Grid.Row="1" Grid.Column="1"/>
+        <ListView x:Name="BlockList" Margin="0,16,10,10" SelectionChanged="BlockList_SelectionChanged_1" Grid.Row="1" Grid.Column="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisplayType}" Header="{x:Static res:Lang.BlockType}" Width="160"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Name}" Width="170"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=DisplayType}" Header="{x:Static res:Lang.BlockType}" Width="130"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Name}" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <ListView x:Name="PropertyList" Margin="305,16,10,10" Grid.Column="2" Grid.Row="1" SelectionChanged="PropertyList_SelectionChanged" IsEnabled="False">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Property}" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Edit}" Header="{x:Static res:Lang.Edit}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="{x:Static res:Lang.Properties}" HorizontalAlignment="Left" Margin="305,0,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <TextBox x:Name="GridNameBox" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" Grid.Column="1" TextChanged="GridNameBox_TextChanged"/>
+        <Label Content="{x:Static res:Lang.GridName}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="1" Height="16" Width="90"/>
+        <CheckBox x:Name="DestructibleGridBox" Content="{x:Static res:Lang.DestructibleGrid}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,57,0,0" Padding="4,-1,0,0" UseLayoutRounding="False" Height="16" Width="126" Click="DestructibleGridBox_Click"/>
+        <ComboBox x:Name="GridSizeBox" Grid.Column="1" HorizontalAlignment="Left" Margin="204,54,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="GridSizeBox_SelectionChanged">
+            <ComboBoxItem Content="{x:Static res:Lang.SmallGrid}"/>
+            <ComboBoxItem Content="{x:Static res:Lang.LargeGrid}"/>
+        </ComboBox>
+        <TextBox x:Name="BlockNameBox" HorizontalAlignment="Left" Height="23" Margin="0,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False" TextChanged="BlockNameBox_TextChanged"/>
+        <Label Content="{x:Static res:Lang.BlockName}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <TextBox x:Name="BlockTypeBox" HorizontalAlignment="Left" Height="23" Margin="0,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False"/>
+        <Label Content="{x:Static res:Lang.BlockType}" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <TextBox x:Name="BlockSubtypeBox" HorizontalAlignment="Left" Height="23" Margin="0,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False"/>
+        <Label Content="{x:Static res:Lang.BlockSubtype}" HorizontalAlignment="Left" Margin="0,88,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Height="127" Width="300"/>
+        <Button Content="{x:Static res:Lang.SaveClose}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="142" Click="Button_Click"/>
+
     </Grid>
 </Window>

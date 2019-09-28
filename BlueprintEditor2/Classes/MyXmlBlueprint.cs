@@ -48,9 +48,17 @@ namespace BlueprintEditor2
                 }
             }
         }
+        public void Save(bool forced = false)
+        {
+            if (Directory.Exists(Patch))
+            {
+                BlueprintXml.Save(Patch + "\\bp.sbc");
+            }
+            
+        }
         public void SaveBackup(bool forced = false)
         {
-            if (Directory.Exists(Patch+"/Backups"))
+            if (Directory.Exists(Patch + "/Backups"))
             {
                 if (forced)
                 {
@@ -58,11 +66,16 @@ namespace BlueprintEditor2
                     return;
                 }
                 bool save = true;
-                string Lastest = "";
+                string Lastest = "",LastestName = "";
                 List<string> Files = new List<string>();
                 foreach (string file in Directory.GetFiles(Patch + "/Backups"))
                 {
-                    if (file.Contains("Lastest-")) { Lastest = File.ReadAllText(file);continue; }
+                    if (file.Contains("Lastest-"))
+                    {
+                        Lastest = File.ReadAllText(file);
+                        LastestName = file;
+                        continue;
+                    }
                     DateTime FileDate = DateTime.FromFileTimeUtc(long.Parse(file.Split('\\').Last().Replace(".sbc", "")));
                     if (Files.Contains(File.ReadAllText(file)))
                     {
@@ -73,7 +86,11 @@ namespace BlueprintEditor2
                         Files.Add(File.ReadAllText(file));
                     }
                 }
-                if (save && Lastest != File.ReadAllText(Patch + "\\bp.sbc")) File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\"+(Lastest != ""?"": "Lastest-") + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
+                if (save && Lastest != File.ReadAllText(Patch + "\\bp.sbc"))
+                {
+                    if(LastestName != "") File.Move(LastestName,Path.GetDirectoryName(LastestName)+"\\"+Path.GetFileName(LastestName).Replace("Lastest-",""));
+                    File.Copy(Patch + "\\bp.sbc", Patch + "\\Backups\\" + "Lastest-" + DateTime.UtcNow.ToFileTimeUtc().ToString() + ".sbc");
+                }
             }
             else
             {

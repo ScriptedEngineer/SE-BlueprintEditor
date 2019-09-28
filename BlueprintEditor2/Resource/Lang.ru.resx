@@ -134,6 +134,12 @@
   <data name="BlockCount" xml:space="preserve">
     <value>Блоки</value>
   </data>
+  <data name="BlockName" xml:space="preserve">
+    <value>Имя блока</value>
+  </data>
+  <data name="BlockSubtype" xml:space="preserve">
+    <value>Подтип блока</value>
+  </data>
   <data name="BlockType" xml:space="preserve">
     <value>Тип блока</value>
   </data>
@@ -167,6 +173,9 @@
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Удалить все резервные копии всех чертежей</value>
   </data>
+  <data name="Destructible grid" xml:space="preserve">
+    <value>Разрушаемая сетка</value>
+  </data>
   <data name="Directories" xml:space="preserve">
     <value>Папки</value>
   </data>
@@ -185,6 +194,9 @@
   <data name="GridCount" xml:space="preserve">
     <value>Сетки</value>
   </data>
+  <data name="GridName" xml:space="preserve">
+    <value>Название сетки</value>
+  </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
   </data>
@@ -199,6 +211,9 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>
+  </data>
+  <data name="LargeGrid" xml:space="preserve">
+    <value>Большая сетка</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
@@ -231,6 +246,12 @@
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Пожалуйста ждите, наши сервера работают от картошки</value>
   </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Свойства</value>
+  </data>
+  <data name="Property" xml:space="preserve">
+    <value>Свойство</value>
+  </data>
   <data name="RemLater" xml:space="preserve">
     <value>Напомнить позже</value>
   </data>
@@ -239,6 +260,9 @@
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
+  </data>
+  <data name="SaveClose" xml:space="preserve">
+    <value>Сохранить и закрыть</value>
   </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста, выберите четреж для отображения информации</value>
@@ -251,6 +275,9 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
+  </data>
+  <data name="SmallGrid" xml:space="preserve">
+    <value>Малая сетка</value>
   </data>
   <data name="System" xml:space="preserve">
     <value>Система</value>

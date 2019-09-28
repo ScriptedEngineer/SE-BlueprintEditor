@@ -134,6 +134,12 @@ Developed by clan "Andromeda"</value>
   <data name="BlockCount" xml:space="preserve">
     <value>Blocks</value>
   </data>
+  <data name="BlockName" xml:space="preserve">
+    <value>Block name</value>
+  </data>
+  <data name="BlockSubtype" xml:space="preserve">
+    <value>Block subtype</value>
+  </data>
   <data name="BlockType" xml:space="preserve">
     <value>Block type</value>
   </data>
@@ -167,6 +173,9 @@ Developed by clan "Andromeda"</value>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Delete all backups of all blueprints</value>
   </data>
+  <data name="DestructibleGrid" xml:space="preserve">
+    <value>Destructible grid</value>
+  </data>
   <data name="Directories" xml:space="preserve">
     <value>Directories</value>
   </data>
@@ -185,6 +194,9 @@ Developed by clan "Andromeda"</value>
   <data name="GridCount" xml:space="preserve">
     <value>Grids</value>
   </data>
+  <data name="GridName" xml:space="preserve">
+    <value>Grid name</value>
+  </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
   </data>
@@ -199,6 +211,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="LargeGrid" xml:space="preserve">
+    <value>Large grid</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -231,6 +246,12 @@ Do you want set a thumbnail?</value>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Please wait,  it's just that our servers work on potato electricity</value>
   </data>
+  <data name="Properties" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="Property" xml:space="preserve">
+    <value>Property</value>
+  </data>
   <data name="RemLater" xml:space="preserve">
     <value>Remind me later</value>
   </data>
@@ -239,6 +260,9 @@ Do you want set a thumbnail?</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
+  </data>
+  <data name="SaveClose" xml:space="preserve">
+    <value>Save and сlose</value>
   </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Please select blueprint to display information</value>
@@ -251,6 +275,9 @@ Do you want set a thumbnail?</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SmallGrid" xml:space="preserve">
+    <value>Small grid</value>
   </data>
   <data name="System" xml:space="preserve">
     <value>System</value>

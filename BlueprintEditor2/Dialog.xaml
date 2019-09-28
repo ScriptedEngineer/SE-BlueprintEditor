@@ -13,6 +13,7 @@
         <Button x:Name="CancelButton" Content="{x:Static res:Lang.Cancel}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>
         <Button x:Name="NoButton" Content="{x:Static res:Lang.No}" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Click="NoButton_Click"/>
         <Button x:Name="YesButton" Content="{x:Static res:Lang.Yes}" HorizontalAlignment="Right" Margin="0,0,170,10" VerticalAlignment="Bottom" Width="75" Click="YesButton_Click"/>
-        <Label Content="I see you" HorizontalAlignment="Left" Margin="10,0,0,2" VerticalAlignment="Bottom" Foreground="#FFF0F0F0"/>
+        <Label Content="I see you" HorizontalAlignment="Left" Margin="10,0,0,2" VerticalAlignment="Bottom" Foreground="#FFECECEC"/>
+        <TextBox x:Name="Input" Height="23" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="115,0,10,35" Visibility="Hidden"/>
     </Grid>
 </Window>
