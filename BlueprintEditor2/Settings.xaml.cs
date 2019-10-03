@@ -47,7 +47,7 @@ namespace BlueprintEditor2
             {
                 MySettings.Serialize();
                 SelectBlueprint.window.SetLock(true, 0);
-                new Dialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
+                new MesassageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
                 {
                     if (Dial == DialоgResult.Yes)
                     {
@@ -92,6 +92,7 @@ namespace BlueprintEditor2
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
+                
                 dialog.SelectedPath = BlueprintFolderSetting.Text;
                 dialog.ShowNewFolderButton = false;
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();

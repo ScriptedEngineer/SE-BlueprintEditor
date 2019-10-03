@@ -113,8 +113,8 @@
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
     <Compile Include="Classes\MyXmlBlockEqualer.cs" />
-    <Compile Include="Dialog.xaml.cs">
-      <DependentUpon>Dialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\MesassageDialog.xaml.cs">
+      <DependentUpon>MesassageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditBlueprint.xaml.cs">
       <DependentUpon>EditBlueprint.xaml</DependentUpon>
@@ -151,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialog.xaml">
+    <Page Include="Dialogs\MesassageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -214,7 +214,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="BlueprintEditor2_TemporaryKey.pfx" />
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

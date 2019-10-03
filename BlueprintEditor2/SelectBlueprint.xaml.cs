@@ -76,6 +76,7 @@ namespace BlueprintEditor2
             }
             Height++; Height--;
         }
+
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
@@ -88,42 +89,7 @@ namespace BlueprintEditor2
                 if (!MySettings.Current.MultiWindow) Hide();
                 BackupButton.IsEnabled = true;
             }
-            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
-        }
-        private void PicMenuItemNormalize_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentBlueprint != null) BluePicture.Source = CurrentBlueprint.GetPic(true);
-        }
-        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => 
-            Process.Start(MySettings.Current.BlueprintPatch);
-        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
-        {
-            if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
-            else new Dialog(DialogPicture.attention, "Attention", Lang.SelectBlueForOpen, null, DialogType.Message).Show();
-        }
-        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
-        {
-            if (About.LastWindow == null) new About().Show();
-            else About.LastWindow.Focus();
-        }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            try
-            {
-                MySettings.Serialize();
-                if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
-                {
-                    e.Cancel = true;
-                    Hide();
-                    UpdateAvailable.window.Show();
-                    UpdateAvailable.last_open = true;
-                }
-                else Application.Current.Shutdown();
-            }
-            catch
-            {
-
-            }
+            else new MesassageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
         }
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
@@ -131,12 +97,12 @@ namespace BlueprintEditor2
             {
                 new BackupManager(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint).Show();
             }
-            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
+            else new MesassageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
 
         }
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            new Dialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
+            new MesassageDialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
             /*if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
                 Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
@@ -148,12 +114,29 @@ namespace BlueprintEditor2
                 Form.Height = Height;
             }
             else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
-        */}
+        */
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            InitBlueprints();
+        }
+        private void PicMenuItemNormalize_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentBlueprint != null) BluePicture.Source = CurrentBlueprint.GetPic(true);
+        }
+        private void SelectorMenuItemFolder_Click(object sender, RoutedEventArgs e) => 
+            Process.Start(MySettings.Current.BlueprintPatch);
+        private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
+        {
+            if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
+            else new MesassageDialog(DialogPicture.attention, "Attention", Lang.SelectBlueForOpen, null, DialogType.Message).Show();
+        }
         private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             Lock.Height = SystemParameters.PrimaryScreenHeight;
             Lock.DataContext = 0;
-            new Dialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteAllBackps, (Dial) =>
+            new MesassageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteAllBackps, (Dial) =>
             {
                 if (Dial == DialоgResult.Yes)
                 {
@@ -166,33 +149,10 @@ namespace BlueprintEditor2
                 Lock.Height = 0;
             }).Show();
         }
-        private void Lock_MouseDown(object sender, MouseButtonEventArgs e)
+        private void WindowsMenuItemAbout_Click(object sender, RoutedEventArgs e)
         {
-            switch (Lock.DataContext)
-            {
-                case 0:
-                    if (Dialog.Last != null) Dialog.Last.Focus();
-                    break;
-                case 1:
-                    break;
-                default:
-                    Window wind = (Window)Lock.DataContext;
-                    if (wind != null) wind.Focus();
-                    break;
-            }
-        }
-        public void SetLock(bool lockly, object DataContext)
-        {
-            if (lockly)
-            {
-                Lock.Height = SystemParameters.PrimaryScreenHeight;
-                Lock.DataContext = DataContext;
-            }
-            else
-            {
-                Lock.Height = 0;
-                Lock.DataContext = null;
-            }
+            if (About.LastWindow == null) new About().Show();
+            else About.LastWindow.Focus();
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -222,6 +182,65 @@ namespace BlueprintEditor2
             currentBluePatch = MySettings.Current.BlueprintPatch;
             InitBlueprints();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                MySettings.Serialize();
+                if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
+                {
+                    e.Cancel = true;
+                    Hide();
+                    UpdateAvailable.window.Show();
+                    UpdateAvailable.last_open = true;
+                }
+                else Application.Current.Shutdown();
+            }
+            catch
+            {
+
+            }
+        }
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //new Task(() =>
+            //{
+            //    Thread.Sleep(100);
+            //    MyExtensions.AsyncWorker(() =>
+            MinHeight = (ImageRow.ActualHeight + TextRow.ActualHeight + 40 + (ActualHeight - ControlsConteiner.ActualHeight));
+            //});
+        }
+
+        private void Lock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (Lock.DataContext)
+            {
+                case 0:
+                    if (MesassageDialog.Last != null) MesassageDialog.Last.Focus();
+                    break;
+                case 1:
+                    break;
+                default:
+                    Window wind = (Window)Lock.DataContext;
+                    if (wind != null) wind.Focus();
+                    break;
+            }
+        }
+        public void SetLock(bool lockly, object DataContext)
+        {
+            if (lockly)
+            {
+                Lock.Height = SystemParameters.PrimaryScreenHeight;
+                Lock.DataContext = DataContext;
+            }
+            else
+            {
+                Lock.Height = 0;
+                Lock.DataContext = null;
+            }
+        }
+
         private void InitBlueprints()
         {
             Title = "SE BlueprintEditor Loading...";
@@ -315,20 +334,6 @@ namespace BlueprintEditor2
             //BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
             SortBy.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
-        }
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-            InitBlueprints();
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            //new Task(() =>
-            //{
-            //    Thread.Sleep(100);
-            //    MyExtensions.AsyncWorker(() =>
-                MinHeight = (ImageRow.ActualHeight + TextRow.ActualHeight + 40 + (ActualHeight-ControlsConteiner.ActualHeight));
-            //});
         }
     }
 }

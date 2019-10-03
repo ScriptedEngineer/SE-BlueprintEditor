@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.IO;
 using System.ComponentModel;
+using System.Windows.Media;
+using Forms = System.Windows.Forms;
 
 namespace BlueprintEditor2
 {
@@ -37,19 +39,70 @@ namespace BlueprintEditor2
             MyXmlBlock[] TheBlocks = SlectedGrd.Blocks;
             for (int i = 0; i < TheBlocks.Length; i++)
                 BlockList.Items.Add(TheBlocks[i]);
-            BlockList.Items.SortDescriptions.Clear();
-            BlockList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+            //BlockList.Items.SortDescriptions.Clear();
+            //BlockList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             GridNameBox.Text = SlectedGrd.Name;
             DestructibleGridBox.IsChecked = SlectedGrd.Destructible;
             GridSizeBox.SelectedIndex = (int)SlectedGrd.GridSize;
+            GoSort(BlockListColumns.Columns[1],null);
         }
-        GridViewColumnHeader OldSortBy;
+        private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if (BlockList.SelectedItem != null)
+            {
+                if (BlockList.SelectedItems.Count == 1)
+                {
+                    PropertyList.IsEnabled = true;
+                    PropertyList.ItemsSource = (BlockList.SelectedItem as MyXmlBlock).Properties;
+                }
+                else
+                {
+                    PropertyList.IsEnabled = false;
+                    PropertyList.ItemsSource = null;
+                }
+                MyXmlBlockEqualer MasterBlock = null;
+                foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+                {
+                    if (MasterBlock == null)
+                        MasterBlock = new MyXmlBlockEqualer(SelectedBlk);
+                    else
+                    {
+                        MasterBlock.Equalize(SelectedBlk);
+                    }
+                }
+                SetTextBox(BlockNameBox, MasterBlock.Name);
+                string[] Str = MasterBlock.Type?.Split('/');
+                SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0] : null);
+                SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1] : null);
+                BlockColorBox.Fill = new SolidColorBrush(MasterBlock.Mask.ToMediaColor());
+                BlockColorBox.IsEnabled = true;
+            }
+            else
+            {
+                PropertyList.IsEnabled = false;
+                PropertyList.ItemsSource = null;
+                SetTextBox(BlockNameBox, null);
+                SetTextBox(BlockTypeBox, null);
+                SetTextBox(BlockSubtypeBox, null);
+                BlockColorBox.Fill = new SolidColorBrush(Colors.White);
+                BlockColorBox.IsEnabled = false;
+            }
+                
+        }
+        private void PropertyList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        GridViewColumn OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
-            GridViewColumnHeader SortBy = (GridViewColumnHeader)sender;
-            if(OldSortBy != null)
-                OldSortBy.Content = OldSortBy.Content.ToString().Trim('↓', '↑', ' ');
-            string PropertyPatch = ((Binding)SortBy.Column.DisplayMemberBinding).Path.Path.Replace("Text", "");
+            if (sender == null) return;
+            GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
+            if(SortBy == null) SortBy = (sender as GridViewColumn);
+            if (OldSortBy != null)
+                OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
+            string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding).Path.Path.Replace("Text", "");
             ListSortDirection OldDirection = ListSortDirection.Descending;
             if (BlockList.Items.SortDescriptions.Count > 0 && BlockList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
                 OldDirection = BlockList.Items.SortDescriptions[0].Direction;
@@ -60,52 +113,8 @@ namespace BlueprintEditor2
                 NewDirection = OldDirection;
             BlockList.Items.SortDescriptions.Clear();
             BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
-            SortBy.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
+            SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
-        }
-        private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            if (BlockList.SelectedItem != null)
-            {
-                if(BlockList.SelectedItems.Count == 1)
-                {
-                    MyXmlBlock SelectedBlk = (MyXmlBlock)BlockList.SelectedItem;
-                    PropertyList.IsEnabled = true;
-                    PropertyList.ItemsSource = SelectedBlk.Properties;
-                    SetTextBox(BlockNameBox, SelectedBlk.Name);
-                    string[] Str = SelectedBlk.Type.Split('/');
-                    SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0] : null);
-                    SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1] : null);
-                }
-                else
-                {
-                    PropertyList.IsEnabled = false;
-                    PropertyList.ItemsSource = null;
-                    MyXmlBlockEqualer MasterBlock = null;
-                    foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
-                    {
-                        if (MasterBlock == null)
-                            MasterBlock = new MyXmlBlockEqualer(SelectedBlk);
-                        else
-                        {
-                            MasterBlock.Equalize(SelectedBlk);
-                        }
-                    }
-                    SetTextBox(BlockNameBox, MasterBlock.Name);
-                    string[] Str = MasterBlock.Type?.Split('/');
-                    SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0]:null);
-                    SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1]: null);
-                }
-            }
-            else
-            {
-                PropertyList.IsEnabled = false;
-                PropertyList.ItemsSource = null;
-                SetTextBox(BlockNameBox, null);
-                SetTextBox(BlockTypeBox, null);
-                SetTextBox(BlockSubtypeBox, null);
-            }
-                
         }
         private void SetTextBox(TextBox Box, string Text)
         {
@@ -119,10 +128,6 @@ namespace BlueprintEditor2
                 Box.Text = "";
                 Box.IsEnabled = false;
             }
-        }
-        private void PropertyList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void GridNameBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -144,10 +149,50 @@ namespace BlueprintEditor2
         {
             EdBlueprint.Grids[GridList.SelectedIndex].GridSize = (GridSizes)GridSizeBox.SelectedIndex;
         }
+
         private void BlockNameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (BlockNameBox.Text == "" || BlockNameBox.Text == "-") return;
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
+                SelectedBlk.Name = BlockNameBox.Text;
+            }
+            GoSort(OldSortBy,null);
+            BlockList.ScrollIntoView(BlockList.SelectedItem);
+        }
+        private void BlockTypeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BlockTypeBox.Text == "") return;
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                SelectedBlk.Type = BlockTypeBox.Text+"/"+ BlockSubtypeBox.Text;
+            }
+            GoSort(OldSortBy, null);
+            BlockList.ScrollIntoView(BlockList.SelectedItem);
+        }
+        private void BlockSubtypeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BlockSubtypeBox.Text == "") return;
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                SelectedBlk.Type = BlockTypeBox.Text + "/" + BlockSubtypeBox.Text;
+            }
+            GoSort(OldSortBy, null);
+            BlockList.ScrollIntoView(BlockList.SelectedItem);
+        }
+        private void BlockColorBox_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Forms.ColorDialog MyDialog = new Forms.ColorDialog();
+            MyDialog.AllowFullOpen = true;
+            MyDialog.ShowHelp = false;
+            MyDialog.Color = ((SolidColorBrush)BlockColorBox.Fill).Color.ToDrawingColor();
+            if (MyDialog.ShowDialog() == Forms.DialogResult.OK)
+            {
+                foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+                {
+                    SelectedBlk.ColorMask = MyDialog.Color;
+                }
+                BlockColorBox.Fill = new SolidColorBrush(MyDialog.Color.ToMediaColor());
             }
         }
 

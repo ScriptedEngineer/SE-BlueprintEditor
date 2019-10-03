@@ -85,7 +85,7 @@ namespace BlueprintEditor2
         {
             Hide();
             SelectBlueprint.window.SetLock(true, 0);
-            new Dialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 
+            new MesassageDialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 
             {
                 if (Dial == DialоgResult.Yes)
                 {

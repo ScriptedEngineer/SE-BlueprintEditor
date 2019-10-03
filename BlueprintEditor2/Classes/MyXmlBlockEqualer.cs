@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,13 @@ namespace BlueprintEditor2
     {
         public string Type;
         public string Name;
+        public Color Mask;
 
         internal MyXmlBlockEqualer(MyXmlBlock block)
         {
             Type = block.Type;
             Name = block.Name;
+            Mask = block.ColorMask;
         }
 
         public void Equalize(MyXmlBlock block)
@@ -26,6 +29,11 @@ namespace BlueprintEditor2
                     Name = null;
                 else
                     Name = "-";
+            if (block.ColorMask != Mask)
+                if (block.ColorMask == new Color())
+                    Mask = new Color();
+                else
+                    Mask = Color.Gray;
         }
     }
 }

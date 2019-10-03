@@ -17,12 +17,12 @@ namespace BlueprintEditor2
     /// <summary>
     /// Логика взаимодействия для Dialog.xaml
     /// </summary>
-    public partial class Dialog : Window
+    public partial class MesassageDialog : Window
     {
         private Action<DialоgResult> OnClick;
         private Action<string> OnInput;
-        internal static Dialog Last;
-        public Dialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
+        internal static MesassageDialog Last;
+        public MesassageDialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
         {
             OnClick = _Run;
             InitializeComponent();
@@ -33,13 +33,13 @@ namespace BlueprintEditor2
             switch (Pic)
             {
                 case DialogPicture.warn:
-                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/warn.png"));
+                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/../Resource/warn.png"));
                     break;
                 case DialogPicture.attention:
-                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/attention.png"));
+                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/../Resource/attention.png"));
                     break;
                 case DialogPicture.question:
-                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/question.png"));
+                    DialImage.Source = new BitmapImage(new Uri("pack://application:,,,/../Resource/question.png"));
                     break;
             }
             switch (Type)
@@ -59,7 +59,7 @@ namespace BlueprintEditor2
             }
             Last = this;
         }
-        public Dialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
+        public MesassageDialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
         {
             OnInput = _Run;
             InitializeComponent();

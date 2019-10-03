@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace BlueprintEditor2
         private readonly XmlNode _BlockXml;
         private readonly XmlNode _NameNode;
         private readonly XmlNode _SubTypeNode;
+        private readonly XmlNode _ColorMaskNode;
         private readonly List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
         public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
 
@@ -39,6 +41,27 @@ namespace BlueprintEditor2
                 if (_NameNode != null) _NameNode.InnerText = value;
             }
         }
+        public Color ColorMask
+        {
+            get
+            {
+                if (_ColorMaskNode == null) return new Color();
+                double x, y, z;
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.',','), out x);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("y").Value.Replace('.', ','), out y);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("z").Value.Replace('.', ','), out z);
+                Console.WriteLine(x + "|" + y + "|" + z);
+                return SE_ColorConverter.ColorFromSE_HSV(x,y,z);
+            }
+            set
+            {
+                double x, y, z;
+                SE_ColorConverter.ColorToSE_HSV(value, out x,out y,out z);
+                _ColorMaskNode.Attributes.GetNamedItem("x").Value = x.ToString().Replace(',', '.');
+                _ColorMaskNode.Attributes.GetNamedItem("y").Value = y.ToString().Replace(',', '.');
+                _ColorMaskNode.Attributes.GetNamedItem("z").Value = z.ToString().Replace(',', '.');
+            }
+        }
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -52,11 +75,19 @@ namespace BlueprintEditor2
                     case "CustomName":
                         _NameNode = child;
                         continue;
+                    case "ColorMaskHSV":
+                        _ColorMaskNode = child;
+                        break;
                     default:
                         _Properties.Add(new MyBlockProperty(child));
                         continue;
                 }
         }
-
+    }
+    public enum ShareMode
+    {
+        Faction,
+        Me,
+        None
     }
 }
