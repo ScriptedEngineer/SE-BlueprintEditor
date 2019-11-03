@@ -7,6 +7,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Windows.Media;
 using Forms = System.Windows.Forms;
+using BlueprintEditor2.Resource;
 
 namespace BlueprintEditor2
 {
@@ -38,7 +39,19 @@ namespace BlueprintEditor2
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
             MyXmlBlock[] TheBlocks = SlectedGrd.Blocks;
             for (int i = 0; i < TheBlocks.Length; i++)
-                BlockList.Items.Add(TheBlocks[i]);
+            {
+                switch (SearchBy.SelectedIndex)
+                {
+                    case 0:
+                        if(TheBlocks[i].DisplayType.Contains(Search.Text))
+                            BlockList.Items.Add(TheBlocks[i]);
+                        break;
+                    case 1:
+                        if (TheBlocks[i].Name != null && TheBlocks[i].Name.Contains(Search.Text))
+                            BlockList.Items.Add(TheBlocks[i]);
+                        break;
+                }
+            }
             //BlockList.Items.SortDescriptions.Clear();
             //BlockList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             GridNameBox.Text = SlectedGrd.Name;
@@ -50,16 +63,7 @@ namespace BlueprintEditor2
         {
             if (BlockList.SelectedItem != null)
             {
-                if (BlockList.SelectedItems.Count == 1)
-                {
-                    PropertyList.IsEnabled = true;
-                    PropertyList.ItemsSource = (BlockList.SelectedItem as MyXmlBlock).Properties;
-                }
-                else
-                {
-                    PropertyList.IsEnabled = false;
-                    PropertyList.ItemsSource = null;
-                }
+                
                 MyXmlBlockEqualer MasterBlock = null;
                 foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
                 {
@@ -70,12 +74,35 @@ namespace BlueprintEditor2
                         MasterBlock.Equalize(SelectedBlk);
                     }
                 }
+                if (MasterBlock.Properties.Count > 0)
+                {
+                    PropertyList.IsEnabled = true;
+                    PropertyList.ItemsSource = MasterBlock.Properties;
+                }
+                else
+                {
+                    PropertyList.IsEnabled = false;
+                    PropertyList.ItemsSource = null;
+                }
                 SetTextBox(BlockNameBox, MasterBlock.Name);
                 string[] Str = MasterBlock.Type?.Split('/');
                 SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0] : null);
                 SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1] : null);
                 BlockColorBox.Fill = new SolidColorBrush(MasterBlock.Mask.ToMediaColor());
                 BlockColorBox.IsEnabled = true;
+                if (MasterBlock.Share.HasValue)
+                {
+                    ShareBox.IsEnabled = true;
+                    if (MasterBlock.Share.Value != ShareMode.Difference)
+                        ShareBox.SelectedIndex = (int)MasterBlock.Share.Value;
+                    else
+                        ShareBox.SelectedIndex = -1;
+                }
+                else
+                {
+                    ShareBox.IsEnabled = false;
+                    ShareBox.SelectedIndex = -1;
+                }
             }
             else
             {
@@ -97,12 +124,15 @@ namespace BlueprintEditor2
         GridViewColumn OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
+            if (sender.ToString() == Lang.Property) return;
             if (sender == null) return;
             GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
             if(SortBy == null) SortBy = (sender as GridViewColumn);
+            string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding)?.Path.Path.Replace("Text", "");
+            if (PropertyPatch == "PropertyName") return;
+            if (PropertyPatch == null) return;
             if (OldSortBy != null)
                 OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
-            string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding).Path.Path.Replace("Text", "");
             ListSortDirection OldDirection = ListSortDirection.Descending;
             if (BlockList.Items.SortDescriptions.Count > 0 && BlockList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
                 OldDirection = BlockList.Items.SortDescriptions[0].Direction;
@@ -143,7 +173,7 @@ namespace BlueprintEditor2
         private void DestructibleGridBox_Click(object sender, RoutedEventArgs e)
         {
             EdBlueprint.Grids[GridList.SelectedIndex].Destructible = DestructibleGridBox.IsChecked.Value;
-            Console.WriteLine(EdBlueprint.Grids[GridList.SelectedIndex].Destructible);
+            //Console.WriteLine(EdBlueprint.Grids[GridList.SelectedIndex].Destructible);
         }
         private void GridSizeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -213,5 +243,40 @@ namespace BlueprintEditor2
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
         }
 
+        private void ShareBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ShareBox.SelectedIndex == -1) return;
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                SelectedBlk.ShareMode = (ShareMode)ShareBox.SelectedIndex;
+            }
+        }
+
+        private void PropertyClick(object sender, RoutedEventArgs e)
+        {
+           //((EventHandler<RoutedEventArgs>)((Button)sender).DataContext).Invoke(null,null);
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox Sender = (CheckBox)sender;
+            Sender.Content = Sender.IsChecked.Value ? Lang.Yes : Lang.No;
+            string TxtVle = Sender.IsChecked.ToString();
+            string PropName = Sender.CommandParameter.ToString();
+            Console.WriteLine(PropName);
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                MyBlockProperty Change = SelectedBlk.Properties.FirstOrDefault(x => x.PropertyName == PropName);
+                if (Change != null)
+                {
+                    Change.TextValue = TxtVle;
+                }
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GridList_SelectionChanged(null,null);
+        }
     }
 }

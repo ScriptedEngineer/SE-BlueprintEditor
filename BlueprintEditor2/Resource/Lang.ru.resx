@@ -125,11 +125,23 @@
   <data name="AboutProg" xml:space="preserve">
     <value>О программе</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Всем</value>
+  </data>
   <data name="AlreadyOpened" xml:space="preserve">
     <value>Данный чертеж уже открыт</value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Кол-во</value>
+  </data>
+  <data name="AssemblerEfficiency" xml:space="preserve">
+    <value>Эффективность сборщика</value>
+  </data>
   <data name="Backups" xml:space="preserve">
     <value>Резервные копии</value>
+  </data>
+  <data name="BlockColor" xml:space="preserve">
+    <value>Цвет блока</value>
   </data>
   <data name="BlockCount" xml:space="preserve">
     <value>Блоки</value>
@@ -161,6 +173,75 @@
   <data name="ComingSoon" xml:space="preserve">
     <value>Скоро...</value>
   </data>
+  <data name="Component/BulletproofGlass" xml:space="preserve">
+    <value>Бронированное стекло</value>
+  </data>
+  <data name="Component/Canvas" xml:space="preserve">
+    <value>Полотно парашута</value>
+  </data>
+  <data name="Component/Computer" xml:space="preserve">
+    <value>Компьютер</value>
+  </data>
+  <data name="Component/Construction" xml:space="preserve">
+    <value>Строительные компоненты</value>
+  </data>
+  <data name="Component/Detector" xml:space="preserve">
+    <value>Компоненты детектора</value>
+  </data>
+  <data name="Component/Display" xml:space="preserve">
+    <value>Экран</value>
+  </data>
+  <data name="Component/Explosives" xml:space="preserve">
+    <value>Взрывчатка</value>
+  </data>
+  <data name="Component/Girder" xml:space="preserve">
+    <value>Балка</value>
+  </data>
+  <data name="Component/GravityGenerator" xml:space="preserve">
+    <value>Компоненты гравитационного генератора</value>
+  </data>
+  <data name="Component/InteriorPlate" xml:space="preserve">
+    <value>Внутренняя пластина</value>
+  </data>
+  <data name="Component/LargeTube" xml:space="preserve">
+    <value>Большая стальная труба</value>
+  </data>
+  <data name="Component/Medical" xml:space="preserve">
+    <value>Медецинские компоненты</value>
+  </data>
+  <data name="Component/MetalGrid" xml:space="preserve">
+    <value>Компонент решётки</value>
+  </data>
+  <data name="Component/Motor" xml:space="preserve">
+    <value>Мотор</value>
+  </data>
+  <data name="Component/PowerCell" xml:space="preserve">
+    <value>Энергоячейка</value>
+  </data>
+  <data name="Component/RadioCommunication" xml:space="preserve">
+    <value>Радиокомпоненты</value>
+  </data>
+  <data name="Component/Reactor" xml:space="preserve">
+    <value>Компоненты реактора</value>
+  </data>
+  <data name="Component/SmallTube" xml:space="preserve">
+    <value>Малая трубка</value>
+  </data>
+  <data name="Component/SolarCell" xml:space="preserve">
+    <value>Солнечная ячейка</value>
+  </data>
+  <data name="Component/SteelPlate" xml:space="preserve">
+    <value>Стальная пластина</value>
+  </data>
+  <data name="Component/Thrust" xml:space="preserve">
+    <value>Детали ионного ускорителя</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Компоненты</value>
+  </data>
+  <data name="CopyToClipboard" xml:space="preserve">
+    <value>Скорипровать в буфер обмена</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
@@ -171,19 +252,31 @@
     <value>Удалить</value>
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
-    <value>Удалить все резервные копии всех чертежей</value>
+    <value>Удалить все резервные копии всех чертежей в этой папке</value>
   </data>
-  <data name="Destructible grid" xml:space="preserve">
+  <data name="DestructibleGrid" xml:space="preserve">
     <value>Разрушаемая сетка</value>
   </data>
   <data name="Directories" xml:space="preserve">
     <value>Папки</value>
+  </data>
+  <data name="DontOpenAllBlue" xml:space="preserve">
+    <value>Не открывать чертежи при сканировании</value>
+  </data>
+  <data name="DowLangPack" xml:space="preserve">
+    <value>Загружаем локализацию для новой версии</value>
   </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Скачиваем новую версию</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="Faction" xml:space="preserve">
+    <value>Фракция</value>
+  </data>
+  <data name="GameFolder" xml:space="preserve">
+    <value>Папка с игрой</value>
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Назад</value>
@@ -199,6 +292,39 @@
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
+  </data>
+  <data name="Ingot/Cobalt" xml:space="preserve">
+    <value>Кобальт</value>
+  </data>
+  <data name="Ingot/Gold" xml:space="preserve">
+    <value>Золото</value>
+  </data>
+  <data name="Ingot/Iron" xml:space="preserve">
+    <value>Железо</value>
+  </data>
+  <data name="Ingot/Magnesium" xml:space="preserve">
+    <value>Магний</value>
+  </data>
+  <data name="Ingot/Nickel" xml:space="preserve">
+    <value>Никель</value>
+  </data>
+  <data name="Ingot/Platinum" xml:space="preserve">
+    <value>Платина</value>
+  </data>
+  <data name="Ingot/Silicon" xml:space="preserve">
+    <value>Кремний</value>
+  </data>
+  <data name="Ingot/Silver" xml:space="preserve">
+    <value>Серебро</value>
+  </data>
+  <data name="Ingot/Stone" xml:space="preserve">
+    <value>Гравий</value>
+  </data>
+  <data name="Ingot/Uranium" xml:space="preserve">
+    <value>Уран</value>
+  </data>
+  <data name="Ingots" xml:space="preserve">
+    <value>Слитки</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Интерфейс</value>
@@ -227,15 +353,52 @@
   <data name="No" xml:space="preserve">
     <value>Нет</value>
   </data>
+  <data name="Nobody" xml:space="preserve">
+    <value>Никому</value>
+  </data>
   <data name="NoPic" xml:space="preserve">
     <value>Нет миниатюры</value>
   </data>
   <data name="NoPicture" xml:space="preserve">
     <value>Похоже, у этого чертежа нет миниатюры!
-Вы хотите установить миниатюру?</value>
+Вы хотите установить миниатюру? 
+Отмена - Не устанавливать стандартную миниатюру</value>
   </data>
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать миниатюру (исправить прозрачность)</value>
+  </data>
+  <data name="Ore/Cobalt" xml:space="preserve">
+    <value>Кобальт</value>
+  </data>
+  <data name="Ore/Gold" xml:space="preserve">
+    <value>Золото</value>
+  </data>
+  <data name="Ore/Iron" xml:space="preserve">
+    <value>Железо</value>
+  </data>
+  <data name="Ore/Magnesium" xml:space="preserve">
+    <value>Магний</value>
+  </data>
+  <data name="Ore/Nickel" xml:space="preserve">
+    <value>Никель</value>
+  </data>
+  <data name="Ore/Platinum" xml:space="preserve">
+    <value>Платина</value>
+  </data>
+  <data name="Ore/Silicon" xml:space="preserve">
+    <value>Кремний</value>
+  </data>
+  <data name="Ore/Silver" xml:space="preserve">
+    <value>Серебро</value>
+  </data>
+  <data name="Ore/Stone" xml:space="preserve">
+    <value>Камень</value>
+  </data>
+  <data name="Ore/Uranium" xml:space="preserve">
+    <value>Уран</value>
+  </data>
+  <data name="Ores" xml:space="preserve">
+    <value>Руды</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Автор</value>
@@ -252,6 +415,21 @@
   <data name="Property" xml:space="preserve">
     <value>Свойство</value>
   </data>
+  <data name="Property/Enabled" xml:space="preserve">
+    <value>Включен</value>
+  </data>
+  <data name="Property/ShowInInventory" xml:space="preserve">
+    <value>Отображать в инвентаре</value>
+  </data>
+  <data name="Property/ShowInTerminal" xml:space="preserve">
+    <value>Отображать в терминале</value>
+  </data>
+  <data name="Property/ShowInToolbarConfig" xml:space="preserve">
+    <value>Отображать в инструментах</value>
+  </data>
+  <data name="Property/ShowOnHUD" xml:space="preserve">
+    <value>Отображать в HUD</value>
+  </data>
   <data name="RemLater" xml:space="preserve">
     <value>Напомнить позже</value>
   </data>
@@ -264,11 +442,22 @@
   <data name="SaveClose" xml:space="preserve">
     <value>Сохранить и закрыть</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста, выберите четреж для отображения информации</value>
   </data>
   <data name="SelectBlueForOpen" xml:space="preserve">
     <value>Пожалуйста, выберите чертеж, чтобы открыть папку</value>
+  </data>
+  <data name="SelectBluePatchDesc" xml:space="preserve">
+    <value>Пожалуйста выберите папку с чертежами, обычно это C:\Users\%UserName%\AppData\Roaming\SpaceEngineers
+\Blueprints\local</value>
+  </data>
+  <data name="SelectGamePatchDesc" xml:space="preserve">
+    <value>Пожалуйста выберите папку с игрой, обычно это C:\Program Files (x86)\Steam
+\SteamApps\common\SpaceEngineers</value>
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста, выберите предмет для отображения информации</value>
@@ -276,14 +465,26 @@
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
+  <data name="ShareMode" xml:space="preserve">
+    <value>Дать доступ</value>
+  </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>
+  </data>
+  <data name="StoneAmount" xml:space="preserve">
+    <value>Колличество камня (kg)</value>
   </data>
   <data name="System" xml:space="preserve">
     <value>Система</value>
   </data>
   <data name="SystemLang" xml:space="preserve">
     <value>Системный</value>
+  </data>
+  <data name="UndefinedTypes" xml:space="preserve">
+    <value>Неопознанные типы</value>
+  </data>
+  <data name="UndefinedTypesExists" xml:space="preserve">
+    <value>Программа не нашла эти типы блоков:</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Небезопастное действие</value>
@@ -308,5 +509,8 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
+  </data>
+  <data name="YieldModules" xml:space="preserve">
+    <value>Модули выработки</value>
   </data>
 </root>

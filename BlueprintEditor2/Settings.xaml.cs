@@ -31,8 +31,10 @@ namespace BlueprintEditor2
             InitializeComponent();
             LastWindow = this;
             BlueprintFolderSetting.Text = MySettings.Current.BlueprintPatch;
+            GameFolderSetting.Text = MySettings.Current.GamePatch;
             LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
+            DOBSBox.IsChecked = MySettings.Current.DOBS;
             hasChanged = false;
         }
 
@@ -47,7 +49,7 @@ namespace BlueprintEditor2
             {
                 MySettings.Serialize();
                 SelectBlueprint.window.SetLock(true, 0);
-                new MesassageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
+                new MessageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
                 {
                     if (Dial == DialоgResult.Yes)
                     {
@@ -94,6 +96,7 @@ namespace BlueprintEditor2
             {
                 
                 dialog.SelectedPath = BlueprintFolderSetting.Text;
+                dialog.Description = Lang.SelectBluePatchDesc;
                 dialog.ShowNewFolderButton = false;
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
                 if (result.Equals(System.Windows.Forms.DialogResult.OK))
@@ -102,6 +105,38 @@ namespace BlueprintEditor2
                     hasChanged = true;
                 }
             }
+        }
+
+        private void GameFolderSetting_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Directory.Exists(GameFolderSetting.Text))
+            {
+                MySettings.Current.GamePatch = GameFolderSetting.Text;
+                hasChanged = true;
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+
+                dialog.SelectedPath = GameFolderSetting.Text;
+                dialog.Description = Lang.SelectGamePatchDesc;
+                dialog.ShowNewFolderButton = false;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    GameFolderSetting.Text = dialog.SelectedPath + "\\";
+                    hasChanged = true;
+                }
+            }
+        }
+
+        private void DOBSBox_Click(object sender, RoutedEventArgs e)
+        {
+            MySettings.Current.DOBS = DOBSBox.IsChecked.Value;
+            hasChanged = true;
         }
     }
 }

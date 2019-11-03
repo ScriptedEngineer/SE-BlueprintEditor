@@ -9,7 +9,7 @@
         Title="Updating - SE BlueprintEditor" Height="120" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <ProgressBar x:Name="Progress" Margin="10,32,10,33" VerticalAlignment="Center" Height="26"/>
-        <Label x:Name="Status" Content="{x:Static res:Lang.DownNewVer}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Status" Content="" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Procents" Content="0%" Margin="10,32,10,33" VerticalAlignment="Center" Width="374" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26"/>
         <Label Content="{x:Static res:Lang.PleaseWaitServers}" HorizontalAlignment="Right" Margin="0,0,10,1" VerticalAlignment="Bottom"/>
 

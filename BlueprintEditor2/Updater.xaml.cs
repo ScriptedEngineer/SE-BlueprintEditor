@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
 
 namespace BlueprintEditor2
 {
@@ -22,24 +23,52 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class Updater : Window
     {
+        string downUrl;
         public Updater(string link)
         {
+            downUrl = link;
             InitializeComponent();
             MyExtensions.AsyncWorker(() =>
             {
-                WebClient web = new WebClient();
-                
-                Console.WriteLine(MyExtensions.AppFile);
-                web.DownloadFileAsync(new Uri(link), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
-                web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
-                web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
+                if (MySettings.Current.LCID != 9)
+                {
+                    Status.Content = Resource.Lang.DowLangPack;
+                    string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
+                    if (!Directory.Exists(langpackfolder))
+                        Directory.CreateDirectory(langpackfolder);
+                    WebClient web = new WebClient();
+                    web.DownloadFileAsync(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
+                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged);
+                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
+                }
+                else
+                {
+                    Status.Content = Resource.Lang.DownNewVer;
+                    WebClient web = new WebClient();
+                    web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
+                }
             });
+        }
+        public void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Progress.Value = e.ProgressPercentage;
+            Procents.Content = e.ProgressPercentage + "%";
+            Status.Content = Resource.Lang.DowLangPack + " (" + e.BytesReceived + "bytes/" + e.TotalBytesToReceive + "bytes)";
         }
         public void DownloadProgressChanged2(object sender, DownloadProgressChangedEventArgs e)
         {
             Progress.Value = e.ProgressPercentage;
-            Procents.Content = e.ProgressPercentage+"%";
-            Status.Content = Resource.Lang.DownNewVer + " ("+e.BytesReceived+"bytes/"+e.TotalBytesToReceive+"bytes)";
+            Procents.Content = e.ProgressPercentage + "%";
+            Status.Content = Resource.Lang.DownNewVer + " (" + e.BytesReceived + "bytes/" + e.TotalBytesToReceive + "bytes)";
+        }
+        public void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            WebClient web = new WebClient();
+            web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+            web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+            web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
         }
         public void DownloadFileCompleted2(object sender, AsyncCompletedEventArgs e)
         {
@@ -51,7 +80,7 @@ namespace BlueprintEditor2
 + "\r\nSet fso = CreateObject(\"Scripting.FileSystemObject\")"
 + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
 + "\r\nSet Del = fso.GetFile(\"" + MyExtensions.AppFile + "\")"
-+ "\r\nIf (fso.FileExists(\""+ UpdFile + "\")) Then"
++ "\r\nIf (fso.FileExists(\"" + UpdFile + "\")) Then"
 + "\r\n     Set Upd = fso.GetFile(\"" + UpdFile + "\")"
 + "\r\n     Del.Delete"
 + "\r\n     Upd.Name = \"" + Path.GetFileName(MyExtensions.AppFile) + "\""

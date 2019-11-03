@@ -107,7 +107,7 @@ namespace BlueprintEditor2
                     SelectBlueprint.window.Lock.Height = SystemParameters.PrimaryScreenHeight;
                     MyExtensions.AsyncWorker(() =>
                     {
-                        new MesassageDialog(DialogPicture.question, Lang.NoPic+" ["+ Name+"]", Lang.NoPicture, (Dial) =>
+                        new MessageDialog(DialogPicture.question, Lang.NoPic+" ["+ Name+"]", Lang.NoPicture, (Dial) =>
                             {
                                 switch (Dial)
                                 {

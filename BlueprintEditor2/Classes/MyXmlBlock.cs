@@ -14,7 +14,8 @@ namespace BlueprintEditor2
         private readonly XmlNode _NameNode;
         private readonly XmlNode _SubTypeNode;
         private readonly XmlNode _ColorMaskNode;
-        private readonly List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
+        private readonly XmlNode _ShareModeNode;
+        private List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
         public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
 
         public string Type
@@ -50,7 +51,6 @@ namespace BlueprintEditor2
                 double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.',','), out x);
                 double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("y").Value.Replace('.', ','), out y);
                 double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("z").Value.Replace('.', ','), out z);
-                Console.WriteLine(x + "|" + y + "|" + z);
                 return SE_ColorConverter.ColorFromSE_HSV(x,y,z);
             }
             set
@@ -60,6 +60,21 @@ namespace BlueprintEditor2
                 _ColorMaskNode.Attributes.GetNamedItem("x").Value = x.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("y").Value = y.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("z").Value = z.ToString().Replace(',', '.');
+            }
+        }
+        public ShareMode? ShareMode { 
+            get
+            {
+                ShareMode Mode;
+                if (_ShareModeNode != null && Enum.TryParse(_ShareModeNode.InnerText,out Mode))
+                    return Mode;
+                else
+                    return null;
+            }
+            set
+            {
+                if(value.HasValue && value.Value != BlueprintEditor2.ShareMode.Difference)
+                _ShareModeNode.InnerText = value.Value.ToString();
             }
         }
 
@@ -78,16 +93,27 @@ namespace BlueprintEditor2
                     case "ColorMaskHSV":
                         _ColorMaskNode = child;
                         break;
+                    case "ShareMode":
+                        _ShareModeNode = child;
+                        break;
                     default:
                         _Properties.Add(new MyBlockProperty(child));
                         continue;
                 }
+            /*if(_ShareModeNode == null && _NameNode != null)
+            {
+                XmlNode newNode = block.OwnerDocument.CreateNode("element", "ShareMode", "");
+                newNode.InnerText = "None";
+                block.AppendChild(newNode);
+                _ShareModeNode = newNode;
+            }*/
         }
     }
     public enum ShareMode
     {
+        All,
         Faction,
-        Me,
-        None
+        None,
+        Difference
     }
 }

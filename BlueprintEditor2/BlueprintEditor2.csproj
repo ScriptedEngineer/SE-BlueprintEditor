@@ -110,11 +110,12 @@
     <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
+    <Compile Include="Classes\MyResourceCalculator.cs" />
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
     <Compile Include="Classes\MyXmlBlockEqualer.cs" />
-    <Compile Include="Dialogs\MesassageDialog.xaml.cs">
-      <DependentUpon>MesassageDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditBlueprint.xaml.cs">
       <DependentUpon>EditBlueprint.xaml</DependentUpon>
@@ -128,7 +129,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.ru.resx</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -151,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\MesassageDialog.xaml">
+    <Page Include="Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,7 +211,6 @@
     <EmbeddedResource Include="Resource\Lang.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.ru.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="BlueprintEditor2_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />

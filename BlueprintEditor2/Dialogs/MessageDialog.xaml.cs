@@ -17,12 +17,12 @@ namespace BlueprintEditor2
     /// <summary>
     /// Логика взаимодействия для Dialog.xaml
     /// </summary>
-    public partial class MesassageDialog : Window
+    public partial class MessageDialog : Window
     {
         private Action<DialоgResult> OnClick;
         private Action<string> OnInput;
-        internal static MesassageDialog Last;
-        public MesassageDialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
+        internal static MessageDialog Last;
+        public MessageDialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
         {
             OnClick = _Run;
             InitializeComponent();
@@ -30,6 +30,18 @@ namespace BlueprintEditor2
             Width = _Width;
             Height = _Height;
             DataText.Text = Text;
+            string[] StrHeight = Text.Split('\n');
+            if (StrHeight.Length > 7)
+            {
+                Height = 180 + 18*(StrHeight.Length - 7);
+                int width = 400;
+                foreach (string str in StrHeight)
+                {
+                    int iwidth = 400 + 8 * (str.Length - 41);
+                    if (iwidth > width) width = iwidth;
+                }
+                Width = width;
+            }
             switch (Pic)
             {
                 case DialogPicture.warn:
@@ -59,7 +71,7 @@ namespace BlueprintEditor2
             }
             Last = this;
         }
-        public MesassageDialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
+        public MessageDialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
         {
             OnInput = _Run;
             InitializeComponent();

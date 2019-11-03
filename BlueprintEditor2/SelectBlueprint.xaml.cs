@@ -12,6 +12,8 @@ using BlueprintEditor2.Resource;
 using System.Diagnostics;
 using Path = System.IO.Path;
 using System.ComponentModel;
+using System.Net;
+using System.Text;
 
 namespace BlueprintEditor2
 {
@@ -26,6 +28,30 @@ namespace BlueprintEditor2
         public SelectBlueprint()
         {
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
+            if (!Directory.Exists("ru"))
+                try
+                {
+                    string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
+                    if (!Directory.Exists(langpackfolder))
+                        Directory.CreateDirectory(langpackfolder);
+                    WebClient web = new WebClient();
+                    web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
+                    FileStream Batch = File.Create("update.vbs");
+                    string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
+                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(500)"
+        + "\r\nOn Error Resume next"
+        + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
+        + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
+        + "\r\nOn Error GoTo 0");
+                    Batch.Write(Data, 0, Data.Length);
+                    Batch.Close();
+                    Process.Start("update.vbs");
+                    Application.Current.Shutdown();
+                }
+                catch
+                {
+
+                }
             MySettings.Deserialize();
             MySettings.Current.ApplySettings();
             InitializeComponent();
@@ -41,6 +67,7 @@ namespace BlueprintEditor2
                 }
                 //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
+            OldSortBy = FirstSorter;
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -48,6 +75,7 @@ namespace BlueprintEditor2
             if (Selected != null && File.Exists(currentBluePatch + Selected.Name + "\\bp.sbc"))
             {
                 CurrentBlueprint = new MyXmlBlueprint(currentBluePatch + Selected.Name);
+                if(MySettings.Current.DOBS)Selected.addXmlData(CurrentBlueprint);
                 BluePicture.Source = CurrentBlueprint.GetPic();
                 BlueText.Text = Lang.Blueprint + ": " + Selected.Name + "\n" +
                     Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
@@ -62,6 +90,12 @@ namespace BlueprintEditor2
                 foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*", SearchOption.TopDirectoryOnly))
                 {
                     if (Path.GetFileName(file) != "bp.sbc") File.Delete(file);
+                }
+                if (MySettings.Current.DOBS)
+                {
+                    if (OldSortBy != null)
+                        GoSort(OldSortBy, null);
+                    BlueList.ScrollIntoView(Selected);
                 }
             }
             else
@@ -81,15 +115,19 @@ namespace BlueprintEditor2
         {
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
-                Left = 0;
-                Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                if (!MySettings.Current.MultiWindow) Hide();
+                else
+                {
+                    Left = 0;
+                    Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                }
                 CurrentBlueprint.SaveBackup();
                 EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
                 Form.Show();
-                if (!MySettings.Current.MultiWindow) Hide();
+                
                 BackupButton.IsEnabled = true;
             }
-            else new MesassageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
+            else new MessageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
         }
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
@@ -97,24 +135,32 @@ namespace BlueprintEditor2
             {
                 new BackupManager(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint).Show();
             }
-            else new MesassageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
+            else new MessageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
 
         }
         private void CalculateButton_Click(object sender, RoutedEventArgs e)
         {
-            new MesassageDialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
-            /*if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
+            //new MesassageDialog(DialogPicture.attention, "Attention", Lang.ComingSoon, null, DialogType.Message).Show(); return;
+            if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))
             {
-                Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
-                Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                if (!MySettings.Current.MultiWindow) Hide();
+                else
+                {
+                    Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
+                    Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                }
                 Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
-                Form.Show();
-                Form.Left = Left + 360;
-                Form.Top = Top;
-                Form.Height = Height;
+                try
+                {
+                    Form.Show();
+                }
+                catch
+                {
+                    Focus();
+                }
             }
-            else new Dialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
-        */
+            else new MessageDialog(DialogPicture.warn, "Error", Lang.AlreadyOpened, null, DialogType.Message).Show();
+        
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -130,13 +176,13 @@ namespace BlueprintEditor2
         private void SelectorMenuItemFolder2_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentBlueprint != null) Process.Start(CurrentBlueprint.Patch);
-            else new MesassageDialog(DialogPicture.attention, "Attention", Lang.SelectBlueForOpen, null, DialogType.Message).Show();
+            else new MessageDialog(DialogPicture.attention, "Attention", Lang.SelectBlueForOpen, null, DialogType.Message).Show();
         }
         private void BackupsMenuItemDelete_Click(object sender, RoutedEventArgs e)
         {
             Lock.Height = SystemParameters.PrimaryScreenHeight;
             Lock.DataContext = 0;
-            new MesassageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteAllBackps, (Dial) =>
+            new MessageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteAllBackps, (Dial) =>
             {
                 if (Dial == DialоgResult.Yes)
                 {
@@ -217,7 +263,7 @@ namespace BlueprintEditor2
             switch (Lock.DataContext)
             {
                 case 0:
-                    if (MesassageDialog.Last != null) MesassageDialog.Last.Focus();
+                    if (MessageDialog.Last != null) MessageDialog.Last.Focus();
                     break;
                 case 1:
                     break;
@@ -240,9 +286,11 @@ namespace BlueprintEditor2
                 Lock.DataContext = null;
             }
         }
-
+        bool BlueprintInitializing = false;
         private void InitBlueprints()
         {
+            if (BlueprintInitializing) return;
+            BlueprintInitializing = true;
             Title = "SE BlueprintEditor Loading...";
             FoldersItem.Items.Clear();
             BlueList.Items.Clear();
@@ -297,7 +345,30 @@ namespace BlueprintEditor2
                         });
                         return;
                     }
-                    MyExtensions.AsyncWorker(() => BlueList.Items.Add(Elem));
+                     MyExtensions.AsyncWorker(() =>
+                     {
+                         bool AddIt = true;
+                         if (!string.IsNullOrEmpty(Search.Text))
+                         {
+                             switch (SearchBy.SelectedIndex)
+                             {
+                                 case 0:
+                                     if (!Elem.Name.Contains(Search.Text)) AddIt = false;
+                                     break;
+                                 case 1:
+                                     if (!Elem.Owner.Contains(Search.Text)) AddIt = false;
+                                     break;
+                                 case 2:
+                                     if (!Elem.CreationTimeText.Contains(Search.Text)) AddIt = false;
+                                     break;
+                                 case 3:
+                                     if (!Elem.CreationTimeText.Contains(Search.Text)) AddIt = false;
+                                     break;
+                             }
+                         }
+                         if (AddIt)
+                             BlueList.Items.Add(Elem);
+                     });
                 });
                 new Task(() =>
                 {
@@ -309,19 +380,21 @@ namespace BlueprintEditor2
                         if (OldSortBy != null)
                             GoSort(OldSortBy,null);
                         Title = "SE BlueprintEditor";
+                        BlueprintInitializing = false;
                     });
                 }).Start();
             }).Start();
         }
-        GridViewColumnHeader OldSortBy;
+        GridViewColumn OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
             
-            GridViewColumnHeader SortBy = (GridViewColumnHeader)sender;
-            if(OldSortBy != null)
-                OldSortBy.Content = OldSortBy.Content.ToString().Trim('↓', '↑', ' ');
-            string PropertyPatch = ((Binding)SortBy.Column.DisplayMemberBinding).Path.Path.Replace("Text","");
-            ListSortDirection OldDirection = ListSortDirection.Descending;
+            GridViewColumn SortBy = sender as GridViewColumn;
+            if(SortBy == null) SortBy = ((GridViewColumnHeader)sender).Column;
+            if (OldSortBy != null)
+                OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
+            string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding).Path.Path.Replace("Text","");
+            ListSortDirection OldDirection = ListSortDirection.Ascending;
             if (BlueList.Items.SortDescriptions.Count > 0 && BlueList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
                 OldDirection = BlueList.Items.SortDescriptions[0].Direction;
             ListSortDirection NewDirection;
@@ -332,8 +405,18 @@ namespace BlueprintEditor2
             BlueList.Items.SortDescriptions.Clear();
             BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             //BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
-            SortBy.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
+            SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            InitBlueprints();
         }
     }
 }

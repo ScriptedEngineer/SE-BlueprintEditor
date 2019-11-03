@@ -60,7 +60,7 @@ namespace BlueprintEditor2
             H = x * 360;
             S = y + 0.8;
             V = z + 0.45;
-            return ColorFromHSV(H, S, V);
+            return ColorFromHSV(H, Math.Max(Math.Min(S,1),0), Math.Max(Math.Min(V,1),0));
         }
         public static void ColorToSE_HSV(DColor color, out double x, out double y, out double z)
         {

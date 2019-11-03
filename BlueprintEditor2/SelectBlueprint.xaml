@@ -74,10 +74,10 @@
         <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click" Grid.Column="1" Height="20" Grid.Row="3"/>
         <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click" Grid.Column="1" Height="20" Grid.Row="3"/>
         <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Calculate}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click" Height="20" Grid.Row="3" Grid.Column="1"/>
-        <ListView x:Name="BlueList" Margin="10,26,2,10" SelectionChanged="BlueList_SelectionChanged" SelectionMode="Single" Grid.RowSpan="3" Grid.Row="1">
+        <ListView x:Name="BlueList" Margin="10,26,2,37" SelectionChanged="BlueList_SelectionChanged" SelectionMode="Single" Grid.RowSpan="3" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="170"/>
+                    <GridViewColumn x:Name="FirstSorter" DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="170"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="130"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Header="{x:Static res:Lang.GridCount}" Width="50"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Header="{x:Static res:Lang.BlockCount}" Width="50"/>
@@ -125,6 +125,14 @@
 
         </Menu>
         <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
+        <TextBox x:Name="Search" Height="22" Margin="10,0,197,10" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Bottom" TextChanged="Search_TextChanged"/>
+        <ComboBox x:Name="SearchBy" HorizontalAlignment="Right" Margin="0,0,79,10" Grid.Row="3" VerticalAlignment="Bottom" Width="113" SelectedIndex="0">
+            <ComboBoxItem Content="{x:Static res:Lang.Blueprint}"/>
+            <ComboBoxItem Content="{x:Static res:Lang.Owner}"/>
+            <ComboBoxItem Content="{x:Static res:Lang.Created}"/>
+            <ComboBoxItem Content="{x:Static res:Lang.Changed}"/>
+        </ComboBox>
+        <Button Content="{x:Static res:Lang.Search}" HorizontalAlignment="Right" Margin="0,0,2,10" Grid.Row="3" VerticalAlignment="Bottom" Width="72" Height="22" Click="Button_Click"/>
 
     </Grid>
 </Window>

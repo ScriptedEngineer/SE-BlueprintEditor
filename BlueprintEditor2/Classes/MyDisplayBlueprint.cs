@@ -26,6 +26,15 @@ namespace BlueprintEditor2
         {
 
         }
+        public void addXmlData(MyXmlBlueprint blueprint)
+        {
+            Owner = blueprint.DisplayName;
+            int blcnt = 0;
+            foreach (MyXmlGrid grd in blueprint.Grids)
+                blcnt += grd.Blocks.Length;
+            BlockCount = blcnt;
+            GridCount = blueprint.Grids.Length;
+        }
         static public MyDisplayBlueprint fromBlueprint(string Bluepath)
         {
             if (File.Exists(Bluepath + "\\bp.sbc"))
@@ -35,12 +44,20 @@ namespace BlueprintEditor2
                 FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
                 Elem.LastEditTime = Inf.LastWriteTime;
                 Elem.CreationTime = Inf.CreationTime;
-
-                XmlDocument BlueprintXml = new XmlDocument();
-                BlueprintXml.Load(Bluepath + "\\bp.sbc");
-                Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
-                Elem.BlockCount = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count;
-                Elem.GridCount = BlueprintXml.GetElementsByTagName("CubeGrid").Count;
+                if (!MySettings.Current.DOBS)
+                {
+                    XmlDocument BlueprintXml = new XmlDocument();
+                    BlueprintXml.Load(Bluepath + "\\bp.sbc");
+                    Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
+                    Elem.BlockCount = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count;
+                    Elem.GridCount = BlueprintXml.GetElementsByTagName("CubeGrid").Count;
+                }
+                else
+                {
+                    Elem.Owner = "";
+                    Elem.BlockCount = 0;
+                    Elem.GridCount = 0;
+                }
 
                 return Elem;
             }

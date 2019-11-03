@@ -125,11 +125,23 @@ Developed by clan "Andromeda"</value>
   <data name="AboutProg" xml:space="preserve">
     <value>About program</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="AlreadyOpened" xml:space="preserve">
     <value>Blueprint is already open</value>
   </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="AssemblerEfficiency" xml:space="preserve">
+    <value>Assembler efficiency</value>
+  </data>
   <data name="Backups" xml:space="preserve">
     <value>Backups</value>
+  </data>
+  <data name="BlockColor" xml:space="preserve">
+    <value>Block color</value>
   </data>
   <data name="BlockCount" xml:space="preserve">
     <value>Blocks</value>
@@ -144,7 +156,7 @@ Developed by clan "Andromeda"</value>
     <value>Block type</value>
   </data>
   <data name="BlueFolder" xml:space="preserve">
-    <value>Blueprints folder</value>
+    <value>Blueprints directory</value>
   </data>
   <data name="Blueprint" xml:space="preserve">
     <value>Blueprint</value>
@@ -161,6 +173,75 @@ Developed by clan "Andromeda"</value>
   <data name="ComingSoon" xml:space="preserve">
     <value>Coming soon...</value>
   </data>
+  <data name="Component/BulletproofGlass" xml:space="preserve">
+    <value>Bulletproof glass</value>
+  </data>
+  <data name="Component/Canvas" xml:space="preserve">
+    <value>Canvas</value>
+  </data>
+  <data name="Component/Computer" xml:space="preserve">
+    <value>Computer</value>
+  </data>
+  <data name="Component/Construction" xml:space="preserve">
+    <value>Construction</value>
+  </data>
+  <data name="Component/Detector" xml:space="preserve">
+    <value>Detector</value>
+  </data>
+  <data name="Component/Display" xml:space="preserve">
+    <value>Display</value>
+  </data>
+  <data name="Component/Explosives" xml:space="preserve">
+    <value>Explosives</value>
+  </data>
+  <data name="Component/Girder" xml:space="preserve">
+    <value>Girder</value>
+  </data>
+  <data name="Component/GravityGenerator" xml:space="preserve">
+    <value>Gravity generator</value>
+  </data>
+  <data name="Component/InteriorPlate" xml:space="preserve">
+    <value>Interior plate</value>
+  </data>
+  <data name="Component/LargeTube" xml:space="preserve">
+    <value>Large tube</value>
+  </data>
+  <data name="Component/Medical" xml:space="preserve">
+    <value>Medical</value>
+  </data>
+  <data name="Component/MetalGrid" xml:space="preserve">
+    <value>Metal grid</value>
+  </data>
+  <data name="Component/Motor" xml:space="preserve">
+    <value>Motor</value>
+  </data>
+  <data name="Component/PowerCell" xml:space="preserve">
+    <value>Power cell</value>
+  </data>
+  <data name="Component/RadioCommunication" xml:space="preserve">
+    <value>Radio communication</value>
+  </data>
+  <data name="Component/Reactor" xml:space="preserve">
+    <value>Reactor</value>
+  </data>
+  <data name="Component/SmallTube" xml:space="preserve">
+    <value>Small tube</value>
+  </data>
+  <data name="Component/SolarCell" xml:space="preserve">
+    <value>Solar cell</value>
+  </data>
+  <data name="Component/SteelPlate" xml:space="preserve">
+    <value>Steel plate</value>
+  </data>
+  <data name="Component/Thrust" xml:space="preserve">
+    <value>Thrust</value>
+  </data>
+  <data name="Components" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="CopyToClipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
@@ -171,7 +252,7 @@ Developed by clan "Andromeda"</value>
     <value>Delete</value>
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
-    <value>Delete all backups of all blueprints</value>
+    <value>Delete all backups of all blueprints in this directory</value>
   </data>
   <data name="DestructibleGrid" xml:space="preserve">
     <value>Destructible grid</value>
@@ -179,11 +260,23 @@ Developed by clan "Andromeda"</value>
   <data name="Directories" xml:space="preserve">
     <value>Directories</value>
   </data>
+  <data name="DontOpenAllBlue" xml:space="preserve">
+    <value>Don't open blueprints when scanning</value>
+  </data>
+  <data name="DowLangPack" xml:space="preserve">
+    <value>Do empty work</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Downloading new version</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Faction" xml:space="preserve">
+    <value>Faction</value>
+  </data>
+  <data name="GameFolder" xml:space="preserve">
+    <value>Game directory</value>
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Back</value>
@@ -199,6 +292,39 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
+  </data>
+  <data name="Ingot/Cobalt" xml:space="preserve">
+    <value>Cobalt</value>
+  </data>
+  <data name="Ingot/Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Ingot/Iron" xml:space="preserve">
+    <value>Iron</value>
+  </data>
+  <data name="Ingot/Magnesium" xml:space="preserve">
+    <value>Magnesium</value>
+  </data>
+  <data name="Ingot/Nickel" xml:space="preserve">
+    <value>Nickel</value>
+  </data>
+  <data name="Ingot/Platinum" xml:space="preserve">
+    <value>Platinum</value>
+  </data>
+  <data name="Ingot/Silicon" xml:space="preserve">
+    <value>Silicon</value>
+  </data>
+  <data name="Ingot/Silver" xml:space="preserve">
+    <value>Silver</value>
+  </data>
+  <data name="Ingot/Stone" xml:space="preserve">
+    <value>Gravel</value>
+  </data>
+  <data name="Ingot/Uranium" xml:space="preserve">
+    <value>Uranium</value>
+  </data>
+  <data name="Ingots" xml:space="preserve">
+    <value>Ingots</value>
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
@@ -227,15 +353,52 @@ Developed by clan "Andromeda"</value>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="Nobody" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="NoPic" xml:space="preserve">
     <value>No thumbnail</value>
   </data>
   <data name="NoPicture" xml:space="preserve">
     <value>Looks like this blueprint doesn't have a thumbnail!
-Do you want set a thumbnail?</value>
+Do you want set a thumbnail?
+Cancel - Don't set default thumbnail</value>
   </data>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize thumbnail (fix transparency)</value>
+  </data>
+  <data name="Ore/Cobalt" xml:space="preserve">
+    <value>Cobalt</value>
+  </data>
+  <data name="Ore/Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Ore/Iron" xml:space="preserve">
+    <value>Iron</value>
+  </data>
+  <data name="Ore/Magnesium" xml:space="preserve">
+    <value>Magnesium</value>
+  </data>
+  <data name="Ore/Nickel" xml:space="preserve">
+    <value>Nickel</value>
+  </data>
+  <data name="Ore/Platinum" xml:space="preserve">
+    <value>Platinum</value>
+  </data>
+  <data name="Ore/Silicon" xml:space="preserve">
+    <value>Silicon</value>
+  </data>
+  <data name="Ore/Silver" xml:space="preserve">
+    <value>Silver</value>
+  </data>
+  <data name="Ore/Stone" xml:space="preserve">
+    <value>Stone</value>
+  </data>
+  <data name="Ore/Uranium" xml:space="preserve">
+    <value>Uranium</value>
+  </data>
+  <data name="Ores" xml:space="preserve">
+    <value>Ores</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Author</value>
@@ -252,6 +415,21 @@ Do you want set a thumbnail?</value>
   <data name="Property" xml:space="preserve">
     <value>Property</value>
   </data>
+  <data name="Property/Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Property/ShowInInventory" xml:space="preserve">
+    <value>Show in inventory</value>
+  </data>
+  <data name="Property/ShowInTerminal" xml:space="preserve">
+    <value>Show in terminal</value>
+  </data>
+  <data name="Property/ShowInToolbarConfig" xml:space="preserve">
+    <value>Show in toolbar config</value>
+  </data>
+  <data name="Property/ShowOnHUD" xml:space="preserve">
+    <value>Show on HUD</value>
+  </data>
   <data name="RemLater" xml:space="preserve">
     <value>Remind me later</value>
   </data>
@@ -264,11 +442,22 @@ Do you want set a thumbnail?</value>
   <data name="SaveClose" xml:space="preserve">
     <value>Save and сlose</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Please select blueprint to display information</value>
   </data>
   <data name="SelectBlueForOpen" xml:space="preserve">
     <value>Please select blueprint to open folder</value>
+  </data>
+  <data name="SelectBluePatchDesc" xml:space="preserve">
+    <value>Please select blueprints directory, usually it C:\Users\%UserName%\AppData\Roaming\SpaceEngineers
+\Blueprints\local</value>
+  </data>
+  <data name="SelectGamePatchDesc" xml:space="preserve">
+    <value>Please select game directory, usually it C:\Program Files (x86)\Steam
+\SteamApps\common\SpaceEngineers</value>
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
@@ -276,14 +465,26 @@ Do you want set a thumbnail?</value>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ShareMode" xml:space="preserve">
+    <value>Share mode</value>
+  </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>
+  </data>
+  <data name="StoneAmount" xml:space="preserve">
+    <value>Stone amount (kg)</value>
   </data>
   <data name="System" xml:space="preserve">
     <value>System</value>
   </data>
   <data name="SystemLang" xml:space="preserve">
     <value>System</value>
+  </data>
+  <data name="UndefinedTypes" xml:space="preserve">
+    <value>Undefined types</value>
+  </data>
+  <data name="UndefinedTypesExists" xml:space="preserve">
+    <value>This block types not found:</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Unsafe action</value>
@@ -308,5 +509,8 @@ Do you want set a thumbnail?</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="YieldModules" xml:space="preserve">
+    <value>Yield modules</value>
   </data>
 </root>

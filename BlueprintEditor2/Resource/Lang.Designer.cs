@@ -81,6 +81,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Blueprint is already open.
         /// </summary>
         public static string AlreadyOpened {
@@ -90,11 +99,38 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Assembler efficiency.
+        /// </summary>
+        public static string AssemblerEfficiency {
+            get {
+                return ResourceManager.GetString("AssemblerEfficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Backups.
         /// </summary>
         public static string Backups {
             get {
                 return ResourceManager.GetString("Backups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Block color.
+        /// </summary>
+        public static string BlockColor {
+            get {
+                return ResourceManager.GetString("BlockColor", resourceCulture);
             }
         }
         
@@ -135,7 +171,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Blueprints folder.
+        ///   Ищет локализованную строку, похожую на Blueprints directory.
         /// </summary>
         public static string BlueFolder {
             get {
@@ -189,6 +225,213 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Bulletproof glass.
+        /// </summary>
+        public static string Component_BulletproofGlass {
+            get {
+                return ResourceManager.GetString("Component/BulletproofGlass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Canvas.
+        /// </summary>
+        public static string Component_Canvas {
+            get {
+                return ResourceManager.GetString("Component/Canvas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Computer.
+        /// </summary>
+        public static string Component_Computer {
+            get {
+                return ResourceManager.GetString("Component/Computer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Construction.
+        /// </summary>
+        public static string Component_Construction {
+            get {
+                return ResourceManager.GetString("Component/Construction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Detector.
+        /// </summary>
+        public static string Component_Detector {
+            get {
+                return ResourceManager.GetString("Component/Detector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Display.
+        /// </summary>
+        public static string Component_Display {
+            get {
+                return ResourceManager.GetString("Component/Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Explosives.
+        /// </summary>
+        public static string Component_Explosives {
+            get {
+                return ResourceManager.GetString("Component/Explosives", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Girder.
+        /// </summary>
+        public static string Component_Girder {
+            get {
+                return ResourceManager.GetString("Component/Girder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gravity generator.
+        /// </summary>
+        public static string Component_GravityGenerator {
+            get {
+                return ResourceManager.GetString("Component/GravityGenerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Interior plate.
+        /// </summary>
+        public static string Component_InteriorPlate {
+            get {
+                return ResourceManager.GetString("Component/InteriorPlate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Large tube.
+        /// </summary>
+        public static string Component_LargeTube {
+            get {
+                return ResourceManager.GetString("Component/LargeTube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Medical.
+        /// </summary>
+        public static string Component_Medical {
+            get {
+                return ResourceManager.GetString("Component/Medical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Metal grid.
+        /// </summary>
+        public static string Component_MetalGrid {
+            get {
+                return ResourceManager.GetString("Component/MetalGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Motor.
+        /// </summary>
+        public static string Component_Motor {
+            get {
+                return ResourceManager.GetString("Component/Motor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Power cell.
+        /// </summary>
+        public static string Component_PowerCell {
+            get {
+                return ResourceManager.GetString("Component/PowerCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Radio communication.
+        /// </summary>
+        public static string Component_RadioCommunication {
+            get {
+                return ResourceManager.GetString("Component/RadioCommunication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Reactor.
+        /// </summary>
+        public static string Component_Reactor {
+            get {
+                return ResourceManager.GetString("Component/Reactor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Small tube.
+        /// </summary>
+        public static string Component_SmallTube {
+            get {
+                return ResourceManager.GetString("Component/SmallTube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Solar cell.
+        /// </summary>
+        public static string Component_SolarCell {
+            get {
+                return ResourceManager.GetString("Component/SolarCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Steel plate.
+        /// </summary>
+        public static string Component_SteelPlate {
+            get {
+                return ResourceManager.GetString("Component/SteelPlate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Thrust.
+        /// </summary>
+        public static string Component_Thrust {
+            get {
+                return ResourceManager.GetString("Component/Thrust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Components.
+        /// </summary>
+        public static string Components {
+            get {
+                return ResourceManager.GetString("Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy to clipboard.
+        /// </summary>
+        public static string CopyToClipboard {
+            get {
+                return ResourceManager.GetString("CopyToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Created.
         /// </summary>
         public static string Created {
@@ -216,7 +459,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete all backups of all blueprints.
+        ///   Ищет локализованную строку, похожую на Delete all backups of all blueprints in this directory.
         /// </summary>
         public static string DeleteAllBackups {
             get {
@@ -243,6 +486,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t open blueprints when scanning.
+        /// </summary>
+        public static string DontOpenAllBlue {
+            get {
+                return ResourceManager.GetString("DontOpenAllBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Do empty work.
+        /// </summary>
+        public static string DowLangPack {
+            get {
+                return ResourceManager.GetString("DowLangPack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Downloading new version.
         /// </summary>
         public static string DownNewVer {
@@ -257,6 +518,24 @@ namespace BlueprintEditor2.Resource {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Faction.
+        /// </summary>
+        public static string Faction {
+            get {
+                return ResourceManager.GetString("Faction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Game directory.
+        /// </summary>
+        public static string GameFolder {
+            get {
+                return ResourceManager.GetString("GameFolder", resourceCulture);
             }
         }
         
@@ -302,6 +581,105 @@ namespace BlueprintEditor2.Resource {
         public static string ImFiles {
             get {
                 return ResourceManager.GetString("ImFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cobalt.
+        /// </summary>
+        public static string Ingot_Cobalt {
+            get {
+                return ResourceManager.GetString("Ingot/Cobalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gold.
+        /// </summary>
+        public static string Ingot_Gold {
+            get {
+                return ResourceManager.GetString("Ingot/Gold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Iron.
+        /// </summary>
+        public static string Ingot_Iron {
+            get {
+                return ResourceManager.GetString("Ingot/Iron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Magnesium.
+        /// </summary>
+        public static string Ingot_Magnesium {
+            get {
+                return ResourceManager.GetString("Ingot/Magnesium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Nickel.
+        /// </summary>
+        public static string Ingot_Nickel {
+            get {
+                return ResourceManager.GetString("Ingot/Nickel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Platinum.
+        /// </summary>
+        public static string Ingot_Platinum {
+            get {
+                return ResourceManager.GetString("Ingot/Platinum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Silicon.
+        /// </summary>
+        public static string Ingot_Silicon {
+            get {
+                return ResourceManager.GetString("Ingot/Silicon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Silver.
+        /// </summary>
+        public static string Ingot_Silver {
+            get {
+                return ResourceManager.GetString("Ingot/Silver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gravel.
+        /// </summary>
+        public static string Ingot_Stone {
+            get {
+                return ResourceManager.GetString("Ingot/Stone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Uranium.
+        /// </summary>
+        public static string Ingot_Uranium {
+            get {
+                return ResourceManager.GetString("Ingot/Uranium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ingots.
+        /// </summary>
+        public static string Ingots {
+            get {
+                return ResourceManager.GetString("Ingots", resourceCulture);
             }
         }
         
@@ -387,6 +765,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на None.
+        /// </summary>
+        public static string Nobody {
+            get {
+                return ResourceManager.GetString("Nobody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No thumbnail.
         /// </summary>
         public static string NoPic {
@@ -397,7 +784,8 @@ namespace BlueprintEditor2.Resource {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Looks like this blueprint doesn&apos;t have a thumbnail!
-        ///Do you want set a thumbnail?.
+        ///Do you want set a thumbnail?
+        ///Cancel - Don&apos;t set default thumbnail.
         /// </summary>
         public static string NoPicture {
             get {
@@ -411,6 +799,105 @@ namespace BlueprintEditor2.Resource {
         public static string Normalize {
             get {
                 return ResourceManager.GetString("Normalize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Cobalt.
+        /// </summary>
+        public static string Ore_Cobalt {
+            get {
+                return ResourceManager.GetString("Ore/Cobalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Gold.
+        /// </summary>
+        public static string Ore_Gold {
+            get {
+                return ResourceManager.GetString("Ore/Gold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Iron.
+        /// </summary>
+        public static string Ore_Iron {
+            get {
+                return ResourceManager.GetString("Ore/Iron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Magnesium.
+        /// </summary>
+        public static string Ore_Magnesium {
+            get {
+                return ResourceManager.GetString("Ore/Magnesium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Nickel.
+        /// </summary>
+        public static string Ore_Nickel {
+            get {
+                return ResourceManager.GetString("Ore/Nickel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Platinum.
+        /// </summary>
+        public static string Ore_Platinum {
+            get {
+                return ResourceManager.GetString("Ore/Platinum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Silicon.
+        /// </summary>
+        public static string Ore_Silicon {
+            get {
+                return ResourceManager.GetString("Ore/Silicon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Silver.
+        /// </summary>
+        public static string Ore_Silver {
+            get {
+                return ResourceManager.GetString("Ore/Silver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stone.
+        /// </summary>
+        public static string Ore_Stone {
+            get {
+                return ResourceManager.GetString("Ore/Stone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Uranium.
+        /// </summary>
+        public static string Ore_Uranium {
+            get {
+                return ResourceManager.GetString("Ore/Uranium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ores.
+        /// </summary>
+        public static string Ores {
+            get {
+                return ResourceManager.GetString("Ores", resourceCulture);
             }
         }
         
@@ -460,6 +947,51 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Enabled.
+        /// </summary>
+        public static string Property_Enabled {
+            get {
+                return ResourceManager.GetString("Property/Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show in inventory.
+        /// </summary>
+        public static string Property_ShowInInventory {
+            get {
+                return ResourceManager.GetString("Property/ShowInInventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show in terminal.
+        /// </summary>
+        public static string Property_ShowInTerminal {
+            get {
+                return ResourceManager.GetString("Property/ShowInTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show in toolbar config.
+        /// </summary>
+        public static string Property_ShowInToolbarConfig {
+            get {
+                return ResourceManager.GetString("Property/ShowInToolbarConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show on HUD.
+        /// </summary>
+        public static string Property_ShowOnHUD {
+            get {
+                return ResourceManager.GetString("Property/ShowOnHUD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Remind me later.
         /// </summary>
         public static string RemLater {
@@ -496,6 +1028,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please select blueprint to display information.
         /// </summary>
         public static string SelectBlue {
@@ -510,6 +1051,26 @@ namespace BlueprintEditor2.Resource {
         public static string SelectBlueForOpen {
             get {
                 return ResourceManager.GetString("SelectBlueForOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select blueprints directory, usually it C:\Users\%UserName%\AppData\Roaming\SpaceEngineers
+        ///\Blueprints\local.
+        /// </summary>
+        public static string SelectBluePatchDesc {
+            get {
+                return ResourceManager.GetString("SelectBluePatchDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select game directory, usually it C:\Program Files (x86)\Steam
+        ///\SteamApps\common\SpaceEngineers.
+        /// </summary>
+        public static string SelectGamePatchDesc {
+            get {
+                return ResourceManager.GetString("SelectGamePatchDesc", resourceCulture);
             }
         }
         
@@ -532,11 +1093,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Share mode.
+        /// </summary>
+        public static string ShareMode {
+            get {
+                return ResourceManager.GetString("ShareMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Small grid.
         /// </summary>
         public static string SmallGrid {
             get {
                 return ResourceManager.GetString("SmallGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Stone amount (kg).
+        /// </summary>
+        public static string StoneAmount {
+            get {
+                return ResourceManager.GetString("StoneAmount", resourceCulture);
             }
         }
         
@@ -555,6 +1134,24 @@ namespace BlueprintEditor2.Resource {
         public static string SystemLang {
             get {
                 return ResourceManager.GetString("SystemLang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Undefined types.
+        /// </summary>
+        public static string UndefinedTypes {
+            get {
+                return ResourceManager.GetString("UndefinedTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This block types not found:.
+        /// </summary>
+        public static string UndefinedTypesExists {
+            get {
+                return ResourceManager.GetString("UndefinedTypesExists", resourceCulture);
             }
         }
         
@@ -627,6 +1224,15 @@ namespace BlueprintEditor2.Resource {
         public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Yield modules.
+        /// </summary>
+        public static string YieldModules {
+            get {
+                return ResourceManager.GetString("YieldModules", resourceCulture);
             }
         }
     }

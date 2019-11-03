@@ -20,17 +20,23 @@ namespace BlueprintEditor2
         public static MySettings Current = new MySettings();
         [DataMember(Name = "BlueprintMainFolder")]
         public string BlueprintPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Blueprints\local\";
+        [DataMember(Name = "GameFolder")]
+        public string GamePatch = null;
         [DataMember(Name = "UseMultipleWindows")]
         public bool MultiWindow = false;
+        [DataMember(Name = "DontOpenBlueprintsOnScan")]
+        public bool DOBS = false;
         [DataMember(Name = "LangCultureID")]
-        public int LCID;
+        public int LCID = 0;
         MySettings()
         {
             LCID = Thread.CurrentThread.CurrentUICulture.LCID;
+            if (Directory.Exists(@"C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers"))
+                GamePatch = @"C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\";
         }
         public void ApplySettings()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(LCID);
+            if(LCID != 0) Thread.CurrentThread.CurrentUICulture = new CultureInfo(LCID);
         }
         public static void Serialize()
         {
