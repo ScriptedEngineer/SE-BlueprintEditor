@@ -42,8 +42,8 @@ namespace BlueprintEditor2
             {
                 if (version == "") continue;
                 bool breaked = false;
-                string versio = version.Split(':')[1];
-                string[] Strings = versio.Split(new string[] { "\n", "\r", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                //string[] versio = version.Split(':');
+                string[] Strings = version.Split(new string[] { ":", "\n", "\r", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var stringe in Strings)
                 {
                     if (stringe == "") continue;
@@ -52,12 +52,12 @@ namespace BlueprintEditor2
                         Backlog += (langs[Lid == "ru" ? 1 : 0]) + "\r\n";
                     else
                     {
-                        if (cut && langs[0] == MyExtensions.Version + ":")
+                        if (cut && langs[0] == MyExtensions.Version)
                         {
                             breaked = true;
                             break;
                         }
-                        Backlog += langs[0] + "\r\n";
+                        //Backlog += langs[0] + "\r\n";
                     }
 
                 }
