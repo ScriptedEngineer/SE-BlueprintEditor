@@ -233,6 +233,9 @@
   <data name="Component/SteelPlate" xml:space="preserve">
     <value>Стальная пластина</value>
   </data>
+  <data name="Component/Superconductor" xml:space="preserve">
+    <value>Сверхпроводник</value>
+  </data>
   <data name="Component/Thrust" xml:space="preserve">
     <value>Детали ионного ускорителя</value>
   </data>

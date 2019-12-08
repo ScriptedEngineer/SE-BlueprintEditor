@@ -100,13 +100,11 @@ namespace BlueprintEditor2
                         _Properties.Add(new MyBlockProperty(child));
                         continue;
                 }
-            /*if(_ShareModeNode == null && _NameNode != null)
-            {
-                XmlNode newNode = block.OwnerDocument.CreateNode("element", "ShareMode", "");
-                newNode.InnerText = "None";
-                block.AppendChild(newNode);
-                _ShareModeNode = newNode;
-            }*/
+        }
+        public void Delete()
+        {
+            XmlNode parent = _BlockXml.ParentNode;
+            parent.RemoveChild(_BlockXml);
         }
     }
     public enum ShareMode

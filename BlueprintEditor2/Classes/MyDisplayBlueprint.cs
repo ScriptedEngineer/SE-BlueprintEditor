@@ -31,7 +31,7 @@ namespace BlueprintEditor2
             Owner = blueprint.DisplayName;
             int blcnt = 0;
             foreach (MyXmlGrid grd in blueprint.Grids)
-                blcnt += grd.Blocks.Length;
+                blcnt += grd.Blocks.Count;
             BlockCount = blcnt;
             GridCount = blueprint.Grids.Length;
         }

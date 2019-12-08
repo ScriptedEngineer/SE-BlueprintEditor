@@ -10,7 +10,7 @@ namespace BlueprintEditor2
     public class MyXmlGrid
     {
         public XmlNode GridXml;
-        public MyXmlBlock[] Blocks;
+        public List<MyXmlBlock> Blocks;
         private XmlNode NameNode;
         private XmlNode GridSizeNode;
         private XmlNode DestructibleNode;
@@ -40,7 +40,7 @@ namespace BlueprintEditor2
                         NameNode = child;
                         break;
                     case "CubeBlocks":
-                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => new MyXmlBlock(x)).ToArray();
+                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => new MyXmlBlock(x)).ToList();
                         break;
                     case "GridSizeEnum":
                         GridSizeNode = child;
@@ -50,6 +50,11 @@ namespace BlueprintEditor2
                         break;
                 }
             }
+        }
+        public void RemoveBlock(MyXmlBlock Block)
+        {
+            Block.Delete();
+            Blocks.Remove(Block);
         }
     }
     public enum GridSizes

@@ -405,6 +405,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Superconductor.
+        /// </summary>
+        public static string Component_Superconductor {
+            get {
+                return ResourceManager.GetString("Component/Superconductor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Thrust.
         /// </summary>
         public static string Component_Thrust {

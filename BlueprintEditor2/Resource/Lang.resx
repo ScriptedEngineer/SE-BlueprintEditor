@@ -233,6 +233,9 @@ Developed by clan "Andromeda"</value>
   <data name="Component/SteelPlate" xml:space="preserve">
     <value>Steel plate</value>
   </data>
+  <data name="Component/Superconductor" xml:space="preserve">
+    <value>Superconductor</value>
+  </data>
   <data name="Component/Thrust" xml:space="preserve">
     <value>Thrust</value>
   </data>

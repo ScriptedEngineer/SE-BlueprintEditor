@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using Forms = System.Windows.Forms;
 using BlueprintEditor2.Resource;
+using System.Collections.Generic;
 
 namespace BlueprintEditor2
 {
@@ -37,8 +38,8 @@ namespace BlueprintEditor2
             BlockList.Items.Clear();
             if (GridList.SelectedIndex == -1) return;
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
-            MyXmlBlock[] TheBlocks = SlectedGrd.Blocks;
-            for (int i = 0; i < TheBlocks.Length; i++)
+            List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
+            for (int i = 0; i < TheBlocks.Count; i++)
             {
                 switch (SearchBy.SelectedIndex)
                 {
@@ -263,7 +264,6 @@ namespace BlueprintEditor2
             Sender.Content = Sender.IsChecked.Value ? Lang.Yes : Lang.No;
             string TxtVle = Sender.IsChecked.ToString();
             string PropName = Sender.CommandParameter.ToString();
-            Console.WriteLine(PropName);
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
                 MyBlockProperty Change = SelectedBlk.Properties.FirstOrDefault(x => x.PropertyName == PropName);
@@ -277,6 +277,22 @@ namespace BlueprintEditor2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GridList_SelectionChanged(null,null);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            List<MyXmlBlock> Blocks = new List<MyXmlBlock>();
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                EdBlueprint.Grids[GridList.SelectedIndex].RemoveBlock(SelectedBlk);
+                Blocks.Add(SelectedBlk);
+            }
+            foreach (MyXmlBlock SelectedBlk in Blocks)
+            {
+                BlockList.Items.Remove(SelectedBlk);
+            }
+            GoSort(OldSortBy, null);
+            BlockList.ScrollIntoView(BlockList.SelectedItem);
         }
     }
 }
