@@ -30,7 +30,15 @@ namespace BlueprintEditor2
             InitializeComponent();
             MyExtensions.AsyncWorker(() =>
             {
-                if (MySettings.Current.LCID != 9)
+                if (MySettings.Current.LCID == 9)
+                {
+                    Status.Content = Resource.Lang.DownNewVer;
+                    WebClient web = new WebClient();
+                    web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
+                }
+                else if(MySettings.Current.LCID == 1049)
                 {
                     Status.Content = Resource.Lang.DowLangPack;
                     string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
@@ -40,14 +48,6 @@ namespace BlueprintEditor2
                     web.DownloadFileAsync(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
                     web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged);
                     web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
-                }
-                else
-                {
-                    Status.Content = Resource.Lang.DownNewVer;
-                    WebClient web = new WebClient();
-                    web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
-                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
-                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
                 }
             });
         }

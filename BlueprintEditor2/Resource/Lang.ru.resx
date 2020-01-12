@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>SE Blueprint Editor - программа для редактирования чертежей игры "Space Engineers" вне игры
+    <value>SE Blueprint Editor - программа для редактирования
+чертежей игры "Space Engineers" вне игры
 Данная программа позволяет быстро изменить необходимые части чертежей(блоки, их настройки и прочее), не запуская игру.
 Разработано кланом "Андромеда"</value>
   </data>
@@ -245,6 +246,10 @@
   <data name="CopyToClipboard" xml:space="preserve">
     <value>Скорипровать в буфер обмена</value>
   </data>
+  <data name="CrashReport" xml:space="preserve">
+    <value>Отчет об ошибке:
+Нажав на кнопку "Не отправлять", вы признаете, что ошибка произошла по вашей вине!</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
@@ -265,6 +270,9 @@
   </data>
   <data name="DontOpenAllBlue" xml:space="preserve">
     <value>Не открывать чертежи при сканировании</value>
+  </data>
+  <data name="DontSend" xml:space="preserve">
+    <value>Не отправлять</value>
   </data>
   <data name="DowLangPack" xml:space="preserve">
     <value>Загружаем локализацию для новой версии</value>
@@ -287,11 +295,20 @@
   <data name="GoHome" xml:space="preserve">
     <value>Домой</value>
   </data>
+  <data name="GridArmorType" xml:space="preserve">
+    <value>Тип брони сетки</value>
+  </data>
   <data name="GridCount" xml:space="preserve">
     <value>Сетки</value>
   </data>
   <data name="GridName" xml:space="preserve">
     <value>Название сетки</value>
+  </data>
+  <data name="HeavyArmor" xml:space="preserve">
+    <value>Тяжелая броня</value>
+  </data>
+  <data name="HideArmor" xml:space="preserve">
+    <value>Скрыть броню</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
@@ -343,6 +360,9 @@
   </data>
   <data name="LargeGrid" xml:space="preserve">
     <value>Большая сетка</value>
+  </data>
+  <data name="LightArmor" xml:space="preserve">
+    <value>Легкая броня</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
@@ -442,6 +462,9 @@
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
   </data>
+  <data name="RunApp" xml:space="preserve">
+    <value>Запустить приложение</value>
+  </data>
   <data name="SaveClose" xml:space="preserve">
     <value>Сохранить и закрыть</value>
   </data>
@@ -464,6 +487,9 @@
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста, выберите предмет для отображения информации</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Отправить</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Настройки</value>
@@ -507,8 +533,14 @@
   <data name="ViewFold" xml:space="preserve">
     <value>Открыть папку чартежа…</value>
   </data>
+  <data name="WhatHappens" xml:space="preserve">
+    <value>Что произошло?</value>
+  </data>
   <data name="WhatNew" xml:space="preserve">
     <value>Что нового:</value>
+  </data>
+  <data name="WhoAreYou" xml:space="preserve">
+    <value>Контактная информация, или ник, или ничего</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>

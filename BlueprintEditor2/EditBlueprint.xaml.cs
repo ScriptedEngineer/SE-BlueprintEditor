@@ -36,23 +36,47 @@ namespace BlueprintEditor2
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BlockList.Items.Clear();
+            HideArmor.IsEnabled = true;
+            GridArmourType.IsEnabled = true;
+            initGAT = false;
             if (GridList.SelectedIndex == -1) return;
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
             List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
+            int Heavy = 0,Light = 0;
             for (int i = 0; i < TheBlocks.Count; i++)
             {
+                MyXmlBlock thatBlock = TheBlocks[i];
                 switch (SearchBy.SelectedIndex)
                 {
                     case 0:
-                        if(TheBlocks[i].DisplayType.Contains(Search.Text))
-                            BlockList.Items.Add(TheBlocks[i]);
+                        if(thatBlock.DisplayType.Contains(Search.Text) && (HideArmor.IsChecked.Value? !thatBlock.IsArmor :true))
+                            BlockList.Items.Add(thatBlock);
                         break;
                     case 1:
-                        if (TheBlocks[i].Name != null && TheBlocks[i].Name.Contains(Search.Text))
-                            BlockList.Items.Add(TheBlocks[i]);
+                        if (thatBlock.Name != null && thatBlock.Name.Contains(Search.Text) && (HideArmor.IsChecked.Value ? !thatBlock.IsArmor : true))
+                            BlockList.Items.Add(thatBlock);
                         break;
                 }
+                if (thatBlock.IsArmor)
+                {
+                    if (thatBlock.Armor == ArmorType.Heavy)
+                        Heavy++;
+                    else if (thatBlock.Armor == ArmorType.Light)
+                        Light++;
+                }
             }
+            if(Heavy != Light)
+                GridArmourType.SelectedIndex = Heavy > Light?0:1;
+            else
+            {
+                GridArmourType.SelectedIndex = -1;
+                if (Heavy == 0)
+                {
+                    HideArmor.IsEnabled = false;
+                    GridArmourType.IsEnabled = false;
+                }
+            }
+            initGAT = true;
             //BlockList.Items.SortDescriptions.Clear();
             //BlockList.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
             GridNameBox.Text = SlectedGrd.Name;
@@ -293,6 +317,18 @@ namespace BlueprintEditor2
             }
             GoSort(OldSortBy, null);
             BlockList.ScrollIntoView(BlockList.SelectedItem);
+        }
+        bool initGAT = false;
+        private void GridArmourType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!initGAT) return;
+            MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
+            ArmorType type = (ArmorType)GridArmourType.SelectedIndex;
+            foreach (MyXmlBlock block in SlectedGrd.Blocks)
+            {
+                block.Armor = type;
+            }
+            GridList_SelectionChanged(null,null);
         }
     }
 }

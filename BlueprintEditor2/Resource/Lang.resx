@@ -118,7 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>SE Blueprint Editor - program for editing blueprints of the game "Space Engineers" outside the game
+    <value>SE Blueprint Editor - program for editing 
+blueprints of the game "Space Engineers" outside the game
 This program allows you to quickly change the necessary parts of the blueprints(blocks, their settings, etc.), without starting the game.
 Developed by clan "Andromeda"</value>
   </data>
@@ -245,6 +246,10 @@ Developed by clan "Andromeda"</value>
   <data name="CopyToClipboard" xml:space="preserve">
     <value>Copy to clipboard</value>
   </data>
+  <data name="CrashReport" xml:space="preserve">
+    <value>Crash report:
+By clicking on the "Don't send", you acknowledge that the error was your fault!</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
@@ -265,6 +270,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="DontOpenAllBlue" xml:space="preserve">
     <value>Don't open blueprints when scanning</value>
+  </data>
+  <data name="DontSend" xml:space="preserve">
+    <value>Don't send</value>
   </data>
   <data name="DowLangPack" xml:space="preserve">
     <value>Do empty work</value>
@@ -287,11 +295,20 @@ Developed by clan "Andromeda"</value>
   <data name="GoHome" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="GridArmorType" xml:space="preserve">
+    <value>Grid armor type</value>
+  </data>
   <data name="GridCount" xml:space="preserve">
     <value>Grids</value>
   </data>
   <data name="GridName" xml:space="preserve">
     <value>Grid name</value>
+  </data>
+  <data name="HeavyArmor" xml:space="preserve">
+    <value>Heavy armor</value>
+  </data>
+  <data name="HideArmor" xml:space="preserve">
+    <value>Hide armor</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
@@ -343,6 +360,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="LargeGrid" xml:space="preserve">
     <value>Large grid</value>
+  </data>
+  <data name="LightArmor" xml:space="preserve">
+    <value>Light armor</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -442,6 +462,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>
+  <data name="RunApp" xml:space="preserve">
+    <value>Run app</value>
+  </data>
   <data name="SaveClose" xml:space="preserve">
     <value>Save and сlose</value>
   </data>
@@ -464,6 +487,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -507,8 +533,14 @@ Cancel - Don't set default thumbnail</value>
   <data name="ViewFold" xml:space="preserve">
     <value>View blueprint folder</value>
   </data>
+  <data name="WhatHappens" xml:space="preserve">
+    <value>What happens?</value>
+  </data>
   <data name="WhatNew" xml:space="preserve">
     <value>What's new:</value>
+  </data>
+  <data name="WhoAreYou" xml:space="preserve">
+    <value>You contact or just nickname or nothing</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

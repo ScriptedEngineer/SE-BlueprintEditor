@@ -107,6 +107,7 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\CrashLogger.cs" />
     <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
@@ -119,6 +120,9 @@
     </Compile>
     <Compile Include="EditBlueprint.xaml.cs">
       <DependentUpon>EditBlueprint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Reporter.xaml.cs">
+      <DependentUpon>Reporter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resource\Lang.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -156,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditBlueprint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Reporter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

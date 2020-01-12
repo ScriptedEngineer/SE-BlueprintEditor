@@ -27,6 +27,16 @@ namespace BlueprintEditor2
         string currentBluePatch;
         public SelectBlueprint()
         {
+            MySettings.Deserialize();
+            MySettings.Current.ApplySettings();
+            window = this;
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1 && args[1] == "Crash")
+            {
+                new Reporter().Show();
+                Hide();
+            }
+            Classes.CrashLogger.HandleUhEx();
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
             if (!Directory.Exists("ru"))
                 try
@@ -52,10 +62,7 @@ namespace BlueprintEditor2
                 {
 
                 }
-            MySettings.Deserialize();
-            MySettings.Current.ApplySettings();
             InitializeComponent();
-            window = this;
             currentBluePatch = MySettings.Current.BlueprintPatch;
             InitBlueprints();
             new Task(() =>

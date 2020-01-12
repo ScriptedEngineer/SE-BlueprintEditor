@@ -19,16 +19,16 @@ namespace BlueprintEditor2
     {
         public static string Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static void AsyncWorker(Action act) => Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, act);
-        public static string ApiServer(ApiServerAct Actione, ApiServerOutFormat Formate = ApiServerOutFormat.@string)
+        public static string ApiServer(ApiServerAct Actione, ApiServerOutFormat Formate = ApiServerOutFormat.@string, string JsonData = "")
         {
             try
             {
                 using (var client = new System.Net.WebClient())
                 {
+                    string json = "{\"token\":\"J1H8MHUpN7N8BPZg9f9m6tf7NVHspVYo\",\"app\":\"SEBE2\",\"version\":\"" +
+                         Version + "\"" + JsonData + "}";
                     client.Encoding = Encoding.UTF8;
-                    return client.UploadString("https://wsxz.ru/api/"+ Actione.ToString() + "/"+ Formate.ToString(),
-                        "{\"token\":\"J1H8MHUpN7N8BPZg9f9m6tf7NVHspVYo\",\"app\":\"SEBE2\",\"version\":\"" +
-                         Version + "\"}");
+                    return client.UploadString("https://wsxz.ru/api/"+ Actione.ToString() + "/"+ Formate.ToString(),json);
                 }
             }
             catch
@@ -110,7 +110,8 @@ namespace BlueprintEditor2
     public enum ApiServerAct
     {
         CheckVersion,
-        GetUpdateLog
+        GetUpdateLog,
+        Report
     }
     public enum ApiServerOutFormat
     {

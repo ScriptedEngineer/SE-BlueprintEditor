@@ -61,7 +61,8 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на SE Blueprint Editor - program for editing blueprints of the game &quot;Space Engineers&quot; outside the game
+        ///   Ищет локализованную строку, похожую на SE Blueprint Editor - program for editing 
+        ///blueprints of the game &quot;Space Engineers&quot; outside the game
         ///This program allows you to quickly change the necessary parts of the blueprints(blocks, their settings, etc.), without starting the game.
         ///Developed by clan &quot;Andromeda&quot;.
         /// </summary>
@@ -441,6 +442,16 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Crash report:
+        ///By clicking on the &quot;Don&apos;t send&quot;, you acknowledge that the error was your fault!.
+        /// </summary>
+        public static string CrashReport {
+            get {
+                return ResourceManager.GetString("CrashReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Created.
         /// </summary>
         public static string Created {
@@ -500,6 +511,15 @@ namespace BlueprintEditor2.Resource {
         public static string DontOpenAllBlue {
             get {
                 return ResourceManager.GetString("DontOpenAllBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t send.
+        /// </summary>
+        public static string DontSend {
+            get {
+                return ResourceManager.GetString("DontSend", resourceCulture);
             }
         }
         
@@ -567,6 +587,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Grid armor type.
+        /// </summary>
+        public static string GridArmorType {
+            get {
+                return ResourceManager.GetString("GridArmorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Grids.
         /// </summary>
         public static string GridCount {
@@ -581,6 +610,24 @@ namespace BlueprintEditor2.Resource {
         public static string GridName {
             get {
                 return ResourceManager.GetString("GridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Heavy armor.
+        /// </summary>
+        public static string HeavyArmor {
+            get {
+                return ResourceManager.GetString("HeavyArmor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hide armor.
+        /// </summary>
+        public static string HideArmor {
+            get {
+                return ResourceManager.GetString("HideArmor", resourceCulture);
             }
         }
         
@@ -734,6 +781,15 @@ namespace BlueprintEditor2.Resource {
         public static string LargeGrid {
             get {
                 return ResourceManager.GetString("LargeGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Light armor.
+        /// </summary>
+        public static string LightArmor {
+            get {
+                return ResourceManager.GetString("LightArmor", resourceCulture);
             }
         }
         
@@ -1028,6 +1084,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Run app.
+        /// </summary>
+        public static string RunApp {
+            get {
+                return ResourceManager.GetString("RunApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Save and сlose.
         /// </summary>
         public static string SaveClose {
@@ -1089,6 +1154,15 @@ namespace BlueprintEditor2.Resource {
         public static string SelectOne {
             get {
                 return ResourceManager.GetString("SelectOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Send.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
             }
         }
         
@@ -1219,11 +1293,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на What happens?.
+        /// </summary>
+        public static string WhatHappens {
+            get {
+                return ResourceManager.GetString("WhatHappens", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на What&apos;s new:.
         /// </summary>
         public static string WhatNew {
             get {
                 return ResourceManager.GetString("WhatNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You contact or just nickname or nothing.
+        /// </summary>
+        public static string WhoAreYou {
+            get {
+                return ResourceManager.GetString("WhoAreYou", resourceCulture);
             }
         }
         

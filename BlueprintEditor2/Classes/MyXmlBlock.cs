@@ -16,7 +16,6 @@ namespace BlueprintEditor2
         private readonly XmlNode _ColorMaskNode;
         private readonly XmlNode _ShareModeNode;
         private List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
-        public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
 
         public string Type
         {
@@ -25,14 +24,14 @@ namespace BlueprintEditor2
             {
                 string[] types = value.Split('/');
                 if (types.Length != 2) return;
-                if(_BlockXml.Attributes != default(XmlAttributeCollection))
+                if (_BlockXml.Attributes != default(XmlAttributeCollection))
                     _BlockXml.Attributes.GetNamedItem("xsi:type").Value = types[0];
                 _SubTypeNode.InnerText = types[1];
             }
         }
         public string DisplayType
         {
-            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_","") + "/" + _SubTypeNode.InnerText;
+            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode.InnerText;
         }
         public string Name
         {
@@ -48,35 +47,74 @@ namespace BlueprintEditor2
             {
                 if (_ColorMaskNode == null) return new Color();
                 double x, y, z;
-                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.',','), out x);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.', ','), out x);
                 double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("y").Value.Replace('.', ','), out y);
                 double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("z").Value.Replace('.', ','), out z);
-                return SE_ColorConverter.ColorFromSE_HSV(x,y,z);
+                return SE_ColorConverter.ColorFromSE_HSV(x, y, z);
             }
             set
             {
                 double x, y, z;
-                SE_ColorConverter.ColorToSE_HSV(value, out x,out y,out z);
+                SE_ColorConverter.ColorToSE_HSV(value, out x, out y, out z);
                 _ColorMaskNode.Attributes.GetNamedItem("x").Value = x.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("y").Value = y.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("z").Value = z.ToString().Replace(',', '.');
             }
         }
-        public ShareMode? ShareMode { 
+        public ShareMode? ShareMode
+        {
             get
             {
                 ShareMode Mode;
-                if (_ShareModeNode != null && Enum.TryParse(_ShareModeNode.InnerText,out Mode))
+                if (_ShareModeNode != null && Enum.TryParse(_ShareModeNode.InnerText, out Mode))
                     return Mode;
                 else
                     return null;
             }
             set
             {
-                if(value.HasValue && value.Value != BlueprintEditor2.ShareMode.Difference)
-                _ShareModeNode.InnerText = value.Value.ToString();
+                if (value.HasValue && value.Value != BlueprintEditor2.ShareMode.Difference)
+                    _ShareModeNode.InnerText = value.Value.ToString();
             }
         }
+        public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
+        public ArmorType Armor
+        {
+            get
+            {
+                string subtype = _SubTypeNode.InnerText;
+                if (IsArmor && subtype.Contains("Heavy"))
+                    return ArmorType.Heavy;
+                else if (IsArmor)
+                    return ArmorType.Light;
+                else
+                    return ArmorType.None;
+            }
+            set
+            {
+                if (IsArmor)
+                {
+                    string junk = _SubTypeNode.InnerText;
+                    switch (value)
+                    {
+                        case ArmorType.Heavy:
+                            if (!junk.Contains("Heavy"))
+                            {
+                                if (junk.Contains("BlockArmor"))
+                                    _SubTypeNode.InnerText = junk.Replace("BlockArmor", "HeavyBlockArmor");
+                                else if (junk.Contains("Half"))
+                                    _SubTypeNode.InnerText = junk.Replace("Half", "HeavyHalf");
+                            }
+                            break;
+                        case ArmorType.Light:
+                            _SubTypeNode.InnerText = junk.Replace("Heavy", "");
+                            break;
+                    }
+                }
+            }
+        }
+        public bool IsArmor { get; }
+
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -86,6 +124,7 @@ namespace BlueprintEditor2
                 {
                     case "SubtypeName":
                         _SubTypeNode = child;
+                        IsArmor = _SubTypeNode.InnerText.Contains("Armor");
                         continue;
                     case "CustomName":
                         _NameNode = child;
@@ -106,6 +145,12 @@ namespace BlueprintEditor2
             XmlNode parent = _BlockXml.ParentNode;
             parent.RemoveChild(_BlockXml);
         }
+    }
+    public enum ArmorType
+    {
+        Heavy,
+        Light,
+        None
     }
     public enum ShareMode
     {
