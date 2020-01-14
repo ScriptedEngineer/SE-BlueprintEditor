@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -14,6 +15,7 @@ namespace BlueprintEditor2
         public string Name;
         public Color Mask;
         public ShareMode? Share;
+        public Vector3 Position;
         public List<MyBlockProperty> Properties = new List<MyBlockProperty>();
 
         internal MyXmlBlockEqualer(MyXmlBlock block)
@@ -21,6 +23,7 @@ namespace BlueprintEditor2
             Type = block.Type;
             Name = block.Name;
             Mask = block.ColorMask;
+            Position = block.Position;
             if (block.ShareMode.HasValue) Share = block.ShareMode;
             foreach (var x in block.Properties)
                 Properties.Add(x);
@@ -28,6 +31,7 @@ namespace BlueprintEditor2
 
         public void Equalize(MyXmlBlock block)
         {
+            Position = Vector3.Zero;
             if (block.Type != Type) Type = null;
             if (block.Name != Name)
                 if (block.Name == null)

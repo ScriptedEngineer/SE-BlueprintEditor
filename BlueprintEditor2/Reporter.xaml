@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="SE BlueprintEditor Crash Report" Height="450" Width="380" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="SE BlueprintEditor Crash Report" Height="450" Width="380" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
     <Grid>
         <TextBox x:Name="Who" Height="23" Margin="10,31,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label Content="{x:Static res:Lang.WhoAreYou}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0,-1,0,0"/>

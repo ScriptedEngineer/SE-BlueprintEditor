@@ -91,6 +91,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на All blocks.
+        /// </summary>
+        public static string AllBlocks {
+            get {
+                return ResourceManager.GetString("AllBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Blueprint is already open.
         /// </summary>
         public static string AlreadyOpened {
@@ -150,6 +159,15 @@ namespace BlueprintEditor2.Resource {
         public static string BlockName {
             get {
                 return ResourceManager.GetString("BlockName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Block position.
+        /// </summary>
+        public static string BlockPosition {
+            get {
+                return ResourceManager.GetString("BlockPosition", resourceCulture);
             }
         }
         
@@ -632,6 +650,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Hide terminal.
+        /// </summary>
+        public static string HideTerminal {
+            get {
+                return ResourceManager.GetString("HideTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Image files.
         /// </summary>
         public static string ImFiles {
@@ -641,7 +668,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cobalt.
+        ///   Ищет локализованную строку, похожую на 3.Cobalt.
         /// </summary>
         public static string Ingot_Cobalt {
             get {
@@ -650,7 +677,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Gold.
+        ///   Ищет локализованную строку, похожую на 7.Gold.
         /// </summary>
         public static string Ingot_Gold {
             get {
@@ -659,7 +686,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Iron.
+        ///   Ищет локализованную строку, похожую на 1.Iron.
         /// </summary>
         public static string Ingot_Iron {
             get {
@@ -668,7 +695,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Magnesium.
+        ///   Ищет локализованную строку, похожую на 9.Magnesium.
         /// </summary>
         public static string Ingot_Magnesium {
             get {
@@ -677,7 +704,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Nickel.
+        ///   Ищет локализованную строку, похожую на 2.Nickel.
         /// </summary>
         public static string Ingot_Nickel {
             get {
@@ -686,7 +713,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Platinum.
+        ///   Ищет локализованную строку, похожую на 8.Platinum.
         /// </summary>
         public static string Ingot_Platinum {
             get {
@@ -695,7 +722,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Silicon.
+        ///   Ищет локализованную строку, похожую на 4.Silicon.
         /// </summary>
         public static string Ingot_Silicon {
             get {
@@ -704,7 +731,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Silver.
+        ///   Ищет локализованную строку, похожую на 6.Silver.
         /// </summary>
         public static string Ingot_Silver {
             get {
@@ -713,7 +740,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Gravel.
+        ///   Ищет локализованную строку, похожую на 5.Gravel.
         /// </summary>
         public static string Ingot_Stone {
             get {
@@ -722,7 +749,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Uranium.
+        ///   Ищет локализованную строку, похожую на 10.Uranium.
         /// </summary>
         public static string Ingot_Uranium {
             get {
@@ -868,7 +895,25 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Cobalt.
+        ///   Ищет локализованную строку, похожую на Only armor.
+        /// </summary>
+        public static string OnlyArmor {
+            get {
+                return ResourceManager.GetString("OnlyArmor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Only terminal.
+        /// </summary>
+        public static string OnlyTerminal {
+            get {
+                return ResourceManager.GetString("OnlyTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на 3.Cobalt.
         /// </summary>
         public static string Ore_Cobalt {
             get {
@@ -877,7 +922,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Gold.
+        ///   Ищет локализованную строку, похожую на 7.Gold.
         /// </summary>
         public static string Ore_Gold {
             get {
@@ -886,7 +931,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Iron.
+        ///   Ищет локализованную строку, похожую на 1.Iron.
         /// </summary>
         public static string Ore_Iron {
             get {
@@ -895,7 +940,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Magnesium.
+        ///   Ищет локализованную строку, похожую на 9.Magnesium.
         /// </summary>
         public static string Ore_Magnesium {
             get {
@@ -904,7 +949,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Nickel.
+        ///   Ищет локализованную строку, похожую на 2.Nickel.
         /// </summary>
         public static string Ore_Nickel {
             get {
@@ -913,7 +958,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Platinum.
+        ///   Ищет локализованную строку, похожую на 8.Platinum.
         /// </summary>
         public static string Ore_Platinum {
             get {
@@ -922,7 +967,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Silicon.
+        ///   Ищет локализованную строку, похожую на 4.Silicon.
         /// </summary>
         public static string Ore_Silicon {
             get {
@@ -931,7 +976,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Silver.
+        ///   Ищет локализованную строку, похожую на 6.Silver.
         /// </summary>
         public static string Ore_Silver {
             get {
@@ -940,7 +985,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Stone.
+        ///   Ищет локализованную строку, похожую на 5.Stone.
         /// </summary>
         public static string Ore_Stone {
             get {
@@ -949,7 +994,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Uranium.
+        ///   Ищет локализованную строку, похожую на 10.Uranium.
         /// </summary>
         public static string Ore_Uranium {
             get {
@@ -1181,6 +1226,15 @@ namespace BlueprintEditor2.Resource {
         public static string ShareMode {
             get {
                 return ResourceManager.GetString("ShareMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Show blocks.
+        /// </summary>
+        public static string ShowBlocks {
+            get {
+                return ResourceManager.GetString("ShowBlocks", resourceCulture);
             }
         }
         

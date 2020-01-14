@@ -23,7 +23,7 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class Updater : Window
     {
-        string downUrl;
+        string downUrl, LangDest;
         public Updater(string link)
         {
             downUrl = link;
@@ -38,16 +38,43 @@ namespace BlueprintEditor2
                     web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
                     web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
                 }
-                else if(MySettings.Current.LCID == 1049)
+                else
                 {
-                    Status.Content = Resource.Lang.DowLangPack;
-                    string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
-                    if (!Directory.Exists(langpackfolder))
-                        Directory.CreateDirectory(langpackfolder);
-                    WebClient web = new WebClient();
-                    web.DownloadFileAsync(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
-                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged);
-                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
+                    string LCID = MySettings.Current.LCID.ToString();
+                    string CultureFolder = "", PackLink = "";
+                    foreach (string langpack in MyExtensions.ApiServer(ApiServerAct.GetCustomData).Split('\n'))
+                    {
+                        var langpart = langpack.Trim().Split('|');
+                        if(langpart.Length >= 3)
+                        {
+                            if(langpart[0] == LCID)
+                            {
+                                CultureFolder = langpart[1];
+                                PackLink = langpart[2];
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(CultureFolder) && !string.IsNullOrWhiteSpace(PackLink))
+                    {
+                        Status.Content = Resource.Lang.DowLangPack;
+                        string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/" + CultureFolder + "/";
+                        if (!Directory.Exists(langpackfolder))
+                            Directory.CreateDirectory(langpackfolder);
+                        File.WriteAllText("lang.txt", CultureFolder);
+                        LangDest = langpackfolder + "SE-BlueprintEditor.resources.dll";
+                        WebClient web = new WebClient();
+                        web.DownloadFileAsync(new Uri(PackLink), langpackfolder + "SE-BlueprintEditor.resources.dll.upd");
+                        web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged);
+                        web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
+                    }
+                    else
+                    {
+                        Status.Content = Resource.Lang.DownNewVer;
+                        WebClient web = new WebClient();
+                        web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+                        web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+                        web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
+                    }
                 }
             });
         }
@@ -65,6 +92,7 @@ namespace BlueprintEditor2
         }
         public void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            Thread.Sleep(200);
             WebClient web = new WebClient();
             web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
             web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
@@ -74,9 +102,9 @@ namespace BlueprintEditor2
         {
             FileStream Batch = File.Create("update.vbs");
             string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
-            byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(500)"
+            byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
 + "\r\nOn Error Resume next"
-+ "\r\nDim fso, Del, Upd, WshShell"
++ "\r\nDim fso, Del, Del2, Upd, WshShell"
 + "\r\nSet fso = CreateObject(\"Scripting.FileSystemObject\")"
 + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
 + "\r\nSet Del = fso.GetFile(\"" + MyExtensions.AppFile + "\")"
@@ -88,6 +116,8 @@ namespace BlueprintEditor2
 + "\r\nElse"
 + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
 + "\r\nEnd If"
++ "\r\nSet Del2 = fso.GetFile(\"" + LangDest + "\")"
++ "\r\nDel2.Delete"
 + "\r\nOn Error GoTo 0");
             Batch.Write(Data, 0, Data.Length);
             Batch.Close();

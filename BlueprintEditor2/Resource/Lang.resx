@@ -129,6 +129,9 @@ Developed by clan "Andromeda"</value>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="AllBlocks" xml:space="preserve">
+    <value>All blocks</value>
+  </data>
   <data name="AlreadyOpened" xml:space="preserve">
     <value>Blueprint is already open</value>
   </data>
@@ -149,6 +152,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="BlockName" xml:space="preserve">
     <value>Block name</value>
+  </data>
+  <data name="BlockPosition" xml:space="preserve">
+    <value>Block position</value>
   </data>
   <data name="BlockSubtype" xml:space="preserve">
     <value>Block subtype</value>
@@ -310,38 +316,41 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   <data name="HideArmor" xml:space="preserve">
     <value>Hide armor</value>
   </data>
+  <data name="HideTerminal" xml:space="preserve">
+    <value>Hide terminal</value>
+  </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
   </data>
   <data name="Ingot/Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>3.Cobalt</value>
   </data>
   <data name="Ingot/Gold" xml:space="preserve">
-    <value>Gold</value>
+    <value>7.Gold</value>
   </data>
   <data name="Ingot/Iron" xml:space="preserve">
-    <value>Iron</value>
+    <value>1.Iron</value>
   </data>
   <data name="Ingot/Magnesium" xml:space="preserve">
-    <value>Magnesium</value>
+    <value>9.Magnesium</value>
   </data>
   <data name="Ingot/Nickel" xml:space="preserve">
-    <value>Nickel</value>
+    <value>2.Nickel</value>
   </data>
   <data name="Ingot/Platinum" xml:space="preserve">
-    <value>Platinum</value>
+    <value>8.Platinum</value>
   </data>
   <data name="Ingot/Silicon" xml:space="preserve">
-    <value>Silicon</value>
+    <value>4.Silicon</value>
   </data>
   <data name="Ingot/Silver" xml:space="preserve">
-    <value>Silver</value>
+    <value>6.Silver</value>
   </data>
   <data name="Ingot/Stone" xml:space="preserve">
-    <value>Gravel</value>
+    <value>5.Gravel</value>
   </data>
   <data name="Ingot/Uranium" xml:space="preserve">
-    <value>Uranium</value>
+    <value>10.Uranium</value>
   </data>
   <data name="Ingots" xml:space="preserve">
     <value>Ingots</value>
@@ -390,35 +399,41 @@ Cancel - Don't set default thumbnail</value>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize thumbnail (fix transparency)</value>
   </data>
+  <data name="OnlyArmor" xml:space="preserve">
+    <value>Only armor</value>
+  </data>
+  <data name="OnlyTerminal" xml:space="preserve">
+    <value>Only terminal</value>
+  </data>
   <data name="Ore/Cobalt" xml:space="preserve">
-    <value>Cobalt</value>
+    <value>3.Cobalt</value>
   </data>
   <data name="Ore/Gold" xml:space="preserve">
-    <value>Gold</value>
+    <value>7.Gold</value>
   </data>
   <data name="Ore/Iron" xml:space="preserve">
-    <value>Iron</value>
+    <value>1.Iron</value>
   </data>
   <data name="Ore/Magnesium" xml:space="preserve">
-    <value>Magnesium</value>
+    <value>9.Magnesium</value>
   </data>
   <data name="Ore/Nickel" xml:space="preserve">
-    <value>Nickel</value>
+    <value>2.Nickel</value>
   </data>
   <data name="Ore/Platinum" xml:space="preserve">
-    <value>Platinum</value>
+    <value>8.Platinum</value>
   </data>
   <data name="Ore/Silicon" xml:space="preserve">
-    <value>Silicon</value>
+    <value>4.Silicon</value>
   </data>
   <data name="Ore/Silver" xml:space="preserve">
-    <value>Silver</value>
+    <value>6.Silver</value>
   </data>
   <data name="Ore/Stone" xml:space="preserve">
-    <value>Stone</value>
+    <value>5.Stone</value>
   </data>
   <data name="Ore/Uranium" xml:space="preserve">
-    <value>Uranium</value>
+    <value>10.Uranium</value>
   </data>
   <data name="Ores" xml:space="preserve">
     <value>Ores</value>
@@ -496,6 +511,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="ShareMode" xml:space="preserve">
     <value>Share mode</value>
+  </data>
+  <data name="ShowBlocks" xml:space="preserve">
+    <value>Show blocks</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>

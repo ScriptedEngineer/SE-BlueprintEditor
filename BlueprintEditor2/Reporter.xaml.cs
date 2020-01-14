@@ -46,5 +46,10 @@ namespace BlueprintEditor2
                 "<br><br>Error:<br>" + File.ReadAllText("LastCrash.txt")).Replace("\n", "<br>").Replace("\r", "").Replace("\"","'").Replace("\\","\\\\") + "\"");
             Button_Click(x, null);
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

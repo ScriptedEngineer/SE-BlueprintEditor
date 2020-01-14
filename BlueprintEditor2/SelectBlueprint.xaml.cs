@@ -38,6 +38,29 @@ namespace BlueprintEditor2
             }
             Classes.CrashLogger.HandleUhEx();
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
+            if (File.Exists("lang.txt"))
+                try
+                {
+                    string langfold = File.ReadAllText("lang.txt");
+                    File.Delete("./" + langfold + "/SE-BlueprintEditor.resources.dll");
+                    File.Move("./" + langfold + "/SE-BlueprintEditor.resources.dll.upd", "./" + langfold + "/SE-BlueprintEditor.resources.dll");
+                    File.Delete("lang.txt");
+                    FileStream Batch = File.Create("update.vbs");
+                    string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
+                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
+        + "\r\nOn Error Resume next"
+        + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
+        + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
+        + "\r\nOn Error GoTo 0");
+                    Batch.Write(Data, 0, Data.Length);
+                    Batch.Close();
+                    Process.Start("update.vbs");
+                    Application.Current.Shutdown();
+                }
+                catch
+                {
+
+                }
             if (!Directory.Exists("ru"))
                 try
                 {
@@ -48,7 +71,7 @@ namespace BlueprintEditor2
                     web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
                     FileStream Batch = File.Create("update.vbs");
                     string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
-                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(500)"
+                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
         + "\r\nOn Error Resume next"
         + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
         + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
@@ -323,6 +346,7 @@ namespace BlueprintEditor2
             else FoldersItem.IsEnabled = false;
             BitmapImage fldicn = new BitmapImage(new Uri("pack://application:,,,/Resource/img_308586.png"));
             List<MenuItem> foldrmenu = new List<MenuItem>();
+            string SerachQuery = Search.Text.ToLower();
             new Task(() =>
             {
                 bool First = true;
@@ -360,16 +384,16 @@ namespace BlueprintEditor2
                              switch (SearchBy.SelectedIndex)
                              {
                                  case 0:
-                                     if (!Elem.Name.Contains(Search.Text)) AddIt = false;
+                                     if (!Elem.Name.ToLower().Contains(SerachQuery)) AddIt = false;
                                      break;
                                  case 1:
-                                     if (!Elem.Owner.Contains(Search.Text)) AddIt = false;
+                                     if (!Elem.Owner.ToLower().Contains(SerachQuery)) AddIt = false;
                                      break;
                                  case 2:
-                                     if (!Elem.CreationTimeText.Contains(Search.Text)) AddIt = false;
+                                     if (!Elem.CreationTimeText.ToLower().Contains(SerachQuery)) AddIt = false;
                                      break;
                                  case 3:
-                                     if (!Elem.CreationTimeText.Contains(Search.Text)) AddIt = false;
+                                     if (!Elem.CreationTimeText.ToLower().Contains(SerachQuery)) AddIt = false;
                                      break;
                              }
                          }

@@ -15,6 +15,7 @@ namespace BlueprintEditor2
         private readonly XmlNode _SubTypeNode;
         private readonly XmlNode _ColorMaskNode;
         private readonly XmlNode _ShareModeNode;
+        private readonly XmlNode _MinPosNode;
         private List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
 
         public string Type
@@ -113,6 +114,25 @@ namespace BlueprintEditor2
                 }
             }
         }
+        public Vector3 Position
+        {
+            get
+            {
+                if (_MinPosNode == null) return Vector3.Zero;
+                var Atrs = _MinPosNode.Attributes;
+                int.TryParse(Atrs.GetNamedItem("x").Value, out int X);
+                int.TryParse(Atrs.GetNamedItem("y").Value, out int Y);
+                int.TryParse(Atrs.GetNamedItem("z").Value, out int Z);
+                return new Vector3(X,Y,Z);
+            }
+            set
+            {
+                var Atrs = _MinPosNode.Attributes;
+                Atrs.GetNamedItem("x").Value = value.X.ToString();
+                Atrs.GetNamedItem("y").Value = value.Y.ToString();
+                Atrs.GetNamedItem("z").Value = value.Z.ToString();
+            }
+        }
         public bool IsArmor { get; }
 
 
@@ -134,6 +154,9 @@ namespace BlueprintEditor2
                         break;
                     case "ShareMode":
                         _ShareModeNode = child;
+                        break;
+                    case "Min":
+                        _MinPosNode = child;
                         break;
                     default:
                         _Properties.Add(new MyBlockProperty(child));

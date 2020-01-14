@@ -129,6 +129,9 @@
   <data name="All" xml:space="preserve">
     <value>Всем</value>
   </data>
+  <data name="AllBlocks" xml:space="preserve">
+    <value>Все блоки</value>
+  </data>
   <data name="AlreadyOpened" xml:space="preserve">
     <value>Данный чертеж уже открыт</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="BlockName" xml:space="preserve">
     <value>Имя блока</value>
+  </data>
+  <data name="BlockPosition" xml:space="preserve">
+    <value>Позиция блока</value>
   </data>
   <data name="BlockSubtype" xml:space="preserve">
     <value>Подтип блока</value>
@@ -310,38 +316,41 @@
   <data name="HideArmor" xml:space="preserve">
     <value>Скрыть броню</value>
   </data>
+  <data name="HideTerminal" xml:space="preserve">
+    <value>Скрыть терминал</value>
+  </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
   </data>
   <data name="Ingot/Cobalt" xml:space="preserve">
-    <value>Кобальт</value>
+    <value>3.Кобальт</value>
   </data>
   <data name="Ingot/Gold" xml:space="preserve">
-    <value>Золото</value>
+    <value>7.Золото</value>
   </data>
   <data name="Ingot/Iron" xml:space="preserve">
-    <value>Железо</value>
+    <value>1.Железо</value>
   </data>
   <data name="Ingot/Magnesium" xml:space="preserve">
-    <value>Магний</value>
+    <value>9.Магний</value>
   </data>
   <data name="Ingot/Nickel" xml:space="preserve">
-    <value>Никель</value>
+    <value>2.Никель</value>
   </data>
   <data name="Ingot/Platinum" xml:space="preserve">
-    <value>Платина</value>
+    <value>8.Платина</value>
   </data>
   <data name="Ingot/Silicon" xml:space="preserve">
-    <value>Кремний</value>
+    <value>4.Кремний</value>
   </data>
   <data name="Ingot/Silver" xml:space="preserve">
-    <value>Серебро</value>
+    <value>6.Серебро</value>
   </data>
   <data name="Ingot/Stone" xml:space="preserve">
-    <value>Гравий</value>
+    <value>5.Гравий</value>
   </data>
   <data name="Ingot/Uranium" xml:space="preserve">
-    <value>Уран</value>
+    <value>10.Уран</value>
   </data>
   <data name="Ingots" xml:space="preserve">
     <value>Слитки</value>
@@ -390,35 +399,41 @@
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать миниатюру (исправить прозрачность)</value>
   </data>
+  <data name="OnlyArmor" xml:space="preserve">
+    <value>Только броня</value>
+  </data>
+  <data name="OnlyTerminal" xml:space="preserve">
+    <value>Только терминал</value>
+  </data>
   <data name="Ore/Cobalt" xml:space="preserve">
-    <value>Кобальт</value>
+    <value>3.Кобальт</value>
   </data>
   <data name="Ore/Gold" xml:space="preserve">
-    <value>Золото</value>
+    <value>7.Золото</value>
   </data>
   <data name="Ore/Iron" xml:space="preserve">
-    <value>Железо</value>
+    <value>1.Железо</value>
   </data>
   <data name="Ore/Magnesium" xml:space="preserve">
-    <value>Магний</value>
+    <value>9.Магний</value>
   </data>
   <data name="Ore/Nickel" xml:space="preserve">
-    <value>Никель</value>
+    <value>2.Никель</value>
   </data>
   <data name="Ore/Platinum" xml:space="preserve">
-    <value>Платина</value>
+    <value>8.Платина</value>
   </data>
   <data name="Ore/Silicon" xml:space="preserve">
-    <value>Кремний</value>
+    <value>4.Кремний</value>
   </data>
   <data name="Ore/Silver" xml:space="preserve">
-    <value>Серебро</value>
+    <value>6.Серебро</value>
   </data>
   <data name="Ore/Stone" xml:space="preserve">
-    <value>Камень</value>
+    <value>5.Камень</value>
   </data>
   <data name="Ore/Uranium" xml:space="preserve">
-    <value>Уран</value>
+    <value>10.Уран</value>
   </data>
   <data name="Ores" xml:space="preserve">
     <value>Руды</value>
@@ -496,6 +511,9 @@
   </data>
   <data name="ShareMode" xml:space="preserve">
     <value>Дать доступ</value>
+  </data>
+  <data name="ShowBlocks" xml:space="preserve">
+    <value>Показывать блоки</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>

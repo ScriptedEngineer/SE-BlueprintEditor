@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("SE BlueprintEditor")]
-[assembly: AssemblyCopyright("Copyright © Andromeda 2019")]
+[assembly: AssemblyCopyright("Copyright © Andromeda 2020")]
 [assembly: AssemblyTrademark("-")]
 [assembly: AssemblyCulture("")]
 
@@ -51,7 +51,7 @@ using System.Windows;
 // Можно задать все значения или принять номер сборки и номер редакции по умолчанию.
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.5")]
-[assembly: AssemblyFileVersion("0.0.0.5")]
+[assembly: AssemblyVersion("0.0.0.7")]
+[assembly: AssemblyFileVersion("0.0.0.7")]
 [assembly: NeutralResourcesLanguage("")]
 

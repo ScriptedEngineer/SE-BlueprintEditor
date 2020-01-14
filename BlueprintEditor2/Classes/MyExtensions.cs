@@ -111,6 +111,7 @@ namespace BlueprintEditor2
     {
         CheckVersion,
         GetUpdateLog,
+        GetCustomData,
         Report
     }
     public enum ApiServerOutFormat

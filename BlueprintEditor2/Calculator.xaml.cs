@@ -37,7 +37,6 @@ namespace BlueprintEditor2
             {
                 using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
                 {
-
                     dialog.SelectedPath = @"C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\";
                     dialog.Description = Lang.SelectGamePatchDesc;
                     dialog.ShowNewFolderButton = false;

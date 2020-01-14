@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Forms = System.Windows.Forms;
 using BlueprintEditor2.Resource;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace BlueprintEditor2
 {
@@ -36,7 +37,6 @@ namespace BlueprintEditor2
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BlockList.Items.Clear();
-            HideArmor.IsEnabled = true;
             GridArmourType.IsEnabled = true;
             initGAT = false;
             if (GridList.SelectedIndex == -1) return;
@@ -46,17 +46,8 @@ namespace BlueprintEditor2
             for (int i = 0; i < TheBlocks.Count; i++)
             {
                 MyXmlBlock thatBlock = TheBlocks[i];
-                switch (SearchBy.SelectedIndex)
-                {
-                    case 0:
-                        if(thatBlock.DisplayType.Contains(Search.Text) && (HideArmor.IsChecked.Value? !thatBlock.IsArmor :true))
-                            BlockList.Items.Add(thatBlock);
-                        break;
-                    case 1:
-                        if (thatBlock.Name != null && thatBlock.Name.Contains(Search.Text) && (HideArmor.IsChecked.Value ? !thatBlock.IsArmor : true))
-                            BlockList.Items.Add(thatBlock);
-                        break;
-                }
+                if(DasShowIt(thatBlock))
+                    BlockList.Items.Add(thatBlock);
                 if (thatBlock.IsArmor)
                 {
                     if (thatBlock.Armor == ArmorType.Heavy)
@@ -72,7 +63,6 @@ namespace BlueprintEditor2
                 GridArmourType.SelectedIndex = -1;
                 if (Heavy == 0)
                 {
-                    HideArmor.IsEnabled = false;
                     GridArmourType.IsEnabled = false;
                 }
             }
@@ -84,11 +74,43 @@ namespace BlueprintEditor2
             GridSizeBox.SelectedIndex = (int)SlectedGrd.GridSize;
             GoSort(BlockListColumns.Columns[1],null);
         }
+        private bool DasShowIt(MyXmlBlock block)
+        {
+            bool show = true;
+            string SearchText = Search.Text.ToLower();
+            switch (SearchBy.SelectedIndex)
+            {
+                case 0:
+                    if (!string.IsNullOrEmpty(SearchText))
+                        show &= block.DisplayType.ToLower().Contains(SearchText);
+                    break;
+                case 1:
+                    if (!string.IsNullOrEmpty(SearchText))
+                        show &= block.Name != null && block.Name.ToLower().Contains(SearchText);
+                    break;
+            }
+            switch (ShowType.SelectedIndex)
+            {
+                case 1:
+                    show &= !block.IsArmor;
+                    break;
+                case 2:
+                    show &= block.IsArmor;
+                    break;
+                case 3:
+                    show &= block.Name == null;
+                    break;
+                case 4:
+                    show &= block.Name != null;
+                    break;
+            }
+            return show;
+        }
         private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             if (BlockList.SelectedItem != null)
             {
-                
+                DeleteButton.IsEnabled = true;
                 MyXmlBlockEqualer MasterBlock = null;
                 foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
                 {
@@ -115,6 +137,24 @@ namespace BlueprintEditor2
                 SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1] : null);
                 BlockColorBox.Fill = new SolidColorBrush(MasterBlock.Mask.ToMediaColor());
                 BlockColorBox.IsEnabled = true;
+                if(MasterBlock.Position != Vector3.Zero)
+                {
+                    BlockX.IsEnabled = true;
+                    BlockY.IsEnabled = true;
+                    BlockZ.IsEnabled = true;
+                    BlockX.Text = MasterBlock.Position.X.ToString();
+                    BlockY.Text = MasterBlock.Position.Y.ToString();
+                    BlockZ.Text = MasterBlock.Position.Z.ToString();
+                }
+                else
+                {
+                    BlockX.Text = "0";
+                    BlockY.Text = "0";
+                    BlockZ.Text = "0";
+                    BlockX.IsEnabled = false;
+                    BlockY.IsEnabled = false;
+                    BlockZ.IsEnabled = false;
+                }
                 if (MasterBlock.Share.HasValue)
                 {
                     ShareBox.IsEnabled = true;
@@ -131,6 +171,7 @@ namespace BlueprintEditor2
             }
             else
             {
+                DeleteButton.IsEnabled = false;
                 PropertyList.IsEnabled = false;
                 PropertyList.ItemsSource = null;
                 SetTextBox(BlockNameBox, null);
@@ -298,11 +339,6 @@ namespace BlueprintEditor2
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            GridList_SelectionChanged(null,null);
-        }
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             List<MyXmlBlock> Blocks = new List<MyXmlBlock>();
@@ -329,6 +365,36 @@ namespace BlueprintEditor2
                 block.Armor = type;
             }
             GridList_SelectionChanged(null,null);
+        }
+
+        private void BlockXYZ_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox Sender = (TextBox)sender;
+            int.TryParse(Sender.Text,out int UnknownCoord);
+            Sender.Text = UnknownCoord.ToString();
+            Sender.CaretIndex = Sender.Text.Length;
+            if (BlockList.SelectedItem != null)
+            {
+                int.TryParse(BlockX.Text, out int X);
+                int.TryParse(BlockY.Text, out int Y);
+                int.TryParse(BlockZ.Text, out int Z);
+                ((MyXmlBlock)BlockList.SelectedItem).Position = new Vector3(X, Y, Z);
+            }
+        }
+
+        int OldShowType = 0;
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (OldShowType != ShowType.SelectedIndex)
+            {
+                OldShowType = ShowType.SelectedIndex;
+                GridList_SelectionChanged(null, null);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GridList_SelectionChanged(null, null);
         }
     }
 }
