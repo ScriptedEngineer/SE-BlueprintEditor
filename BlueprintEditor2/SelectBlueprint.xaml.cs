@@ -13,7 +13,7 @@ using System.Diagnostics;
 using Path = System.IO.Path;
 using System.ComponentModel;
 using System.Net;
-using System.Text;
+using System.Threading;
 
 namespace BlueprintEditor2
 {
@@ -27,14 +27,24 @@ namespace BlueprintEditor2
         string currentBluePatch;
         public SelectBlueprint()
         {
+#if DEBUG
+            System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
+#endif
+
             MySettings.Deserialize();
             MySettings.Current.ApplySettings();
             window = this;
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1 && args[1] == "Crash")
             {
+#if DEBUG
+                Application.Current.Shutdown();
+                return;
+#else
                 new Reporter().Show();
                 Hide();
+                return;
+#endif
             }
             Classes.CrashLogger.HandleUhEx();
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
@@ -45,23 +55,22 @@ namespace BlueprintEditor2
                     File.Delete("./" + langfold + "/SE-BlueprintEditor.resources.dll");
                     File.Move("./" + langfold + "/SE-BlueprintEditor.resources.dll.upd", "./" + langfold + "/SE-BlueprintEditor.resources.dll");
                     File.Delete("lang.txt");
-                    FileStream Batch = File.Create("update.vbs");
-                    string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
+                    /*FileStream Batch = File.Create("update.vbs");
                     byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
         + "\r\nOn Error Resume next"
         + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
         + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
         + "\r\nOn Error GoTo 0");
                     Batch.Write(Data, 0, Data.Length);
-                    Batch.Close();
-                    Process.Start("update.vbs");
+                    Batch.Close();*/
+                    Process.Start(MyExtensions.AppFile);
                     Application.Current.Shutdown();
                 }
                 catch
                 {
 
                 }
-            if (!Directory.Exists("ru"))
+            if (!Directory.Exists("ru") && MySettings.Current.LCID == 1049)
                 try
                 {
                     string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
@@ -69,16 +78,7 @@ namespace BlueprintEditor2
                         Directory.CreateDirectory(langpackfolder);
                     WebClient web = new WebClient();
                     web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
-                    FileStream Batch = File.Create("update.vbs");
-                    string UpdFile = Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update";
-                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
-        + "\r\nOn Error Resume next"
-        + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
-        + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
-        + "\r\nOn Error GoTo 0");
-                    Batch.Write(Data, 0, Data.Length);
-                    Batch.Close();
-                    Process.Start("update.vbs");
+                    Process.Start(MyExtensions.AppFile);
                     Application.Current.Shutdown();
                 }
                 catch
@@ -98,6 +98,8 @@ namespace BlueprintEditor2
                 //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
             OldSortBy = FirstSorter;
+            Welcome.Content = Lang.Welcome+" "+MySettings.Current.UserName.Replace("_", "__");
+            //MessageBox.Show("Hello "+MySettings.Current.UserName);
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -107,13 +109,16 @@ namespace BlueprintEditor2
                 CurrentBlueprint = new MyXmlBlueprint(currentBluePatch + Selected.Name);
                 if(MySettings.Current.DOBS)Selected.addXmlData(CurrentBlueprint);
                 BluePicture.Source = CurrentBlueprint.GetPic();
+                string Owner = Selected.Owner + "(" + CurrentBlueprint.Owner + ")";
+                if (CurrentBlueprint.Owner == MySettings.Current.SteamID)
+                    Owner = MySettings.Current.UserName + "(You)";
                 BlueText.Text = Lang.Blueprint + ": " + Selected.Name + "\n" +
                     Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
                     Lang.Created + ": " + Selected.CreationTimeText + "\n" +
                     Lang.Changed + ": " + Selected.LastEditTimeText + "\n" +
                     Lang.GridCount + ": " + Selected.GridCountText + "\n" +
                     Lang.BlockCount + ": " + Selected.BlockCountText + "\n" +
-                    Lang.Owner + ": " + Selected.Owner + "(" + CurrentBlueprint.Owner + ")\n";
+                    Lang.Owner + ": " + Owner + "\n";
                 CalculateButton.IsEnabled = true;
                 EditButton.IsEnabled = true;
                 BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
@@ -406,7 +411,7 @@ namespace BlueprintEditor2
                     while (!status.IsCompleted) { }
                     MyExtensions.AsyncWorker(() =>
                     {
-                        foreach (var x in foldrmenu.OrderBy(x => x.Header))
+                        foreach (MenuItem x in foldrmenu.OrderBy(x => x.Header))
                             FoldersItem.Items.Add(x);
                         if (OldSortBy != null)
                             GoSort(OldSortBy,null);
@@ -449,5 +454,43 @@ namespace BlueprintEditor2
         {
             InitBlueprints();
         }
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            Lock.Height = SystemParameters.PrimaryScreenHeight;
+            Lock.DataContext = 0;
+            new MessageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteThisBackp, (Dial) =>
+            {
+                if (Dial == DialоgResult.Yes)
+                {
+                    
+                    if (Directory.Exists(CurrentBlueprint.Patch + "\\Backups")) 
+                        Directory.Delete(CurrentBlueprint.Patch + "\\Backups", true);
+                    BlueList_SelectionChanged(null, null);
+                }
+                Lock.Height = 0;
+            }).Show();
+        }
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            WorkshopCache.Clear();
+        }
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+            string mods = WorkshopCache.GetModsForWorld();
+            new MessageDialog((x)=> {
+                MyWorld.Create(x, mods);
+            }, Lang.CreateWorld, Lang.EnterWorldNameForCreate).Show();
+        }
+        private void MenuItem_Click_5(object sender, RoutedEventArgs e)
+        {
+            //WorkshopCache.MoveBlueprintsToLocal();
+            //InitBlueprints();
+        }
+
+        private void InDev(object sender, RoutedEventArgs e)
+        {
+            new MessageDialog(DialogPicture.attention, "InDev", "This features in development, please wait for new version!", null, DialogType.Message).Show();
+        }
+
     }
 }

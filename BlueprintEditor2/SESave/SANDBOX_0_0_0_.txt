@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<MyObjectBuilder_Sector xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Position>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </Position>
+  <SectorEvents>
+    <Events>
+      <MyObjectBuilder_GlobalEventBase>
+        <SubtypeName>SpawnCargoShip</SubtypeName>
+        <Enabled>true</Enabled>
+        <ActivationTimeMs>898000</ActivationTimeMs>
+      </MyObjectBuilder_GlobalEventBase>
+    </Events>
+  </SectorEvents>
+  <AppVersion>1193103</AppVersion>
+  <Environment>
+    <SunAzimuth>-0.502843142</SunAzimuth>
+    <SunElevation>0.789207757</SunElevation>
+    <SunIntensity>0</SunIntensity>
+    <FogMultiplier>0</FogMultiplier>
+    <FogDensity>0.003</FogDensity>
+    <FogColor x="0" y="0" z="0" />
+    <EnvironmentDefinition Type="MyObjectBuilder_EnvironmentDefinition" Subtype="Default" />
+  </Environment>
+  <VoxelHandVolumeChanged>0</VoxelHandVolumeChanged>
+  <SectorObjects />
+</MyObjectBuilder_Sector>

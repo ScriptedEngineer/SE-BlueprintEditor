@@ -122,6 +122,7 @@ namespace BlueprintEditor2
             Batch.Write(Data, 0, Data.Length);
             Batch.Close();
             Process.Start("update.vbs");
+            //Process.Start("cmd","\\c taskkill \\f \\im ");
             Application.Current.Shutdown();
         }
     }

@@ -249,6 +249,9 @@ Developed by clan "Andromeda"</value>
   <data name="Components" xml:space="preserve">
     <value>Components</value>
   </data>
+  <data name="CopyBlueprintsFromWorkshop" xml:space="preserve">
+    <value>Copy blueprints from workshop cache</value>
+  </data>
   <data name="CopyToClipboard" xml:space="preserve">
     <value>Copy to clipboard</value>
   </data>
@@ -259,6 +262,12 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="CreateWorld" xml:space="preserve">
+    <value>Create world</value>
+  </data>
+  <data name="CreateWorldWithMods" xml:space="preserve">
+    <value>Create world with mods from workshop cache</value>
+  </data>
   <data name="CurrentVer" xml:space="preserve">
     <value>Current version</value>
   </data>
@@ -267,6 +276,12 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Delete all backups of all blueprints in this directory</value>
+  </data>
+  <data name="DeleteModCache" xml:space="preserve">
+    <value>Delete workshop cache</value>
+  </data>
+  <data name="DeleteThisBackup" xml:space="preserve">
+    <value>Delete all backups of selected blueprint</value>
   </data>
   <data name="DestructibleGrid" xml:space="preserve">
     <value>Destructible grid</value>
@@ -288,6 +303,9 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EnterWorldNameForCreate" xml:space="preserve">
+    <value>Enter world name! Other settings are edited from the game.</value>
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Faction</value>
@@ -363,6 +381,9 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>This action will delete all backup files of all blueprints, do you really want to do this?</value>
+  </data>
+  <data name="ItWillDeleteThisBackp" xml:space="preserve">
+    <value>This action will delete all backup files of this blueprint, do you really want to do this?</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
@@ -527,6 +548,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="SystemLang" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Undefined types</value>
   </data>
@@ -550,6 +574,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>View blueprint folder</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
   </data>
   <data name="WhatHappens" xml:space="preserve">
     <value>What happens?</value>

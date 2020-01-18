@@ -28,7 +28,10 @@ namespace BlueprintEditor2
         }
         public void addXmlData(MyXmlBlueprint blueprint)
         {
-            Owner = blueprint.DisplayName;
+            if (blueprint.Owner == MySettings.Current.SteamID)
+                Owner = MySettings.Current.UserName;
+            else
+                Owner = blueprint.DisplayName;
             int blcnt = 0;
             foreach (MyXmlGrid grd in blueprint.Grids)
                 blcnt += grd.Blocks.Count;
@@ -47,8 +50,12 @@ namespace BlueprintEditor2
                 if (!MySettings.Current.DOBS)
                 {
                     XmlDocument BlueprintXml = new XmlDocument();
-                    BlueprintXml.Load(Bluepath + "\\bp.sbc");
-                    Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
+                    BlueprintXml.Load($"{Bluepath}\\bp.sbc");
+                    string SteamID = BlueprintXml.GetElementsByTagName("OwnerSteamId").Item(0).InnerText;
+                    if (SteamID == MySettings.Current.SteamID)
+                        Elem.Owner = MySettings.Current.UserName;
+                    else
+                        Elem.Owner = BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
                     Elem.BlockCount = BlueprintXml.GetElementsByTagName("MyObjectBuilder_CubeBlock").Count;
                     Elem.GridCount = BlueprintXml.GetElementsByTagName("CubeGrid").Count;
                 }

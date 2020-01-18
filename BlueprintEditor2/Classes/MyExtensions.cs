@@ -42,6 +42,34 @@ namespace BlueprintEditor2
             for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
                 Application.Current.Windows[intCounter].Hide();
         }
+        static public void ClearFolder(string dir)
+        {
+            string[] files = System.IO.Directory.GetFiles(dir);
+            foreach (string file in files)
+            {
+                try
+                {
+                    System.IO.File.Delete(file);
+                }
+                catch
+                {
+
+                }
+            }
+            files = System.IO.Directory.GetDirectories(dir);
+            foreach (string file in files)
+            {
+                ClearFolder(file);
+                try
+                {
+                    System.IO.Directory.Delete(file);
+                }
+                catch
+                {
+
+                }
+            }
+        }
     }
     public static class SE_ColorConverter
     {

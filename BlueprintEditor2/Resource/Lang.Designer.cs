@@ -451,6 +451,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Copy blueprints from workshop cache.
+        /// </summary>
+        public static string CopyBlueprintsFromWorkshop {
+            get {
+                return ResourceManager.GetString("CopyBlueprintsFromWorkshop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy to clipboard.
         /// </summary>
         public static string CopyToClipboard {
@@ -479,6 +488,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create world.
+        /// </summary>
+        public static string CreateWorld {
+            get {
+                return ResourceManager.GetString("CreateWorld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Create world with mods from workshop cache.
+        /// </summary>
+        public static string CreateWorldWithMods {
+            get {
+                return ResourceManager.GetString("CreateWorldWithMods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Current version.
         /// </summary>
         public static string CurrentVer {
@@ -502,6 +529,24 @@ namespace BlueprintEditor2.Resource {
         public static string DeleteAllBackups {
             get {
                 return ResourceManager.GetString("DeleteAllBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete workshop cache.
+        /// </summary>
+        public static string DeleteModCache {
+            get {
+                return ResourceManager.GetString("DeleteModCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all backups of selected blueprint.
+        /// </summary>
+        public static string DeleteThisBackup {
+            get {
+                return ResourceManager.GetString("DeleteThisBackup", resourceCulture);
             }
         }
         
@@ -565,6 +610,15 @@ namespace BlueprintEditor2.Resource {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter world name! Other settings are edited from the game..
+        /// </summary>
+        public static string EnterWorldNameForCreate {
+            get {
+                return ResourceManager.GetString("EnterWorldNameForCreate", resourceCulture);
             }
         }
         
@@ -790,6 +844,15 @@ namespace BlueprintEditor2.Resource {
         public static string ItWillDeleteAllBackps {
             get {
                 return ResourceManager.GetString("ItWillDeleteAllBackps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This action will delete all backup files of this blueprint, do you really want to do this?.
+        /// </summary>
+        public static string ItWillDeleteThisBackp {
+            get {
+                return ResourceManager.GetString("ItWillDeleteThisBackp", resourceCulture);
             }
         }
         
@@ -1275,6 +1338,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Tools.
+        /// </summary>
+        public static string Tools {
+            get {
+                return ResourceManager.GetString("Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Undefined types.
         /// </summary>
         public static string UndefinedTypes {
@@ -1343,6 +1415,15 @@ namespace BlueprintEditor2.Resource {
         public static string ViewFold {
             get {
                 return ResourceManager.GetString("ViewFold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Welcome.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
         

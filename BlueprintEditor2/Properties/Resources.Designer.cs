@@ -19,7 +19,7 @@ namespace BlueprintEditor2.Properties {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,6 +57,67 @@ namespace BlueprintEditor2.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;MyObjectBuilder_Checkpoint xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        ///  &lt;CurrentSector x=&quot;0&quot; y=&quot;0&quot; z=&quot;0&quot; /&gt;
+        ///  &lt;ElapsedGameTime&gt;1380320000&lt;/ElapsedGameTime&gt;
+        ///  &lt;SessionName&gt;TEST&lt;/SessionName&gt;
+        ///  &lt;SpectatorPosition&gt;
+        ///    &lt;Position x=&quot;1000000&quot; y=&quot;1000000&quot; z=&quot;1000000.0000000002&quot; /&gt;
+        ///    &lt;Forward x=&quot;0.145073712&quot; y=&quot;0.6612421&quot; z=&quot;-0.7360112&quot; /&gt;
+        ///    &lt;Up x=&quot;0.668944657&quot; y=&quot;0.482549965&quot; z=&quot;0.565383554&quot; /&gt;
+        ///    &lt;Orientation&gt;
+        ///      &lt;X [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Sandbox {
+            get {
+                return ResourceManager.GetString("Sandbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;MyObjectBuilder_Sector xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        ///  &lt;Position&gt;
+        ///    &lt;X&gt;0&lt;/X&gt;
+        ///    &lt;Y&gt;0&lt;/Y&gt;
+        ///    &lt;Z&gt;0&lt;/Z&gt;
+        ///  &lt;/Position&gt;
+        ///  &lt;SectorEvents&gt;
+        ///    &lt;Events&gt;
+        ///      &lt;MyObjectBuilder_GlobalEventBase&gt;
+        ///        &lt;SubtypeName&gt;SpawnCargoShip&lt;/SubtypeName&gt;
+        ///        &lt;Enabled&gt;true&lt;/Enabled&gt;
+        ///        &lt;ActivationTimeMs&gt;898000&lt;/ActivationTimeMs&gt;
+        ///      &lt;/MyObjectBuilder_GlobalEventBase&gt;
+        ///    &lt;/Events&gt;
+        ///  &lt;/SectorEvents&gt;
+        ///  &lt;AppV [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string SANDBOX_0_0_0_ {
+            get {
+                return ResourceManager.GetString("SANDBOX_0_0_0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;MyObjectBuilder_WorldConfiguration xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+        ///  &lt;Settings xsi:type=&quot;MyObjectBuilder_SessionSettings&quot;&gt;
+        ///    &lt;GameMode&gt;Creative&lt;/GameMode&gt;
+        ///    &lt;InventorySizeMultiplier&gt;3&lt;/InventorySizeMultiplier&gt;
+        ///    &lt;BlocksInventorySizeMultiplier&gt;1&lt;/BlocksInventorySizeMultiplier&gt;
+        ///    &lt;AssemblerSpeedMultiplier&gt;3&lt;/AssemblerSpeedMultiplier&gt;
+        ///    &lt;AssemblerEfficiencyMultiplier&gt;3&lt;/AssemblerEfficiencyMultiplier&gt;
+        ///   [остаток строки не уместился]&quot;;.
+        /// </summary>
+        internal static string Sandbox_config {
+            get {
+                return ResourceManager.GetString("Sandbox_config", resourceCulture);
             }
         }
         

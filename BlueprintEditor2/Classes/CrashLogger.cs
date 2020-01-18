@@ -17,7 +17,13 @@ namespace BlueprintEditor2.Classes
         }
         private static void CrashHappens(object sende, UnhandledExceptionEventArgs UhEx)
         {
-            if (!UhEx.IsTerminating) return;
+            if (!UhEx.IsTerminating)
+            {
+#if DEBUG
+                Console.WriteLine((UhEx.ExceptionObject as Exception).StackTrace);
+#endif
+                return;
+            }
             string Crash = "";
             Exception e = (Exception)UhEx.ExceptionObject;
             Crash += "Error message: " + e.Message;

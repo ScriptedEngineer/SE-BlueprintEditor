@@ -77,6 +77,7 @@ namespace BlueprintEditor2
 
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (LangSelect.SelectedIndex == -1) return;
             MySettings.Current.LCID = Langs[LangSelect.SelectedIndex];
             hasChanged = true;
         }

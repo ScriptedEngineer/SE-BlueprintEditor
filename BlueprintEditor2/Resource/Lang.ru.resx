@@ -249,6 +249,9 @@
   <data name="Components" xml:space="preserve">
     <value>Компоненты</value>
   </data>
+  <data name="CopyBlueprintsFromWorkshop" xml:space="preserve">
+    <value>Скопировать чертежи из кэша мастерской</value>
+  </data>
   <data name="CopyToClipboard" xml:space="preserve">
     <value>Скорипровать в буфер обмена</value>
   </data>
@@ -259,6 +262,12 @@
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
+  <data name="CreateWorld" xml:space="preserve">
+    <value>Создать мир</value>
+  </data>
+  <data name="CreateWorldWithMods" xml:space="preserve">
+    <value>Создать мир с модами из кэша мастерской</value>
+  </data>
   <data name="CurrentVer" xml:space="preserve">
     <value>Текущая версия</value>
   </data>
@@ -267,6 +276,12 @@
   </data>
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Удалить все резервные копии всех чертежей в этой папке</value>
+  </data>
+  <data name="DeleteModCache" xml:space="preserve">
+    <value>Удалить кэш мастерской</value>
+  </data>
+  <data name="DeleteThisBackup" xml:space="preserve">
+    <value>Удалить все резервные копии выбранного чертежа</value>
   </data>
   <data name="DestructibleGrid" xml:space="preserve">
     <value>Разрушаемая сетка</value>
@@ -288,6 +303,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="EnterWorldNameForCreate" xml:space="preserve">
+    <value>Введите название мира! Остальные настройки редактируются из игры.</value>
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Фракция</value>
@@ -363,6 +381,9 @@
   </data>
   <data name="ItWillDeleteAllBackps" xml:space="preserve">
     <value>Это действие приведет к удалению всех резервных копий всех чертежей, вы действительно хотите это сделать?</value>
+  </data>
+  <data name="ItWillDeleteThisBackp" xml:space="preserve">
+    <value>Это действие приведет к удалению всех резервных копий этого чертежа, вы действительно хотите это сделать?</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>
@@ -527,6 +548,9 @@
   <data name="SystemLang" xml:space="preserve">
     <value>Системный</value>
   </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Инструменты</value>
+  </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Неопознанные типы</value>
   </data>
@@ -550,6 +574,9 @@
   </data>
   <data name="ViewFold" xml:space="preserve">
     <value>Открыть папку чартежа…</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Добро пожаловать</value>
   </data>
   <data name="WhatHappens" xml:space="preserve">
     <value>Что произошло?</value>

@@ -71,7 +71,7 @@ namespace BlueprintEditor2
             }
             Last = this;
         }
-        public MessageDialog(Action<string> _Run, DialogPicture Pic, string _Title, string Text, int _Width = 300, int _Height = 200)
+        public MessageDialog(Action<string> _Run, string _Title, string Text, int _Width = 300, int _Height = 200)
         {
             OnInput = _Run;
             InitializeComponent();

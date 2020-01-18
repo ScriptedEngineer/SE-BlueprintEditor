@@ -37,13 +37,38 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
+            <MenuItem Header="{x:Static res:Lang.DeleteThisBackup}" Click="MenuItem_Click_3">
+                <MenuItem.Icon>
+                    <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="{x:Static res:Lang.DeleteAllBackups}" Click="BackupsMenuItemDelete_Click">
                 <MenuItem.Icon>
                     <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-
+            <MenuItem Header="{x:Static res:Lang.Tools}" Click="MenuItem_Click_5">
+                <MenuItem.Icon>
+                    <Image Source="Resource\img_100000.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="InDev">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_1610640.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <Separator/>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click">
                 <MenuItem.Icon>
                     <Image Source="Resource\Setts.jpg" Width="16" Height="16"/>
@@ -111,6 +136,11 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
+                <MenuItem Header="{x:Static res:Lang.DeleteThisBackup}" Click="MenuItem_Click_3">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="{x:Static res:Lang.DeleteAllBackups}" Click="BackupsMenuItemDelete_Click">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
@@ -118,9 +148,25 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem x:Name="FoldersItem" Header="{x:Static res:Lang.Directories}">
-
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click"/>
+            <MenuItem Header="{x:Static res:Lang.Tools}">
+                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="InDev">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_1610640.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click"/>
 
         </Menu>
@@ -133,6 +179,7 @@
             <ComboBoxItem Content="{x:Static res:Lang.Changed}"/>
         </ComboBox>
         <Button Content="{x:Static res:Lang.Search}" HorizontalAlignment="Right" Margin="0,0,2,10" Grid.Row="3" VerticalAlignment="Bottom" Width="72" Height="22" Click="Button_Click"/>
+        <Label x:Name="Welcome" Content="Welcome" Grid.Column="1" HorizontalAlignment="Right" Margin="0,1,6,0" Grid.Row="1" VerticalAlignment="Top" Padding="0" HorizontalContentAlignment="Right"/>
 
     </Grid>
 </Window>

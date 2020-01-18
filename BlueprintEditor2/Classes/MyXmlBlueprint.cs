@@ -54,7 +54,6 @@ namespace BlueprintEditor2
             {
                 BlueprintXml.Save(Patch + "\\bp.sbc");
             }
-            
         }
         public void SaveBackup(bool forced = false)
         {

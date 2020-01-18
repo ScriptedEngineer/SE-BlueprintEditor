@@ -23,6 +23,7 @@ namespace BlueprintEditor2
         public Reporter()
         {
             InitializeComponent();
+            Who.Text = MySettings.Current.UserName;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
