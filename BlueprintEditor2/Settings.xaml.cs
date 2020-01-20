@@ -35,6 +35,7 @@ namespace BlueprintEditor2
             LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
             DOBSBox.IsChecked = MySettings.Current.DOBS;
+            NickName.Text = MySettings.Current.UserName;
             hasChanged = false;
         }
 
@@ -137,6 +138,12 @@ namespace BlueprintEditor2
         private void DOBSBox_Click(object sender, RoutedEventArgs e)
         {
             MySettings.Current.DOBS = DOBSBox.IsChecked.Value;
+            hasChanged = true;
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MySettings.Current.UserName = NickName.Text;
             hasChanged = true;
         }
     }

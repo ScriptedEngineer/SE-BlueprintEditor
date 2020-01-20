@@ -34,6 +34,41 @@ namespace BlueprintEditor2
             string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
             MyExtensions.ClearFolder(ModFolder);
         }
+        public static string[] GetModsForCalculator()
+        {
+            string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
+            List<string> Mods = new List<string>();
+            foreach (var fld in Directory.GetDirectories(ModFolder))
+            {
+                string[] files = Directory.GetFiles(fld);
+                bool IsMod = Directory.Exists($"{fld}\\Data");
+                if (!IsMod && files.Length >= 1)
+                {
+                    foreach (var ink in files)
+                    {
+                        if (ink.EndsWith(".bin"))
+                        {
+                            try
+                            {
+                                ZipFile.ExtractToDirectory(ink, fld);
+                            }
+                            catch
+                            {
+
+                            }
+                            IsMod = Directory.Exists($"{fld}\\Data");
+                            if (IsMod) break;
+                        }                      
+                    }
+                }
+                if (IsMod)
+                {
+                    //string ID = fld.Split('\\').Last();
+                    Mods.Add(fld);
+                }
+            }
+            return Mods.ToArray();
+        }
         public static string GetModsForWorld()
         {
             string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";

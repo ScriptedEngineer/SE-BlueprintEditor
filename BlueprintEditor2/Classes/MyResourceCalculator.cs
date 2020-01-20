@@ -12,9 +12,10 @@ namespace BlueprintEditor2
     public class MyResourceCalculator
     {
         public double StoneAmount { get; set; }
-        public int YieldModules { get; set; }
+        public double YieldEffect { get; set; }
         public int AssemblerEffic { get; set; }
         private double SelfStoneAmount;
+        static bool Mods = false;
         static Dictionary<string, Dictionary<string, int>> CubeBlocks = new Dictionary<string, Dictionary<string, int>>();
         static Dictionary<string, Dictionary<string,Dictionary<string, double>>> Recipies = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
         static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
@@ -23,10 +24,10 @@ namespace BlueprintEditor2
         Dictionary<string, double> RequaredIngots = new Dictionary<string, double>();
         Dictionary<string, double> RequaredOres = new Dictionary<string, double>();
         List<string> UndefinedTypes = new List<string>();
-        public MyResourceCalculator(string gamePatch)
+        public MyResourceCalculator(string gamePatch, bool loadMods)
         {
             StoneAmount = 0;
-            YieldModules = 0;
+            YieldEffect = 1;
             AssemblerEffic = 1;
             if (!IsInitialized)
             {
@@ -43,6 +44,24 @@ namespace BlueprintEditor2
                     IsInitialized = true;
                 }
             }
+            if ((!IsInitialized && loadMods) || (loadMods && !Mods && IsInitialized))
+            {
+                foreach (string mod in WorkshopCache.GetModsForCalculator())
+                {
+                    //Console.WriteLine(mod);
+                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*CubeBlocks*"))
+                    {
+                        if (x.EndsWith(".sbc"))
+                            AddBlocksInfo(x);
+                    }
+                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*Blueprints*"))
+                    {
+                        if (x.EndsWith(".sbc"))
+                            AddRecipiesInfo(x);
+                    }
+                }
+            }
+            Mods = loadMods;
         }
 
         public void Clear()
@@ -55,6 +74,30 @@ namespace BlueprintEditor2
             StoneAmount = 0;
         }
 
+        public void SetYieldEffect(double yieldEffect)
+        {
+            YieldEffect = yieldEffect;
+        }
+        public double SetYieldModules(int YieldModules)
+        {
+            YieldEffect = 1;
+            switch (YieldModules)
+            {
+                case 1:
+                    YieldEffect = 1.19;
+                    break;
+                case 2:
+                    YieldEffect = 1.41;
+                    break;
+                case 3:
+                    YieldEffect = 1.68;
+                    break;
+                case 4:
+                    YieldEffect = 2;
+                    break;
+            }
+            return YieldEffect;
+        }
         string AddWeightCounters(double Num)
         {
             string Oute = Num.ToString("0.00") + " Kg";
@@ -71,7 +114,7 @@ namespace BlueprintEditor2
             foreach(var x in RequaredComponents)
             {
                 string ressng = Lang.ResourceManager.GetString("Component/"+x.Key);
-                outer.Add(new MyResourceInfo((String.IsNullOrEmpty(ressng) ? x.Key : ressng), x.Value.ToString()));
+                outer.Add(new MyResourceInfo((String.IsNullOrEmpty(ressng) ? x.Key : ressng), x.Value));
             }
             return outer;
         }
@@ -175,23 +218,6 @@ namespace BlueprintEditor2
                     }
                 }
             }
-            double YieldEffect = 1;
-            switch (YieldModules)
-            {
-                case 1:
-                    YieldEffect = 1.19;
-                    break;
-                case 2:
-                    YieldEffect = 1.41;
-                    break;
-                case 3:
-                    YieldEffect = 1.68;
-                    break;
-                case 4:
-                    YieldEffect = 2;
-                    break;
-            }
-            
             foreach (var x in requaredIngots)
             {
                 if (Recipies.ContainsKey(x.Key))
@@ -266,7 +292,11 @@ namespace BlueprintEditor2
                             break;
                     }
                 }
-                CubeBlocks.Add(name.Replace("MyObjectBuilder_", ""), components);
+                name = name.Replace("MyObjectBuilder_", "");
+                if (CubeBlocks.ContainsKey(name))
+                    CubeBlocks[name] = components;
+                else
+                    CubeBlocks.Add(name, components);
             }
         }
         private void AddRecipiesInfo(string file)
@@ -365,7 +395,7 @@ namespace BlueprintEditor2
                             if (Recipies.ContainsKey(d.Key))
                             {
                                 if (!Recipies[d.Key].ContainsKey(requares.First().Key + results.Count))
-                                    Recipies[d.Key].Add(requares.First().Key + results.Count, requared);
+                                      Recipies[d.Key].Add(requares.First().Key + results.Count, requared);
                             }
                             else
                             {
@@ -382,10 +412,18 @@ namespace BlueprintEditor2
     {
         public string Type { get; set; }
         public string Count { get; set; }
+        public int Amount { get; set; }
         public MyResourceInfo(string t, string c)
         {
             Type = t;
             Count = c;
+            Amount = 0;
+        }
+        public MyResourceInfo(string t, int ci)
+        {
+            Type = t;
+            Count = ci.ToString();
+            Amount = ci;
         }
     }
 }

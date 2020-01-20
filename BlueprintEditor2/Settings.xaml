@@ -25,6 +25,7 @@
                 <Grid Background="#FFE5E5E5">
                     <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,37,0,0" Stroke="Black" VerticalAlignment="Top" Width="130"/>
                     <Rectangle HorizontalAlignment="Right" Height="22" Margin="0,10,10,0" Stroke="Black" VerticalAlignment="Top" Width="180"/>
+                    <Rectangle HorizontalAlignment="Right" Height="22" Margin="0,39,10,0" Stroke="Black" VerticalAlignment="Top" Width="289"/>
                     <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="100" SelectedIndex="1" SelectionChanged="LangSelect_SelectionChanged">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Русский"/>
@@ -33,6 +34,8 @@
                     <CheckBox x:Name="MultiWindowCheckBox" Content="{x:Static res:Lang.MultiWindow}" HorizontalAlignment="Left" Margin="13,41,0,0" VerticalAlignment="Top" Height="16" Click="MultiWindowCheckBox_Click"/>
                     <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="270"/>
                     <CheckBox x:Name="DOBSBox" Content="{x:Static res:Lang.DontOpenAllBlue}" HorizontalAlignment="Left" Margin="13,14,0,0" VerticalAlignment="Top" Height="16" Click="DOBSBox_Click"/>
+                    <Label Content="{x:Static res:Lang.NickName}" HorizontalAlignment="Right" Margin="0,37,213,0" VerticalAlignment="Top" Width="86"/>
+                    <TextBox x:Name="NickName" HorizontalAlignment="Right" Height="22" Margin="0,39,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" TextChanged="TextBox_TextChanged"/>
                 </Grid>
             </TabItem>
         </TabControl>

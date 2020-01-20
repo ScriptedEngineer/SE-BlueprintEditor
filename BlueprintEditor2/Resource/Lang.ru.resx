@@ -214,7 +214,7 @@
     <value>Большая стальная труба</value>
   </data>
   <data name="Component/Medical" xml:space="preserve">
-    <value>Медецинские компоненты</value>
+    <value>Медицинские компоненты</value>
   </data>
   <data name="Component/MetalGrid" xml:space="preserve">
     <value>Компонент решётки</value>
@@ -403,6 +403,9 @@
   <data name="Name" xml:space="preserve">
     <value>Название</value>
   </data>
+  <data name="NickName" xml:space="preserve">
+    <value>Псевдоним</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>Нет</value>
   </data>
@@ -587,10 +590,16 @@
   <data name="WhoAreYou" xml:space="preserve">
     <value>Контактная информация, или ник, или ничего</value>
   </data>
+  <data name="WithMods" xml:space="preserve">
+    <value>С модами</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
   </data>
   <data name="YieldModules" xml:space="preserve">
     <value>Модули выработки</value>
+  </data>
+  <data name="YieldProcentage" xml:space="preserve">
+    <value>Процент выработки</value>
   </data>
 </root>

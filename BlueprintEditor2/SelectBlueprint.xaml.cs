@@ -184,7 +184,9 @@ namespace BlueprintEditor2
                     Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
                     Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
-                Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
+                Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint, WithMods.IsChecked.Value);
+                if (WithMods.IsChecked.Value)
+                    WithMods.IsEnabled = false;
                 try
                 {
                     Form.Show();
@@ -483,8 +485,8 @@ namespace BlueprintEditor2
         }
         private void MenuItem_Click_5(object sender, RoutedEventArgs e)
         {
-            //WorkshopCache.MoveBlueprintsToLocal();
-            //InitBlueprints();
+            WorkshopCache.MoveBlueprintsToLocal();
+            InitBlueprints();
         }
 
         private void InDev(object sender, RoutedEventArgs e)

@@ -911,6 +911,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Nickname.
+        /// </summary>
+        public static string NickName {
+            get {
+                return ResourceManager.GetString("NickName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на No.
         /// </summary>
         public static string No {
@@ -1455,6 +1464,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на With mods.
+        /// </summary>
+        public static string WithMods {
+            get {
+                return ResourceManager.GetString("WithMods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Yes.
         /// </summary>
         public static string Yes {
@@ -1469,6 +1487,15 @@ namespace BlueprintEditor2.Resource {
         public static string YieldModules {
             get {
                 return ResourceManager.GetString("YieldModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Yield percentage.
+        /// </summary>
+        public static string YieldProcentage {
+            get {
+                return ResourceManager.GetString("YieldProcentage", resourceCulture);
             }
         }
     }

@@ -51,6 +51,9 @@ namespace BlueprintEditor2
                 {
                     XmlDocument BlueprintXml = new XmlDocument();
                     BlueprintXml.Load($"{Bluepath}\\bp.sbc");
+                    foreach(XmlNode x in BlueprintXml.GetElementsByTagName("ProjectedGrids")){
+                        x.InnerXml = "";
+                    }
                     string SteamID = BlueprintXml.GetElementsByTagName("OwnerSteamId").Item(0).InnerText;
                     if (SteamID == MySettings.Current.SteamID)
                         Elem.Owner = MySettings.Current.UserName;

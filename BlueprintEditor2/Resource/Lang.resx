@@ -403,6 +403,9 @@ By clicking on the "Don't send", you acknowledge that the error was your fault!<
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NickName" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -587,10 +590,16 @@ Cancel - Don't set default thumbnail</value>
   <data name="WhoAreYou" xml:space="preserve">
     <value>You contact or just nickname or nothing</value>
   </data>
+  <data name="WithMods" xml:space="preserve">
+    <value>With mods</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
   <data name="YieldModules" xml:space="preserve">
     <value>Yield modules</value>
+  </data>
+  <data name="YieldProcentage" xml:space="preserve">
+    <value>Yield percentage</value>
   </data>
 </root>

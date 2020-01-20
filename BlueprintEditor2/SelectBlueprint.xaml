@@ -48,11 +48,11 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="{x:Static res:Lang.Tools}" Click="MenuItem_Click_5">
+            <MenuItem Header="{x:Static res:Lang.Tools}">
                 <MenuItem.Icon>
                     <Image Source="Resource\img_100000.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
-                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="InDev">
+                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
@@ -151,7 +151,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click"/>
             <MenuItem Header="{x:Static res:Lang.Tools}">
-                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="InDev">
+                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
@@ -180,6 +180,7 @@
         </ComboBox>
         <Button Content="{x:Static res:Lang.Search}" HorizontalAlignment="Right" Margin="0,0,2,10" Grid.Row="3" VerticalAlignment="Bottom" Width="72" Height="22" Click="Button_Click"/>
         <Label x:Name="Welcome" Content="Welcome" Grid.Column="1" HorizontalAlignment="Right" Margin="0,1,6,0" Grid.Row="1" VerticalAlignment="Top" Padding="0" HorizontalContentAlignment="Right"/>
+        <CheckBox x:Name="WithMods" Content="{x:Static res:Lang.WithMods}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,221,30" Grid.Row="3" VerticalAlignment="Bottom" Width="80"/>
 
     </Grid>
 </Window>

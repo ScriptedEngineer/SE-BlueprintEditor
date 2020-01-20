@@ -55,6 +55,7 @@ namespace BlueprintEditor2
             }
             set
             {
+                if (_ColorMaskNode == null) return;
                 double x, y, z;
                 SE_ColorConverter.ColorToSE_HSV(value, out x, out y, out z);
                 _ColorMaskNode.Attributes.GetNamedItem("x").Value = x.ToString().Replace(',', '.');
@@ -127,6 +128,7 @@ namespace BlueprintEditor2
             }
             set
             {
+                if (_MinPosNode == null) return;
                 var Atrs = _MinPosNode.Attributes;
                 Atrs.GetNamedItem("x").Value = value.X.ToString();
                 Atrs.GetNamedItem("y").Value = value.Y.ToString();
