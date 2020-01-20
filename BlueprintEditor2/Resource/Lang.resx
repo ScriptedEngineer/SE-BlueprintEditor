@@ -426,6 +426,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Only armor</value>
   </data>
+  <data name="OnlyPro" xml:space="preserve">
+    <value>If you are an usual user, not to climb here, and press cancel!</value>
+  </data>
   <data name="OnlyTerminal" xml:space="preserve">
     <value>Only terminal</value>
   </data>
@@ -507,6 +510,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="SaveClose" xml:space="preserve">
     <value>Save and сlose</value>
   </data>
+  <data name="SavesFolder" xml:space="preserve">
+    <value>Saves directory</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
@@ -527,6 +533,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="SelectOne" xml:space="preserve">
     <value>Please select item to display information</value>
   </data>
+  <data name="SelectSavesPatchDesc" xml:space="preserve">
+    <value>Please select saves directory, usually it C:\Users\%UserName%\AppData\Roaming \SpaceEngineers\Saves\%SteamID%</value>
+  </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
@@ -541,6 +550,10 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>
+  </data>
+  <data name="SPNF" xml:space="preserve">
+    <value>The saves patch not found! 
+Please set this in the settings.</value>
   </data>
   <data name="StoneAmount" xml:space="preserve">
     <value>Stone amount (kg)</value>
@@ -592,6 +605,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="WithMods" xml:space="preserve">
     <value>With mods</value>
+  </data>
+  <data name="WorkshopFolder" xml:space="preserve">
+    <value>Workshop directory</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

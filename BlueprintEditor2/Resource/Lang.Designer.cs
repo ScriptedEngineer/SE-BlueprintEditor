@@ -976,6 +976,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на If you are an usual user, not to climb here, and press cancel!.
+        /// </summary>
+        public static string OnlyPro {
+            get {
+                return ResourceManager.GetString("OnlyPro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Only terminal.
         /// </summary>
         public static string OnlyTerminal {
@@ -1219,6 +1228,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Saves directory.
+        /// </summary>
+        public static string SavesFolder {
+            get {
+                return ResourceManager.GetString("SavesFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Search.
         /// </summary>
         public static string Search {
@@ -1275,6 +1293,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select saves directory, usually it C:\Users\%UserName%\AppData\Roaming \SpaceEngineers\Saves\%SteamID%.
+        /// </summary>
+        public static string SelectSavesPatchDesc {
+            get {
+                return ResourceManager.GetString("SelectSavesPatchDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Send.
         /// </summary>
         public static string Send {
@@ -1316,6 +1343,16 @@ namespace BlueprintEditor2.Resource {
         public static string SmallGrid {
             get {
                 return ResourceManager.GetString("SmallGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на The saves patch not found! 
+        ///Please set this in the settings..
+        /// </summary>
+        public static string SPNF {
+            get {
+                return ResourceManager.GetString("SPNF", resourceCulture);
             }
         }
         
@@ -1469,6 +1506,15 @@ namespace BlueprintEditor2.Resource {
         public static string WithMods {
             get {
                 return ResourceManager.GetString("WithMods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Workshop directory.
+        /// </summary>
+        public static string WorkshopFolder {
+            get {
+                return ResourceManager.GetString("WorkshopFolder", resourceCulture);
             }
         }
         

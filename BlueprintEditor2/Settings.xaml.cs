@@ -32,6 +32,8 @@ namespace BlueprintEditor2
             LastWindow = this;
             BlueprintFolderSetting.Text = MySettings.Current.BlueprintPatch;
             GameFolderSetting.Text = MySettings.Current.GamePatch;
+            SavesFolderSetting.Text = MySettings.Current.SavesPatch;
+            WorkshopFolderSetting.Text = MySettings.Current.SteamWorkshop;
             LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
             DOBSBox.IsChecked = MySettings.Current.DOBS;
@@ -145,6 +147,57 @@ namespace BlueprintEditor2
         {
             MySettings.Current.UserName = NickName.Text;
             hasChanged = true;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+
+                dialog.SelectedPath = SavesFolderSetting.Text;
+                dialog.Description = Lang.SelectSavesPatchDesc;
+                dialog.ShowNewFolderButton = false;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    SavesFolderSetting.Text = dialog.SelectedPath + "\\";
+                    hasChanged = true;
+                }
+            }
+        }
+
+        private void SavesFolder_Copy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Directory.Exists(WorkshopFolderSetting.Text))
+            {
+                MySettings.Current.SteamWorkshop = WorkshopFolderSetting.Text;
+                hasChanged = true;
+            }
+        }
+
+        private void SavesFolder_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Directory.Exists(SavesFolderSetting.Text))
+            {
+                MySettings.Current.SavesPatch = SavesFolderSetting.Text;
+                hasChanged = true;
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.SelectedPath = WorkshopFolderSetting.Text;
+                dialog.Description = Lang.OnlyPro;
+                dialog.ShowNewFolderButton = false;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    WorkshopFolderSetting.Text = dialog.SelectedPath + "\\";
+                    hasChanged = true;
+                }
+            }
         }
     }
 }

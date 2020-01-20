@@ -26,8 +26,8 @@ namespace BlueprintEditor2
         public string SavesPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\";
         [DataMember(Name = "GameFolder")]
         public string GamePatch = null;
-        [DataMember(Name = "SteamLibFolder")]
-        public string SteamLib = null;
+        [DataMember(Name = "SteamWorkshopCacheFolder")]
+        public string SteamWorkshop = null;
         [DataMember(Name = "UseMultipleWindows")]
         public bool MultiWindow = false;
         [DataMember(Name = "DontOpenBlueprintsOnScan")]
@@ -59,21 +59,23 @@ namespace BlueprintEditor2
         {
             try
             {
-                string Accounts = File.ReadAllText(Steam + @"\config\loginusers.vdf");
                 if (Directory.Exists(Steam + @"\SteamApps\common\SpaceEngineers"))
                 {
-                    GamePatch = @"C:\Program Files (x86)\Steam\SteamApps\common\SpaceEngineers\";
-                    SteamLib = @"C:\Program Files (x86)\Steam\";
+                    GamePatch = Steam + @"\SteamApps\common\SpaceEngineers\";
+                    if (Directory.Exists(Steam + @"\steamapps\workshop\content\244850"))
+                        SteamWorkshop = Steam + @"\steamapps\workshop\content\244850\";
                 }
                 else
                 {
                     string Folders = File.ReadAllText(Steam + @"\SteamApps\libraryfolders.vdf");
                     foreach (Match x in Regex.Matches(Folders, @"\w\:\\[\\\w]*"))
                     {
-                        if (x.Success && Directory.Exists(x + @"\SteamApps\common\SpaceEngineers"))
+                        string xo = x.ToString().Replace(@"\\", @"\");
+                        if (x.Success && Directory.Exists(xo + @"\SteamApps\common\SpaceEngineers"))
                         {
-                            GamePatch = x.ToString().Replace(@"\\", @"\") + @"\SteamApps\common\SpaceEngineers\";
-                            SteamLib = x.ToString().Replace(@"\\", @"\")+ @"\";
+                            GamePatch = xo + @"\SteamApps\common\SpaceEngineers\";
+                            if (Directory.Exists(xo + @"\steamapps\workshop\content\244850"))
+                                SteamWorkshop = xo + @"\steamapps\workshop\content\244850\";
                             break;
                         }
                     }
@@ -99,7 +101,9 @@ namespace BlueprintEditor2
                         if (ID.Success)
                         {
                             SteamID = ID.Groups[1].Value;
-                            SavesPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\"+ SteamID;
+                            string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + SteamID;
+                            if (Directory.Exists(SavesHmm))
+                                SavesPatch = SavesHmm;
                         }
                         if (Name.Success)
                             UserName = Name.Groups[1].Value;
@@ -132,7 +136,7 @@ namespace BlueprintEditor2
                 using (Stream fs = new FileStream(FILE_PATH, FileMode.Open))
                 {
                     Current = (MySettings)formatter.ReadObject(fs);
-                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamLib);
+                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshop);
                     bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
                     if (NoGamePatch || NoSteamData) {
                         string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
@@ -143,7 +147,9 @@ namespace BlueprintEditor2
                     }
                     if(string.IsNullOrWhiteSpace(Current.SavesPatch))
                     {
-                        Current.SavesPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
+                        string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
+                        if (Directory.Exists(SavesHmm))
+                            Current.SavesPatch = SavesHmm;
                     }
                 }
             }

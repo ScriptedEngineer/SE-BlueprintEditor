@@ -48,7 +48,7 @@
                 </MenuItem.Icon>
             </MenuItem>
             <Separator/>
-            <MenuItem Header="{x:Static res:Lang.Tools}">
+            <MenuItem x:Name="ToolsContext" Header="{x:Static res:Lang.Tools}">
                 <MenuItem.Icon>
                     <Image Source="Resource\img_100000.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
@@ -150,7 +150,7 @@
             <MenuItem x:Name="FoldersItem" Header="{x:Static res:Lang.Directories}">
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click"/>
-            <MenuItem Header="{x:Static res:Lang.Tools}">
+            <MenuItem x:Name="ToolsMenu" Header="{x:Static res:Lang.Tools}">
                 <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_292121.png" Width="16" Height="16"/>

@@ -98,6 +98,11 @@ namespace BlueprintEditor2
                 //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
             OldSortBy = FirstSorter;
+            if (string.IsNullOrWhiteSpace(MySettings.Current.SteamWorkshop))
+            {
+                ToolsMenu.IsEnabled = false;
+                ToolsContext.IsEnabled = false;
+            }
             Welcome.Content = Lang.Welcome+" "+MySettings.Current.UserName.Replace("_", "__");
             //MessageBox.Show("Hello "+MySettings.Current.UserName);
         }
@@ -478,6 +483,11 @@ namespace BlueprintEditor2
         }
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(MySettings.Current.SavesPatch))
+            {
+                new MessageDialog(DialogPicture.attention, "Saves patch not found", Lang.SPNF, null, DialogType.Message).Show();
+                return;
+            }
             string mods = WorkshopCache.GetModsForWorld();
             new MessageDialog((x)=> {
                 MyWorld.Create(x, mods);

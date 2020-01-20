@@ -12,7 +12,7 @@ namespace BlueprintEditor2
     {
         public static void MoveBlueprintsToLocal()
         {
-            string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
+            string ModFolder = MySettings.Current.SteamWorkshop;
             foreach (var fld in Directory.GetDirectories(ModFolder))
             {
                 if (File.Exists(fld + @"\bp.sbc"))
@@ -31,12 +31,12 @@ namespace BlueprintEditor2
         }
         public static void Clear()
         {
-            string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
+            string ModFolder = MySettings.Current.SteamWorkshop;
             MyExtensions.ClearFolder(ModFolder);
         }
         public static string[] GetModsForCalculator()
         {
-            string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
+            string ModFolder = MySettings.Current.SteamWorkshop;
             List<string> Mods = new List<string>();
             foreach (var fld in Directory.GetDirectories(ModFolder))
             {
@@ -71,7 +71,7 @@ namespace BlueprintEditor2
         }
         public static string GetModsForWorld()
         {
-            string ModFolder = MySettings.Current.SteamLib + @"\steamapps\workshop\content\244850";
+            string ModFolder = MySettings.Current.SteamWorkshop;
             StringBuilder Mods = new StringBuilder();
             foreach (var fld in Directory.GetDirectories(ModFolder))
             {

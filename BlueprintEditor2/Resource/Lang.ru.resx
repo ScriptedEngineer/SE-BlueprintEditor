@@ -426,6 +426,9 @@
   <data name="OnlyArmor" xml:space="preserve">
     <value>Только броня</value>
   </data>
+  <data name="OnlyPro" xml:space="preserve">
+    <value>Если вы обычный пользователь, то не лезьте сюда, а нажмите кнопку отмена!</value>
+  </data>
   <data name="OnlyTerminal" xml:space="preserve">
     <value>Только терминал</value>
   </data>
@@ -507,6 +510,9 @@
   <data name="SaveClose" xml:space="preserve">
     <value>Сохранить и закрыть</value>
   </data>
+  <data name="SavesFolder" xml:space="preserve">
+    <value>Папка сохранений</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
@@ -527,6 +533,9 @@
   <data name="SelectOne" xml:space="preserve">
     <value>Пожалуйста, выберите предмет для отображения информации</value>
   </data>
+  <data name="SelectSavesPatchDesc" xml:space="preserve">
+    <value>Пожалуйста выберите папку сохранений, обычно это C:\Users\%UserName%\AppData\Roaming \SpaceEngineers\Saves\%SteamID%</value>
+  </data>
   <data name="Send" xml:space="preserve">
     <value>Отправить</value>
   </data>
@@ -541,6 +550,9 @@
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>
+  </data>
+  <data name="SPNF" xml:space="preserve">
+    <value>Директория сохранений не была найдена! Пожалуйста установите это в настройках.</value>
   </data>
   <data name="StoneAmount" xml:space="preserve">
     <value>Колличество камня (kg)</value>
@@ -592,6 +604,9 @@
   </data>
   <data name="WithMods" xml:space="preserve">
     <value>С модами</value>
+  </data>
+  <data name="WorkshopFolder" xml:space="preserve">
+    <value>Папка мастерской</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
