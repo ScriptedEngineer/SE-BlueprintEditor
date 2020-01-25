@@ -86,6 +86,7 @@ namespace BlueprintEditor2
             }
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
             if(calc != null) calc.Clear();
+            Logger.Add("Calculator closed");
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -113,12 +114,14 @@ namespace BlueprintEditor2
             string undef = calc.GetUndefined();
             if (!string.IsNullOrEmpty(undef))
             {
+                Logger.Add("Undefined types message show");
                 new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Copy to clipboard");
             string Comps = "";
             foreach(MyResourceInfo x in ComponensList.Items)
             {

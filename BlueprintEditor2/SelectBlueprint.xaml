@@ -178,7 +178,7 @@
             <ComboBoxItem Content="{x:Static res:Lang.Created}"/>
             <ComboBoxItem Content="{x:Static res:Lang.Changed}"/>
         </ComboBox>
-        <Button Content="{x:Static res:Lang.Search}" HorizontalAlignment="Right" Margin="0,0,2,10" Grid.Row="3" VerticalAlignment="Bottom" Width="72" Height="22" Click="Button_Click"/>
+        <Button Content="{x:Static res:Lang.Search}" HorizontalAlignment="Left" Margin="516,0,0,10" Grid.Row="3" VerticalAlignment="Bottom" Width="72" Height="22" Click="Button_Click"/>
         <Label x:Name="Welcome" Content="Welcome" Grid.Column="1" HorizontalAlignment="Right" Margin="0,1,6,0" Grid.Row="1" VerticalAlignment="Top" Padding="0" HorizontalContentAlignment="Right"/>
         <CheckBox x:Name="WithMods" Content="{x:Static res:Lang.WithMods}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,221,30" Grid.Row="3" VerticalAlignment="Bottom" Width="80"/>
 

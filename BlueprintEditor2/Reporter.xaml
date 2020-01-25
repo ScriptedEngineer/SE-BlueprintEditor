@@ -15,7 +15,7 @@
         <TextBlock Margin="10,294,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="92" Width="354" Text="{x:Static res:Lang.CrashReport}"/>
         <Button Content="{x:Static res:Lang.Send}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="83" Click="Button_Click_1"/>
         <Button Content="{x:Static res:Lang.DontSend}" HorizontalAlignment="Right" Margin="0,0,98,10" VerticalAlignment="Bottom" Width="101" Click="Button_Click"/>
-        <CheckBox x:Name="Run" Content="{x:Static res:Lang.RunApp}" HorizontalAlignment="Left" Margin="10,0,0,12" VerticalAlignment="Bottom"/>
+        <CheckBox x:Name="Run" Content="{x:Static res:Lang.RunApp}" HorizontalAlignment="Left" Margin="10,0,0,12" VerticalAlignment="Bottom" IsEnabled="False"/>
 
     </Grid>
 </Window>

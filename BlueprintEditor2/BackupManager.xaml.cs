@@ -43,6 +43,7 @@ namespace BlueprintEditor2
         {
             if (BackupList.SelectedIndex != -1)
             {
+                Logger.Add("Backup selected");
                 InfoLabel.Content = Lang.Created + ": " + DateTime.FromFileTimeUtc(long.Parse(BackupList.SelectedItem.ToString().Split('-').Last().Replace(".sbc", ""))).ToString();
                 if (BackupList.SelectedItem.ToString().Contains("Lastest-")) DeleteButton.IsEnabled = false;
                 else DeleteButton.IsEnabled = true;
@@ -51,6 +52,7 @@ namespace BlueprintEditor2
             }
             else
             {
+                Logger.Add("Backup unselect");
                 InfoLabel.Content = Lang.SelectOne;
                 DeleteButton.IsEnabled = false;
                 RestoreButton.IsEnabled = false;
@@ -61,9 +63,11 @@ namespace BlueprintEditor2
         {
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.SetLock(false, null);
             _lock.Dispose();
+            Logger.Add("Backup manager closed");
         }
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Delete backup button click");
             File.Delete(Patch + "\\" + BackupList.SelectedItem.ToString());
             BackupList.Items.Clear();
             foreach (string file in Directory.GetFiles(Patch))
@@ -73,6 +77,7 @@ namespace BlueprintEditor2
         }
         private void ReplaceButton_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Replace backup button click");
             File.Delete(Patch + "\\" + BackupList.SelectedItem.ToString());
             Blueprint.SaveBackup();
             BackupList.Items.Clear();
@@ -83,6 +88,7 @@ namespace BlueprintEditor2
         }
         private void RestoreButton_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Restore backup button click");
             Hide();
             SelectBlueprint.window.SetLock(true, 0);
             new MessageDialog(DialogPicture.attention, Lang.UnsafeAction, Lang.ItWillDelete,(Dial) => 

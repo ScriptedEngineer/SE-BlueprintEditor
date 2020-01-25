@@ -36,11 +36,13 @@ namespace BlueprintEditor2
 
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Logger.Add("Grid changing");
             BlockList.Items.Clear();
             GridArmourType.IsEnabled = true;
             initGAT = false;
             if (GridList.SelectedIndex == -1) return;
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
+            Logger.Add($"Grid changed to {SlectedGrd.Name}");
             List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
             int Heavy = 0,Light = 0;
             for (int i = 0; i < TheBlocks.Count; i++)
@@ -108,6 +110,7 @@ namespace BlueprintEditor2
         }
         private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
+            Logger.Add("Block changed");
             if (BlockList.SelectedItem != null)
             {
                 DeleteButton.IsEnabled = true;
@@ -190,6 +193,7 @@ namespace BlueprintEditor2
         GridViewColumn OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Sotring algoritm start");
             if (sender.ToString() == Lang.Property) return;
             if (sender == null) return;
             GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
@@ -207,6 +211,7 @@ namespace BlueprintEditor2
                 NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             else
                 NewDirection = OldDirection;
+            Logger.Add($"Sort Blueprints by {PropertyPatch} in {NewDirection}");
             BlockList.Items.SortDescriptions.Clear();
             BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
@@ -238,11 +243,13 @@ namespace BlueprintEditor2
         }
         private void DestructibleGridBox_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add($"Destructable changed to {DestructibleGridBox.IsChecked.Value}");
             EdBlueprint.Grids[GridList.SelectedIndex].Destructible = DestructibleGridBox.IsChecked.Value;
             //Console.WriteLine(EdBlueprint.Grids[GridList.SelectedIndex].Destructible);
         }
         private void GridSizeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Logger.Add("Grid size changed");
             EdBlueprint.Grids[GridList.SelectedIndex].GridSize = (GridSizes)GridSizeBox.SelectedIndex;
         }
 
@@ -294,6 +301,7 @@ namespace BlueprintEditor2
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Logger.Add("Blueprint saved");
             EdBlueprint.Save();
             Close();
         }
@@ -307,6 +315,7 @@ namespace BlueprintEditor2
                 SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
+            Logger.Add("Editor closed");
         }
 
         private void ShareBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

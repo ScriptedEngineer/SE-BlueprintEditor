@@ -44,12 +44,14 @@ namespace BlueprintEditor2
         private void Window_Closed(object sender, EventArgs e)
         {
             LastWindow = null;
+            Logger.Add("Settings closed");
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (hasChanged)
             {
+                Logger.Add("Show restart dialog");
                 MySettings.Serialize();
                 SelectBlueprint.window.SetLock(true, 0);
                 new MessageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>

@@ -80,6 +80,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
@@ -110,7 +111,7 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\CrashLogger.cs" />
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
