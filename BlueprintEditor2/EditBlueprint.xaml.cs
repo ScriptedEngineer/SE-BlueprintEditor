@@ -134,6 +134,7 @@ namespace BlueprintEditor2
                     PropertyList.IsEnabled = false;
                     PropertyList.ItemsSource = null;
                 }
+                //SetTextBox(CustomData, MasterBlock.Name);
                 SetTextBox(BlockNameBox, MasterBlock.Name);
                 string[] Str = MasterBlock.Type?.Split('/');
                 SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0] : null);
@@ -335,6 +336,8 @@ namespace BlueprintEditor2
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox Sender = (CheckBox)sender;
+            if (Sender.Visibility == Visibility.Collapsed)
+                return;
             Sender.Content = Sender.IsChecked.Value ? Lang.Yes : Lang.No;
             string TxtVle = Sender.IsChecked.ToString();
             string PropName = Sender.CommandParameter.ToString();
@@ -404,6 +407,55 @@ namespace BlueprintEditor2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             GridList_SelectionChanged(null, null);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox Sender = (TextBox)sender;
+            if (Sender.Visibility == Visibility.Collapsed)
+                return;
+            long.TryParse(Sender.Text, out long intres);
+            string TxtVle = intres.ToString();
+            Sender.Text = TxtVle;
+            Sender.CaretIndex = TxtVle.Length;
+            StackPanel X = (StackPanel)Sender.Parent;
+            CheckBox Tender = (CheckBox)X.Children[0];
+            string PropName = Tender.CommandParameter.ToString();
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                MyBlockProperty Change = SelectedBlk.Properties.FirstOrDefault(x => x.PropertyName == PropName);
+                if (Change != null)
+                {
+                    Change.TextValue = TxtVle;
+                }
+            }
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            
+            TextBox Sender = (TextBox)sender;
+            if (Sender.Visibility == Visibility.Collapsed)
+                return;
+            string top = Sender.Text.Replace(".", ",");
+            if (top.EndsWith(","))
+                return;
+            double.TryParse(top, out double intres);
+            int cind = Sender.CaretIndex;
+            string TxtVle = intres.ToString("F18").TrimEnd('0').TrimEnd(',');
+            Sender.Text = TxtVle;
+            Sender.CaretIndex = cind;
+            StackPanel X = (StackPanel)Sender.Parent;
+            CheckBox Tender = (CheckBox)X.Children[0];
+            string PropName = Tender.CommandParameter.ToString();
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                MyBlockProperty Change = SelectedBlk.Properties.FirstOrDefault(x => x.PropertyName == PropName);
+                if (Change != null)
+                {
+                    Change.TextValue = TxtVle.Replace(",",".");
+                }
+            }
         }
     }
 }

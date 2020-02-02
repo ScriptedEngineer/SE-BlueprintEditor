@@ -13,6 +13,7 @@ namespace BlueprintEditor2
     {
         public string Type;
         public string Name;
+        public string CustomData;
         public Color Mask;
         public ShareMode? Share;
         public Vector3 Position;

@@ -235,6 +235,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Change to.
+        /// </summary>
+        public static string ChangeTo {
+            get {
+                return ResourceManager.GetString("ChangeTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Color.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Coming soon....
         /// </summary>
         public static string ComingSoon {
@@ -963,6 +981,15 @@ namespace BlueprintEditor2.Resource {
         public static string Normalize {
             get {
                 return ResourceManager.GetString("Normalize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на No specific settings for this block(s).
+        /// </summary>
+        public static string NoSSFTB {
+            get {
+                return ResourceManager.GetString("NoSSFTB", resourceCulture);
             }
         }
         

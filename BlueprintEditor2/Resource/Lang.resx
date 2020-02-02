@@ -177,6 +177,12 @@ Developed by clan "Andromeda"</value>
   <data name="Changed" xml:space="preserve">
     <value>Changed</value>
   </data>
+  <data name="ChangeTo" xml:space="preserve">
+    <value>Change to</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="ComingSoon" xml:space="preserve">
     <value>Coming soon...</value>
   </data>
@@ -422,6 +428,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize thumbnail (fix transparency)</value>
+  </data>
+  <data name="NoSSFTB" xml:space="preserve">
+    <value>No specific settings for this block(s)</value>
   </data>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Only armor</value>

@@ -177,6 +177,12 @@
   <data name="Changed" xml:space="preserve">
     <value>Изменено</value>
   </data>
+  <data name="ChangeTo" xml:space="preserve">
+    <value>Заменить на</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Цвет</value>
+  </data>
   <data name="ComingSoon" xml:space="preserve">
     <value>Скоро...</value>
   </data>
@@ -422,6 +428,9 @@
   </data>
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать миниатюру (исправить прозрачность)</value>
+  </data>
+  <data name="NoSSFTB" xml:space="preserve">
+    <value>Нет специальных настроек для этого блока(ов)</value>
   </data>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Только броня</value>

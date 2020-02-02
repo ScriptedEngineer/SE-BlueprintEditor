@@ -33,6 +33,7 @@ namespace BlueprintEditor2
 
             MySettings.Deserialize();
             MySettings.Current.ApplySettings();
+            //MySettings.Current.SteamWorkshop = null;
             window = this;
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1 && args[1] == "Crash")

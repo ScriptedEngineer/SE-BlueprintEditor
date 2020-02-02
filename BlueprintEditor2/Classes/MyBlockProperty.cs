@@ -32,7 +32,7 @@ namespace BlueprintEditor2
             get => _PropertyXml.InnerText;
             set
             {
-                _Edit.Content = value=="True" ? Lang.Yes : Lang.No;
+                _Edit.Content = value == "True" ? Lang.Yes : (value == "False" ? Lang.No : value);
                 _PropertyXml.InnerText = value.ToLower();
             }
         }
@@ -46,6 +46,22 @@ namespace BlueprintEditor2
                 _Edit.Content = Test?Lang.Yes:Lang.No;
                 _Edit.IsChecked = Test;
                 _Edit.CheckboxVisible = Visibility.Visible;
+                Title = _PropertyXml.InnerText;
+            }
+            else if (long.TryParse(_PropertyXml.InnerText, out long Testint))
+            {
+                _Edit = new EditorData();
+                _Edit.Content = Testint.ToString();
+                //_Edit.IsChecked = Test;
+                _Edit.IntTextboxVisible = Visibility.Visible;
+                Title = _PropertyXml.InnerText;
+            }
+            else if (double.TryParse(_PropertyXml.InnerText.Replace(".", ","), out double Testfl))
+            {
+                _Edit = new EditorData();
+                _Edit.Content = Testfl.ToString("F18").TrimEnd('0').TrimEnd(',');
+                //_Edit.IsChecked = Test;
+                _Edit.FloatTextboxVisible = Visibility.Visible;
                 Title = _PropertyXml.InnerText;
             }
             else
@@ -63,12 +79,11 @@ namespace BlueprintEditor2
         }
         public class EditorData
         {
-            private Visibility _Button = Visibility.Collapsed;
-            public Visibility ButtonVisible { get => _Button; set=> _Button = value; }
-            private Visibility _Checkbox = Visibility.Collapsed;
-            public Visibility CheckboxVisible { get => _Checkbox; set => _Checkbox = value; }
-            private Visibility _Label = Visibility.Collapsed;
-            public Visibility LabelVisible { get => _Label; set => _Label = value; }
+            public Visibility ButtonVisible { get; set; } = Visibility.Collapsed;
+            public Visibility CheckboxVisible { get; set; } = Visibility.Collapsed;
+            public Visibility IntTextboxVisible { get; set; } = Visibility.Collapsed;
+            public Visibility FloatTextboxVisible { get; set; } = Visibility.Collapsed;
+            public Visibility LabelVisible { get; set; } = Visibility.Collapsed;
             public string Content { get; set; }
             public bool IsChecked { get; set; }
             //public object Content { get; set; }

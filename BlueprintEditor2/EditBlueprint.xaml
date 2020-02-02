@@ -46,8 +46,10 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <CheckBox Content="{Binding Edit.Content}" IsChecked="{Binding Edit.IsChecked}" Visibility="{Binding Edit.CheckboxVisible}" Click="CheckBox_Click" CommandParameter="{Binding PropertyName}" />
+                                    <CheckBox Content="{Binding Edit.Content}" IsChecked="{Binding Edit.IsChecked}" Visibility="{Binding Edit.CheckboxVisible}" Click="CheckBox_Click" CommandParameter="{Binding PropertyName}"/>
                                     <Button Content="{Binding Edit.Content}" Visibility="{Binding Edit.ButtonVisible}"/>
+                                    <TextBox Text="{Binding Edit.Content}" Visibility="{Binding Edit.IntTextboxVisible}" TextChanged="TextBox_TextChanged"/>
+                                    <TextBox Text="{Binding Edit.Content}" Visibility="{Binding Edit.FloatTextboxVisible}" TextChanged="TextBox_TextChanged_1"/>
                                     <Label Content="{Binding Edit.Content}" Visibility="{Binding Edit.LabelVisible}" Padding="0"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -109,6 +111,32 @@
             <ComboBoxItem Content="{x:Static res:Lang.OnlyTerminal}"/>
         </ComboBox>
         <Label Content="{x:Static res:Lang.ShowBlocks}" Grid.Column="1" HorizontalAlignment="Left" Margin="1,101,0,0" VerticalAlignment="Top" Padding="0"/>
+        <TabControl Grid.Column="2" HorizontalAlignment="Left" Margin="0,202,0,35" Grid.Row="1" Width="300" SelectedIndex="0">
+            <TabItem Header="TabItem" Width="0" Height="0">
+                <Grid Background="#FFE5E5E5">
+                    <Label Content="{x:Static res:Lang.NoSSFTB}" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="InDev" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem" Height="0" Width="0">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+        <Rectangle Grid.Column="2" Fill="#FFF4F4F5" Margin="0,6,0,0" Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Height="78" Width="166" IsEnabled="False"/>
+        <Rectangle x:Name="BlockColorBox_Copy" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,27,0,0" IsEnabled="False">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle x:Name="BlockColorBox_Copy1" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,54,0,0" IsEnabled="False">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="{x:Static res:Lang.Color}" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" IsEnabled="False"/>
+        <Label Content="{x:Static res:Lang.ChangeTo}" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsEnabled="False"/>
+        <Label Content="InDev" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="128,6,0,0" Padding="0"/>
 
     </Grid>
 </Window>
