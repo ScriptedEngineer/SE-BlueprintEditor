@@ -12,6 +12,7 @@ namespace BlueprintEditor2
     public static class Logger
     {
         static StringBuilder Log = new StringBuilder();
+        static int LogLenght = 0; 
         public static void HandleUnhandledException()
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
@@ -23,6 +24,11 @@ namespace BlueprintEditor2
 #if DEBUG
             //Console.WriteLine(log);
 #endif
+            LogLenght++;
+            if (LogLenght > 1000)
+            {
+                Log.Remove(0, Convert.ToString(Log).Split('\n').FirstOrDefault().Length + 1);
+            }
         }
         private static void CrashHappens(object sende, UnhandledExceptionEventArgs UhEx)
         {

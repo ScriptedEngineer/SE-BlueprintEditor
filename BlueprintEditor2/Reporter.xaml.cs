@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management;
@@ -31,7 +32,8 @@ namespace BlueprintEditor2
         {
             if (Run.IsChecked.Value)
             {
-                SelectBlueprint.window.Show();
+                Process.Start(MyExtensions.AppFile);
+                Application.Current.Shutdown();
             }
             else
             {

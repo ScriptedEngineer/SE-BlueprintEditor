@@ -45,10 +45,11 @@ namespace BlueprintEditor2
             Logger.Add($"Grid changed to {SlectedGrd.Name}");
             List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
             int Heavy = 0,Light = 0;
+            ExistedColors.Items.Clear();
             for (int i = 0; i < TheBlocks.Count; i++)
             {
                 MyXmlBlock thatBlock = TheBlocks[i];
-                if(DasShowIt(thatBlock))
+                if (DasShowIt(thatBlock))
                     BlockList.Items.Add(thatBlock);
                 if (thatBlock.IsArmor)
                 {
@@ -57,6 +58,32 @@ namespace BlueprintEditor2
                     else if (thatBlock.Armor == ArmorType.Light)
                         Light++;
                 }
+                string argb = thatBlock.ColorMask.ToArgb().ToString("X");
+                if (argb != "0")
+                {
+                    argb = $"#{argb.Substring(2)}";
+                    if (ExistedColors.Items.IndexOf(argb) == -1)
+                    {
+                        ExistedColors.Items.Add(argb);
+                    }
+                }
+            }
+            if (ExistedColors.Items.Count > 0)
+            {
+                ExistedColors.SelectedIndex = 0;
+                ColorChangeButton.IsEnabled = true;
+                ExistedColors.IsEnabled = true;
+                GridColorReplace.IsEnabled = true;
+                GridColorChange.IsEnabled = true;
+                GridColorExist.IsEnabled = true;
+            }
+            else
+            {
+                ColorChangeButton.IsEnabled = false;
+                ExistedColors.IsEnabled = false;
+                GridColorReplace.IsEnabled = false;
+                GridColorChange.IsEnabled = false;
+                GridColorExist.IsEnabled = false;
             }
             if(Heavy != Light)
                 GridArmourType.SelectedIndex = Heavy > Light?0:1;
@@ -194,7 +221,6 @@ namespace BlueprintEditor2
         GridViewColumn OldSortBy;
         private void GoSort(object sender, RoutedEventArgs e)
         {
-            Logger.Add("Sotring algoritm start");
             if (sender.ToString() == Lang.Property) return;
             if (sender == null) return;
             GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
@@ -212,7 +238,7 @@ namespace BlueprintEditor2
                 NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             else
                 NewDirection = OldDirection;
-            Logger.Add($"Sort Blueprints by {PropertyPatch} in {NewDirection}");
+            Logger.Add($"Sort Blocks by {PropertyPatch} in {NewDirection}");
             BlockList.Items.SortDescriptions.Clear();
             BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
@@ -454,6 +480,72 @@ namespace BlueprintEditor2
                 if (Change != null)
                 {
                     Change.TextValue = TxtVle.Replace(",",".");
+                }
+            }
+        }
+
+        private void GridNameBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void ExistedColors_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ExistedColors.SelectedIndex == -1) return;
+            GridColorReplace.Text = ExistedColors.SelectedItem.ToString();
+            Color color = (Color)ColorConverter.ConvertFromString(GridColorReplace.Text);
+            GridColorExist.Fill = new SolidColorBrush(color);
+        }
+
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                Color color = (Color)ColorConverter.ConvertFromString(GridColorReplace.Text);
+                GridColorChange.Fill = new SolidColorBrush(color);
+                string argb = color.ToDrawingColor().ToArgb().ToString("X");
+                if (argb != "0")
+                {
+                    //int cind = Sender.CaretIndex;
+                    GridColorReplace.Text = $"#{argb.Substring(2)}";
+                    GridColorReplace.CaretIndex = GridColorReplace.Text.Length;
+                }
+            }
+            catch (FormatException ex)
+            {
+                
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if (!initGAT) return;
+            MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
+            System.Drawing.Color From = ((SolidColorBrush)GridColorExist.Fill).Color.ToDrawingColor();
+            System.Drawing.Color To = ((SolidColorBrush)GridColorChange.Fill).Color.ToDrawingColor();
+            foreach (MyXmlBlock block in SlectedGrd.Blocks)
+            {
+                if (block.ColorMask.Equals(From))
+                    block.ColorMask = To;
+            }
+            GridList_SelectionChanged(null, null);
+        }
+
+        private void GridColorChange_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Forms.ColorDialog MyDialog = new Forms.ColorDialog();
+            MyDialog.AllowFullOpen = true;
+            MyDialog.ShowHelp = false;
+            MyDialog.Color = ((SolidColorBrush)GridColorChange.Fill).Color.ToDrawingColor();
+            if (MyDialog.ShowDialog() == Forms.DialogResult.OK)
+            {
+                GridColorChange.Fill = new SolidColorBrush(MyDialog.Color.ToMediaColor());
+                string argb = MyDialog.Color.ToArgb().ToString("X");
+                if (argb != "0")
+                {
+                    //int cind = Sender.CaretIndex;
+                    GridColorReplace.Text = $"#{argb.Substring(2)}";
+                    GridColorReplace.CaretIndex = GridColorReplace.Text.Length;
                 }
             }
         }

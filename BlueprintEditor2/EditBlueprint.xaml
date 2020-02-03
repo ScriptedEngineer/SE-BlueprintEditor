@@ -59,10 +59,10 @@
             </ListView.View>
         </ListView>
         <Label Content="{x:Static res:Lang.Properties}" HorizontalAlignment="Left" Margin="305,0,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
-        <TextBox x:Name="GridNameBox" HorizontalAlignment="Left" Height="23" Margin="0,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" Grid.Column="1" TextChanged="GridNameBox_TextChanged"/>
+        <TextBox x:Name="GridNameBox" Height="23" Margin="0,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" TextChanged="GridNameBox_TextChanged" LostFocus="GridNameBox_LostFocus"/>
         <Label Content="{x:Static res:Lang.GridName}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="1" Height="16" Width="90"/>
         <CheckBox x:Name="DestructibleGridBox" Content="{x:Static res:Lang.DestructibleGrid}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="0,57,0,0" Padding="4,-1,0,0" UseLayoutRounding="False" Height="16" Width="126" Click="DestructibleGridBox_Click"/>
-        <ComboBox x:Name="GridSizeBox" Grid.Column="1" HorizontalAlignment="Left" Margin="199,54,0,0" VerticalAlignment="Top" Width="126" SelectionChanged="GridSizeBox_SelectionChanged">
+        <ComboBox x:Name="GridSizeBox" Grid.Column="1" HorizontalAlignment="Right" Margin="0,54,10,0" VerticalAlignment="Top" Width="126" SelectionChanged="GridSizeBox_SelectionChanged">
             <ComboBoxItem Content="{x:Static res:Lang.SmallGrid}"/>
             <ComboBoxItem Content="{x:Static res:Lang.LargeGrid}"/>
         </ComboBox>
@@ -91,11 +91,11 @@
         </ComboBox>
         <Button Content="{x:Static res:Lang.Search}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="63" RenderTransformOrigin="0.086,0.8" Height="22" Click="Button_Click_1"/>
         <Button x:Name="DeleteButton" Content="{x:Static res:Lang.Delete}" Grid.Column="2" HorizontalAlignment="Left" Margin="226,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="Button_Click_2" Height="22" IsEnabled="False"/>
-        <ComboBox x:Name="GridArmourType" Grid.Column="1" HorizontalAlignment="Left" Margin="199,117,0,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.5,0.5" SelectionChanged="GridArmourType_SelectionChanged" IsEnabled="False">
+        <ComboBox x:Name="GridArmourType" Grid.Column="1" HorizontalAlignment="Right" Margin="0,117,10,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.5,0.5" SelectionChanged="GridArmourType_SelectionChanged" IsEnabled="False">
             <ComboBoxItem Content="{x:Static res:Lang.HeavyArmor}"/>
             <ComboBoxItem Content="{x:Static res:Lang.LightArmor}"/>
         </ComboBox>
-        <Label Content="{x:Static res:Lang.GridArmorType}" Grid.Column="1" HorizontalAlignment="Left" Margin="199,101,0,0" VerticalAlignment="Top" Padding="0"/>
+        <Label Content="{x:Static res:Lang.GridArmorType}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,101,45,0" VerticalAlignment="Top" Padding="0"/>
         <TextBox x:Name="BlockZ" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="265,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
         <TextBox x:Name="BlockX" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="163,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
         <TextBox x:Name="BlockY" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="214,148,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" Text="0" IsEnabled="False"/>
@@ -122,21 +122,21 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-        <Rectangle Grid.Column="2" Fill="#FFF4F4F5" Margin="0,6,0,0" Stroke="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Height="78" Width="166" IsEnabled="False"/>
-        <Rectangle x:Name="BlockColorBox_Copy" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,27,0,0" IsEnabled="False">
+        <Rectangle x:Name="GridColorExist" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,27,0,0">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="BlockColorBox_Copy1" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,54,0,0" IsEnabled="False">
+        <Rectangle x:Name="GridColorChange" HorizontalAlignment="Left" Height="23" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,65,0,0" MouseUp="GridColorChange_MouseUp">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label Content="{x:Static res:Lang.Color}" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" IsEnabled="False"/>
-        <Label Content="{x:Static res:Lang.ChangeTo}" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsEnabled="False"/>
-        <Label Content="InDev" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="128,6,0,0" Padding="0"/>
+        <ComboBox x:Name="ExistedColors" Grid.Column="2" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="ExistedColors_SelectionChanged"/>
+        <Label Content="{x:Static res:Lang.Color}" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16"/>
+        <Label Content="{x:Static res:Lang.ChangeTo}" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+        <TextBox x:Name="GridColorReplace" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" TextWrapping="Wrap" Text="#FFFFFF" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_2"/>
+        <Button x:Name="ColorChangeButton" Content="{x:Static res:Lang.Change}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="148" Click="Button_Click_3"/>
 
     </Grid>
 </Window>

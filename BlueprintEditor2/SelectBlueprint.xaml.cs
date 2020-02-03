@@ -359,6 +359,7 @@ namespace BlueprintEditor2
         }
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            //Logger.Add($"Main window size changed to {Width}x{Height}");
             //new Task(() =>
             //{
             //    Thread.Sleep(100);
@@ -533,6 +534,10 @@ namespace BlueprintEditor2
         {
             Logger.Add($"Blueprints search '{Search.Text}' in '{SearchBy.Text}'");
             InitBlueprints();
+            /*
+            int x = 0;
+            int y = 13 / x;*/
+        
         }
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
@@ -580,6 +585,7 @@ namespace BlueprintEditor2
 
         private void InDev(object sender, RoutedEventArgs e)
         {
+            Logger.Add($"Show InDev message");
             new MessageDialog(DialogPicture.attention, "InDev", "This features in development, please wait for new version!", null, DialogType.Message).Show();
         }
 
