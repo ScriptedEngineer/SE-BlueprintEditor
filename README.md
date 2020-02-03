@@ -9,7 +9,7 @@ The tool for easy editing blueprints of the game Space Engineers
 
 ### Prewiew
 
-Version 0.0.0.5 startup window
-![Prewiew](https://sun9-46.userapi.com/c854428/v854428269/1c9220/E2HcjINGHMc.jpg "Startup window")
-Version 0.0.0.5 editor window
-![Prewiew](https://sun9-43.userapi.com/c854428/v854428269/1c9229/hz2r-mSiHrg.jpg "Editor window")
+Version 0.0.2.0 startup window
+![Prewiew](https://sun9-19.userapi.com/c854120/v854120020/1e6937/Ke_JPEII6WM.jpg "Startup window")
+Version 0.0.2.0 editor window
+![Prewiew](https://sun9-21.userapi.com/c854120/v854120020/1e6940/VAyjRornfw4.jpg "Editor window")
