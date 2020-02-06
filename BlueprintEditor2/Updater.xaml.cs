@@ -30,7 +30,7 @@ namespace BlueprintEditor2
             InitializeComponent();
             MyExtensions.AsyncWorker(() =>
             {
-                if (MySettings.Current.LCID == 9)
+                if (MySettings.Current.LangCultureID == 9)
                 {
                     Status.Content = Resource.Lang.DownNewVer;
                     WebClient web = new WebClient();
@@ -40,7 +40,7 @@ namespace BlueprintEditor2
                 }
                 else
                 {
-                    string LCID = MySettings.Current.LCID.ToString();
+                    string LCID = MySettings.Current.LangCultureID.ToString();
                     string CultureFolder = "", PackLink = "";
                     foreach (string langpack in MyExtensions.ApiServer(ApiServerAct.GetCustomData).Split('\n'))
                     {

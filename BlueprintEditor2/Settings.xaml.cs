@@ -27,16 +27,16 @@ namespace BlueprintEditor2
         bool hasChanged = false;
         public Settings()
         {
-            int _indexLCID = Array.IndexOf(Langs, MySettings.Current.LCID);
+            int _indexLCID = Array.IndexOf(Langs, MySettings.Current.LangCultureID);
             InitializeComponent();
             LastWindow = this;
             BlueprintFolderSetting.Text = MySettings.Current.BlueprintPatch;
             GameFolderSetting.Text = MySettings.Current.GamePatch;
             SavesFolderSetting.Text = MySettings.Current.SavesPatch;
-            WorkshopFolderSetting.Text = MySettings.Current.SteamWorkshop;
+            WorkshopFolderSetting.Text = MySettings.Current.SteamWorkshopPatch;
             LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
-            DOBSBox.IsChecked = MySettings.Current.DOBS;
+            DOBSBox.IsChecked = MySettings.Current.DontOpenBlueprintsOnScan;
             NickName.Text = MySettings.Current.UserName;
             hasChanged = false;
         }
@@ -83,7 +83,7 @@ namespace BlueprintEditor2
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LangSelect.SelectedIndex == -1) return;
-            MySettings.Current.LCID = Langs[LangSelect.SelectedIndex];
+            MySettings.Current.LangCultureID = Langs[LangSelect.SelectedIndex];
             hasChanged = true;
         }
 
@@ -141,7 +141,7 @@ namespace BlueprintEditor2
 
         private void DOBSBox_Click(object sender, RoutedEventArgs e)
         {
-            MySettings.Current.DOBS = DOBSBox.IsChecked.Value;
+            MySettings.Current.DontOpenBlueprintsOnScan = DOBSBox.IsChecked.Value;
             hasChanged = true;
         }
 
@@ -172,7 +172,7 @@ namespace BlueprintEditor2
         {
             if (Directory.Exists(WorkshopFolderSetting.Text))
             {
-                MySettings.Current.SteamWorkshop = WorkshopFolderSetting.Text;
+                MySettings.Current.SteamWorkshopPatch = WorkshopFolderSetting.Text;
                 hasChanged = true;
             }
         }

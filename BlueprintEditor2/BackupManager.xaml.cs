@@ -98,13 +98,13 @@ namespace BlueprintEditor2
                     File.Delete(Blueprint.Patch + "\\bp.sbc");
                     File.Copy(Patch + "\\" + BackupList.SelectedItem.ToString(), Blueprint.Patch + "\\bp.sbc");
                     Close();
-                    SelectBlueprint.window.SetLock(false, null);
+                    
                 }
                 else
                 {
                     Show();
-                    SelectBlueprint.window.SetLock(true, this);
                 }
+                SelectBlueprint.window.SetLock(false, null);
             }).Show();
         }
     }

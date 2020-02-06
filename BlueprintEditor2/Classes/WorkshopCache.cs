@@ -12,7 +12,7 @@ namespace BlueprintEditor2
     {
         public static void MoveBlueprintsToLocal()
         {
-            string ModFolder = MySettings.Current.SteamWorkshop;
+            string ModFolder = MySettings.Current.SteamWorkshopPatch;
             foreach (var fld in Directory.GetDirectories(ModFolder))
             {
                 if (File.Exists(fld + @"\bp.sbc"))
@@ -31,12 +31,12 @@ namespace BlueprintEditor2
         }
         public static void Clear()
         {
-            string ModFolder = MySettings.Current.SteamWorkshop;
+            string ModFolder = MySettings.Current.SteamWorkshopPatch;
             MyExtensions.ClearFolder(ModFolder);
         }
         public static string[] GetModsForCalculator()
         {
-            string ModFolder = MySettings.Current.SteamWorkshop;
+            string ModFolder = MySettings.Current.SteamWorkshopPatch;
             if (string.IsNullOrEmpty(ModFolder))
                 return new string[0];
             List<string> Mods = new List<string>();
@@ -73,7 +73,7 @@ namespace BlueprintEditor2
         }
         public static string GetModsForWorld()
         {
-            string ModFolder = MySettings.Current.SteamWorkshop;
+            string ModFolder = MySettings.Current.SteamWorkshopPatch;
             if (string.IsNullOrEmpty(ModFolder))
                 return "";
             StringBuilder Mods = new StringBuilder();

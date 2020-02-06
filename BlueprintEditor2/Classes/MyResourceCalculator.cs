@@ -278,8 +278,8 @@ namespace BlueprintEditor2
                             foreach (XmlNode h in z.ChildNodes)
                             {
                                 if (h.Attributes == null) continue;
-                                int.TryParse(h.Attributes.GetNamedItem("Count").Value, out int res);
-                                string comp = h.Attributes.GetNamedItem("Subtype").Value;
+                                int.TryParse(h.Attributes.GetNamedItem("Count")?.Value, out int res);
+                                string comp = h.Attributes.GetNamedItem("Subtype")?.Value;
                                 if (components.ContainsKey(comp))
                                 {
                                     components[comp] += res;

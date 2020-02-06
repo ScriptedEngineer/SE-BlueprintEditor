@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MColor = System.Windows.Media.Color;
 using DColor = System.Drawing.Color;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace BlueprintEditor2
 {
@@ -67,6 +69,16 @@ namespace BlueprintEditor2
                 catch
                 {
 
+                }
+            }
+        }
+        public static string checkMD5(string filename)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    return Encoding.Default.GetString(md5.ComputeHash(stream));
                 }
             }
         }

@@ -47,7 +47,7 @@ namespace BlueprintEditor2
                 FileInfo Inf = new FileInfo(Bluepath + "\\bp.sbc");
                 Elem.LastEditTime = Inf.LastWriteTime;
                 Elem.CreationTime = Inf.CreationTime;
-                if (!MySettings.Current.DOBS)
+                if (!MySettings.Current.DontOpenBlueprintsOnScan)
                 {
                     XmlDocument BlueprintXml = new XmlDocument();
                     BlueprintXml.Load($"{Bluepath}\\bp.sbc");

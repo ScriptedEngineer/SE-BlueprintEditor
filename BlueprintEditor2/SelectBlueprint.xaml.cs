@@ -74,7 +74,7 @@ namespace BlueprintEditor2
                 {
                     Logger.Add($"Error {e.Message}");
                 }
-            if (!Directory.Exists("ru") && MySettings.Current.LCID == 1049)
+            if (!Directory.Exists("ru") && MySettings.Current.LangCultureID == 1049)
                 try
                 {
                     Logger.Add("language pack not exists. language pack downloading");
@@ -118,7 +118,7 @@ namespace BlueprintEditor2
             }).Start();
             Logger.Add("Finish Init GUI");
             OldSortBy = FirstSorter;
-            if (string.IsNullOrWhiteSpace(MySettings.Current.SteamWorkshop))
+            if (string.IsNullOrWhiteSpace(MySettings.Current.SteamWorkshopPatch))
             {
                 ToolsMenu.IsEnabled = false;
                 ToolsContext.IsEnabled = false;
@@ -134,7 +134,7 @@ namespace BlueprintEditor2
             {
                 Logger.Add($"Bluerpint '{Selected.Name}' selected");
                 CurrentBlueprint = new MyXmlBlueprint(currentBluePatch + Selected.Name);
-                if(MySettings.Current.DOBS)Selected.addXmlData(CurrentBlueprint);
+                if(MySettings.Current.DontOpenBlueprintsOnScan)Selected.addXmlData(CurrentBlueprint);
                 BluePicture.Source = CurrentBlueprint.GetPic();
                 string Owner = Selected.Owner + "(" + CurrentBlueprint.Owner + ")";
                 if (CurrentBlueprint.Owner == MySettings.Current.SteamID)
@@ -153,7 +153,7 @@ namespace BlueprintEditor2
                 {
                     if (Path.GetFileName(file) != "bp.sbc") File.Delete(file);
                 }
-                if (MySettings.Current.DOBS)
+                if (MySettings.Current.DontOpenBlueprintsOnScan)
                 {
                     if (OldSortBy != null)
                         GoSort(OldSortBy, null);
@@ -221,7 +221,7 @@ namespace BlueprintEditor2
                     Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
                     Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
-                Logger.Add($"Open calculator for [{CurrentBlueprint.Name}]");
+                Logger.Add($"Open calculator for [{CurrentBlueprint.Name}] {(WithMods.IsChecked.Value?"WithMods":"")}");
                 Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint, WithMods.IsChecked.Value);
                 if (WithMods.IsChecked.Value)
                     WithMods.IsEnabled = false;

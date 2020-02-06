@@ -14,10 +14,11 @@ using System.Xml.Serialization;
 
 namespace BlueprintEditor2
 {
+    [XmlRoot("SE_BlueprintEditor2_Settings", Namespace = "https://wsxz.ru/BlueprintEditor",IsNullable = false)]
     [DataContract(Name = "SE_BlueprintEditor2_Settings")]
     public class MySettings
     {
-        private const string FILE_PATH = "settings.xml";
+        private const string FILE_PATH = "config.xml";
 
         public static MySettings Current = new MySettings();
         [DataMember(Name = "BlueprintMainFolder")]
@@ -27,13 +28,13 @@ namespace BlueprintEditor2
         [DataMember(Name = "GameFolder")]
         public string GamePatch = null;
         [DataMember(Name = "SteamWorkshopCacheFolder")]
-        public string SteamWorkshop = null;
+        public string SteamWorkshopPatch = null;
         [DataMember(Name = "UseMultipleWindows")]
         public bool MultiWindow = false;
         [DataMember(Name = "DontOpenBlueprintsOnScan")]
-        public bool DOBS = false;
+        public bool DontOpenBlueprintsOnScan = false;
         [DataMember(Name = "LangCultureID")]
-        public int LCID = 0;
+        public int LangCultureID = 0;
         [DataMember(Name = "UserSteamID")]
         public string SteamID = "";
         [DataMember(Name = "UserName")]
@@ -42,7 +43,7 @@ namespace BlueprintEditor2
         {
             if (!File.Exists("settings.xml"))
             {
-                LCID = Thread.CurrentThread.CurrentUICulture.LCID;
+                LangCultureID = Thread.CurrentThread.CurrentUICulture.LCID;
                 try
                 {
                     string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
@@ -63,7 +64,7 @@ namespace BlueprintEditor2
                 {
                     GamePatch = Steam + @"\SteamApps\common\SpaceEngineers\";
                     if (Directory.Exists(Steam + @"\steamapps\workshop\content\244850"))
-                        SteamWorkshop = Steam + @"\steamapps\workshop\content\244850\";
+                        SteamWorkshopPatch = Steam + @"\steamapps\workshop\content\244850\";
                 }
                 else
                 {
@@ -75,7 +76,7 @@ namespace BlueprintEditor2
                         {
                             GamePatch = xo + @"\SteamApps\common\SpaceEngineers\";
                             if (Directory.Exists(xo + @"\steamapps\workshop\content\244850"))
-                                SteamWorkshop = xo + @"\steamapps\workshop\content\244850\";
+                                SteamWorkshopPatch = xo + @"\steamapps\workshop\content\244850\";
                             break;
                         }
                     }
@@ -117,26 +118,26 @@ namespace BlueprintEditor2
         }
         public void ApplySettings()
         {
-            if(LCID != 0) Thread.CurrentThread.CurrentUICulture = new CultureInfo(LCID);
+            if(LangCultureID != 0) Thread.CurrentThread.CurrentUICulture = new CultureInfo(LangCultureID);
         }
         public static void Serialize()
         {
-            DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+            XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
             //new StreamWriter("settings.xml")
             using (Stream fs = new FileStream(FILE_PATH, FileMode.Create))
             {
-                formatter.WriteObject(fs, Current);
+                formatter.Serialize(fs, Current);
             }
         }
         public static void Deserialize()
         {
-            if (File.Exists("settings.xml"))
+            if (File.Exists(FILE_PATH))
             {
-                DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+                XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
                 using (Stream fs = new FileStream(FILE_PATH, FileMode.Open))
                 {
-                    Current = (MySettings)formatter.ReadObject(fs);
-                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshop);
+                    Current = (MySettings)formatter.Deserialize(fs);
+                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
                     bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
                     if (NoGamePatch || NoSteamData) {
                         string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
@@ -152,6 +153,30 @@ namespace BlueprintEditor2
                             Current.SavesPatch = SavesHmm;
                     }
                 }
+            }else if (File.Exists("settings.xml"))
+            {
+                DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+                using (Stream fs = new FileStream("settings.xml", FileMode.Open))
+                {
+                    Current = (MySettings)formatter.ReadObject(fs);
+                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
+                    bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
+                    if (NoGamePatch || NoSteamData)
+                    {
+                        string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
+                        if (NoGamePatch)
+                            Current.GetGameFolder(Steam);
+                        if (NoSteamData)
+                            Current.GetSteamAccount(Steam);
+                    }
+                    if (string.IsNullOrWhiteSpace(Current.SavesPatch))
+                    {
+                        string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
+                        if (Directory.Exists(SavesHmm))
+                            Current.SavesPatch = SavesHmm;
+                    }
+                }
+                File.Delete("settings.xml");
             }
         }
     }
