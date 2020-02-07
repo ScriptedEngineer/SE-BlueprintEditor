@@ -266,7 +266,8 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="CrashReport" xml:space="preserve">
     <value>Crash report:
-By clicking on the "Don't send", you acknowledge that the error was your fault!</value>
+This report will help us find out about errors in the program and fix them in time!
+If you click the "Do not send" button, we will not be able to fix the problem that caused the program to crash!</value>
   </data>
   <data name="Created" xml:space="preserve">
     <value>Created</value>

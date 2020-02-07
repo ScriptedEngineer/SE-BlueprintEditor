@@ -49,7 +49,7 @@ namespace BlueprintEditor2
                 "<br><br>Comment: <br>" + What.Text + //
                 "<br><br>Log:<br>" + File.ReadAllText("LastCrash.txt") +
                 "<br><br>PC: <br>" + GetPCInfo() +
-                "<br><br>Settings: <br>"+(File.Exists("settings.xml") ? File.ReadAllText("settings.xml").Replace("<", "&lt;") : "")
+                "<br><br>Settings: <br>"+(File.Exists("config.xml") ? File.ReadAllText("config.xml").Replace("<", "&lt;") : "")
                 ).Replace("\n", "<br>").Replace("\r", "").Replace("\"", "'").Replace("\\", "\\\\") + "\"");
             Button_Click(x, null);
         }

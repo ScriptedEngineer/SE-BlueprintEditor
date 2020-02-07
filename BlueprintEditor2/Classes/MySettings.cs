@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using BlueprintEditor2.Resource;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -24,7 +26,7 @@ namespace BlueprintEditor2
         [DataMember(Name = "BlueprintMainFolder")]
         public string BlueprintPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Blueprints\local\";
         [DataMember(Name = "SavesMainFolder")]
-        public string SavesPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\";
+        public string SavesPatch = null;
         [DataMember(Name = "GameFolder")]
         public string GamePatch = null;
         [DataMember(Name = "SteamWorkshopCacheFolder")]
@@ -41,11 +43,27 @@ namespace BlueprintEditor2
         public string UserName = "";
         MySettings()
         {
-            if (!File.Exists("settings.xml"))
+            if (!File.Exists(FILE_PATH))
             {
                 LangCultureID = Thread.CurrentThread.CurrentUICulture.LCID;
                 try
                 {
+                    if (!Directory.Exists(BlueprintPatch))
+                    {
+                        using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                        {
+                            dialog.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                            dialog.Description = Lang.SelectBluePatchDesc;
+                            dialog.ShowNewFolderButton = false;
+                            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                            if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                            {
+                                BlueprintPatch = dialog.SelectedPath + "\\";
+                            }
+                            else
+                                Application.Current.Shutdown();
+                        }
+                    }
                     string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
                     GetGameFolder(Steam);
                     GetSteamAccount(Steam);
@@ -131,52 +149,103 @@ namespace BlueprintEditor2
         }
         public static void Deserialize()
         {
-            if (File.Exists(FILE_PATH))
+            try
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
-                using (Stream fs = new FileStream(FILE_PATH, FileMode.Open))
+                if (File.Exists(FILE_PATH))
                 {
-                    Current = (MySettings)formatter.Deserialize(fs);
-                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
-                    bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
-                    if (NoGamePatch || NoSteamData) {
-                        string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
-                        if(NoGamePatch) 
-                            Current.GetGameFolder(Steam);
-                        if(NoSteamData)
-                            Current.GetSteamAccount(Steam);
-                    }
-                    if(string.IsNullOrWhiteSpace(Current.SavesPatch))
+                    XmlSerializer formatter = new XmlSerializer(typeof(MySettings));
+                    using (Stream fs = new FileStream(FILE_PATH, FileMode.Open))
                     {
-                        string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
-                        if (Directory.Exists(SavesHmm))
-                            Current.SavesPatch = SavesHmm;
+                        Current = (MySettings)formatter.Deserialize(fs);
+                        if (!Directory.Exists(Current.BlueprintPatch))
+                        {
+                            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                            {
+                                dialog.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                                dialog.Description = Lang.SelectBluePatchDesc;
+                                dialog.ShowNewFolderButton = false;
+                                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                                {
+                                    Current.BlueprintPatch = dialog.SelectedPath + "\\";
+                                }
+                                else
+                                    Application.Current.Shutdown();
+                            }
+                        }
+                        bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
+                        bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
+                        if (NoGamePatch || NoSteamData)
+                        {
+                            string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
+                            if (NoGamePatch)
+                                Current.GetGameFolder(Steam);
+                            if (NoSteamData)
+                                Current.GetSteamAccount(Steam);
+                        }
+                        if (string.IsNullOrWhiteSpace(Current.SavesPatch))
+                        {
+                            string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
+                            if (Directory.Exists(SavesHmm))
+                                Current.SavesPatch = SavesHmm;
+                        }
                     }
                 }
-            }else if (File.Exists("settings.xml"))
-            {
-                DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
-                using (Stream fs = new FileStream("settings.xml", FileMode.Open))
+                else if (File.Exists("settings.xml"))
                 {
-                    Current = (MySettings)formatter.ReadObject(fs);
-                    bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
-                    bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
-                    if (NoGamePatch || NoSteamData)
+                    DataContractSerializer formatter = new DataContractSerializer(typeof(MySettings));
+                    using (Stream fs = new FileStream("settings.xml", FileMode.Open))
                     {
-                        string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
-                        if (NoGamePatch)
-                            Current.GetGameFolder(Steam);
-                        if (NoSteamData)
-                            Current.GetSteamAccount(Steam);
+                        Current = (MySettings)formatter.ReadObject(fs);
+                        bool NoGamePatch = string.IsNullOrWhiteSpace(Current.GamePatch) || string.IsNullOrWhiteSpace(Current.SteamWorkshopPatch);
+                        bool NoSteamData = string.IsNullOrWhiteSpace(Current.SteamID);
+                        if (NoGamePatch || NoSteamData)
+                        {
+                            string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
+                            if (NoGamePatch)
+                                Current.GetGameFolder(Steam);
+                            if (NoSteamData)
+                                Current.GetSteamAccount(Steam);
+                        }
+                        if (string.IsNullOrWhiteSpace(Current.SavesPatch))
+                        {
+                            string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
+                            if (Directory.Exists(SavesHmm))
+                                Current.SavesPatch = SavesHmm;
+                        }
                     }
-                    if (string.IsNullOrWhiteSpace(Current.SavesPatch))
-                    {
-                        string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + Current.SteamID;
-                        if (Directory.Exists(SavesHmm))
-                            Current.SavesPatch = SavesHmm;
-                    }
+                    File.Delete("settings.xml");
                 }
-                File.Delete("settings.xml");
+            }
+            catch
+            {
+                Current.LangCultureID = Thread.CurrentThread.CurrentUICulture.LCID;
+                try
+                {
+                    if (!Directory.Exists(Current.BlueprintPatch))
+                    {
+                        using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                        {
+                            dialog.SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                            dialog.Description = Lang.SelectBluePatchDesc;
+                            dialog.ShowNewFolderButton = false;
+                            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                            if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                            {
+                                Current.BlueprintPatch = dialog.SelectedPath + "\\";
+                            }
+                            else
+                                Application.Current.Shutdown();
+                        }
+                    }
+                    string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
+                    Current.GetGameFolder(Steam);
+                    Current.GetSteamAccount(Steam);
+                }
+                catch
+                {
+
+                }
             }
         }
     }

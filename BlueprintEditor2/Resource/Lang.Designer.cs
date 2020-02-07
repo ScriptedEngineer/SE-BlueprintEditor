@@ -497,7 +497,8 @@ namespace BlueprintEditor2.Resource {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на Crash report:
-        ///By clicking on the &quot;Don&apos;t send&quot;, you acknowledge that the error was your fault!.
+        ///This report will help us find out about errors in the program and fix them in time!
+        ///If you click the &quot;Do not send&quot; button, we will not be able to fix the problem that caused the program to crash!.
         /// </summary>
         public static string CrashReport {
             get {

@@ -11,8 +11,8 @@
         <TextBox x:Name="Who" Height="23" Margin="10,31,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label Content="{x:Static res:Lang.WhoAreYou}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0,-1,0,0"/>
         <Label Content="{x:Static res:Lang.WhatHappens}" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Padding="0,-1,0,0"/>
-        <TextBox x:Name="What" Height="209" Margin="10,80,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <TextBlock Margin="10,294,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="92" Width="354" Text="{x:Static res:Lang.CrashReport}"/>
+        <TextBox x:Name="What" Height="190" Margin="10,80,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock Margin="10,275,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="111" Width="354" Text="{x:Static res:Lang.CrashReport}"/>
         <Button Content="{x:Static res:Lang.Send}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="83" Click="Button_Click_1"/>
         <Button Content="{x:Static res:Lang.DontSend}" HorizontalAlignment="Right" Margin="0,0,98,10" VerticalAlignment="Bottom" Width="101" Click="Button_Click"/>
         <CheckBox x:Name="Run" Content="{x:Static res:Lang.RunApp}" HorizontalAlignment="Left" Margin="10,0,0,12" VerticalAlignment="Bottom"/>
