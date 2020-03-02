@@ -831,7 +831,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 10.Uranium.
+        ///   Ищет локализованную строку, похожую на Uranium.
         /// </summary>
         public static string Ingot_Uranium {
             get {
@@ -1004,6 +1004,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на From stone only gravel.
+        /// </summary>
+        public static string OffStone {
+            get {
+                return ResourceManager.GetString("OffStone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Only armor.
         /// </summary>
         public static string OnlyArmor {
@@ -1112,7 +1121,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на 10.Uranium.
+        ///   Ищет локализованную строку, похожую на Uranium.
         /// </summary>
         public static string Ore_Uranium {
             get {

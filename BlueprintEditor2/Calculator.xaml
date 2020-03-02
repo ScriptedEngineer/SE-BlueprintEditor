@@ -60,6 +60,8 @@
         <TextBox x:Name="YieldProcentage" Grid.Column="1" Height="23" Margin="0,94,20,0" TextWrapping="Wrap" Text="100%" VerticalAlignment="Top" TextChanged="YieldProcentage_TextChanged"/>
         <RadioButton x:Name="ProcentageYield" Content="{x:Static Resource:Lang.YieldProcentage}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,79,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1"/>
         <RadioButton x:Name="ModulesYield" Content="{x:Static Resource:Lang.YieldModules}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" IsChecked="True"/>
+        <CheckBox x:Name="OffStone" Content="{x:Static Resource:Lang.OffStone}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,54" VerticalAlignment="Bottom" Click="CheckBox_Click"/>
+        <Rectangle x:Name="Preloader" Visibility="Collapsed" Fill="#FFF4F4F5" Height="469" Stroke="Black" Width="892" Grid.ColumnSpan="4" Grid.RowSpan="2" Opacity="0.505"/>
 
     </Grid>
 </Window>

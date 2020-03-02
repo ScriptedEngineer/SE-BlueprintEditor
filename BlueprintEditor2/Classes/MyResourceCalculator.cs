@@ -16,13 +16,13 @@ namespace BlueprintEditor2
         public int AssemblerEffic { get; set; }
         private double SelfStoneAmount;
         static bool Mods = false;
+        public bool OffStone = false;
         static Dictionary<string, Dictionary<string, int>> CubeBlocks = new Dictionary<string, Dictionary<string, int>>();
         static Dictionary<string, Dictionary<string,Dictionary<string, double>>> Recipies = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
         static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
+        static Dictionary<string, string> Names = new Dictionary<string, string>();
         public static bool IsInitialized = false;
-        Dictionary<string, int> RequaredComponents = new Dictionary<string, int>();
-        Dictionary<string, double> RequaredIngots = new Dictionary<string, double>();
-        Dictionary<string, double> RequaredOres = new Dictionary<string, double>();
+        Dictionary<string, double> Requared = new Dictionary<string, double>();
         List<string> UndefinedTypes = new List<string>();
         public MyResourceCalculator(string gamePatch, bool loadMods)
         {
@@ -49,15 +49,14 @@ namespace BlueprintEditor2
                 foreach (string mod in WorkshopCache.GetModsForCalculator())
                 {
                     //Console.WriteLine(mod);
-                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*CubeBlocks*"))
+                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*.*", SearchOption.AllDirectories)
+                                        .Where(s => s.EndsWith(".sbc")))
                     {
-                        if (x.EndsWith(".sbc"))
-                            AddBlocksInfo(x);
-                    }
-                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*Blueprints*"))
-                    {
-                        if (x.EndsWith(".sbc"))
-                            AddRecipiesInfo(x);
+                        XmlDocument File = new XmlDocument();
+                        File.Load(x);
+                        AddBlocksInfo(x, File);
+                        AddRecipiesInfo(x, File);
+                        AddNames(x, File);
                     }
                 }
             }
@@ -66,9 +65,7 @@ namespace BlueprintEditor2
 
         public void Clear()
         {
-            RequaredComponents.Clear();
-            RequaredIngots.Clear();
-            RequaredOres.Clear();
+            Requared.Clear();
             UndefinedTypes = new List<string>();
             SelfStoneAmount = 0;
             StoneAmount = 0;
@@ -111,32 +108,51 @@ namespace BlueprintEditor2
         public List<MyResourceInfo> GetComponents()
         {
             List<MyResourceInfo> outer = new List<MyResourceInfo>();
-            foreach(var x in RequaredComponents)
+            foreach(var x in Requared.Where(x => x.Key.StartsWith("Component/")))
             {
-                string ressng = Lang.ResourceManager.GetString("Component/"+x.Key);
-                outer.Add(new MyResourceInfo((String.IsNullOrEmpty(ressng) ? x.Key : ressng), x.Value));
+                string ressng = Lang.ResourceManager.GetString(x.Key);
+                if (String.IsNullOrEmpty(ressng))
+                {
+                    if (Names.ContainsKey(x.Key))
+                        ressng = Names[x.Key];
+                    else
+                        ressng = x.Key.Replace("Component/", "");
+                }
+                outer.Add(new MyResourceInfo(ressng, (int)x.Value));
             }
             return outer;
         }
         public List<MyResourceInfo> GetIngots()
         {
             List<MyResourceInfo> outer = new List<MyResourceInfo>();
-            foreach (var x in RequaredIngots)
+            foreach (var x in Requared.Where(x => x.Key.StartsWith("Ingot/")))
             {
                 string ressng = Lang.ResourceManager.GetString(x.Key);
-                //outer += (String.IsNullOrEmpty(ressng) ? x.Key.Replace("Ingot/", "") : ressng) + " - " + x.Value + "kg\r\n";
-                outer.Add(new MyResourceInfo((String.IsNullOrEmpty(ressng) ? x.Key.Replace("Ingot/", "") : ressng), AddWeightCounters(x.Value)));
+                if (String.IsNullOrEmpty(ressng))
+                {
+                    if (Names.ContainsKey(x.Key))
+                        ressng = Names[x.Key];
+                    else
+                        ressng = x.Key.Replace("Ingot/", "");
+                }
+                outer.Add(new MyResourceInfo(ressng, AddWeightCounters(x.Value)));
             }
             return outer;
         }
         public List<MyResourceInfo> GetOres()
         {
             List<MyResourceInfo> outer = new List<MyResourceInfo>();
-            foreach (var x in RequaredOres)
+            foreach (var x in Requared.Where(x =>x.Key.StartsWith("Ore/")))
             {
                 string ressng = Lang.ResourceManager.GetString(x.Key);
-                //outer += (String.IsNullOrEmpty(ressng) ? x.Key.Replace("Ingot/", "") : ressng) + " - " + x.Value + "kg\r\n";
-                outer.Add(new MyResourceInfo((String.IsNullOrEmpty(ressng) ? x.Key.Replace("Ore/", "") : ressng), AddWeightCounters(x.Value)));
+                if (String.IsNullOrEmpty(ressng))
+                {
+                    if (Names.ContainsKey(x.Key))
+                        ressng = Names[x.Key];
+                    else
+                        ressng = x.Key.Replace("Ore/", "");
+                }
+                outer.Add(new MyResourceInfo(ressng, AddWeightCounters(x.Value)));
             }
             return outer;
         }
@@ -163,13 +179,13 @@ namespace BlueprintEditor2
             if (CubeBlocks.ContainsKey(block.DisplayType))
                 foreach (var x in CubeBlocks[block.DisplayType])
                 {
-                    if (RequaredComponents.ContainsKey(x.Key))
+                    if (Requared.ContainsKey(x.Key))
                     {
-                        RequaredComponents[x.Key] += x.Value;
+                        Requared[x.Key] += x.Value;
                     }
                     else
                     {
-                        RequaredComponents.Add(x.Key, x.Value);
+                        Requared.Add(x.Key, x.Value);
                     }
                 }
             else if (!UndefinedTypes.Contains(block.DisplayType))
@@ -177,38 +193,76 @@ namespace BlueprintEditor2
                 UndefinedTypes.Add(block.DisplayType);
             }
         }
-        public void CalculateIngots()
+        public void CalculateIngots(Dictionary<string, double> ToRecalce = null, bool update = false)
         {
-            RequaredIngots.Clear();
-            RequaredOres.Clear();
-            foreach (var x in RequaredComponents)
+            bool Recalculate = false;
+            Dictionary<string, double> ToRecalc = new Dictionary<string, double>();
+            if (ToRecalce == null)
+                foreach (var xu in Requared.Where(x => x.Key.StartsWith("Ingot/") || x.Key.StartsWith("Ore/")).ToArray())
+                {
+                    Requared.Remove(xu.Key);
+                }
+            foreach (var x in (ToRecalce != null?ToRecalce.ToArray() : Requared.Where(x => x.Key.StartsWith("Component/")).ToArray()))
             {
-                if (Recipies.ContainsKey("Component/"+x.Key)) {
-                    var rec = Recipies["Component/" + x.Key];
-                    foreach (var y in rec[rec.Keys.First()])
+                if (Recipies.ContainsKey(x.Key)) {
+                    var rec = Recipies[x.Key];
+                    foreach (var y in rec[rec.Keys.Last()])
                     {
-                        if (RequaredIngots.ContainsKey(y.Key))
+                        if (y.Key.StartsWith("Component/"))
                         {
-                            RequaredIngots[y.Key] += (y.Value * x.Value) / AssemblerEffic;
+                            if (!update)
+                            {
+                                if (ToRecalc.ContainsKey(y.Key))
+                                {
+                                    ToRecalc[y.Key] += (y.Value * x.Value);
+                                }
+                                else
+                                {
+                                    ToRecalc.Add(y.Key, (y.Value * x.Value));
+                                }
+                                if (Requared.ContainsKey(y.Key))
+                                {
+                                    Requared[y.Key] += (y.Value * x.Value);
+                                }
+                                else
+                                {
+                                    Requared.Add(y.Key, (y.Value * x.Value));
+                                }
+                                Recalculate = true;
+                            }
+                            continue;
+                        }
+                        if (Requared.ContainsKey(y.Key))
+                        {
+                            Requared[y.Key] += (y.Value * x.Value) / AssemblerEffic;
                         }
                         else
                         {
-                            RequaredIngots.Add(y.Key, (y.Value * x.Value) / AssemblerEffic);
+                            Requared.Add(y.Key, (y.Value * x.Value) / AssemblerEffic);
                         }
+                        /*if (Requared.ContainsKey("Ingot/Stone"))
+                        {
+                            //int sdax = 0;
+                        }*/
                     } 
                 }
             }
-            
+            if (Recalculate)
+                CalculateIngots(ToRecalc);
         }
         public void CalculateOres()
         {
-            RequaredOres.Clear();
+            bool Recalculate = false;
+            foreach (var xu in Requared.Where(x => x.Key.StartsWith("Ore/")).ToArray())
+            {
+                Requared.Remove(xu.Key);
+            }
             Dictionary<string, double> requaredIngots = new Dictionary<string, double>();
-            foreach (var x in RequaredIngots)
+            foreach (var x in Requared.Where(x => x.Key.StartsWith("Ingot/")).ToArray())
             {
                 requaredIngots.Add(x.Key, x.Value);
             }
-            if (SelfStoneAmount > 0 || StoneAmount > 0)
+            if (!OffStone && (SelfStoneAmount > 0 || StoneAmount > 0))
             {
                 foreach (var x in StoneRicipie)
                 {
@@ -226,32 +280,51 @@ namespace BlueprintEditor2
                     string kuau = rec.Keys.FirstOrDefault(y => y.Contains(x.Key == "Ingot/Stone"?"Ore":x.Key.Replace("Ingot/", "") + "1"));
                     foreach (var y in rec[(string.IsNullOrEmpty(kuau) ? rec.Keys.First() : kuau)])
                     {
-                        if (RequaredOres.ContainsKey(y.Key))
+                        if (y.Key.StartsWith("Component/"))
                         {
-                            RequaredOres[y.Key] += Math.Max(0,(y.Value * x.Value)/ YieldEffect);
+                            if (Requared.ContainsKey(y.Key))
+                            {
+                                Requared[y.Key] += (y.Value * x.Value) / AssemblerEffic;
+                            }
+                            else
+                            {
+                                Requared.Add(y.Key, (y.Value * x.Value) / AssemblerEffic);
+                            }
+                            Recalculate = true;
+                            continue;
+                        }
+                        if (Requared.ContainsKey(y.Key))
+                        {
+                            Requared[y.Key] += Math.Max(0,(y.Value * x.Value)/ YieldEffect);
                         }
                         else
                         {
-                            RequaredOres.Add(y.Key, Math.Max(0, (y.Value * x.Value) / YieldEffect));
+                            Requared.Add(y.Key, Math.Max(0, (y.Value * x.Value) / YieldEffect));
                         }
                     }
                 }
             }
-            if (RequaredOres.ContainsKey("Ore/Stone") && RequaredOres["Ore/Stone"] > 0)
-            {
-                SelfStoneAmount = RequaredOres["Ore/Stone"];
+            if (!OffStone)
+                if (Requared.ContainsKey("Ore/Stone") && Requared["Ore/Stone"] > 0)
+                {
+                    SelfStoneAmount = Requared["Ore/Stone"];
+                    Recalculate = true;
+                }
+                else if (Requared.ContainsKey("Ore/Stone") && Requared["Ore/Stone"] == 0)
+                {
+                    Requared["Ore/Stone"] = Math.Max(0, SelfStoneAmount - StoneAmount);
+                }
+            if(Recalculate)
                 CalculateOres();
-            }
-            else if (RequaredOres.ContainsKey("Ore/Stone") && RequaredOres["Ore/Stone"] == 0)
-            {
-                RequaredOres["Ore/Stone"] = Math.Max(0, SelfStoneAmount - StoneAmount);
-            }
         }
 
-        private void AddBlocksInfo(string file)
+        private void AddBlocksInfo(string file, XmlDocument File = null)
         {
-            XmlDocument File = new XmlDocument();
-            File.Load(file);
+            if (File == null)
+            {
+                File = new XmlDocument();
+                File.Load(file);
+            }
             foreach (XmlNode y in File.GetElementsByTagName("Definition"))
             {
                 string name = "";
@@ -279,7 +352,7 @@ namespace BlueprintEditor2
                             {
                                 if (h.Attributes == null) continue;
                                 int.TryParse(h.Attributes.GetNamedItem("Count")?.Value, out int res);
-                                string comp = h.Attributes.GetNamedItem("Subtype")?.Value;
+                                string comp = string.Format("Component/{0}", h.Attributes.GetNamedItem("Subtype")?.Value);
                                 if (components.ContainsKey(comp))
                                 {
                                     components[comp] += res;
@@ -299,10 +372,13 @@ namespace BlueprintEditor2
                     CubeBlocks.Add(name, components);
             }
         }
-        private void AddRecipiesInfo(string file)
+        private void AddRecipiesInfo(string file, XmlDocument File = null)
         {
-            XmlDocument File = new XmlDocument();
-            File.Load(file);
+            if (File == null)
+            {
+                File = new XmlDocument();
+                File.Load(file);
+            }
             foreach (XmlNode y in File.GetElementsByTagName("Blueprint"))
             {
                 string name = "";
@@ -386,6 +462,8 @@ namespace BlueprintEditor2
                     default:
                         foreach (var d in results)
                         {
+                            if (requares.Count == 0)
+                                continue;
                             Dictionary<string, double> requared = new Dictionary<string, double>();
                             foreach (string key in requares.Keys)
                             {
@@ -395,7 +473,9 @@ namespace BlueprintEditor2
                             if (Recipies.ContainsKey(d.Key))
                             {
                                 if (!Recipies[d.Key].ContainsKey(requares.First().Key + results.Count))
-                                      Recipies[d.Key].Add(requares.First().Key + results.Count, requared);
+                                    Recipies[d.Key].Add(requares.First().Key + results.Count, requared);
+                                else
+                                    Recipies[d.Key][requares.First().Key + results.Count] = requared;
                             }
                             else
                             {
@@ -405,6 +485,78 @@ namespace BlueprintEditor2
                         }
                         break;
                 }
+            }
+        }
+        private void AddNames(string file, XmlDocument File = null)
+        {
+            if (File == null)
+            {
+                File = new XmlDocument();
+                File.Load(file);
+            }
+            foreach (XmlNode y in File.GetElementsByTagName("Component"))
+            {
+                string name = "", type = "";
+                foreach (XmlNode z in y.ChildNodes)
+                {
+                    switch (z.Name)
+                    {
+                        case "Id":
+                            foreach (XmlNode h in z.ChildNodes)
+                            {
+                                switch (h.Name)
+                                {
+                                    case "TypeId":
+                                        type = h.InnerText + type;
+                                        break;
+                                    case "SubtypeId":
+                                        type += "/" + h.InnerText;
+                                        break;
+                                }
+                            }
+                            break;
+                        case "DisplayName":
+                            name += z.InnerText;
+                            break;
+                    }
+                }
+                //name = name.Replace("MyObjectBuilder_", "");
+                if (Names.ContainsKey(type))
+                    Names[type] = name;
+                else
+                    Names.Add(type, name);
+            }
+            foreach (XmlNode y in File.GetElementsByTagName("PhysicalItem"))
+            {
+                string name = "", type = "";
+                foreach (XmlNode z in y.ChildNodes)
+                {
+                    switch (z.Name)
+                    {
+                        case "Id":
+                            foreach (XmlNode h in z.ChildNodes)
+                            {
+                                switch (h.Name)
+                                {
+                                    case "TypeId":
+                                        type = h.InnerText + type;
+                                        break;
+                                    case "SubtypeId":
+                                        type += "/" + h.InnerText;
+                                        break;
+                                }
+                            }
+                            break;
+                        case "DisplayName":
+                            name += z.InnerText;
+                            break;
+                    }
+                }
+                //name = name.Replace("MyObjectBuilder_", "");
+                if (Names.ContainsKey(type))
+                    Names[type] = name;
+                else
+                    Names.Add(type, name);
             }
         }
     }

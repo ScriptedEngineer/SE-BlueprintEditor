@@ -378,7 +378,7 @@
     <value>5.Гравий</value>
   </data>
   <data name="Ingot/Uranium" xml:space="preserve">
-    <value>10.Уран</value>
+    <value>Уран</value>
   </data>
   <data name="Ingots" xml:space="preserve">
     <value>Слитки</value>
@@ -436,6 +436,9 @@
   <data name="NoSSFTB" xml:space="preserve">
     <value>Нет специальных настроек для этого блока(ов)</value>
   </data>
+  <data name="OffStone" xml:space="preserve">
+    <value>Из камня только гравий</value>
+  </data>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Только броня</value>
   </data>
@@ -473,7 +476,7 @@
     <value>5.Камень</value>
   </data>
   <data name="Ore/Uranium" xml:space="preserve">
-    <value>10.Уран</value>
+    <value>Уран</value>
   </data>
   <data name="Ores" xml:space="preserve">
     <value>Руды</value>

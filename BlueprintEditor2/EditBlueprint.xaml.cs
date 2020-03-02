@@ -338,8 +338,8 @@ namespace BlueprintEditor2
             OpenCount--;
             if (OpenCount == 0)
             {
-                SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
-                SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
+                //SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
+                //SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
             Logger.Add("Editor closed");

@@ -30,10 +30,11 @@ namespace BlueprintEditor2
             _lock = Lock;
             EdBlueprint = Blueprint;
             InitializeComponent();
-            Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
+            Preloader.Visibility = Visibility.Visible;
+            Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor Loading...";
             BluePicture.Source = EdBlueprint.GetPic(false, false);
             EditBlueprint.OpenCount++;
-            if (MySettings.Current.GamePatch == null)
+            while (MySettings.Current.GamePatch == null)
             {
                 using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
                 {
@@ -44,35 +45,50 @@ namespace BlueprintEditor2
                     if (result.Equals(System.Windows.Forms.DialogResult.OK))
                     {
                         MySettings.Current.GamePatch = dialog.SelectedPath + "\\";
-                            calc = new MyResourceCalculator(MySettings.Current.GamePatch, withMods);
                     }
                 }
             }
-            else 
+            new Task(() =>
+            {
                 calc = new MyResourceCalculator(MySettings.Current.GamePatch, withMods);
-            if (calc != null && MyResourceCalculator.IsInitialized)
-            {
-                foreach (MyXmlGrid Gr in Blueprint.Grids)
+                if (calc != null && MyResourceCalculator.IsInitialized)
                 {
-                    foreach (MyXmlBlock Bl in Gr.Blocks)
+                    foreach (MyXmlGrid Gr in Blueprint.Grids)
                     {
-                        calc.AddBlock(Bl);
+                        foreach (MyXmlBlock Bl in Gr.Blocks)
+                        {
+                            calc.AddBlock(Bl);
+                        }
                     }
+                    calc.CalculateIngots();
+                    calc.CalculateOres();
+                    MyExtensions.AsyncWorker(() =>
+                    {
+                        ComponensList.ItemsSource = calc.GetComponents();
+                        IngotsList.ItemsSource = calc.GetIngots();
+                        OresList.ItemsSource = calc.GetOres();
+                        ListSort(ComponensList, "Amount", ListSortDirection.Descending);
+                        ListSort(IngotsList);
+                        ListSort(OresList);
+                        Preloader.Visibility = Visibility.Hidden;
+                        Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
+                        string undef = calc.GetUndefined();
+                        if (!string.IsNullOrEmpty(undef))
+                        {
+                            Logger.Add("Undefined types message show");
+                            new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
+                        }
+                    });
                 }
-                calc.CalculateIngots();
-                calc.CalculateOres();
-                ComponensList.ItemsSource = calc.GetComponents();
-                IngotsList.ItemsSource = calc.GetIngots();
-                OresList.ItemsSource = calc.GetOres();
-                ListSort(ComponensList, "Amount", ListSortDirection.Descending);
-                ListSort(IngotsList);
-                ListSort(OresList);
-            }
-            else
-            {
-                Window_Closing(null, null);
-                Close();
-            }
+                else
+                {
+                    MyExtensions.AsyncWorker(() =>
+                    {
+                        Window_Closing(null, null);
+                        Close();
+                    });
+                }
+            }).Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -81,8 +97,8 @@ namespace BlueprintEditor2
             EditBlueprint.OpenCount--;
             if (EditBlueprint.OpenCount == 0)
             {
-                SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
-                SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
+                //SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
+                //SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
             if(calc != null) calc.Clear();
@@ -111,12 +127,7 @@ namespace BlueprintEditor2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string undef = calc.GetUndefined();
-            if (!string.IsNullOrEmpty(undef))
-            {
-                Logger.Add("Undefined types message show");
-                new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
-            }
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -159,8 +170,9 @@ namespace BlueprintEditor2
             {
                 calc.AssemblerEffic = (int)AssembleEffic.Value;
                 YieldProcentage.Text = (calc.SetYieldModules((int)YieldCount.Value)*100).ToString("F0")+"%";
-                calc.CalculateIngots();
+                calc.CalculateIngots(null, true);
                 calc.CalculateOres();
+                ComponensList.ItemsSource = calc.GetComponents();
                 IngotsList.ItemsSource = calc.GetIngots();
                 OresList.ItemsSource = calc.GetOres();
                 ListSort(IngotsList);
@@ -201,6 +213,21 @@ namespace BlueprintEditor2
                 }
                 YieldProcentage.CaretIndex = YieldProcentage.Text.Length - 1;
             }
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (calc != null)
+            {
+                calc.OffStone = OffStone.IsChecked.Value;
+                calc.CalculateOres();
+                OresList.ItemsSource = calc.GetOres();
+                ListSort(OresList);
+            }
+            if (OffStone.IsChecked.Value)
+                StoneAmountText.IsEnabled = false;
+            else 
+                StoneAmountText.IsEnabled = true;
         }
     }
 }

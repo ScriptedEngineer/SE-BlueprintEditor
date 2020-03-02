@@ -182,8 +182,8 @@ namespace BlueprintEditor2
                 if (!MySettings.Current.MultiWindow) Hide();
                 else
                 {
-                    Left = 0;
-                    Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                    //Left = 0;
+                    //Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
                 CurrentBlueprint.SaveBackup();
                 Logger.Add($"Open editor for [{CurrentBlueprint.Name}]");
@@ -218,8 +218,8 @@ namespace BlueprintEditor2
                 if (!MySettings.Current.MultiWindow) Hide();
                 else
                 {
-                    Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
-                    Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
+                    //Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
+                    //Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
                 Logger.Add($"Open calculator for [{CurrentBlueprint.Name}] {(WithMods.IsChecked.Value?"WithMods":"")}");
                 Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint, WithMods.IsChecked.Value);

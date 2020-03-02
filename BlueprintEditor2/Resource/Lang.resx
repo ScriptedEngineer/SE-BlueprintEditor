@@ -378,7 +378,7 @@ If you click the "Do not send" button, we will not be able to fix the problem th
     <value>5.Gravel</value>
   </data>
   <data name="Ingot/Uranium" xml:space="preserve">
-    <value>10.Uranium</value>
+    <value>Uranium</value>
   </data>
   <data name="Ingots" xml:space="preserve">
     <value>Ingots</value>
@@ -436,6 +436,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="NoSSFTB" xml:space="preserve">
     <value>No specific settings for this block(s)</value>
   </data>
+  <data name="OffStone" xml:space="preserve">
+    <value>From stone only gravel</value>
+  </data>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Only armor</value>
   </data>
@@ -473,7 +476,7 @@ Cancel - Don't set default thumbnail</value>
     <value>5.Stone</value>
   </data>
   <data name="Ore/Uranium" xml:space="preserve">
-    <value>10.Uranium</value>
+    <value>Uranium</value>
   </data>
   <data name="Ores" xml:space="preserve">
     <value>Ores</value>
