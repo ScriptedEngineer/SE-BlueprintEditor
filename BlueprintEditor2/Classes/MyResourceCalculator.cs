@@ -244,7 +244,7 @@ namespace BlueprintEditor2
                         {
                             //int sdax = 0;
                         }*/
-                    } 
+                    }
                 }
             }
             if (Recalculate)
@@ -278,7 +278,7 @@ namespace BlueprintEditor2
                 {
                     var rec = Recipies[x.Key];
                     string kuau = rec.Keys.FirstOrDefault(y => y.Contains(x.Key == "Ingot/Stone"?"Ore":x.Key.Replace("Ingot/", "") + "1"));
-                    foreach (var y in rec[(string.IsNullOrEmpty(kuau) ? rec.Keys.First() : kuau)])
+                    foreach (var y in rec[(string.IsNullOrEmpty(kuau) ? rec.Keys.Last() : kuau)])
                     {
                         if (y.Key.StartsWith("Component/"))
                         {
@@ -469,17 +469,21 @@ namespace BlueprintEditor2
                             {
                                 requared.Add(key, requares[key] / d.Value);
                             }
-
+                            if (requares.First().Key.EndsWith("/Scrap"))
+                            {
+                                continue;
+                            }
                             if (Recipies.ContainsKey(d.Key))
                             {
-                                if (!Recipies[d.Key].ContainsKey(requares.First().Key + results.Count))
-                                    Recipies[d.Key].Add(requares.First().Key + results.Count, requared);
+                                string keyd = string.Format("{0} {1} {2}", requares.First().Key, results.Count, Recipies[d.Key].Count);
+                                if (!Recipies[d.Key].ContainsKey(keyd))
+                                    Recipies[d.Key].Add(keyd, requared);
                                 else
-                                    Recipies[d.Key][requares.First().Key + results.Count] = requared;
+                                    Recipies[d.Key][keyd] = requared;
                             }
                             else
                             {
-                                Recipies.Add(d.Key, new Dictionary<string, Dictionary<string, double>>() { { requares.First().Key + results.Count, requared } });
+                                Recipies.Add(d.Key, new Dictionary<string, Dictionary<string, double>>() { { string.Format("{0} {1} 0", requares.First().Key, results.Count), requared } });
                             }
 
                         }
