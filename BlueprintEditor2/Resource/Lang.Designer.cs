@@ -1301,6 +1301,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Please select blueprint to delete backups.
+        /// </summary>
+        public static string SelectBlueForDelBack {
+            get {
+                return ResourceManager.GetString("SelectBlueForDelBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please select blueprint to open folder.
         /// </summary>
         public static string SelectBlueForOpen {

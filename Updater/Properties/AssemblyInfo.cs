@@ -5,25 +5,25 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 // Общие сведения об этой сборке предоставляются следующим набором
-// набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
+// набор атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("SE BlueprintEditor")]
-[assembly: AssemblyDescription("Программа редактирования чертежей")]
+[assembly: AssemblyTitle("Updater")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("-")]
-[assembly: AssemblyProduct("SE BlueprintEditor")]
-[assembly: AssemblyCopyright("Copyright © Andromeda 2020")]
-[assembly: AssemblyTrademark("-")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Updater")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
 // для компонентов COM. Если необходимо обратиться к типу в этой сборке через
-// COM, задайте атрибуту ComVisible значение TRUE для этого типа.
+// из модели COM, установите атрибут ComVisible для этого типа в значение true.
 [assembly: ComVisible(false)]
 
 //Чтобы начать создание локализуемых приложений, задайте
 //<UICulture>CultureYouAreCodingWith</UICulture> в файле .csproj
-//внутри <PropertyGroup>.  Например, если используется английский США
+//в <PropertyGroup>. Например, при использовании английского (США)
 //в своих исходных файлах установите <UICulture> в en-US.  Затем отмените преобразование в комментарий
 //атрибута NeutralResourceLanguage ниже.  Обновите "en-US" в
 //строка внизу для обеспечения соответствия настройки UICulture в файле проекта.
@@ -41,17 +41,15 @@ using System.Windows;
 )]
 
 
-// Сведения о версии сборки состоят из следующих четырех значений:
+// Сведения о версии для сборки включают четыре следующих значения:
 //
 //      Основной номер версии
 //      Дополнительный номер версии
-//   Номер сборки
-//      Редакция
+//      Номер сборки
+//      Номер редакции
 //
-// Можно задать все значения или принять номер сборки и номер редакции по умолчанию.
+// Можно задать все значения или принять номера сборки и редакции по умолчанию 
 // используя "*", как показано ниже:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.2.8")]
-[assembly: AssemblyFileVersion("0.0.2.8")]
-[assembly: NeutralResourcesLanguage("")]
-
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

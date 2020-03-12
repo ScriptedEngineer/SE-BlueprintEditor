@@ -25,7 +25,7 @@ namespace BlueprintEditor2
         MyResourceCalculator calc;
         FileStream _lock;
         MyXmlBlueprint EdBlueprint;
-        public Calculator(FileStream Lock, MyXmlBlueprint Blueprint, bool withMods)
+        public Calculator(FileStream Lock, MyXmlBlueprint Blueprint)
         {
             _lock = Lock;
             EdBlueprint = Blueprint;
@@ -50,8 +50,8 @@ namespace BlueprintEditor2
             }
             new Task(() =>
             {
-                calc = new MyResourceCalculator(MySettings.Current.GamePatch, withMods);
-                if (calc != null && MyResourceCalculator.IsInitialized)
+                calc = new MyResourceCalculator();
+                if (calc != null)
                 {
                     foreach (MyXmlGrid Gr in Blueprint.Grids)
                     {
@@ -228,6 +228,59 @@ namespace BlueprintEditor2
                 StoneAmountText.IsEnabled = false;
             else 
                 StoneAmountText.IsEnabled = true;
+        }
+
+        private void WithMods_Click(object sender, RoutedEventArgs e)
+        {
+            bool modse = WithMods.IsChecked.Value;
+            Preloader.Visibility = Visibility.Visible;
+            Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor Loading...";
+            new Task(() =>
+            {
+                if (calc != null) 
+                    calc.Clear();
+                else
+                    calc = new MyResourceCalculator();
+
+                if (calc != null)
+                {
+                    calc.Mods = modse;
+                    foreach (MyXmlGrid Gr in EdBlueprint.Grids)
+                    {
+                        foreach (MyXmlBlock Bl in Gr.Blocks)
+                        {
+                            calc.AddBlock(Bl);
+                        }
+                    }
+                    calc.CalculateIngots();
+                    calc.CalculateOres();
+                    MyExtensions.AsyncWorker(() =>
+                    {
+                        ComponensList.ItemsSource = calc.GetComponents();
+                        IngotsList.ItemsSource = calc.GetIngots();
+                        OresList.ItemsSource = calc.GetOres();
+                        ListSort(ComponensList, "Amount", ListSortDirection.Descending);
+                        ListSort(IngotsList);
+                        ListSort(OresList);
+                        Preloader.Visibility = Visibility.Hidden;
+                        Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
+                        string undef = calc.GetUndefined();
+                        if (!string.IsNullOrEmpty(undef))
+                        {
+                            Logger.Add("Undefined types message show");
+                            new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
+                        }
+                    });
+                }
+                else
+                {
+                    MyExtensions.AsyncWorker(() =>
+                    {
+                        Window_Closing(null, null);
+                        Close();
+                    });
+                }
+            }).Start();
         }
     }
 }

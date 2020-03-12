@@ -15,17 +15,15 @@ using System.IO;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
-namespace BlueprintEditor2
+namespace Updater
 {
     /// <summary>
     /// Логика взаимодействия для Updater.xaml
     /// </summary>
     public partial class Updater : Window
     {
-        string downUrl, LangDest, CultureFolder;
+        string downUrl, LangDest;
         public Updater(string link)
         {
             downUrl = link;
@@ -34,19 +32,22 @@ namespace BlueprintEditor2
             {
                 if (MySettings.Current.LangCultureID == 9)
                 {
-                    DownloadProg();
+                    Status.Content = Resource.Lang.DownNewVer;
+                    WebClient web = new WebClient();
+                    web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+                    web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+                    web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
                 }
                 else
                 {
                     string LCID = MySettings.Current.LangCultureID.ToString();
-                    CultureFolder = "";
-                    string PackLink = "";
+                    string CultureFolder = "", PackLink = "";
                     foreach (string langpack in MyExtensions.ApiServer(ApiServerAct.GetCustomData).Split('\n'))
                     {
                         var langpart = langpack.Trim().Split('|');
-                        if (langpart.Length >= 3)
+                        if(langpart.Length >= 3)
                         {
-                            if (langpart[0] == LCID)
+                            if(langpart[0] == LCID)
                             {
                                 CultureFolder = langpart[1];
                                 PackLink = langpart[2];
@@ -55,23 +56,24 @@ namespace BlueprintEditor2
                     }
                     if (!string.IsNullOrWhiteSpace(CultureFolder) && !string.IsNullOrWhiteSpace(PackLink))
                     {
-                        
                         Status.Content = Resource.Lang.DowLangPack;
-                        string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "\\" + CultureFolder + "\\";
+                        string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/" + CultureFolder + "/";
                         if (!Directory.Exists(langpackfolder))
                             Directory.CreateDirectory(langpackfolder);
                         File.WriteAllText("lang.txt", CultureFolder);
                         LangDest = langpackfolder + "SE-BlueprintEditor.resources.dll";
-                        //File.Delete(LangDest);
-                        //Process.Start("cmd", "/c del /f " + LangDest);
                         WebClient web = new WebClient();
-                        web.DownloadFileAsync(new Uri(PackLink), LangDest);
+                        web.DownloadFileAsync(new Uri(PackLink), langpackfolder + "SE-BlueprintEditor.resources.dll");
                         web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged);
                         web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted);
                     }
                     else
                     {
-                        DownloadProg();
+                        Status.Content = Resource.Lang.DownNewVer;
+                        WebClient web = new WebClient();
+                        web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe");
+                        web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+                        web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
                     }
                 }
             });
@@ -90,8 +92,11 @@ namespace BlueprintEditor2
         }
         public void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            //Thread.Sleep(200);
-            DownloadProg();
+            Thread.Sleep(200);
+            WebClient web = new WebClient();
+            web.DownloadFileAsync(new Uri(downUrl), Path.GetFileNameWithoutExtension(MyExtensions.AppFile) + ".update");
+            web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
+            web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
         }
         public void DownloadFileCompleted2(object sender, AsyncCompletedEventArgs e)
         {
@@ -115,32 +120,11 @@ namespace BlueprintEditor2
 + "\r\nDel2.Delete"
 + "\r\nOn Error GoTo 0");
             Batch.Write(Data, 0, Data.Length);
-            Batch.Close(); 
-            //Process.Start("update.vbs");*/
-            File.WriteAllText("upd.bat",$"taskkill /f /im {Path.GetFileName(MyExtensions.AppFile)}"+
-                (string.IsNullOrEmpty(LangDest) ?"":"\n rmdir /s /q "+ CultureFolder) +
-                "\n start SE-BlueprintEditor.exe");
-            Process.Start("upd.bat");
-            //Process.Start("SE-BlueprintEditor.exe");
+            Batch.Close();
+            //Process.Start("update.vbs");
+            //Process.Start("cmd","\\c taskkill \\f \\im ");*/
+            Process.Start("SE-BlueprintEditor.exe");
             Application.Current.Shutdown();
-        }
-
-
-        private void DownloadLang()
-        {
-            Status.Content = Resource.Lang.DownNewVer;
-            WebClient web = new WebClient();
-            web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe");
-            web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
-            web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
-        }
-        private void DownloadProg()
-        {
-            Status.Content = Resource.Lang.DownNewVer;
-            WebClient web = new WebClient();
-            web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe");
-            web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
-            web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
         }
     }
 }

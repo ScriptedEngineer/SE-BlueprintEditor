@@ -115,6 +115,7 @@
     <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
+    <Compile Include="Classes\MyGameData.cs" />
     <Compile Include="Classes\MyResourceCalculator.cs" />
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyWorld.cs" />
@@ -197,8 +198,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Updater.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

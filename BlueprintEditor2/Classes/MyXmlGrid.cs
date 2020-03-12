@@ -27,7 +27,7 @@ namespace BlueprintEditor2
         public bool Destructible
         {
             get => bool.Parse(DestructibleNode.InnerText);
-            set => DestructibleNode.InnerText = value.ToString();
+            set => DestructibleNode.InnerText = value.ToString().ToLower();
         }
         public MyXmlGrid(XmlNode Grid)
         {

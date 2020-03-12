@@ -24,15 +24,42 @@ namespace BlueprintEditor2
                     File.Copy(fld + @"\bp.sbc", DirectoryName + @"\bp.sbc", true);
                     if (File.Exists(fld + @"\thumb.png"))
                         File.Copy(fld + @"\thumb.png", DirectoryName + @"\thumb.png", true);
-                    //MyExtensions.ClearFolder(fld);
-                    //Directory.Delete(fld);
                 }
             }
         }
-        public static void Clear()
+        public static void ClearMods()
         {
             string ModFolder = MySettings.Current.SteamWorkshopPatch;
-            MyExtensions.ClearFolder(ModFolder);
+            if (string.IsNullOrEmpty(ModFolder))
+                return;
+            foreach (var fld in Directory.GetDirectories(ModFolder))
+            {
+                string[] files = Directory.GetFiles(fld);
+                bool IsMod = Directory.Exists($"{fld}\\Data");
+                if (!IsMod && files.Length >= 1)
+                {
+                    foreach (var ink in files)
+                    {
+                        if (ink.EndsWith(".bin"))
+                            using (ZipArchive archive = new ZipArchive(File.OpenRead(ink)))
+                            {
+                                foreach (var x in archive.Entries)
+                                {
+                                    if (x.FullName.StartsWith("Data"))
+                                    {
+                                        IsMod = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        if (IsMod) break;
+                    }
+                }
+                if (IsMod)
+                {
+                    MyExtensions.ClearFolder(fld);
+                }
+            }
         }
         public static string[] GetModsForCalculator()
         {

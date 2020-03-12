@@ -172,5 +172,16 @@ namespace BlueprintEditor2
             gfxPic.Dispose();
             return bmpPic;
         }
+
+        public string ConvertToPrefab()
+        {
+            StringBuilder str = new StringBuilder();
+            str.Append("<?xml version=\"1.0\"?>")
+.Append("<Definitions xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><Prefabs><Prefab><Id><TypeId>MyObjectBuilder_PrefabDefinition</TypeId>")
+        .Append("<SubtypeId>").Append(Name).Append("</SubtypeId></Id>")
+      .Append("<CubeGrids>").Append(BlueprintXml.GetElementsByTagName("CubeGrids").Item(0).InnerXml)
+      .Append("</CubeGrids></Prefab></Prefabs></Definitions>");
+            return str.ToString();
+        }
     }
 }

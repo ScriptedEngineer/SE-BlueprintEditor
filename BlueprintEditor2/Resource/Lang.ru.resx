@@ -535,6 +535,9 @@
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста, выберите четреж для отображения информации</value>
   </data>
+  <data name="SelectBlueForDelBack" xml:space="preserve">
+    <value>Пожалуйста, выберите чертеж, чтобы удалить резервные копии</value>
+  </data>
   <data name="SelectBlueForOpen" xml:space="preserve">
     <value>Пожалуйста, выберите чертеж, чтобы открыть папку</value>
   </data>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -85,7 +87,11 @@ namespace BlueprintEditor2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MyExtensions.CloseAllWindows();
-            new Updater(UpdateLink).Show();
+            File.Copy(MyExtensions.AppFile, "Updater.exe", true);
+            File.WriteAllText("upd",UpdateLink);
+            Process.Start("Updater.exe");
+            Application.Current.Shutdown();
+            //new Updater(UpdateLink).Show();
         }
 
         private void UpdLog_TextChanged(object sender, TextChangedEventArgs e)

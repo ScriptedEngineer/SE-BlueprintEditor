@@ -535,6 +535,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="SelectBlue" xml:space="preserve">
     <value>Please select blueprint to display information</value>
   </data>
+  <data name="SelectBlueForDelBack" xml:space="preserve">
+    <value>Please select blueprint to delete backups</value>
+  </data>
   <data name="SelectBlueForOpen" xml:space="preserve">
     <value>Please select blueprint to open folder</value>
   </data>

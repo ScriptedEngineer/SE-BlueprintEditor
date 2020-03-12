@@ -14,6 +14,8 @@ using Path = System.IO.Path;
 using System.ComponentModel;
 using System.Net;
 using System.Threading;
+using System.Text;
+using System.Globalization;
 
 namespace BlueprintEditor2
 {
@@ -30,10 +32,18 @@ namespace BlueprintEditor2
 #if DEBUG
             System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
 #endif
-
             MySettings.Deserialize();
+            if (Path.GetFileName(MyExtensions.AppFile) == "Updater.exe")
+            {
+                while (Process.GetProcessesByName("SE-BlueprintEditor.exe").Length > 0)
+                    Thread.Sleep(100);
+                string updlink = File.ReadAllText("upd");
+                new Updater(updlink).Show();
+                File.Delete("upd");
+                Hide();
+                return;
+            }
             MySettings.Current.ApplySettings();
-            //MySettings.Current.SteamWorkshop = null;
             window = this;
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1 && args[1] == "Crash")
@@ -49,12 +59,14 @@ namespace BlueprintEditor2
             }
             Logger.HandleUnhandledException();
             Thread.CurrentThread.Name = "Main";
-            Logger.Add("Startup");
+            Logger.Add("Startup"); 
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
-            if (File.Exists("lang.txt"))
+            if (File.Exists("upd.bat")) File.Delete("upd.bat");
+            if (File.Exists("Updater.exe")) File.Delete("Updater.exe");
+            /*if (File.Exists("lang.txt"))
                 try
                 {
-                    Logger.Add("Post update language pack downloading");
+                    Logger.Add("Post update language pack init");
                     string langfold = File.ReadAllText("lang.txt");
                     File.Delete("./" + langfold + "/SE-BlueprintEditor.resources.dll");
                     File.Move("./" + langfold + "/SE-BlueprintEditor.resources.dll.upd", "./" + langfold + "/SE-BlueprintEditor.resources.dll");
@@ -66,15 +78,15 @@ namespace BlueprintEditor2
         + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
         + "\r\nOn Error GoTo 0");
                     Batch.Write(Data, 0, Data.Length);
-                    Batch.Close();*/
+                    Batch.Close();*//*
                     Process.Start(MyExtensions.AppFile);
                     Application.Current.Shutdown();
                 }
                 catch(Exception e)
                 {
                     Logger.Add($"Error {e.Message}");
-                }
-            if (!Directory.Exists("ru") && MySettings.Current.LangCultureID == 1049)
+                }*/
+            if (MySettings.Current.LangCultureID == 1049 && !Directory.Exists("ru"))
                 try
                 {
                     Logger.Add("language pack not exists. language pack downloading");
@@ -126,6 +138,15 @@ namespace BlueprintEditor2
             Welcome.Content = Lang.Welcome+" "+MySettings.Current.UserName.Replace("_", "__");
             //MessageBox.Show("Hello "+MySettings.Current.UserName);
             Logger.Add("GUI Loaded");
+            new Task(() => {
+                Thread.CurrentThread.Name = "DataParser";
+                Logger.Add("Game data parse start");
+                MyGameData.Init();
+                Logger.Add("Game data parse end");
+                MyExtensions.AsyncWorker(() => { 
+                CalculateButton.IsEnabled = BlueList.SelectedIndex != -1;
+                });
+            }).Start();
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -146,8 +167,9 @@ namespace BlueprintEditor2
                     Lang.GridCount + ": " + Selected.GridCountText + "\n" +
                     Lang.BlockCount + ": " + Selected.BlockCountText + "\n" +
                     Lang.Owner + ": " + Owner + "\n";
-                CalculateButton.IsEnabled = true;
+                CalculateButton.IsEnabled = MyGameData.IsInitialized;
                 EditButton.IsEnabled = true;
+                PrefabButton.IsEnabled = true;
                 BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
                 foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*", SearchOption.TopDirectoryOnly))
                 {
@@ -169,6 +191,7 @@ namespace BlueprintEditor2
                 BlueText.Text = Lang.SelectBlue;
                 CalculateButton.IsEnabled = false;
                 EditButton.IsEnabled = false;
+                PrefabButton.IsEnabled = false;
                 BackupButton.IsEnabled = false;
             }
             Height++; Height--;
@@ -221,10 +244,8 @@ namespace BlueprintEditor2
                     //Left = SystemParameters.PrimaryScreenWidth / 2 - ((360 + 800) / 2);
                     //Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
-                Logger.Add($"Open calculator for [{CurrentBlueprint.Name}] {(WithMods.IsChecked.Value?"WithMods":"")}");
-                Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint, WithMods.IsChecked.Value);
-                if (WithMods.IsChecked.Value)
-                    WithMods.IsEnabled = false;
+                Logger.Add($"Open calculator for [{CurrentBlueprint.Name}]");
+                Calculator Form = new Calculator(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
                 try
                 {
                     Form.Show();
@@ -541,25 +562,33 @@ namespace BlueprintEditor2
         }
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-            Lock.Height = SystemParameters.PrimaryScreenHeight;
-            Lock.DataContext = 0;
-            Logger.Add("Show delete backups attention");
-            new MessageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteThisBackp, (Dial) =>
+            if (CurrentBlueprint != null)
             {
-                if (Dial == DialоgResult.Yes)
+                Lock.Height = SystemParameters.PrimaryScreenHeight;
+                Lock.DataContext = 0;
+                Logger.Add("Show delete backups attention");
+                new MessageDialog(DialogPicture.warn, Lang.UnsafeAction, Lang.ItWillDeleteThisBackp, (Dial) =>
                 {
-                    Logger.Add("Delete blueprint backups");
-                    if (Directory.Exists(CurrentBlueprint?.Patch + "\\Backups")) 
-                        Directory.Delete(CurrentBlueprint.Patch + "\\Backups", true);
-                    BlueList_SelectionChanged(null, null);
-                }
-                Lock.Height = 0;
-            }).Show();
+                    if (Dial == DialоgResult.Yes)
+                    {
+                        Logger.Add("Delete blueprint backups");
+                        if (Directory.Exists(CurrentBlueprint?.Patch + "\\Backups"))
+                            Directory.Delete(CurrentBlueprint.Patch + "\\Backups", true);
+                        BlueList_SelectionChanged(null, null);
+                    }
+                    Lock.Height = 0;
+                }).Show();
+            }
+            else
+            {
+                Logger.Add("Try to delete blueprint backups, but blueprint not selected");
+                new MessageDialog(DialogPicture.attention, "Attention", Lang.SelectBlueForDelBack, null, DialogType.Message).Show();
+            }
         }
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             Logger.Add("Clear workshop cache");
-            WorkshopCache.Clear();
+            WorkshopCache.ClearMods();
         }
         private void MenuItem_Click_4(object sender, RoutedEventArgs e)
         {
@@ -589,5 +618,12 @@ namespace BlueprintEditor2
             new MessageDialog(DialogPicture.attention, "InDev", "This features in development, please wait for new version!", null, DialogType.Message).Show();
         }
 
+        private void PrefabButton_Click(object sender, RoutedEventArgs e)
+        {
+            new MessageDialog(DialogPicture.attention, "Experemental", "This experemental function, your prefab in file PrefabTest.xml.", (x) => {
+                File.WriteAllText("PrefabTest.xml", CurrentBlueprint.ConvertToPrefab());
+            },DialogType.Message).Show();
+            
+        }
     }
 }
