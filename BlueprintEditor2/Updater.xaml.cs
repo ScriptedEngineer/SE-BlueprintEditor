@@ -32,6 +32,8 @@ namespace BlueprintEditor2
             InitializeComponent();
             MyExtensions.AsyncWorker(() =>
             {
+                DownloadProg();
+                /*
                 if (MySettings.Current.LangCultureID == 9)
                 {
                     DownloadProg();
@@ -73,7 +75,7 @@ namespace BlueprintEditor2
                     {
                         DownloadProg();
                     }
-                }
+                }*/
             });
         }
         public void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -125,20 +127,11 @@ namespace BlueprintEditor2
             Application.Current.Shutdown();
         }
 
-
-        private void DownloadLang()
-        {
-            Status.Content = Resource.Lang.DownNewVer;
-            WebClient web = new WebClient();
-            web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe");
-            web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
-            web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
-        }
         private void DownloadProg()
         {
             Status.Content = Resource.Lang.DownNewVer;
             WebClient web = new WebClient();
-            web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe");
+            web.DownloadFileAsync(new Uri(downUrl), "SE-BlueprintEditor.exe.upd");
             web.DownloadProgressChanged += new DownloadProgressChangedEventHandler(DownloadProgressChanged2);
             web.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadFileCompleted2);
         }

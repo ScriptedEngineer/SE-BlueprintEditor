@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlueprintEditor2.Resource;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -87,9 +88,16 @@ namespace BlueprintEditor2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MyExtensions.CloseAllWindows();
-            File.Copy(MyExtensions.AppFile, "Updater.exe", true);
+            //File.Copy(MyExtensions.AppFile, "Updater.exe", true);
             File.WriteAllText("upd",UpdateLink);
-            Process.Start("Updater.exe");
+            //Process.Start("cmd", "/c start Updater.exe");
+            if(File.Exists("Updater.exe"))
+                Process.Start("Updater.exe");
+            else
+            {
+                new MessageDialog(DialogPicture.attention, "Attention", "File Updater.exe not found", null, DialogType.Message).Show();
+                return;
+            }
             Application.Current.Shutdown();
             //new Updater(UpdateLink).Show();
         }

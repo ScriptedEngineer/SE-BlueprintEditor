@@ -33,16 +33,6 @@ namespace BlueprintEditor2
             System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
 #endif
             MySettings.Deserialize();
-            if (Path.GetFileName(MyExtensions.AppFile) == "Updater.exe")
-            {
-                while (Process.GetProcessesByName("SE-BlueprintEditor.exe").Length > 0)
-                    Thread.Sleep(100);
-                string updlink = File.ReadAllText("upd");
-                new Updater(updlink).Show();
-                File.Delete("upd");
-                Hide();
-                return;
-            }
             MySettings.Current.ApplySettings();
             window = this;
             string[] args = Environment.GetCommandLineArgs();
@@ -62,13 +52,16 @@ namespace BlueprintEditor2
             Logger.Add("Startup"); 
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
             if (File.Exists("upd.bat")) File.Delete("upd.bat");
-            try
+            if (File.Exists("Updater.exe"))
             {
-                if (File.Exists("Updater.exe")) File.Delete("Updater.exe");
-            }
-            catch
-            {
-
+                try
+                {
+                    File.Delete("Updater.exe");
+                }
+                catch 
+                {
+                    
+                }
             }
             /*if (File.Exists("lang.txt"))
                 try
@@ -120,9 +113,14 @@ namespace BlueprintEditor2
                 string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
                 if (Vers.Length == 3) {
                     if (Vers[0] == "0")
-                    {
+                    { 
                         Logger.Add("Update found");
                         MyExtensions.AsyncWorker(() => new UpdateAvailable(Vers[2], Vers[1]).Show());
+                        if (!File.Exists("Updater.exe"))
+                        {
+                            WebClient web = new WebClient();
+                            web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/Updater.exe"), "Updater.exe");
+                        }
                     }
                     else
                     {
