@@ -62,7 +62,14 @@ namespace BlueprintEditor2
             Logger.Add("Startup"); 
             if (File.Exists("update.vbs")) File.Delete("update.vbs");
             if (File.Exists("upd.bat")) File.Delete("upd.bat");
-            if (File.Exists("Updater.exe")) File.Delete("Updater.exe");
+            try
+            {
+                if (File.Exists("Updater.exe")) File.Delete("Updater.exe");
+            }
+            catch
+            {
+
+            }
             /*if (File.Exists("lang.txt"))
                 try
                 {
