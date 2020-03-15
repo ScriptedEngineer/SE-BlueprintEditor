@@ -64,7 +64,7 @@ namespace BlueprintEditor2
         public static string[] GetModsForCalculator()
         {
             string ModFolder = MySettings.Current.SteamWorkshopPatch;
-            if (string.IsNullOrEmpty(ModFolder))
+            if (string.IsNullOrEmpty(ModFolder) || !Directory.Exists(ModFolder))
                 return new string[0];
             List<string> Mods = new List<string>();
             foreach (var fld in Directory.GetDirectories(ModFolder))

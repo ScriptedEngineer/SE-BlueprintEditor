@@ -35,20 +35,26 @@ namespace BlueprintEditor2
                     }
                 }
                 //Mods
-                foreach (string mod in WorkshopCache.GetModsForCalculator())
+                try
                 {
-                    //Console.WriteLine(mod);
-                    foreach (var x in Directory.GetFiles(mod + @"\Data", "*.*", SearchOption.AllDirectories)
-                                        .Where(s => s.EndsWith(".sbc")))
+                    foreach (string mod in WorkshopCache.GetModsForCalculator())
                     {
-                        XmlDocument File = new XmlDocument();
-                        File.Load(x);
-                        AddBlocksInfo(x, File, true);
-                        AddRecipiesInfo(x, File, true);
-                        AddNames(x, File);
+                        //Console.WriteLine(mod);
+                        foreach (var x in Directory.GetFiles(mod + @"\Data", "*.*", SearchOption.AllDirectories)
+                                            .Where(s => s.EndsWith(".sbc")))
+                        {
+                            XmlDocument File = new XmlDocument();
+                            File.Load(x);
+                            AddBlocksInfo(x, File, true);
+                            AddRecipiesInfo(x, File, true);
+                            AddNames(x, File);
+                        }
                     }
                 }
-                IsInitialized = true;
+                finally
+                {
+                    IsInitialized = true;
+                }
             }
         }
         private static void AddBlocksInfo(string file, XmlDocument File = null, bool mods = false)
