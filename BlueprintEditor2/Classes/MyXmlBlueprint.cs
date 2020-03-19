@@ -23,16 +23,56 @@ namespace BlueprintEditor2
         public MyXmlGrid[] Grids;
         public string Name
         {
-            get => BlueprintXml.GetElementsByTagName("Id").Item(0).Attributes["Subtype"].Value;
-            set => BlueprintXml.GetElementsByTagName("Id").Item(0).Attributes["Subtype"].Value = value;
+            get
+            {
+                try
+                {
+                    return BlueprintXml.GetElementsByTagName("Id")?.Item(0).Attributes["Subtype"].Value;
+                }
+                catch
+                {
+                    return "ERROR";
+                }
+            }
+            set
+            {
+                try
+                {
+                    BlueprintXml.GetElementsByTagName("Id").Item(0).Attributes["Subtype"].Value = value;
+                }
+                catch
+                {
+                    Logger.Add("Name write error");
+                }
+            }
         }
         public string DisplayName
         {
-            get => BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
+            get
+            {
+                try
+                {
+                   return BlueprintXml.GetElementsByTagName("DisplayName").Item(0).InnerText;
+                }
+                catch
+                {
+                    return "ERROR";
+                }
+            }
         }
         public string Owner
         {
-            get => BlueprintXml.GetElementsByTagName("OwnerSteamId").Item(0).InnerText;
+            get
+            {
+                try
+                {
+                    return BlueprintXml.GetElementsByTagName("OwnerSteamId").Item(0).InnerText;
+                }
+                catch
+                {
+                    return "ERROR";
+                }
+            }
         }
         public MyXmlBlueprint(string patch)
         {

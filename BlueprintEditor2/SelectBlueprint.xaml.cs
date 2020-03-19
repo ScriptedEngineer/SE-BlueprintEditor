@@ -178,7 +178,7 @@ namespace BlueprintEditor2
                 BackupButton.IsEnabled = Directory.Exists(CurrentBlueprint.Patch + "/Backups");
                 foreach (string file in Directory.GetFiles(CurrentBlueprint.Patch, "bp.sbc*", SearchOption.TopDirectoryOnly))
                 {
-                    if (Path.GetFileName(file) != "bp.sbc") File.Delete(file);
+                    if (File.Exists(file) && Path.GetFileName(file) != "bp.sbc") File.Delete(file);
                 }
                 if (MySettings.Current.DontOpenBlueprintsOnScan)
                 {
