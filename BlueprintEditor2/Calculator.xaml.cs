@@ -63,7 +63,7 @@ namespace BlueprintEditor2
                 {
                     if (Mods.ContainsKey(lol[0]))
                     {
-                        bool.TryParse(lol[1],out bool lod);
+                        bool.TryParse(lol[1], out bool lod);
                         Mods[lol[0]].Enabled = lod;
                     }
                 }
@@ -74,6 +74,7 @@ namespace BlueprintEditor2
                 calc = new MyResourceCalculator();
                 if (calc != null)
                 {
+                    calc.ModReEnable(Mods);
                     foreach (MyXmlGrid Gr in Blueprint.Grids)
                     {
                         foreach (MyXmlBlock Bl in Gr.Blocks)
@@ -112,7 +113,7 @@ namespace BlueprintEditor2
             }).Start();
         }
 
-        private void Calculate()
+        private void Calculate(bool showWarn = false)
         {
             bool modse = WithMods.IsChecked.Value;
             bool ofbks = OnlyForBuild.IsChecked.Value;
@@ -146,7 +147,7 @@ namespace BlueprintEditor2
                         Preloader.Visibility = Visibility.Hidden;
                         Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor";
                         string undef = calc.GetUndefined();
-                        if (!string.IsNullOrEmpty(undef))
+                        if (!string.IsNullOrEmpty(undef) && showWarn)
                         {
                             Logger.Add("Undefined types message show");
                             new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
@@ -246,6 +247,7 @@ namespace BlueprintEditor2
                 if(x.Enabled)
                     Modsss += x.ID+" - "+x.Name + "\r\n";
             }
+            string undef = calc.GetUndefined();
             string[] hh = Lang.StoneAmount.Split('(');
             Clipboard.SetText("SE BlueprintEditor - Calculator\r\n"+
                 Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n\r\n" +
@@ -258,6 +260,8 @@ namespace BlueprintEditor2
                 (OffStone.IsChecked.Value? "\r\n" : hh[0].Trim(' ') + ": "+ StoneAmountText.Text+ hh[1].Trim(' ',')') + "\r\n\r\n") +
 
                 (WithMods.IsChecked.Value? Lang.WithMods + ":\r\n"+ Modsss + "\r\n" : "") +
+
+                (string.IsNullOrEmpty(undef)?"": Lang.UndefinedTypesExists+ "\r\n" + undef+ "\r\n")+
 
                 (OnlyForBuild.IsChecked.Value? 
                 Lang.OnlyForBuild + "\r\n" +
@@ -338,7 +342,7 @@ namespace BlueprintEditor2
         {
             Preloader.Visibility = Visibility.Visible;
             Title = "[" + EdBlueprint.Patch.Split('\\').Last() + "] Calculator - SE BlueprintEditor Loading...";
-            Calculate();
+            Calculate(true);
         }
 
         private void OnlyForBuild_Click(object sender, RoutedEventArgs e)
