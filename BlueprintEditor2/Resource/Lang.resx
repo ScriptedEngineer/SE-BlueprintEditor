@@ -442,6 +442,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="OnlyArmor" xml:space="preserve">
     <value>Only armor</value>
   </data>
+  <data name="OnlyForBuild" xml:space="preserve">
+    <value>Only for building</value>
+  </data>
   <data name="OnlyPro" xml:space="preserve">
     <value>If you are an usual user, not to climb here, and press cancel!</value>
   </data>

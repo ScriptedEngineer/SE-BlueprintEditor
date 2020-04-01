@@ -442,6 +442,9 @@
   <data name="OnlyArmor" xml:space="preserve">
     <value>Только броня</value>
   </data>
+  <data name="OnlyForBuild" xml:space="preserve">
+    <value>Только для постройки</value>
+  </data>
   <data name="OnlyPro" xml:space="preserve">
     <value>Если вы обычный пользователь, то не лезьте сюда, а нажмите кнопку отмена!</value>
   </data>

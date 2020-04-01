@@ -1022,6 +1022,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Only for building.
+        /// </summary>
+        public static string OnlyForBuild {
+            get {
+                return ResourceManager.GetString("OnlyForBuild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на If you are an usual user, not to climb here, and press cancel!.
         /// </summary>
         public static string OnlyPro {

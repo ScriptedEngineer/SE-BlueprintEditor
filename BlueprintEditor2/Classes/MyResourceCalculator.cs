@@ -18,6 +18,7 @@ namespace BlueprintEditor2
         public bool Mods = true;
         public bool OffStone = false;
 
+        Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
         Dictionary<string, double> Requared = new Dictionary<string, double>();
         List<string> UndefinedTypes = new List<string>();
         public MyResourceCalculator()
@@ -30,6 +31,7 @@ namespace BlueprintEditor2
         public void Clear()
         {
             Requared.Clear();
+            RequaredBuidComp.Clear();
             UndefinedTypes = new List<string>();
             SelfStoneAmount = 0;
         }
@@ -68,6 +70,23 @@ namespace BlueprintEditor2
             return Oute;
         }
 
+        public List<MyResourceInfo> GetBuildComponents()
+        {
+            List<MyResourceInfo> outer = new List<MyResourceInfo>();
+            foreach (var x in RequaredBuidComp.Where(x => x.Key.StartsWith("Component/")))
+            {
+                string ressng = Lang.ResourceManager.GetString(x.Key);
+                if (string.IsNullOrEmpty(ressng))
+                {
+                    if (MyGameData.Names.ContainsKey(x.Key))
+                        ressng = MyGameData.Names[x.Key];
+                    else
+                        ressng = x.Key.Replace("Component/", "");
+                }
+                outer.Add(new MyResourceInfo(ressng, (int)x.Value));
+            }
+            return outer;
+        }
         public List<MyResourceInfo> GetComponents()
         {
             List<MyResourceInfo> outer = new List<MyResourceInfo>();
@@ -154,6 +173,14 @@ namespace BlueprintEditor2
                     else
                     {
                         Requared.Add(x.Key, x.Value);
+                    }
+                    if (RequaredBuidComp.ContainsKey(x.Key))
+                    {
+                        RequaredBuidComp[x.Key] += x.Value;
+                    }
+                    else
+                    {
+                        RequaredBuidComp.Add(x.Key, x.Value);
                     }
                 }
             else if (!UndefinedTypes.Contains(block.DisplayType))
