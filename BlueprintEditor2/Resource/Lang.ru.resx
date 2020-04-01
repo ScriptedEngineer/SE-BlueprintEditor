@@ -255,6 +255,9 @@
   <data name="Component/Thrust" xml:space="preserve">
     <value>Детали ионного ускорителя</value>
   </data>
+  <data name="Component/ZoneChip" xml:space="preserve">
+    <value>Ключ безопастности</value>
+  </data>
   <data name="Components" xml:space="preserve">
     <value>Компоненты</value>
   </data>
@@ -288,7 +291,7 @@
     <value>Удалить все резервные копии всех чертежей в этой папке</value>
   </data>
   <data name="DeleteModCache" xml:space="preserve">
-    <value>Удалить кэш мастерской</value>
+    <value>Удалить моды из кэша мастерской</value>
   </data>
   <data name="DeleteThisBackup" xml:space="preserve">
     <value>Удалить все резервные копии выбранного чертежа</value>
@@ -406,6 +409,9 @@
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
+  </data>
+  <data name="Mods" xml:space="preserve">
+    <value>Моды</value>
   </data>
   <data name="MultiWindow" xml:space="preserve">
     <value>Многооконность</value>

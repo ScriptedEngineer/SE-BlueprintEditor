@@ -41,6 +41,8 @@ namespace BlueprintEditor2
         public string SteamID = "";
         [DataMember(Name = "UserName")]
         public string UserName = "";
+        [DataMember(Name = "ModPriority")]
+        public string ModSwitches = "";
         MySettings()
         {
             if (!File.Exists(FILE_PATH))

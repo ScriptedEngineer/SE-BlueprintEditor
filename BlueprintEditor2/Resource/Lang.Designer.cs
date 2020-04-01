@@ -469,6 +469,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Zone Chip.
+        /// </summary>
+        public static string Component_ZoneChip {
+            get {
+                return ResourceManager.GetString("Component/ZoneChip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Components.
         /// </summary>
         public static string Components {
@@ -561,7 +570,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Delete workshop cache.
+        ///   Ищет локализованную строку, похожую на Delete mods from workshop cache.
         /// </summary>
         public static string DeleteModCache {
             get {
@@ -917,6 +926,15 @@ namespace BlueprintEditor2.Resource {
         public static string Menu {
             get {
                 return ResourceManager.GetString("Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Mods.
+        /// </summary>
+        public static string Mods {
+            get {
+                return ResourceManager.GetString("Mods", resourceCulture);
             }
         }
         

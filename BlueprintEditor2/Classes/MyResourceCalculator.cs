@@ -16,7 +16,11 @@ namespace BlueprintEditor2
         public int AssemblerEffic { get; set; }
         private double SelfStoneAmount;
         public bool Mods = true;
-        public bool OffStone = false;
+        public bool OffStone = true;
+
+        public Dictionary<string, Dictionary<string, int>> ModCubeBlocks = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
+
 
         Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
         Dictionary<string, double> Requared = new Dictionary<string, double>();
@@ -26,6 +30,32 @@ namespace BlueprintEditor2
             StoneAmount = 0;
             YieldEffect = 1;
             AssemblerEffic = 1;
+            ModCubeBlocks.Clear();
+            ModRecipies.Clear();
+            foreach (var x in MyGameData.ModCubeBlocks)
+            {
+                ModCubeBlocks = ModCubeBlocks.Concat(x.Value.Where(n => !ModCubeBlocks.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
+            foreach (var x in MyGameData.ModRecipies)
+            {
+                ModRecipies = ModRecipies.Concat(x.Value.Where(n => !ModRecipies.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
+        }
+
+        public void ModReEnable(Dictionary<string,MyModSwitch> Switches)
+        {
+            ModCubeBlocks.Clear();
+            ModRecipies.Clear();
+            foreach (var x in MyGameData.ModCubeBlocks)
+            {
+                if(Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
+                    ModCubeBlocks = ModCubeBlocks.Concat(x.Value.Where(n => !ModCubeBlocks.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
+            foreach (var x in MyGameData.ModRecipies)
+            {
+                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
+                    ModRecipies = ModRecipies.Concat(x.Value.Where(n => !ModRecipies.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
         }
 
         public void Clear()
@@ -100,6 +130,12 @@ namespace BlueprintEditor2
                     else
                         ressng = x.Key.Replace("Component/", "");
                 }
+                if (ressng.Contains("DisplayName"))
+                {
+                    string essng = ressng.Replace("DisplayName_Item_", "");
+                    ressng = Lang.ResourceManager.GetString("Ingot/" + essng);
+                    if (string.IsNullOrEmpty(ressng)) ressng = essng;
+                }
                 outer.Add(new MyResourceInfo(ressng, (int)x.Value));
             }
             return outer;
@@ -110,12 +146,18 @@ namespace BlueprintEditor2
             foreach (var x in Requared.Where(x => x.Key.StartsWith("Ingot/")))
             {
                 string ressng = Lang.ResourceManager.GetString(x.Key);
-                if (String.IsNullOrEmpty(ressng))
+                if (string.IsNullOrEmpty(ressng))
                 {
                     if (MyGameData.Names.ContainsKey(x.Key))
                         ressng = MyGameData.Names[x.Key];
                     else
                         ressng = x.Key.Replace("Ingot/", "");
+                }
+                if (ressng.Contains("DisplayName"))
+                {
+                    string essng = ressng.Replace("DisplayName_Item_", "");
+                    ressng = Lang.ResourceManager.GetString("Ingot/" + essng);
+                    if (string.IsNullOrEmpty(ressng)) ressng = essng;
                 }
                 outer.Add(new MyResourceInfo(ressng, AddWeightCounters(x.Value)));
             }
@@ -127,12 +169,18 @@ namespace BlueprintEditor2
             foreach (var x in Requared.Where(x =>x.Key.StartsWith("Ore/")))
             {
                 string ressng = Lang.ResourceManager.GetString(x.Key);
-                if (String.IsNullOrEmpty(ressng))
+                if (string.IsNullOrEmpty(ressng))
                 {
                     if (MyGameData.Names.ContainsKey(x.Key))
                         ressng = MyGameData.Names[x.Key];
                     else
                         ressng = x.Key.Replace("Ore/", "");
+                }
+                if (ressng.Contains("DisplayName"))
+                {
+                    string essng = ressng.Replace("DisplayName_Item_", "");
+                    ressng = Lang.ResourceManager.GetString("Ore/"+essng);
+                    if (string.IsNullOrEmpty(ressng))ressng = essng;
                 }
                 outer.Add(new MyResourceInfo(ressng, AddWeightCounters(x.Value)));
             }
@@ -159,8 +207,8 @@ namespace BlueprintEditor2
         public void AddBlock(MyXmlBlock block)
         {
             Dictionary<string,int> xx = null;
-            if (Mods && MyGameData.ModCubeBlocks.ContainsKey(block.DisplayType))
-                xx = MyGameData.ModCubeBlocks[block.DisplayType];
+            if (Mods && ModCubeBlocks.ContainsKey(block.DisplayType))
+               xx = ModCubeBlocks[block.DisplayType];
             else if (MyGameData.CubeBlocks.ContainsKey(block.DisplayType))
                 xx = MyGameData.CubeBlocks[block.DisplayType];
             if (xx != null)
@@ -200,8 +248,8 @@ namespace BlueprintEditor2
             foreach (var x in (ToRecalce != null?ToRecalce.ToArray() : Requared.Where(x => x.Key.StartsWith("Component/")).ToArray()))
             {
                 Dictionary<string, double> xx = null;
-                if (Mods && MyGameData.ModRecipies.ContainsKey(x.Key))
-                    xx = MyGameData.ModRecipies[x.Key];
+                if (Mods && ModRecipies.ContainsKey(x.Key))
+                    xx = ModRecipies[x.Key];
                 else if (MyGameData.Recipies.ContainsKey(x.Key))
                     xx = MyGameData.Recipies[x.Key];
                 if (xx != null) {
@@ -274,8 +322,8 @@ namespace BlueprintEditor2
             foreach (var x in requaredIngots)
             {
                 Dictionary<string, double> xx = null;
-                if (Mods && MyGameData.ModRecipies.ContainsKey(x.Key))
-                    xx = MyGameData.ModRecipies[x.Key];
+                if (Mods && ModRecipies.ContainsKey(x.Key))
+                    xx = ModRecipies[x.Key];
                 else if (MyGameData.Recipies.ContainsKey(x.Key))
                     xx = MyGameData.Recipies[x.Key];
                 if (xx != null) {

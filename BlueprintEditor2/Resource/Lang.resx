@@ -255,6 +255,9 @@ Developed by clan "Andromeda"</value>
   <data name="Component/Thrust" xml:space="preserve">
     <value>Thrust</value>
   </data>
+  <data name="Component/ZoneChip" xml:space="preserve">
+    <value>Zone Chip</value>
+  </data>
   <data name="Components" xml:space="preserve">
     <value>Components</value>
   </data>
@@ -288,7 +291,7 @@ If you click the "Do not send" button, we will not be able to fix the problem th
     <value>Delete all backups of all blueprints in this directory</value>
   </data>
   <data name="DeleteModCache" xml:space="preserve">
-    <value>Delete workshop cache</value>
+    <value>Delete mods from workshop cache</value>
   </data>
   <data name="DeleteThisBackup" xml:space="preserve">
     <value>Delete all backups of selected blueprint</value>
@@ -406,6 +409,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
+  </data>
+  <data name="Mods" xml:space="preserve">
+    <value>Mods</value>
   </data>
   <data name="MultiWindow" xml:space="preserve">
     <value>Multi-Window</value>

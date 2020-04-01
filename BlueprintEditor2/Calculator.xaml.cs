@@ -25,6 +25,7 @@ namespace BlueprintEditor2
         MyResourceCalculator calc;
         FileStream _lock;
         MyXmlBlueprint EdBlueprint;
+        Dictionary<string, MyModSwitch> Mods = new Dictionary<string, MyModSwitch>();
         public Calculator(FileStream Lock, MyXmlBlueprint Blueprint)
         {
             _lock = Lock;
@@ -48,6 +49,26 @@ namespace BlueprintEditor2
                     }
                 }
             }
+            
+            foreach (var xe in WorkshopCache.ModNames)
+            {
+                Mods.Add(xe.Key,new MyModSwitch(xe.Value, xe.Key));
+                //ModsList.Items.Add(xe);
+            }
+            string[] swt = MySettings.Current.ModSwitches.Split('\n');
+            foreach (var x in swt)
+            {
+                string[] lol = x.Split(':');
+                if (lol.Length >= 2)
+                {
+                    if (Mods.ContainsKey(lol[0]))
+                    {
+                        bool.TryParse(lol[1],out bool lod);
+                        Mods[lol[0]].Enabled = lod;
+                    }
+                }
+            }
+            ModsList.ItemsSource = Mods.Values;
             new Task(() =>
             {
                 calc = new MyResourceCalculator();
@@ -112,16 +133,13 @@ namespace BlueprintEditor2
                             calc.AddBlock(Bl);
                         }
                     }
-                    if (!ofbks)
-                    {
                         calc.CalculateIngots();
                         calc.CalculateOres();
-                    }
                     MyExtensions.AsyncWorker(() =>
                     {
-                        ComponensList.ItemsSource = ofbks?calc.GetBuildComponents():calc.GetComponents();
-                        IngotsList.ItemsSource = calc.GetIngots();
-                        OresList.ItemsSource = calc.GetOres();
+                        ComponensList.ItemsSource = ofbks ? calc.GetBuildComponents():calc.GetComponents();
+                        IngotsList.ItemsSource = ofbks ? null : calc.GetIngots();
+                        OresList.ItemsSource = ofbks ? null : calc.GetOres();
                         ListSort(ComponensList, "Amount", ListSortDirection.Descending);
                         ListSort(IngotsList);
                         ListSort(OresList);
@@ -222,6 +240,12 @@ namespace BlueprintEditor2
             {
                 Ors += x.Type + ": " + x.Count + "\r\n";
             }
+            string Modsss = "";
+            foreach (MyModSwitch x in ModsList.Items)
+            {
+                if(x.Enabled)
+                    Modsss += x.ID+" - "+x.Name + "\r\n";
+            }
             string[] hh = Lang.StoneAmount.Split('(');
             Clipboard.SetText("SE BlueprintEditor - Calculator\r\n"+
                 Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n\r\n" +
@@ -233,7 +257,7 @@ namespace BlueprintEditor2
 
                 (OffStone.IsChecked.Value? "\r\n" : hh[0].Trim(' ') + ": "+ StoneAmountText.Text+ hh[1].Trim(' ',')') + "\r\n\r\n") +
 
-               (WithMods.IsChecked.Value? Lang.WithMods + "\r\n":"") +
+                (WithMods.IsChecked.Value? Lang.WithMods + ":\r\n"+ Modsss + "\r\n" : "") +
 
                 (OnlyForBuild.IsChecked.Value? 
                 Lang.OnlyForBuild + "\r\n" +
@@ -319,7 +343,37 @@ namespace BlueprintEditor2
 
         private void OnlyForBuild_Click(object sender, RoutedEventArgs e)
         {
+            bool ofbks = OnlyForBuild.IsChecked.Value;
+            ComponensList.ItemsSource = ofbks ? calc.GetBuildComponents() : calc.GetComponents();
+            IngotsList.ItemsSource = ofbks ? null : calc.GetIngots();
+            OresList.ItemsSource = ofbks ? null : calc.GetOres();
+            ListSort(ComponensList, "Amount", ListSortDirection.Descending);
+            ListSort(IngotsList);
+            ListSort(OresList);
+
+        }
+
+        private void CheckBox_Click_1(object sender, RoutedEventArgs e)
+        {
+            CheckBox Sender = sender as CheckBox;
+            string id = Sender.CommandParameter.ToString();
+            if (Mods.ContainsKey(id))
+            {
+                Mods[id].Enabled = Sender.IsChecked.Value;
+            }
+            calc.ModReEnable(Mods);
             Calculate();
+            SaveSvitches();
+        }
+        private void SaveSvitches()
+        {
+            StringBuilder Switches = new StringBuilder();
+            Switches.Append("\n");
+            foreach (var x in Mods)
+            {
+                Switches.Append(x.Key).Append(":").Append(x.Value.Enabled.ToString()).Append("\n");
+            }
+            MySettings.Current.ModSwitches = Switches.ToString();
         }
     }
 }

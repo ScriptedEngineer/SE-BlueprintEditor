@@ -116,6 +116,7 @@
     <Compile Include="Classes\MyExtensions.cs" />
     <Compile Include="Classes\MyDisplayBlueprint.cs" />
     <Compile Include="Classes\MyGameData.cs" />
+    <Compile Include="Classes\MyModSwitch.cs" />
     <Compile Include="Classes\MyResourceCalculator.cs" />
     <Compile Include="Classes\MySettings.cs" />
     <Compile Include="Classes\MyWorld.cs" />

@@ -14,6 +14,7 @@ using MColor = System.Windows.Media.Color;
 using DColor = System.Drawing.Color;
 using System.Security.Cryptography;
 using System.IO;
+using System.Net;
 
 namespace BlueprintEditor2
 {
@@ -81,6 +82,25 @@ namespace BlueprintEditor2
                     return Encoding.Default.GetString(md5.ComputeHash(stream));
                 }
             }
+        }
+        public static string PostReq(string url, string postData)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(url);
+
+            var data = Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            return new StreamReader(response.GetResponseStream()).ReadToEnd();
         }
     }
     public static class SE_ColorConverter

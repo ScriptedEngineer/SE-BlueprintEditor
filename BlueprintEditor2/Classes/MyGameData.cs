@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Threading;
 
 namespace BlueprintEditor2
 {
     static class MyGameData
     {
         public static Dictionary<string, Dictionary<string, int>> CubeBlocks = new Dictionary<string, Dictionary<string, int>>();
-        public static Dictionary<string, Dictionary<string, int>> ModCubeBlocks = new Dictionary<string, Dictionary<string, int>>();
+        public static Dictionary<string, Dictionary<string, Dictionary<string, int>>> ModCubeBlocks = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
         public static Dictionary<string, Dictionary<string, double>> Recipies = new Dictionary<string, Dictionary<string, double>>();
-        public static Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
+        public static Dictionary<string, Dictionary<string, Dictionary<string, double>>> ModRecipies = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
         public static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
         public static bool IsInitialized = false;
@@ -39,15 +42,18 @@ namespace BlueprintEditor2
                 {
                     foreach (string mod in WorkshopCache.GetModsForCalculator())
                     {
-                        //Console.WriteLine(mod);
-                        foreach (var x in Directory.GetFiles(mod + @"\Data", "*.*", SearchOption.AllDirectories)
-                                            .Where(s => s.EndsWith(".sbc")))
+                        foreach (var x in Directory.GetFiles(mod + @"\Data", "*.sbc", SearchOption.AllDirectories))
                         {
-                            XmlDocument File = new XmlDocument();
-                            File.Load(x);
-                            AddBlocksInfo(x, File, true);
-                            AddRecipiesInfo(x, File, true);
-                            AddNames(x, File);
+                            string modid = Path.GetFileName(mod);
+                            //Console.WriteLine(x);
+                            try
+                            {
+                                XmlDocument File = new XmlDocument();
+                                File.Load(x);
+                                AddBlocksInfo(x, File, true, modid);
+                                AddRecipiesInfo(x, File, true, modid);
+                                AddNames(x, File);
+                            }catch { }
                         }
                     }
                 }
@@ -57,7 +63,7 @@ namespace BlueprintEditor2
                 }
             }
         }
-        private static void AddBlocksInfo(string file, XmlDocument File = null, bool mods = false)
+        private static void AddBlocksInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
         {
             if (File == null)
             {
@@ -107,10 +113,14 @@ namespace BlueprintEditor2
                 name = name.Replace("MyObjectBuilder_", "");
                 if (mods)
                 {
-                    if (ModCubeBlocks.ContainsKey(name))
-                        ModCubeBlocks[name] = components;
-                    else
-                        ModCubeBlocks.Add(name, components);
+                    if (ModCubeBlocks.ContainsKey(modid))
+                    {
+                        if (ModCubeBlocks[modid].ContainsKey(name))
+                            ModCubeBlocks[modid][name] = components;
+                        else
+                            ModCubeBlocks[modid].Add(name, components);
+                    }else
+                        ModCubeBlocks.Add(modid, new Dictionary<string, Dictionary<string, int>>() { [name]=components });
                 }
                 else
                 {
@@ -121,7 +131,7 @@ namespace BlueprintEditor2
                 }
             }
         }
-        private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false)
+        private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
         {
             if (File == null)
             {
@@ -220,16 +230,22 @@ namespace BlueprintEditor2
                             {
                                 requared.Add(key, requares[key] / d.Value);
                             }
-                            if (requares.First().Key.EndsWith("/Scrap"))
+                            if (requares.First().Key.EndsWith("/Scrap") || 
+                                requared.ContainsKey(d.Key) ||
+                                requared.ContainsKey("Ore/Ice"))
                             {
                                 continue;
                             }
                             if (mods)
                             {
-                                if (!ModRecipies.ContainsKey(d.Key))
-                                    ModRecipies.Add(d.Key, requared);
-                                else if(!requared.ContainsKey("Ore/Ice"))
-                                    ModRecipies[d.Key] = requared;
+                                if (ModRecipies.ContainsKey(modid))
+                                {
+                                    if (!ModRecipies[modid].ContainsKey(d.Key))
+                                        ModRecipies[modid].Add(d.Key, requared);
+                                    else
+                                        ModRecipies[modid][d.Key] = requared;
+                                }else
+                                    ModRecipies.Add(modid, new Dictionary<string, Dictionary<string, double>>() { [d.Key] = requared });
                             }
                             else
                             {
@@ -237,7 +253,6 @@ namespace BlueprintEditor2
                                     Recipies.Add(d.Key, requared);
                                 else if(requared.Count != 0 && d.Key != "Ingot/Stone")
                                     Recipies[d.Key] = requared;
-                                    
                             }
                         }
                         break;
