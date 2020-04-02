@@ -487,6 +487,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Convert from clipboard.
+        /// </summary>
+        public static string ConvertFromClipboard {
+            get {
+                return ResourceManager.GetString("ConvertFromClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Convert to clipboard.
+        /// </summary>
+        public static string ConvertToClipboard {
+            get {
+                return ResourceManager.GetString("ConvertToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Copy blueprints from workshop cache.
         /// </summary>
         public static string CopyBlueprintsFromWorkshop {
@@ -525,6 +543,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create pattern.
+        /// </summary>
+        public static string CreatePattern {
+            get {
+                return ResourceManager.GetString("CreatePattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Create world.
         /// </summary>
         public static string CreateWorld {
@@ -543,11 +570,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Current.
+        /// </summary>
+        public static string Current {
+            get {
+                return ResourceManager.GetString("Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Current version.
         /// </summary>
         public static string CurrentVer {
             get {
                 return ResourceManager.GetString("CurrentVer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Custom data.
+        /// </summary>
+        public static string CustomData {
+            get {
+                return ResourceManager.GetString("CustomData", resourceCulture);
             }
         }
         
@@ -606,6 +651,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Dithering.
+        /// </summary>
+        public static string Dithering {
+            get {
+                return ResourceManager.GetString("Dithering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Don&apos;t open blueprints when scanning.
         /// </summary>
         public static string DontOpenAllBlue {
@@ -647,6 +701,15 @@ namespace BlueprintEditor2.Resource {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter pattern name.
+        /// </summary>
+        public static string EnterPatternName {
+            get {
+                return ResourceManager.GetString("EnterPatternName", resourceCulture);
             }
         }
         
@@ -746,6 +809,24 @@ namespace BlueprintEditor2.Resource {
         public static string HideTerminal {
             get {
                 return ResourceManager.GetString("HideTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на LCD image converter (Monospace).
+        /// </summary>
+        public static string ImageConverter {
+            get {
+                return ResourceManager.GetString("ImageConverter", resourceCulture);
             }
         }
         
@@ -921,6 +1002,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Maintain aspect ratio.
+        /// </summary>
+        public static string MaintainAspectRatio {
+            get {
+                return ResourceManager.GetString("MaintainAspectRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Menu.
         /// </summary>
         public static string Menu {
@@ -935,6 +1025,15 @@ namespace BlueprintEditor2.Resource {
         public static string Mods {
             get {
                 return ResourceManager.GetString("Mods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Monospace.
+        /// </summary>
+        public static string Monospace {
+            get {
+                return ResourceManager.GetString("Monospace", resourceCulture);
             }
         }
         
@@ -1004,6 +1103,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Normal.
+        /// </summary>
+        public static string Normal {
+            get {
+                return ResourceManager.GetString("Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Normalize thumbnail (fix transparency).
         /// </summary>
         public static string Normalize {
@@ -1063,6 +1171,15 @@ namespace BlueprintEditor2.Resource {
         public static string OnlyTerminal {
             get {
                 return ResourceManager.GetString("OnlyTerminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Open picture.
+        /// </summary>
+        public static string OpenPic {
+            get {
+                return ResourceManager.GetString("OpenPic", resourceCulture);
             }
         }
         
@@ -1171,6 +1288,15 @@ namespace BlueprintEditor2.Resource {
         public static string Owner {
             get {
                 return ResourceManager.GetString("Owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Picture.
+        /// </summary>
+        public static string Picture {
+            get {
+                return ResourceManager.GetString("Picture", resourceCulture);
             }
         }
         
@@ -1292,11 +1418,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Save and сlose.
         /// </summary>
         public static string SaveClose {
             get {
                 return ResourceManager.GetString("SaveClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save picture.
+        /// </summary>
+        public static string SavePic {
+            get {
+                return ResourceManager.GetString("SavePic", resourceCulture);
             }
         }
         
@@ -1466,6 +1610,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Text.
+        /// </summary>
+        public static string Text {
+            get {
+                return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tools.
         /// </summary>
         public static string Tools {
@@ -1579,6 +1732,15 @@ namespace BlueprintEditor2.Resource {
         public static string WhoAreYou {
             get {
                 return ResourceManager.GetString("WhoAreYou", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Wide.
+        /// </summary>
+        public static string Wide {
+            get {
+                return ResourceManager.GetString("Wide", resourceCulture);
             }
         }
         

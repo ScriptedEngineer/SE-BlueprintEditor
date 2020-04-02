@@ -16,6 +16,8 @@ namespace BlueprintEditor2
         private readonly XmlNode _ColorMaskNode;
         private readonly XmlNode _ShareModeNode;
         private readonly XmlNode _MinPosNode;
+        private readonly XmlNode _CustomDataNode;
+        private readonly XmlNode _PublicTextNode;
         private List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
 
         public string Type
@@ -136,7 +138,22 @@ namespace BlueprintEditor2
             }
         }
         public bool IsArmor { get; }
-
+        public string CustomData 
+        {
+            get => _CustomDataNode?.InnerText;
+            set
+            {
+                if (_CustomDataNode != null) _CustomDataNode.InnerText = value;
+            }
+        }
+        public string PublicText
+        {
+            get => _PublicTextNode?.InnerText;
+            set
+            {
+                if (_PublicTextNode != null) _PublicTextNode.InnerText = value;
+            }
+        }
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -159,6 +176,20 @@ namespace BlueprintEditor2
                         break;
                     case "Min":
                         _MinPosNode = child;
+                        break;
+                    case "ComponentContainer":
+                        foreach (XmlNode node in child.FirstChild.ChildNodes)
+                        {
+                            switch (node.FirstChild.InnerText)
+                            {
+                                case "MyModStorageComponent":
+                                    _CustomDataNode = node.LastChild.LastChild.LastChild.LastChild.LastChild;
+                                    break;
+                            }
+                        }
+                        break;
+                    case "PublicDescription":
+                        _PublicTextNode = child;
                         break;
                     default:
                         _Properties.Add(new MyBlockProperty(child));

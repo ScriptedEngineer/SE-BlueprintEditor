@@ -199,6 +199,7 @@ namespace BlueprintEditor2
                     ShareBox.IsEnabled = false;
                     ShareBox.SelectedIndex = -1;
                 }
+                SetSpecials(MasterBlock);
             }
             else
             {
@@ -208,6 +209,7 @@ namespace BlueprintEditor2
                 SetTextBox(BlockNameBox, null);
                 SetTextBox(BlockTypeBox, null);
                 SetTextBox(BlockSubtypeBox, null);
+                SetSpecials(null);
                 BlockColorBox.Fill = new SolidColorBrush(Colors.White);
                 BlockColorBox.IsEnabled = false;
             }
@@ -255,6 +257,32 @@ namespace BlueprintEditor2
             {
                 Box.Text = "";
                 Box.IsEnabled = false;
+            }
+        }
+        private void SetSpecials(MyXmlBlockEqualer MasterBlock)
+        {
+            Specials.SelectedIndex = 0;
+            Specials.IsEnabled = false;
+            (Specials.Items[1] as TabItem).Visibility = Visibility.Collapsed;
+            (Specials.Items[2] as TabItem).Visibility = Visibility.Collapsed;
+            if (MasterBlock != null)
+            {
+                if (MasterBlock.PublicText != null)
+                {
+                    Specials.SelectedIndex = 2;
+                    Specials.IsEnabled = true;
+                    (Specials.Items[2] as TabItem).Visibility = Visibility.Visible;
+                    PannelText.Text = MasterBlock.PublicText;
+                }
+                if (MasterBlock.CustomData != null)
+                {
+                    Specials.SelectedIndex = 1;
+                    Specials.IsEnabled = true;
+                    (Specials.Items[1] as TabItem).Visibility = Visibility.Visible;
+                    CustomData.Text = MasterBlock.CustomData;
+                }
+
+
             }
         }
 
@@ -547,6 +575,24 @@ namespace BlueprintEditor2
                     GridColorReplace.Text = $"#{argb.Substring(2)}";
                     GridColorReplace.CaretIndex = GridColorReplace.Text.Length;
                 }
+            }
+        }
+
+        private void CustomData_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (CustomData.Text == "" || CustomData.Text == "-") return;
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                SelectedBlk.CustomData = CustomData.Text;
+            }
+        }
+
+        private void PannelText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (PannelText.Text == "" || PannelText.Text == "-") return;
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                SelectedBlk.PublicText = PannelText.Text;
             }
         }
     }

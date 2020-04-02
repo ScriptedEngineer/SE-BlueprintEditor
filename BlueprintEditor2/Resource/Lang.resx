@@ -261,6 +261,12 @@ Developed by clan "Andromeda"</value>
   <data name="Components" xml:space="preserve">
     <value>Components</value>
   </data>
+  <data name="ConvertFromClipboard" xml:space="preserve">
+    <value>Convert from clipboard</value>
+  </data>
+  <data name="ConvertToClipboard" xml:space="preserve">
+    <value>Convert to clipboard</value>
+  </data>
   <data name="CopyBlueprintsFromWorkshop" xml:space="preserve">
     <value>Copy blueprints from workshop cache</value>
   </data>
@@ -275,14 +281,23 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="Created" xml:space="preserve">
     <value>Created</value>
   </data>
+  <data name="CreatePattern" xml:space="preserve">
+    <value>Create pattern</value>
+  </data>
   <data name="CreateWorld" xml:space="preserve">
     <value>Create world</value>
   </data>
   <data name="CreateWorldWithMods" xml:space="preserve">
     <value>Create world with mods from workshop cache</value>
   </data>
+  <data name="Current" xml:space="preserve">
+    <value>Current</value>
+  </data>
   <data name="CurrentVer" xml:space="preserve">
     <value>Current version</value>
+  </data>
+  <data name="CustomData" xml:space="preserve">
+    <value>Custom data</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -302,6 +317,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="Directories" xml:space="preserve">
     <value>Directories</value>
   </data>
+  <data name="Dithering" xml:space="preserve">
+    <value>Dithering</value>
+  </data>
   <data name="DontOpenAllBlue" xml:space="preserve">
     <value>Don't open blueprints when scanning</value>
   </data>
@@ -316,6 +334,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EnterPatternName" xml:space="preserve">
+    <value>Enter pattern name</value>
   </data>
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Enter world name! Other settings are edited from the game.</value>
@@ -349,6 +370,12 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="HideTerminal" xml:space="preserve">
     <value>Hide terminal</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageConverter" xml:space="preserve">
+    <value>LCD image converter (Monospace)</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Image files</value>
@@ -407,11 +434,17 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="LightArmor" xml:space="preserve">
     <value>Light armor</value>
   </data>
+  <data name="MaintainAspectRatio" xml:space="preserve">
+    <value>Maintain aspect ratio</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
   <data name="Mods" xml:space="preserve">
     <value>Mods</value>
+  </data>
+  <data name="Monospace" xml:space="preserve">
+    <value>Monospace</value>
   </data>
   <data name="MultiWindow" xml:space="preserve">
     <value>Multi-Window</value>
@@ -436,6 +469,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
 Do you want set a thumbnail?
 Cancel - Don't set default thumbnail</value>
   </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
   <data name="Normalize" xml:space="preserve">
     <value>Normalize thumbnail (fix transparency)</value>
   </data>
@@ -456,6 +492,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="OnlyTerminal" xml:space="preserve">
     <value>Only terminal</value>
+  </data>
+  <data name="OpenPic" xml:space="preserve">
+    <value>Open picture</value>
   </data>
   <data name="Ore/Cobalt" xml:space="preserve">
     <value>3.Cobalt</value>
@@ -492,6 +531,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Author</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Picture</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Settings saved! For apply settings need to restart app,you want to restart the app?</value>
@@ -532,8 +574,14 @@ Cancel - Don't set default thumbnail</value>
   <data name="RunApp" xml:space="preserve">
     <value>Run app</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="SaveClose" xml:space="preserve">
     <value>Save and сlose</value>
+  </data>
+  <data name="SavePic" xml:space="preserve">
+    <value>Save picture</value>
   </data>
   <data name="SavesFolder" xml:space="preserve">
     <value>Saves directory</value>
@@ -592,6 +640,9 @@ Please set this in the settings.</value>
   <data name="SystemLang" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
   </data>
@@ -630,6 +681,9 @@ Please set this in the settings.</value>
   </data>
   <data name="WhoAreYou" xml:space="preserve">
     <value>You contact or just nickname or nothing</value>
+  </data>
+  <data name="Wide" xml:space="preserve">
+    <value>Wide</value>
   </data>
   <data name="WithMods" xml:space="preserve">
     <value>With mods</value>

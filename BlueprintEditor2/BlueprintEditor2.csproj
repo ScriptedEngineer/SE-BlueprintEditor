@@ -111,6 +111,7 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\SEImageConverter.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\MyBlockProperty.cs" />
     <Compile Include="Classes\MyExtensions.cs" />
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="EditBlueprint.xaml.cs">
       <DependentUpon>EditBlueprint.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImageConverter.xaml.cs">
+      <DependentUpon>ImageConverter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Reporter.xaml.cs">
       <DependentUpon>Reporter.xaml</DependentUpon>
@@ -169,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditBlueprint.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImageConverter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,6 +246,7 @@
     <Resource Include="Resource\img_292121.png" />
     <Resource Include="Resource\img_1610640.png" />
     <Resource Include="Resource\img_100000.png" />
+    <Resource Include="Resource\gyZddYCd3a8.jpg" />
     <Content Include="SESave\Sandbox.txt" />
     <Content Include="SESave\SANDBOX_0_0_0_.txt" />
     <Content Include="SESave\Sandbox_config.txt" />

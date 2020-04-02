@@ -137,8 +137,12 @@ namespace BlueprintEditor2
             OldSortBy = FirstSorter;
             if (string.IsNullOrWhiteSpace(MySettings.Current.SteamWorkshopPatch))
             {
-                ToolsMenu.IsEnabled = false;
-                ToolsContext.IsEnabled = false;
+                MenuItem_1_1.IsEnabled = false;
+                MenuItem_2_1.IsEnabled = false;
+                MenuItem_1_2.IsEnabled = false;
+                MenuItem_2_2.IsEnabled = false;
+                MenuItem_1_3.IsEnabled = false;
+                MenuItem_2_3.IsEnabled = false;
             }
             Welcome.Content = Lang.Welcome+" "+MySettings.Current.UserName.Replace("_", "__");
             //MessageBox.Show("Hello "+MySettings.Current.UserName);
@@ -629,6 +633,14 @@ namespace BlueprintEditor2
                 File.WriteAllText("PrefabTest.xml", CurrentBlueprint.ConvertToPrefab());
             },DialogType.Message).Show();
             
+        }
+
+        private void MenuItem_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (ImageConverter.Opened != null)
+                ImageConverter.Opened.Focus();
+            else
+                new ImageConverter().Show();
         }
     }
 }

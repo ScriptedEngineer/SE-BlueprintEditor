@@ -52,19 +52,24 @@
                 <MenuItem.Icon>
                     <Image Source="Resource\img_100000.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
-                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
+                <MenuItem x:Name="MenuItem_2_1" Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
+                <MenuItem x:Name="MenuItem_2_2" Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
+                <MenuItem x:Name="MenuItem_2_3" Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_1610640.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.ImageConverter}" Click="MenuItem_Click_6" >
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
@@ -151,19 +156,24 @@
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click"/>
             <MenuItem x:Name="ToolsMenu" Header="{x:Static res:Lang.Tools}">
-                <MenuItem Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
+                <MenuItem x:Name="MenuItem_1_1" Header="{x:Static res:Lang.CopyBlueprintsFromWorkshop}" Click="MenuItem_Click_5">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_292121.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
+                <MenuItem x:Name="MenuItem_1_2" Header="{x:Static res:Lang.DeleteModCache}" Click="MenuItem_Click_2">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_252744.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
+                <MenuItem x:Name="MenuItem_1_3" Header="{x:Static res:Lang.CreateWorldWithMods}" Click="MenuItem_Click_4">
                     <MenuItem.Icon>
                         <Image Source="Resource\img_1610640.png" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static res:Lang.ImageConverter}" Click="MenuItem_Click_6" >
+                    <MenuItem.Icon>
+                        <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

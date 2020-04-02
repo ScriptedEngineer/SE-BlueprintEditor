@@ -14,6 +14,7 @@ namespace BlueprintEditor2
         public string Type;
         public string Name;
         public string CustomData;
+        public string PublicText;
         public Color Mask;
         public ShareMode? Share;
         public Vector3 Position;
@@ -25,6 +26,8 @@ namespace BlueprintEditor2
             Name = block.Name;
             Mask = block.ColorMask;
             Position = block.Position;
+            CustomData = block.CustomData;
+            PublicText = block.PublicText;
             if (block.ShareMode.HasValue) Share = block.ShareMode;
             foreach (var x in block.Properties)
                 Properties.Add(x);
@@ -34,7 +37,7 @@ namespace BlueprintEditor2
         {
             Position = Vector3.Zero;
             if (block.Type != Type) Type = null;
-            if (block.Name != Name)
+            if (Name != null && block.Name != Name)
                 if (block.Name == null)
                     Name = null;
                 else
@@ -51,6 +54,16 @@ namespace BlueprintEditor2
             }
             else
                 Share = null;
+            if(CustomData != null && block.CustomData != CustomData)
+                if (block.CustomData == null)
+                    CustomData = null;
+                else
+                    CustomData = "-";
+            if (PublicText != null && block.PublicText != PublicText)
+                if (block.PublicText == null)
+                    PublicText = null;
+                else
+                    PublicText = "-";
             List<int> toDelete = new List<int>();
             int counter = 0;
             foreach (MyBlockProperty x in Properties)

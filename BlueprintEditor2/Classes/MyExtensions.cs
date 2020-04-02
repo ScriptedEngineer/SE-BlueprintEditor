@@ -116,19 +116,35 @@ namespace BlueprintEditor2
 
         public static DColor ColorFromSE_HSV(double x, double y, double z)
         {
-            double H, S, V;
-            H = x * 360;
-            S = y + 0.8;
-            V = z + 0.45;
-            return ColorFromHSV(H, Math.Max(Math.Min(S,1),0), Math.Max(Math.Min(V,1),0));
+            try
+            {
+                double H, S, V;
+                H = x * 360;
+                S = y + 0.8;
+                V = z + 0.45;
+                return ColorFromHSV(H, Math.Max(Math.Min(S, 1), 0), Math.Max(Math.Min(V, 1), 0));
+            }
+            catch
+            {
+                return new DColor();
+            }
         }
         public static void ColorToSE_HSV(DColor color, out double x, out double y, out double z)
         {
-            double H, S, V;
-            ColorToHSV(color, out H, out S, out V);
-            x = H / 360;
-            y = S - 0.8;
-            z = V - 0.45;
+            try
+            {
+                double H, S, V;
+                ColorToHSV(color, out H, out S, out V);
+                x = H / 360;
+                y = S - 0.8;
+                z = V - 0.45;
+            }
+            catch
+            {
+                x = 0;
+                y = 0;
+                z = 0;
+            }
         }
 
         #region Ctrl+C Ctrl+V

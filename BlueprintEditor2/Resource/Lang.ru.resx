@@ -261,6 +261,12 @@
   <data name="Components" xml:space="preserve">
     <value>Компоненты</value>
   </data>
+  <data name="ConvertFromClipboard" xml:space="preserve">
+    <value>Конвертировать из буфера</value>
+  </data>
+  <data name="ConvertToClipboard" xml:space="preserve">
+    <value>Конвертировать в буфер</value>
+  </data>
   <data name="CopyBlueprintsFromWorkshop" xml:space="preserve">
     <value>Скопировать чертежи из кэша мастерской</value>
   </data>
@@ -275,14 +281,23 @@
   <data name="Created" xml:space="preserve">
     <value>Создано</value>
   </data>
+  <data name="CreatePattern" xml:space="preserve">
+    <value>Создание шаблона</value>
+  </data>
   <data name="CreateWorld" xml:space="preserve">
     <value>Создать мир</value>
   </data>
   <data name="CreateWorldWithMods" xml:space="preserve">
     <value>Создать мир с модами из кэша мастерской</value>
   </data>
+  <data name="Current" xml:space="preserve">
+    <value>Текущий</value>
+  </data>
   <data name="CurrentVer" xml:space="preserve">
     <value>Текущая версия</value>
+  </data>
+  <data name="CustomData" xml:space="preserve">
+    <value>Свои данные</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
@@ -302,6 +317,9 @@
   <data name="Directories" xml:space="preserve">
     <value>Папки</value>
   </data>
+  <data name="Dithering" xml:space="preserve">
+    <value>Смешение</value>
+  </data>
   <data name="DontOpenAllBlue" xml:space="preserve">
     <value>Не открывать чертежи при сканировании</value>
   </data>
@@ -316,6 +334,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="EnterPatternName" xml:space="preserve">
+    <value>Введите имя шаблона</value>
   </data>
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Введите название мира! Остальные настройки редактируются из игры.</value>
@@ -349,6 +370,12 @@
   </data>
   <data name="HideTerminal" xml:space="preserve">
     <value>Скрыть терминал</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Изображение</value>
+  </data>
+  <data name="ImageConverter" xml:space="preserve">
+    <value>Конвертер изображений для LCD (Monospace)</value>
   </data>
   <data name="ImFiles" xml:space="preserve">
     <value>Файлы изображений</value>
@@ -407,11 +434,17 @@
   <data name="LightArmor" xml:space="preserve">
     <value>Легкая броня</value>
   </data>
+  <data name="MaintainAspectRatio" xml:space="preserve">
+    <value>Сохранять пропорции</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
   </data>
   <data name="Mods" xml:space="preserve">
     <value>Моды</value>
+  </data>
+  <data name="Monospace" xml:space="preserve">
+    <value>Monospace</value>
   </data>
   <data name="MultiWindow" xml:space="preserve">
     <value>Многооконность</value>
@@ -436,6 +469,9 @@
 Вы хотите установить миниатюру? 
 Отмена - Не устанавливать стандартную миниатюру</value>
   </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Нормальная</value>
+  </data>
   <data name="Normalize" xml:space="preserve">
     <value>Нормализовать миниатюру (исправить прозрачность)</value>
   </data>
@@ -456,6 +492,9 @@
   </data>
   <data name="OnlyTerminal" xml:space="preserve">
     <value>Только терминал</value>
+  </data>
+  <data name="OpenPic" xml:space="preserve">
+    <value>Открыть картинку</value>
   </data>
   <data name="Ore/Cobalt" xml:space="preserve">
     <value>3.Кобальт</value>
@@ -492,6 +531,9 @@
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Автор</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Изображение</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение. вы хотите перезагрузить приложение сейчас?</value>
@@ -532,8 +574,14 @@
   <data name="RunApp" xml:space="preserve">
     <value>Запустить приложение</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
   <data name="SaveClose" xml:space="preserve">
     <value>Сохранить и закрыть</value>
+  </data>
+  <data name="SavePic" xml:space="preserve">
+    <value>Сохранить картинку</value>
   </data>
   <data name="SavesFolder" xml:space="preserve">
     <value>Папка сохранений</value>
@@ -591,6 +639,9 @@
   <data name="SystemLang" xml:space="preserve">
     <value>Системный</value>
   </data>
+  <data name="Text" xml:space="preserve">
+    <value>Текст</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Инструменты</value>
   </data>
@@ -629,6 +680,9 @@
   </data>
   <data name="WhoAreYou" xml:space="preserve">
     <value>Контактная информация, или ник, или ничего</value>
+  </data>
+  <data name="Wide" xml:space="preserve">
+    <value>Широкая</value>
   </data>
   <data name="WithMods" xml:space="preserve">
     <value>С модами</value>

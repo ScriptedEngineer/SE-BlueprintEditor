@@ -69,7 +69,8 @@ namespace BlueprintEditor2
                 }
             }
             ModsList.ItemsSource = Mods.Values;
-            new Task(() =>
+            Calculate(true);
+            /*new Task(() =>
             {
                 calc = new MyResourceCalculator();
                 if (calc != null)
@@ -110,7 +111,27 @@ namespace BlueprintEditor2
                         Close();
                     });
                 }
-            }).Start();
+            }).Start();*/
+            UpdatePatterns();
+        }
+
+        private void ApplySwitches(string sw)
+        {
+            string[] swt = sw.Split('\n');
+            foreach (var x in swt)
+            {
+                string[] lol = x.Split(':');
+                if (lol.Length >= 2)
+                {
+                    if (Mods.ContainsKey(lol[0]))
+                    {
+                        bool.TryParse(lol[1], out bool lod);
+                        Mods[lol[0]].Enabled = lod;
+                    }
+                }
+            }
+            ModsList.ItemsSource = null;
+            ModsList.ItemsSource = Mods.Values;
         }
 
         private void Calculate(bool showWarn = false)
@@ -167,6 +188,7 @@ namespace BlueprintEditor2
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            SaveSwitches();
             _lock.Dispose();
             EditBlueprint.OpenCount--;
             if (EditBlueprint.OpenCount == 0)
@@ -359,6 +381,7 @@ namespace BlueprintEditor2
 
         private void CheckBox_Click_1(object sender, RoutedEventArgs e)
         {
+            Patterns.SelectedIndex = 0;
             CheckBox Sender = sender as CheckBox;
             string id = Sender.CommandParameter.ToString();
             if (Mods.ContainsKey(id))
@@ -367,9 +390,15 @@ namespace BlueprintEditor2
             }
             calc.ModReEnable(Mods);
             Calculate();
-            SaveSvitches();
+            SaveSwitches();
         }
-        private void SaveSvitches()
+
+        private void SaveSwitches(bool rew = false)
+        {
+            if(Patterns.SelectedIndex == 0 || rew)
+                MySettings.Current.ModSwitches = GetSwitches();
+        }
+        private string GetSwitches()
         {
             StringBuilder Switches = new StringBuilder();
             Switches.Append("\n");
@@ -377,7 +406,69 @@ namespace BlueprintEditor2
             {
                 Switches.Append(x.Key).Append(":").Append(x.Value.Enabled.ToString()).Append("\n");
             }
-            MySettings.Current.ModSwitches = Switches.ToString();
+            return Switches.ToString();
+        }
+
+        private void UpdatePatterns()
+        {
+            Patterns.Items.Clear();
+            Patterns.Items.Add(Lang.Current);
+            foreach (var x in MySettings.Current.ModSwitchesPatterns)
+            {
+                Patterns.Items.Add(x.Key);
+            }
+            Patterns.SelectedIndex = 0;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new MessageDialog((x) => {
+                if (x != Lang.Current && !string.IsNullOrEmpty(x))
+                {
+                    if (MySettings.Current.ModSwitchesPatterns.Keys.Contains(x))
+                        MySettings.Current.ModSwitchesPatterns[x] = GetSwitches();
+                    else
+                        MySettings.Current.ModSwitchesPatterns.Add(x, GetSwitches());
+                }
+                UpdatePatterns();
+            }, Lang.CreatePattern, Lang.EnterPatternName).Show();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            string key = Patterns.SelectedItem.ToString();
+            if (MySettings.Current.ModSwitchesPatterns.ContainsKey(key))
+            {
+                MySettings.Current.ModSwitchesPatterns.Remove(key);
+            }
+            UpdatePatterns();
+        }
+
+        int oldSelindx = -1;
+        private void Patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (oldSelindx == Patterns.SelectedIndex || Patterns.SelectedIndex == -1) 
+                return;
+            if (oldSelindx == 0)
+                SaveSwitches(true);
+            if(Patterns.SelectedIndex == 0)
+            {
+                ApplySwitches(MySettings.Current.ModSwitches);
+            }
+            else
+            {
+                string key = Patterns.SelectedItem.ToString();
+                if (MySettings.Current.ModSwitchesPatterns.ContainsKey(key))
+                {
+                    ApplySwitches(MySettings.Current.ModSwitchesPatterns[key]);
+                }
+            }
+            oldSelindx = Patterns.SelectedIndex;
+            if (calc != null)
+            {
+                calc.ModReEnable(Mods);
+                Calculate();
+            }
         }
     }
 }
