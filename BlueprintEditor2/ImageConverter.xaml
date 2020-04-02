@@ -12,21 +12,21 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,172,5,0" Stroke="Black" VerticalAlignment="Top"/>
+        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,165,5,0" Stroke="Black" VerticalAlignment="Top"/>
         <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="86" Margin="5,5,5,0" Stroke="Black" VerticalAlignment="Top"/>
-        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,96,5,0" Stroke="Black" VerticalAlignment="Top"/>
+        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,90,5,0" Stroke="Black" VerticalAlignment="Top"/>
         <RadioButton x:Name="NormalSize" Content="{x:Static res:Lang.Normal}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160" IsChecked="True"/>
         <RadioButton x:Name="WideSize" Content="{x:Static res:Lang.Wide}" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
         <CheckBox x:Name="Dithering" Content="{x:Static res:Lang.Dithering}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
-        <Button Content="{x:Static res:Lang.OpenPic}" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click"/>
-        <Button Content="{x:Static res:Lang.ConvertToClipboard}" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_2"/>
-        <Button Content="{x:Static res:Lang.ConvertFromClipboard}" HorizontalAlignment="Left" Margin="10,223,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_3"/>
-        <Button Content="{x:Static res:Lang.SavePic}" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_1"/>
+        <Button Content="{x:Static res:Lang.OpenPic}" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click"/>
+        <Button Content="{x:Static res:Lang.ConvertToClipboard}" HorizontalAlignment="Left" Margin="10,191,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_2"/>
+        <Button Content="{x:Static res:Lang.ConvertFromClipboard}" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_3"/>
+        <Button Content="{x:Static res:Lang.SavePic}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_1"/>
         <Rectangle x:Name="ImgBox" Fill="Black" Margin="5,5,0,5" Stroke="Black" RenderTransformOrigin="0.5,0.5"/>
         <Image x:Name="DitherPic" Margin="5,5,0,5" Source="Resource/gyZddYCd3a8.jpg"/>
         <TextBlock x:Name="LinkBox" Margin="0,0,10,10" VerticalAlignment="Bottom" Foreground="White" Grid.Column="1" FlowDirection="RightToLeft" HorizontalAlignment="Right"><Hyperlink NavigateUri="https://github.com/Whiplash141/Whips-Image-Converter" Click="Hyperlink_Click"><Run Text="More settings"/></Hyperlink></TextBlock>
-        <Label Content="{x:Static res:Lang.Image}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,101,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
-        <Label Content="{x:Static res:Lang.Monospace}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
+        <Label Content="{x:Static res:Lang.Image}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
+        <Label Content="{x:Static res:Lang.Monospace}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
         <CheckBox x:Name="SaveAspect" Content="{x:Static res:Lang.MaintainAspectRatio}" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
     </Grid>
 </Window>

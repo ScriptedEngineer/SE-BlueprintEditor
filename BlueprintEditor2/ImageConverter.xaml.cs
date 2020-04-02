@@ -24,6 +24,7 @@ namespace BlueprintEditor2
     {
         public static ImageConverter Opened;
         string Monospace = "";
+        bool DontNormalize = false;
         public ImageConverter()
         {
             Opened = this;
@@ -35,6 +36,8 @@ namespace BlueprintEditor2
 
         void NormalizeForm()
         {
+            if (DontNormalize)
+                return;
             System.Drawing.Size PicSize;
             double PicAspect = (double)(DitherPic.Source.Width / DitherPic.Source.Height);
             double BoxAspect = (double)(ImgBox.ActualWidth / ImgBox.ActualHeight);
@@ -49,14 +52,16 @@ namespace BlueprintEditor2
             System.Drawing.Size ChangeVec = new System.Drawing.Size((int)ImgBox.ActualWidth, (int)ImgBox.ActualHeight) - PicSize;
             if (Width- ChangeVec.Width > MinWidth && Height - ChangeVec.Height > MinHeight)
             {
-                Width -= ChangeVec.Width;
-                Height -= ChangeVec.Height;
+                Width = (int)Width - ChangeVec.Width;
+                Height = (int)Height - ChangeVec.Height;
             }
             else
             {
-                Width += (int)(ChangeVec.Height * PicAspect);
-                Height += (int)(ChangeVec.Width / PicAspect);
+                Width = (int)Width + (int)(ChangeVec.Height * PicAspect);
+                Height = (int)Height + (int)(ChangeVec.Width / PicAspect);
             }
+            Left = SystemParameters.PrimaryScreenWidth / 2 - (Width / 2);
+            Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
         }
 
         private void Window_Closed(object sender, EventArgs e)
