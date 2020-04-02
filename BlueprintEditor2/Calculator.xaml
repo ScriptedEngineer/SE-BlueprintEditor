@@ -84,7 +84,7 @@
             <ComboBoxItem Content="{x:Static Resource:Lang.Current}"/>
         </ComboBox>
         <Button Content="{x:Static Resource:Lang.Save}" Grid.Column="4" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top" Width="81" Height="22" Click="Button_Click_1"/>
-        <Button Content="{x:Static Resource:Lang.Delete}" Grid.Column="4" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="65" Height="22"/>
+        <Button Content="{x:Static Resource:Lang.Delete}" Grid.Column="4" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="65" Height="22" Click="Button_Click_3"/>
         <Rectangle x:Name="Preloader" Visibility="Collapsed" Fill="#FFF4F4F5" Stroke="Black" Grid.ColumnSpan="5" Grid.RowSpan="3" Opacity="0.505"/>
 
     </Grid>

@@ -434,16 +434,6 @@ namespace BlueprintEditor2
             }, Lang.CreatePattern, Lang.EnterPatternName).Show();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            string key = Patterns.SelectedItem.ToString();
-            if (MySettings.Current.ModSwitchesPatterns.ContainsKey(key))
-            {
-                MySettings.Current.ModSwitchesPatterns.Remove(key);
-            }
-            UpdatePatterns();
-        }
-
         int oldSelindx = -1;
         private void Patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -469,6 +459,16 @@ namespace BlueprintEditor2
                 calc.ModReEnable(Mods);
                 Calculate();
             }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            string key = Patterns.SelectedItem.ToString();
+            if (MySettings.Current.ModSwitchesPatterns.ContainsKey(key))
+            {
+                MySettings.Current.ModSwitchesPatterns.Remove(key);
+            }
+            UpdatePatterns();
         }
     }
 }
