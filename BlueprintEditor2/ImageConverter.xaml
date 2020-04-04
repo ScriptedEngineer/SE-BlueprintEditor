@@ -6,27 +6,47 @@
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         xmlns:local="clr-namespace:BlueprintEditor2"
         mc:Ignorable="d"
-        Title="ImageConverter - SE BlueprintEditor" Height="330" Width="480" MinWidth="480" MinHeight="330" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="ImageConverter - SE BlueprintEditor" Height="272" Width="480" MinWidth="480" MinHeight="330" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition x:Name="BottomRow" Height="0"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="180"/>
         </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,165,5,0" Stroke="Black" VerticalAlignment="Top"/>
-        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="86" Margin="5,5,5,0" Stroke="Black" VerticalAlignment="Top"/>
-        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,90,5,0" Stroke="Black" VerticalAlignment="Top"/>
+        <Rectangle Fill="#FFF4F4F5" Grid.Row="1" Stroke="Black" Margin="-1,0,-1,-1" Grid.ColumnSpan="2"/>
+        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,190,5,0" Stroke="Black" VerticalAlignment="Top"/>
+        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="111" Margin="5,5,5,0" Stroke="Black" VerticalAlignment="Top"/>
+        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Height="76" Margin="5,115,5,0" Stroke="Black" VerticalAlignment="Top"/>
         <RadioButton x:Name="NormalSize" Content="{x:Static res:Lang.Normal}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160" IsChecked="True"/>
         <RadioButton x:Name="WideSize" Content="{x:Static res:Lang.Wide}" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
         <CheckBox x:Name="Dithering" Content="{x:Static res:Lang.Dithering}" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
-        <Button Content="{x:Static res:Lang.OpenPic}" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click"/>
-        <Button Content="{x:Static res:Lang.ConvertToClipboard}" HorizontalAlignment="Left" Margin="10,191,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_2"/>
-        <Button Content="{x:Static res:Lang.ConvertFromClipboard}" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_3"/>
-        <Button Content="{x:Static res:Lang.SavePic}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_1"/>
-        <Rectangle x:Name="ImgBox" Fill="Black" Margin="5,5,0,5" Stroke="Black" RenderTransformOrigin="0.5,0.5"/>
+        <Button Content="{x:Static res:Lang.OpenPic}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click"/>
+        <Button Content="{x:Static res:Lang.ConvertToClipboard}" HorizontalAlignment="Left" Margin="10,216,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_2"/>
+        <Button Content="{x:Static res:Lang.ConvertFromClipboard}" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_3"/>
+        <Button Content="{x:Static res:Lang.SavePic}" HorizontalAlignment="Left" Margin="10,166,0,0" VerticalAlignment="Top" Width="160" Grid.Column="1" Height="20" Click="Button_Click_1"/>
+        <Rectangle x:Name="ImgBox" Fill="#FFAE39F1" Margin="5,5,0,5" Stroke="Black" RenderTransformOrigin="0.5,0.5"/>
         <Image x:Name="DitherPic" Margin="5,5,0,5" Source="Resource/gyZddYCd3a8.jpg"/>
-        <TextBlock x:Name="LinkBox" Margin="0,0,10,10" VerticalAlignment="Bottom" Foreground="White" Grid.Column="1" FlowDirection="RightToLeft" HorizontalAlignment="Right"><Hyperlink NavigateUri="https://github.com/Whiplash141/Whips-Image-Converter" Click="Hyperlink_Click"><Run Text="More settings"/></Hyperlink></TextBlock>
-        <Label Content="{x:Static res:Lang.Image}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
-        <Label Content="{x:Static res:Lang.Monospace}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160"/>
+        <TextBlock x:Name="LinkBox" Margin="0,0,10,1" VerticalAlignment="Bottom" Foreground="White" Grid.Column="1" FlowDirection="RightToLeft" HorizontalAlignment="Right" Height="16" Width="73"><Hyperlink NavigateUri="https://github.com/Whiplash141/Whips-Image-Converter" Click="Hyperlink_Click"><Run Text="More settings"/></Hyperlink></TextBlock>
+        <Label Content="{x:Static res:Lang.Image}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160" Height="16"/>
+        <Label Content="{x:Static res:Lang.Monospace}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Padding="0,0,9,0" Width="160" Height="16"/>
         <CheckBox x:Name="SaveAspect" Content="{x:Static res:Lang.MaintainAspectRatio}" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Grid.Column="1" Height="15" Width="160"/>
+        <CheckBox x:Name="SplitImg" Content="{x:Static res:Lang.SplitImage}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Click="CheckBox_Click"/>
+        <TextBox x:Name="ColumnsIntBox" HorizontalAlignment="Left" Height="23" Margin="70,22,0,0" Grid.Row="1" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="40" TextChanged="IntBox_TextChanged" KeyUp="IntBox_KeyUp"/>
+        <TextBox x:Name="RowsIntBox" HorizontalAlignment="Left" Height="23" Margin="172,22,0,0" Grid.Row="1" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="40" TextChanged="IntBox_TextChanged" KeyUp="IntBox_KeyUp"/>
+        <Label Content="{x:Static res:Lang.Rows}" HorizontalAlignment="Left" Margin="10,19,0,0" Grid.Row="1" VerticalAlignment="Top" Width="55" Height="23" VerticalContentAlignment="Center" Padding="0" HorizontalContentAlignment="Right"/>
+        <Label Content="{x:Static res:Lang.Columns}" Margin="115,19,0,0" Grid.Row="1" VerticalAlignment="Top" Height="23" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Width="52"/>
+        <Button Content="{x:Static res:Lang.Apply}" HorizontalAlignment="Left" Margin="137,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Width="75" Click="Button_Click_4"/>
+        <TextBox x:Name="ImgIndexIntBox" HorizontalAlignment="Right" Height="23" Margin="0,27,98,0" Grid.Row="1" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="40" TextChanged="IntBox_TextChanged" Grid.Column="1" KeyUp="IntBox_KeyUp"/>
+        <Label Content="{x:Static res:Lang.Picture}" Margin="0,24,143,0" Grid.Row="1" VerticalAlignment="Top" Height="23" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Width="105" Grid.ColumnSpan="2"/>
+        <Label Content="{x:Static res:Lang.Show}" HorizontalAlignment="Right" Margin="0,1,10,0" Grid.Row="1" VerticalAlignment="Top" Width="238" Height="15" VerticalContentAlignment="Center" Padding="0" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
+        <Button Content="{x:Static res:Lang.Next}" HorizontalAlignment="Left" Margin="87,0,0,10" Grid.Row="1" VerticalAlignment="Bottom" Width="83" Grid.Column="1" Click="Button_Click_5"/>
+        <Button Content="{x:Static res:Lang.Previous}" HorizontalAlignment="Left" Margin="87,0,0,50" VerticalAlignment="Bottom" Width="83" Grid.Column="1" RenderTransformOrigin="1.423,3.1" Grid.Row="1" Click="Button_Click_7"/>
+        <Label Content="{x:Static res:Lang.Split}" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="233" Height="15" VerticalContentAlignment="Center" Padding="0" HorizontalContentAlignment="Center"/>
+        <Button Content="{x:Static res:Lang.Apply}" HorizontalAlignment="Left" Margin="87,0,0,30" Grid.Row="1" VerticalAlignment="Bottom" Width="83" RenderTransformOrigin="2.413,0.533" Grid.Column="1" Click="Button_Click_6"/>
+        <CheckBox x:Name="AutoConvert" Content="{x:Static res:Lang.AutoConvert}" HorizontalAlignment="Right" Margin="0,55,98,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="80" Margin="218,1,0,-1" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="1"/>
     </Grid>
 </Window>

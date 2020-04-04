@@ -138,8 +138,14 @@
   <data name="Amount" xml:space="preserve">
     <value>Кол-во</value>
   </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
   <data name="AssemblerEfficiency" xml:space="preserve">
     <value>Эффективность сборщика</value>
+  </data>
+  <data name="AutoConvert" xml:space="preserve">
+    <value>Конвертировать</value>
   </data>
   <data name="Backups" xml:space="preserve">
     <value>Резервные копии</value>
@@ -185,6 +191,9 @@
   </data>
   <data name="Color" xml:space="preserve">
     <value>Цвет</value>
+  </data>
+  <data name="Columns" xml:space="preserve">
+    <value>Столбцы</value>
   </data>
   <data name="ComingSoon" xml:space="preserve">
     <value>Скоро...</value>
@@ -452,6 +461,9 @@
   <data name="Name" xml:space="preserve">
     <value>Название</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Следующий</value>
+  </data>
   <data name="NickName" xml:space="preserve">
     <value>Псевдоним</value>
   </data>
@@ -541,6 +553,9 @@
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Пожалуйста ждите, наши сервера работают от картошки</value>
   </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Предыдущий</value>
+  </data>
   <data name="Properties" xml:space="preserve">
     <value>Свойства</value>
   </data>
@@ -570,6 +585,9 @@
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
+  </data>
+  <data name="Rows" xml:space="preserve">
+    <value>Строки</value>
   </data>
   <data name="RunApp" xml:space="preserve">
     <value>Запустить приложение</value>
@@ -621,11 +639,20 @@
   <data name="ShareMode" xml:space="preserve">
     <value>Дать доступ</value>
   </data>
+  <data name="Show" xml:space="preserve">
+    <value>Показать</value>
+  </data>
   <data name="ShowBlocks" xml:space="preserve">
     <value>Показывать блоки</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>
+  </data>
+  <data name="Split" xml:space="preserve">
+    <value>Разделить</value>
+  </data>
+  <data name="SplitImage" xml:space="preserve">
+    <value>Разделить изображение</value>
   </data>
   <data name="SPNF" xml:space="preserve">
     <value>Директория сохранений не была найдена! Пожалуйста установите это в настройках.</value>

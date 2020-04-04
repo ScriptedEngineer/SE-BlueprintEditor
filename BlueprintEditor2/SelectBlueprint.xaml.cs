@@ -106,6 +106,8 @@ namespace BlueprintEditor2
             InitializeComponent();
             currentBluePatch = MySettings.Current.BlueprintPatch;
             InitBlueprints();
+#if DEBUG
+#else
             new Task(() =>
             {
                 Thread.CurrentThread.Name = "Updating";
@@ -133,6 +135,7 @@ namespace BlueprintEditor2
                 }
                 //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
+#endif
             Logger.Add("Finish Init GUI");
             OldSortBy = FirstSorter;
             if (string.IsNullOrWhiteSpace(MySettings.Current.SteamWorkshopPatch))

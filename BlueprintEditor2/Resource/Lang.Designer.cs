@@ -118,11 +118,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Apply.
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Assembler efficiency.
         /// </summary>
         public static string AssemblerEfficiency {
             get {
                 return ResourceManager.GetString("AssemblerEfficiency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Сonvert automatically.
+        /// </summary>
+        public static string AutoConvert {
+            get {
+                return ResourceManager.GetString("AutoConvert", resourceCulture);
             }
         }
         
@@ -258,6 +276,15 @@ namespace BlueprintEditor2.Resource {
         public static string Color {
             get {
                 return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Columns.
+        /// </summary>
+        public static string Columns {
+            get {
+                return ResourceManager.GetString("Columns", resourceCulture);
             }
         }
         
@@ -1056,6 +1083,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Next.
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Nickname.
         /// </summary>
         public static string NickName {
@@ -1319,6 +1355,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Previous.
+        /// </summary>
+        public static string Previous {
+            get {
+                return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Properties.
         /// </summary>
         public static string Properties {
@@ -1405,6 +1450,15 @@ namespace BlueprintEditor2.Resource {
         public static string Restore {
             get {
                 return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Rows.
+        /// </summary>
+        public static string Rows {
+            get {
+                return ResourceManager.GetString("Rows", resourceCulture);
             }
         }
         
@@ -1555,6 +1609,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Show.
+        /// </summary>
+        public static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Show blocks.
         /// </summary>
         public static string ShowBlocks {
@@ -1569,6 +1632,24 @@ namespace BlueprintEditor2.Resource {
         public static string SmallGrid {
             get {
                 return ResourceManager.GetString("SmallGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Split.
+        /// </summary>
+        public static string Split {
+            get {
+                return ResourceManager.GetString("Split", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Split an image.
+        /// </summary>
+        public static string SplitImage {
+            get {
+                return ResourceManager.GetString("SplitImage", resourceCulture);
             }
         }
         
