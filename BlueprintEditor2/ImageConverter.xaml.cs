@@ -181,6 +181,7 @@ namespace BlueprintEditor2
                 }
                 DitherPic.Source = SEImageConverter.ToSource(MemImages.First());
                 ImgIndexIntBox.Text = "1";
+                Label1231321.Content = Lang.Show + "("+MemImages.Count+")";
                 if (AutoConvert.IsChecked.Value)
                     Button_Click_2(null, null);
                 else
