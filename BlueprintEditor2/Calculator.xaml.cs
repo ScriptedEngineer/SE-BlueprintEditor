@@ -117,6 +117,7 @@ namespace BlueprintEditor2
 
         private void ApplySwitches(string sw)
         {
+            if (string.IsNullOrEmpty(sw)) return;
             string[] swt = sw.Split('\n');
             foreach (var x in swt)
             {
@@ -130,8 +131,11 @@ namespace BlueprintEditor2
                     }
                 }
             }
-            ModsList.ItemsSource = null;
-            ModsList.ItemsSource = Mods.Values;
+            if (ModsList != null)
+            {
+                ModsList.ItemsSource = null;
+                ModsList.ItemsSource = Mods.Values;
+            }
         }
 
         private void Calculate(bool showWarn = false)
