@@ -1,7 +1,9 @@
 # SE BlueprintEditor 2
 
 New version of BlueprintEditor for Space Engineers<br>
-The tool for easy editing blueprints of the game Space Engineers
+The tool for easy editing blueprints of the game Space Engineers<br>
+Program include Blueprint calculator with mod support
+English and Russian localization!
 
 ## Download
 
