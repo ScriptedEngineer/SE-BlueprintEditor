@@ -49,12 +49,14 @@ namespace BlueprintEditor2
                     }
                 }
             }
-            
-            foreach (var xe in WorkshopCache.ModNames)
-            {
-                Mods.Add(xe.Key,new MyModSwitch(xe.Value, xe.Key));
-                //ModsList.Items.Add(xe);
-            }
+            if (WorkshopCache.ModNames != null)
+                foreach (var xe in WorkshopCache.ModNames)
+                {
+                    Mods.Add(xe.Key, new MyModSwitch(xe.Value, xe.Key));
+                    //ModsList.Items.Add(xe);
+                }
+            if (MySettings.Current.ModSwitches == null)
+                MySettings.Current.ModSwitches = GetSwitches();
             string[] swt = MySettings.Current.ModSwitches.Split('\n');
             foreach (var x in swt)
             {
@@ -159,11 +161,11 @@ namespace BlueprintEditor2
                             calc.AddBlock(Bl);
                         }
                     }
-                        calc.CalculateIngots();
-                        calc.CalculateOres();
+                    calc.CalculateIngots();
+                    calc.CalculateOres();
                     MyExtensions.AsyncWorker(() =>
                     {
-                        ComponensList.ItemsSource = ofbks ? calc.GetBuildComponents():calc.GetComponents();
+                        ComponensList.ItemsSource = ofbks ? calc.GetBuildComponents() : calc.GetComponents();
                         IngotsList.ItemsSource = ofbks ? null : calc.GetIngots();
                         OresList.ItemsSource = ofbks ? null : calc.GetOres();
                         ListSort(ComponensList, "Amount", ListSortDirection.Descending);
@@ -201,7 +203,7 @@ namespace BlueprintEditor2
                 //SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
-            if(calc != null) calc.Clear();
+            if (calc != null) calc.Clear();
             Logger.Add("Calculator closed");
         }
 
@@ -227,7 +229,7 @@ namespace BlueprintEditor2
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -251,16 +253,16 @@ namespace BlueprintEditor2
                 if (x.Type.Length > OrsL)
                     OrsL = x.Type.Length;
             }*/
-            
+
             string Comps = "";
-            foreach(MyResourceInfo x in ComponensList.Items)
+            foreach (MyResourceInfo x in ComponensList.Items)
             {
                 Comps += x.Type + ": " + x.Count + "\r\n";
             }
             string Ings = "";
             foreach (MyResourceInfo x in IngotsList.Items)
             {
-                Ings += x.Type+ ": " + x.Count + "\r\n";
+                Ings += x.Type + ": " + x.Count + "\r\n";
             }
             string Ors = "";
             foreach (MyResourceInfo x in OresList.Items)
@@ -270,30 +272,30 @@ namespace BlueprintEditor2
             string Modsss = "";
             foreach (MyModSwitch x in ModsList.Items)
             {
-                if(x.Enabled)
-                    Modsss += x.ID+" - "+x.Name + "\r\n";
+                if (x.Enabled)
+                    Modsss += x.ID + " - " + x.Name + "\r\n";
             }
             string undef = calc.GetUndefined();
             string[] hh = Lang.StoneAmount.Split('(');
-            Clipboard.SetText("SE BlueprintEditor - Calculator\r\n"+
+            Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
                 Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n\r\n" +
-                
+
                 Lang.AssemblerEfficiency + " - " + AssembleEffic.Value.ToString("0") + "x\r\n" +
-                (ModulesYield.IsChecked.Value?
-                Lang.YieldModules + " - " + YieldCount.Value.ToString("0") + "\r\n":
+                (ModulesYield.IsChecked.Value ?
+                Lang.YieldModules + " - " + YieldCount.Value.ToString("0") + "\r\n" :
                 Lang.YieldProcentage + " - " + YieldProcentage.Text + "\r\n") +
 
-                (OffStone.IsChecked.Value? "\r\n" : hh[0].Trim(' ') + ": "+ StoneAmountText.Text+ hh[1].Trim(' ',')') + "\r\n\r\n") +
+                (OffStone.IsChecked.Value ? "\r\n" : hh[0].Trim(' ') + ": " + StoneAmountText.Text + hh[1].Trim(' ', ')') + "\r\n\r\n") +
 
-                (WithMods.IsChecked.Value? Lang.WithMods + ":\r\n"+ Modsss + "\r\n" : "") +
+                (WithMods.IsChecked.Value ? Lang.WithMods + ":\r\n" + Modsss + "\r\n" : "") +
 
-                (string.IsNullOrEmpty(undef)?"": Lang.UndefinedTypesExists+ "\r\n" + undef+ "\r\n")+
+                (string.IsNullOrEmpty(undef) ? "" : Lang.UndefinedTypesExists + "\r\n" + undef + "\r\n") +
 
-                (OnlyForBuild.IsChecked.Value? 
+                (OnlyForBuild.IsChecked.Value ?
                 Lang.OnlyForBuild + "\r\n" +
                 Lang.Components + ":\r\n" + Comps
                 :
-                Lang.Components+":\r\n"+ Comps + "\r\n" +
+                Lang.Components + ":\r\n" + Comps + "\r\n" +
                 Lang.Ingots + ":\r\n" + Ings + "\r\n" +
                 Lang.Ores + ":\r\n" + Ors));
         }
@@ -303,7 +305,7 @@ namespace BlueprintEditor2
             if (calc != null)
             {
                 calc.AssemblerEffic = (int)AssembleEffic.Value;
-                YieldProcentage.Text = (calc.SetYieldModules((int)YieldCount.Value)*100).ToString("F0")+"%";
+                YieldProcentage.Text = (calc.SetYieldModules((int)YieldCount.Value) * 100).ToString("F0") + "%";
                 calc.CalculateIngots(null, true);
                 calc.CalculateOres();
                 ComponensList.ItemsSource = calc.GetComponents();
@@ -360,7 +362,7 @@ namespace BlueprintEditor2
             }
             if (OffStone.IsChecked.Value)
                 StoneAmountText.IsEnabled = false;
-            else 
+            else
                 StoneAmountText.IsEnabled = true;
         }
 
@@ -399,7 +401,7 @@ namespace BlueprintEditor2
 
         private void SaveSwitches(bool rew = false)
         {
-            if(Patterns.SelectedIndex == 0 || rew)
+            if (Patterns.SelectedIndex == 0 || rew)
                 MySettings.Current.ModSwitches = GetSwitches();
         }
         private string GetSwitches()
@@ -426,7 +428,8 @@ namespace BlueprintEditor2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            new MessageDialog((x) => {
+            new MessageDialog((x) =>
+            {
                 if (x != Lang.Current && !string.IsNullOrEmpty(x))
                 {
                     if (MySettings.Current.ModSwitchesPatterns.Keys.Contains(x))
@@ -441,11 +444,11 @@ namespace BlueprintEditor2
         int oldSelindx = -1;
         private void Patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (oldSelindx == Patterns.SelectedIndex || Patterns.SelectedIndex == -1) 
+            if (oldSelindx == Patterns.SelectedIndex || Patterns.SelectedIndex == -1)
                 return;
             if (oldSelindx == 0)
                 SaveSwitches(true);
-            if(Patterns.SelectedIndex == 0)
+            if (Patterns.SelectedIndex == 0)
             {
                 ApplySwitches(MySettings.Current.ModSwitches);
             }

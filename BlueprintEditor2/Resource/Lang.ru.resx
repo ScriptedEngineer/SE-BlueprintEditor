@@ -443,6 +443,9 @@
   <data name="LightArmor" xml:space="preserve">
     <value>Легкая броня</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Загрузка...</value>
+  </data>
   <data name="MaintainAspectRatio" xml:space="preserve">
     <value>Сохранять пропорции</value>
   </data>

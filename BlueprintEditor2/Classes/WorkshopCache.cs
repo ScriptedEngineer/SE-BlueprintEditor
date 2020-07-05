@@ -59,7 +59,15 @@ namespace BlueprintEditor2
                 }
                 if (IsMod)
                 {
-                    MyExtensions.ClearFolder(fld);
+                    try
+                    {
+                        MyExtensions.ClearFolder(fld);
+                        Directory.Delete(fld);
+                    }
+                    catch
+                    {
+                        //error
+                    }
                 }
             }
         }

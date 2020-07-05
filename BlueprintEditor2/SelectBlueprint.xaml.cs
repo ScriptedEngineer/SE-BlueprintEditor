@@ -49,14 +49,13 @@ namespace BlueprintEditor2
                     {
                         case "Crash":
 #if DEBUG
-                Application.Current.Shutdown();
-                return;
+                            Application.Current.Shutdown();
+                            return;
 #else
                             new Reporter().Show();
                             Hide();
                             return;
 #endif
-                            break;
                         case "Debug":
                             ConsoleManager.Show();
                             break;
@@ -180,6 +179,7 @@ namespace BlueprintEditor2
                 Logger.Add("Game data parse end");
                 MyExtensions.AsyncWorker(() => { 
                 CalculateButton.IsEnabled = BlueList.SelectedIndex != -1;
+                LoadingCalcLabel.Visibility = Visibility.Collapsed;
                 });
             }).Start();
         }

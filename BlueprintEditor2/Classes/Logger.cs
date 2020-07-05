@@ -31,11 +31,13 @@ namespace BlueprintEditor2
             Lgo.Append(": ").Append(log).Append('\n');
             Log.Append(Lgo);
             //string logf = $"[{DateTime.UtcNow}] {(string.IsNullOrEmpty(Thread.CurrentThread.Name) ? "Thread" + Thread.CurrentThread.ManagedThreadId : Thread.CurrentThread.Name)}: {log}";
+#if DEBUG
             new Task(() =>
             {
                 if (ConsoleManager.HasConsole)
                     Console.Write(Lgo.ToString());
             }).Start();
+#endif
 
             LogLenght++;
             if (LogLenght > 1000)

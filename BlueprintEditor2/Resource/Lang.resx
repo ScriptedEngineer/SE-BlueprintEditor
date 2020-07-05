@@ -443,6 +443,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="LightArmor" xml:space="preserve">
     <value>Light armor</value>
   </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
   <data name="MaintainAspectRatio" xml:space="preserve">
     <value>Maintain aspect ratio</value>
   </data>
