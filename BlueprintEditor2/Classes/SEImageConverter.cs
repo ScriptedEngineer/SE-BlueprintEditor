@@ -85,6 +85,76 @@ namespace BlueprintEditor2
                 return "Error: "+ ex.Message;
             }
         }
+        public static string ConvertToSuperPixel(Image original, int width, int height, bool for_r,bool saspect, out Image Result)
+        {
+            try
+            {
+                StringBuilder text = new StringBuilder();
+                if (!for_r) text.Append('-');
+                int LineAdder = 0;
+                int discro = 0;
+                if (saspect)
+                {
+                    int oldHeight = height;
+                    double aspect = (double)original.Width / (double)original.Height;
+                    height = (int)(width / aspect);
+                    if (height <= oldHeight)
+                    {
+                        discro = (oldHeight - height) / 2;
+                        if (discro > 0)
+                            for (int i = 0; i < discro; i++)
+                            {
+                                text.Append("\n");
+                            }
+                    }
+                    else
+                    {
+                        height = oldHeight;
+                        int oldWidth = width;
+                        width = (int)(height * aspect);
+                        LineAdder = (oldWidth - width) / 2;
+                    }
+                }
+                Bitmap bm = new Bitmap(original, width, height);
+                for (int i = 0; i < bm.Height; i++)
+                {
+                    if (LineAdder > 0)
+                        for (int d = 0; d < LineAdder; d++)
+                        {
+                            text.Append((char)(ushort)57344);
+                        }
+                    for (int j = 0; j < bm.Width; j++)
+                    {
+                        Color pixel = bm.GetPixel(j, i);
+                        int num = pixel.R;
+                        int num2 = pixel.G >> 4;
+                        int num3 = pixel.B;
+                        int num4 = (pixel.G % 16);
+                        if (for_r) text.Append((char)(ushort)(57344 + (num2 << 8) + num));
+                        else text.Append((char)(ushort)(57344 + (num4 << 8) + num3));
+                        bm.SetPixel(j, i, Color.FromArgb(pixel.R, pixel.G, pixel.B));
+                    }
+                    if(i != bm.Height-1) text.Append("\n");
+                }
+                if (discro > 0)
+                    for (int i = 0; i < discro; i++)
+                    {
+                        text.Append("\n");
+                    }
+                if (original != null)
+                {
+                    original.Dispose();
+                }
+                Result = bm.Clone(new Rectangle(0, 0, bm.Width, bm.Height), PixelFormat.Undefined);
+                bm.Dispose();
+                return text.ToString();
+            }
+            catch (Exception ex)
+            {
+                Result = original;
+                return "Error: " + ex.Message;
+            }
+        }
         public static Image ConvertFromMonospce(string Monospace)
         {
             try

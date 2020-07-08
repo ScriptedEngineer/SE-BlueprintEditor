@@ -101,6 +101,7 @@ namespace BlueprintEditor2
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Monospace = SEImageConverter.ConvertToMonospace(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            //Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 512 : 256, 256, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
             DitherPic.Source = SEImageConverter.ToSource(Resul);
             System.Windows.Clipboard.SetText(Monospace);
             NormalizeForm();
@@ -109,7 +110,8 @@ namespace BlueprintEditor2
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             Monospace = System.Windows.Clipboard.GetText();
-            DitherPic.Source = SEImageConverter.ToSource(SEImageConverter.ConvertFromMonospce(Monospace));
+            System.Drawing.Image img = SEImageConverter.ConvertFromMonospce(Monospace);
+            if(img != null) DitherPic.Source = SEImageConverter.ToSource(img);
             NormalizeForm();
         }
 
@@ -118,12 +120,12 @@ namespace BlueprintEditor2
             if (SplitImg.IsChecked.Value)
             {
                 Height += 80;
-                MinHeight = 410;
+                MinHeight = 480;
                 BottomRow.Height = new GridLength(80);
             }
             else
             {
-                MinHeight = 330;
+                MinHeight = 400;
                 Height -= 80;
                 BottomRow.Height = new GridLength(0);
             }
@@ -138,8 +140,8 @@ namespace BlueprintEditor2
                 int.TryParse(RowsIntBox.Text, out int Rows);
                 if (Columns == 0 || Rows == 0)
                     return;
-                int xRes = WideSize.IsChecked.Value ? 356 : 178;
-                int yRes = 178;
+                int xRes = WideSize.IsChecked.Value ? 500 : 250;
+                int yRes = 250;
                 Bitmap ImageMain;
                 if (SaveAspect.IsChecked.Value) 
                 {
@@ -250,6 +252,23 @@ namespace BlueprintEditor2
             if (x <= 0) x = 1;
             Sender.Text = x.ToString();
             Sender.CaretIndex = Sender.Text.Length;
+        }
+
+        private void Button_Click_8(object sender, RoutedEventArgs e)
+        {
+            //Monospace = SEImageConverter.ConvertToMonospace(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, true, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            //DitherPic.Source = SEImageConverter.ToSource(Resul);
+            System.Windows.Clipboard.SetText(Monospace);
+            NormalizeForm();
+        }
+
+        private void Button_Click_9(object sender, RoutedEventArgs e)
+        {
+            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, false, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            //DitherPic.Source = SEImageConverter.ToSource(Resul);
+            System.Windows.Clipboard.SetText(Monospace);
+            NormalizeForm();
         }
     }
 }
