@@ -57,16 +57,16 @@
     <ApplicationIcon>Resource\map-_1_.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E401977FDC38794D06899C5987C7E61C3AA230AB</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>FECF29DCE3324F44A727AEAA40EC3E8A094818D8</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>BlueprintEditor2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Keys.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -78,7 +78,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>SigningKeys.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Keys.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>false</DelaySign>
@@ -246,13 +246,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Lang.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="BlueprintEditor2_TemporaryKey.pfx" />
+    <None Include="Keys.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="SigningKeys.pfx" />
     <Resource Include="Resource\img_292121.png" />
     <Resource Include="Resource\img_1610640.png" />
     <Resource Include="Resource\img_100000.png" />
