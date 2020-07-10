@@ -101,6 +101,7 @@ namespace BlueprintEditor2
             GridNameBox.Text = SlectedGrd.Name;
             DestructibleGridBox.IsChecked = SlectedGrd.Destructible;
             GridSizeBox.SelectedIndex = (int)SlectedGrd.GridSize;
+            DamageFixer.IsEnabled = SlectedGrd.IsDamaged;
             GoSort(BlockListColumns.Columns[1],null);
         }
         private bool DasShowIt(MyXmlBlock block)
@@ -548,7 +549,7 @@ namespace BlueprintEditor2
                     GridColorReplace.CaretIndex = GridColorReplace.Text.Length;
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 
             }
@@ -603,6 +604,21 @@ namespace BlueprintEditor2
             {
                 SelectedBlk.PublicText = PannelText.Text;
             }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Button Sender = sender as Button;
+            if (!initGAT) return;
+            MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
+            foreach (MyXmlBlock block in SlectedGrd.Blocks)
+            {
+                var bp = block.GetProperty("BuildPercent");
+                block.SetPropertyIfExists("IntegrityPercent", bp != null? bp.TextValue: "1");
+            }
+            SlectedGrd.FixVisualDamage();
+            if(Sender != null) Sender.IsEnabled = false;
+            BlockList_SelectionChanged_1(null, null);
         }
     }
 }

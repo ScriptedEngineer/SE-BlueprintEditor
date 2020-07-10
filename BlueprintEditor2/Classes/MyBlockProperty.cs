@@ -13,8 +13,8 @@ namespace BlueprintEditor2
     public class MyBlockProperty
     {
         private readonly XmlNode _PropertyXml;
-        private readonly EditorData _Edit;
-        public string Title { get; set; }
+
+        //public string Title { get; set; }
         public string PropertyName
         {
             get
@@ -26,13 +26,13 @@ namespace BlueprintEditor2
                     return _PropertyXml.Name;
             }
         }
-        public EditorData Edit { get => _Edit; }
+        public EditorData Edit { get; }
         public string TextValue
         {
             get => _PropertyXml.InnerText;
             set
             {
-                _Edit.Content = value == "True" ? Lang.Yes : (value == "False" ? Lang.No : value);
+                Edit.Content = value == "True" ? Lang.Yes : (value == "False" ? Lang.No : value.Replace(".", ","));
                 _PropertyXml.InnerText = value.ToLower();
             }
         }
@@ -42,34 +42,34 @@ namespace BlueprintEditor2
             bool Test;
             if(bool.TryParse(_PropertyXml.InnerText,out Test))
             {
-                _Edit = new EditorData();
-                _Edit.Content = Test?Lang.Yes:Lang.No;
-                _Edit.IsChecked = Test;
-                _Edit.CheckboxVisible = Visibility.Visible;
-                Title = _PropertyXml.InnerText;
+                Edit = new EditorData();
+                Edit.Content = Test?Lang.Yes:Lang.No;
+                Edit.IsChecked = Test;
+                Edit.CheckboxVisible = Visibility.Visible;
+                //Title = _PropertyXml.InnerText;
             }
             else if (long.TryParse(_PropertyXml.InnerText, out long Testint))
             {
-                _Edit = new EditorData();
-                _Edit.Content = Testint.ToString();
+                Edit = new EditorData();
+                Edit.Content = Testint.ToString();
                 //_Edit.IsChecked = Test;
-                _Edit.IntTextboxVisible = Visibility.Visible;
-                Title = _PropertyXml.InnerText;
+                Edit.IntTextboxVisible = Visibility.Visible;
+                //Title = _PropertyXml.InnerText;
             }
             else if (double.TryParse(_PropertyXml.InnerText.Replace(".", ","), out double Testfl))
             {
-                _Edit = new EditorData();
-                _Edit.Content = Testfl.ToString("F18").TrimEnd('0').TrimEnd(',');
+                Edit = new EditorData();
+                Edit.Content = Testfl.ToString("F18").TrimEnd('0').TrimEnd(',');
                 //_Edit.IsChecked = Test;
-                _Edit.FloatTextboxVisible = Visibility.Visible;
-                Title = _PropertyXml.InnerText;
+                Edit.FloatTextboxVisible = Visibility.Visible;
+                //Title = _PropertyXml.InnerText;
             }
             else
             {
                 EditorData box = new EditorData();
                 box.Content = "Not performed";
                 box.LabelVisible = Visibility.Visible;
-                _Edit = box;
+                Edit = box;
             }
         }
 

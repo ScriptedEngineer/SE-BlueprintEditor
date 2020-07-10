@@ -18,7 +18,8 @@ namespace BlueprintEditor2
         private readonly XmlNode _MinPosNode;
         private readonly XmlNode _CustomDataNode;
         private readonly XmlNode _PublicTextNode;
-        private List<MyBlockProperty> _Properties = new List<MyBlockProperty>();
+        private readonly XmlNode _SkinNode;
+        private Dictionary<string,MyBlockProperty> _Properties = new Dictionary<string, MyBlockProperty>();
 
         public string Type
         {
@@ -81,7 +82,7 @@ namespace BlueprintEditor2
                     _ShareModeNode.InnerText = value.Value.ToString();
             }
         }
-        public MyBlockProperty[] Properties { get => _Properties.ToArray(); }
+        public MyBlockProperty[] Properties { get => _Properties.Values.ToArray(); }
         public ArmorType Armor
         {
             get
@@ -154,6 +155,14 @@ namespace BlueprintEditor2
                 if (_PublicTextNode != null) _PublicTextNode.InnerText = value;
             }
         }
+        public string Skin
+        {
+            get => _SkinNode?.InnerText;
+            set
+            {
+                if (_SkinNode != null) _SkinNode.InnerText = value;
+            }
+        }
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -191,8 +200,12 @@ namespace BlueprintEditor2
                     case "PublicDescription":
                         _PublicTextNode = child;
                         break;
+                    case "SkinSubtypeId":
+                        _SkinNode = child;
+                        break;
                     default:
-                        _Properties.Add(new MyBlockProperty(child));
+                        var prop = new MyBlockProperty(child);
+                        _Properties.Add(prop.PropertyName, prop);
                         continue;
                 }
         }
@@ -200,6 +213,21 @@ namespace BlueprintEditor2
         {
             XmlNode parent = _BlockXml.ParentNode;
             parent.RemoveChild(_BlockXml);
+        }
+        public MyBlockProperty GetProperty(string Prop)
+        {
+            if (_Properties.Keys.Contains(Prop))
+            {
+               return _Properties[Prop];
+            }
+            return null;
+        }
+        public void SetPropertyIfExists(string Prop, string Value)
+        {
+            if(_Properties.Keys.Contains(Prop))
+            {
+                _Properties[Prop].TextValue = Value;
+            }
         }
     }
     public enum ArmorType

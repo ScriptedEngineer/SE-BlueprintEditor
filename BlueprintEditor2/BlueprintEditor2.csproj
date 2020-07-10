@@ -63,10 +63,10 @@
     <ManifestKeyFile>Keys.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -162,9 +162,6 @@
     <Compile Include="UpdateAvailable.xaml.cs">
       <DependentUpon>UpdateAvailable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Updater.xaml.cs">
-      <DependentUpon>Updater.xaml</DependentUpon>
-    </Compile>
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,10 +211,6 @@
     <Page Include="UpdateAvailable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Updater.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

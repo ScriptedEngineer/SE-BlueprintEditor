@@ -583,6 +583,9 @@
   <data name="RemLater" xml:space="preserve">
     <value>Напомнить позже</value>
   </data>
+  <data name="RepairTheGrid" xml:space="preserve">
+    <value>Починить сетку</value>
+  </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Заменить на текущий</value>
   </data>

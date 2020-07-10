@@ -92,7 +92,7 @@ namespace BlueprintEditor2
             File.WriteAllText("upd",UpdateLink);
             //Process.Start("cmd", "/c start Updater.exe");
             if(File.Exists("Updater.exe"))
-                Process.Start("Updater.exe");
+                Process.Start("cmd", "/c start Updater.exe");
             else
             {
                 new MessageDialog(DialogPicture.attention, "Attention", "File Updater.exe not found", null, DialogType.Message).Show();

@@ -1445,6 +1445,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Repair the grid.
+        /// </summary>
+        public static string RepairTheGrid {
+            get {
+                return ResourceManager.GetString("RepairTheGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Replace by current.
         /// </summary>
         public static string ReplaceByCurrent {

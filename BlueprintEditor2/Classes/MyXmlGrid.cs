@@ -14,6 +14,9 @@ namespace BlueprintEditor2
         private XmlNode NameNode;
         private XmlNode GridSizeNode;
         private XmlNode DestructibleNode;
+        private XmlNode DeformationsNode;
+
+        public bool IsDamaged { get; private set; }
         public string Name
         {
             get => NameNode.InnerText;
@@ -50,7 +53,16 @@ namespace BlueprintEditor2
                         NameNode = child;
                         break;
                     case "CubeBlocks":
-                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => new MyXmlBlock(x)).ToList();
+                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => {
+                            var xmlB = new MyXmlBlock(x);
+                            if (!IsDamaged) {
+                                var xp = xmlB.GetProperty("IntegrityPercent");
+                                var xb = xmlB.GetProperty("BuildPercent");
+                                if (xp != null && (xb == null || xp.TextValue != xb.TextValue) && xp.TextValue != "1")
+                                    IsDamaged = true;
+                            }
+                            return xmlB;
+                        }).ToList();
                         break;
                     case "GridSizeEnum":
                         GridSizeNode = child;
@@ -58,8 +70,21 @@ namespace BlueprintEditor2
                     case "DestructibleBlocks":
                         DestructibleNode = child;
                         break;
+                    case "Skeleton":
+                        IsDamaged = true;
+                        DeformationsNode = child;
+                        break;
                 }
             }
+        }
+        public void FixVisualDamage()
+        {
+            if (DeformationsNode != null)
+            {
+                XmlNode parent = DeformationsNode.ParentNode;
+                parent.RemoveChild(DeformationsNode);
+            }
+            IsDamaged = false;
         }
         public void RemoveBlock(MyXmlBlock Block)
         {

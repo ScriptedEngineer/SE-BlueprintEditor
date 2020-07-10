@@ -24,7 +24,8 @@
             <ColumnDefinition Width="335*"/>
             <ColumnDefinition Width="608*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="{x:Static res:Lang.BlockColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Margin="0,39,0,0" Width="300" HorizontalContentAlignment="Right"/>
+
+        <Label Content="{x:Static res:Lang.BlockColor}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Margin="87,39,0,0" Width="213" HorizontalContentAlignment="Right"/>
         <Rectangle Fill="Black" Margin="10" Stroke="Black" RenderTransformOrigin="0.5,0.5"/>
         <Image x:Name="BluePicture" Margin="10" Source="Resource/blueprints-textures_00394054.jpg" Height="129"/>
         <ListBox x:Name="GridList" Width="229" Margin="10,16,10,10" SelectionChanged="GridList_SelectionChanged" Grid.Row="1"/>
@@ -83,7 +84,7 @@
             <ComboBoxItem Content="{x:Static res:Lang.Faction}"/>
             <ComboBoxItem Content="{x:Static res:Lang.Nobody}"/>
         </ComboBox>
-        <Label Content="{x:Static res:Lang.ShareMode}" HorizontalAlignment="Left" Margin="0,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <Label Content="{x:Static res:Lang.ShareMode}" HorizontalAlignment="Left" Margin="0,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="120"/>
         <TextBox x:Name="Search" Grid.Column="1" Height="22" Margin="1,0,176,10" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         <ComboBox x:Name="SearchBy" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,78,10" Grid.Row="1" VerticalAlignment="Bottom" Width="93" SelectedIndex="0">
             <ComboBoxItem Content="{x:Static res:Lang.BlockType}"/>
@@ -99,7 +100,7 @@
         <TextBox x:Name="BlockZ" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="265,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
         <TextBox x:Name="BlockX" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="163,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
         <TextBox x:Name="BlockY" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="214,148,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" Text="0" IsEnabled="False"/>
-        <Label Content="{x:Static res:Lang.BlockPosition}" HorizontalAlignment="Left" Margin="0,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="300" HorizontalContentAlignment="Right"/>
+        <Label Content="{x:Static res:Lang.BlockPosition}" HorizontalAlignment="Left" Margin="152,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="148" HorizontalContentAlignment="Right"/>
         <Label Content="X" HorizontalAlignment="Left" Margin="152,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
         <Label Content="Y" HorizontalAlignment="Left" Margin="203,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
         <Label Content="Z" HorizontalAlignment="Left" Margin="254,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
@@ -130,21 +131,33 @@
             </TabItem>
 
         </TabControl>
-        <Rectangle x:Name="GridColorExist" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,27,0,0">
+        <Rectangle x:Name="GridColorExist" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,26,0,0">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle x:Name="GridColorChange" HorizontalAlignment="Left" Height="23" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,65,0,0" MouseUp="GridColorChange_MouseUp">
+        <Rectangle x:Name="GridColorChange" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,65,0,0" MouseUp="GridColorChange_MouseUp">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <ComboBox x:Name="ExistedColors" Grid.Column="2" HorizontalAlignment="Left" Margin="10,27,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="ExistedColors_SelectionChanged"/>
-        <Label Content="{x:Static res:Lang.Color}" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16"/>
+        <ComboBox x:Name="ExistedColors" Grid.Column="2" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="ExistedColors_SelectionChanged" Height="23"/>
+        <Label Content="{x:Static res:Lang.Color}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16"/>
         <Label Content="{x:Static res:Lang.ChangeTo}" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
-        <TextBox x:Name="GridColorReplace" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,65,0,0" TextWrapping="Wrap" Text="#FFFFFF" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_2"/>
-        <Button x:Name="ColorChangeButton" Content="{x:Static res:Lang.Change}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="148" Click="Button_Click_3"/>
+        <TextBox x:Name="GridColorReplace" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="10,65,0,0" TextWrapping="Wrap" Text="#FFFFFF" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_2"/>
+        <Button x:Name="ColorChangeButton" Content="{x:Static res:Lang.Change}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Width="148" Click="Button_Click_3"/>
+        <Button Content="Replace DLC" Grid.Column="2" HorizontalAlignment="Left" Margin="174,93,0,0" VerticalAlignment="Top" Width="126" IsEnabled="False"/>
+        <Label Content="DLC" HorizontalAlignment="Left" Margin="174,11,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" IsEnabled="False"/>
+        <ComboBox x:Name="DLC_List" Grid.Column="2" HorizontalAlignment="Left" Margin="174,26,0,0" VerticalAlignment="Top" Width="126" SelectedIndex="0" IsEnabled="False">
+            <ComboBoxItem Content="ALL"/>
+        </ComboBox>
+        <ComboBox x:Name="DLC_RMode" Grid.Column="2" HorizontalAlignment="Left" Margin="174,65,0,0" VerticalAlignment="Top" Width="126" SelectedIndex="0" IsEnabled="False">
+            <ComboBoxItem Content="Keep non-replaceable"/>
+            <ComboBoxItem Content="Replace all"/>
+        </ComboBox>
+        <Label Content="Replace Mode" HorizontalAlignment="Left" Margin="174,49,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" IsEnabled="False"/>
+        <Button x:Name="DamageFixer" Content="{x:Static res:Lang.RepairTheGrid}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_4"/>
+        <Rectangle Grid.Column="2" Height="129" Margin="169,10,10,0" VerticalAlignment="Top" Fill="White"/>
 
     </Grid>
 </Window>

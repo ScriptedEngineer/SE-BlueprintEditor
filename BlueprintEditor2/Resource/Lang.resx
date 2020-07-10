@@ -583,6 +583,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="RemLater" xml:space="preserve">
     <value>Remind me later</value>
   </data>
+  <data name="RepairTheGrid" xml:space="preserve">
+    <value>Repair the grid</value>
+  </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Replace by current</value>
   </data>
