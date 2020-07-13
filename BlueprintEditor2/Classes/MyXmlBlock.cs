@@ -163,6 +163,7 @@ namespace BlueprintEditor2
                 if (_SkinNode != null) _SkinNode.InnerText = value;
             }
         }
+        public BlockOrientation Orientation { get; set; }
 
         internal MyXmlBlock(XmlNode block)
         {
@@ -203,6 +204,9 @@ namespace BlueprintEditor2
                     case "SkinSubtypeId":
                         _SkinNode = child;
                         break;
+                    case "BlockOrientation":
+                        Orientation = new BlockOrientation(child);
+                        break;
                     default:
                         var prop = new MyBlockProperty(child);
                         _Properties.Add(prop.PropertyName, prop);
@@ -229,6 +233,91 @@ namespace BlueprintEditor2
                 _Properties[Prop].TextValue = Value;
             }
         }
+    }
+    public class BlockOrientation
+    {
+        private readonly XmlNode _OrientationNode;
+        private Base6Directions _Forward, _Up;
+        public Base6Directions Forward
+        {
+            get => _Forward;
+            set
+            {
+                _Forward = value;
+                var Atrs = _OrientationNode.Attributes;
+                Atrs.GetNamedItem("Forward").Value = _Forward.ToString();
+                
+            }
+        }
+        public Base6Directions Up
+        {
+            get => _Up;
+            set
+            {
+                _Up = value;
+                var Atrs = _OrientationNode.Attributes;
+                Atrs.GetNamedItem("Up").Value = _Up.ToString();
+            }
+        }
+        public BlockOrientation(XmlNode Onode)
+        {
+            _OrientationNode = Onode;
+            var Atrs = _OrientationNode.Attributes;
+            Enum.TryParse(Atrs.GetNamedItem("Forward").Value, out _Forward);
+            Enum.TryParse(Atrs.GetNamedItem("Up").Value, out _Up);
+        }
+        public Vector3 SizeToPos(Vector3 size)
+        {
+            switch (Forward)
+            {
+                case Base6Directions.Forward:
+                case Base6Directions.Backward:
+                    switch (Up)
+                    {
+                        case Base6Directions.Left:
+                        case Base6Directions.Right:
+                            return new Vector3(size.Y, size.X, size.Z);//True;
+
+                        case Base6Directions.Up:
+                        case Base6Directions.Down:
+                            return new Vector3(size.X, size.Y, size.Z);//True;
+                    }
+                    break;
+                case Base6Directions.Left:
+                case Base6Directions.Right:
+                    switch (Up)
+                    {
+                        case Base6Directions.Forward:
+                        case Base6Directions.Backward:
+                            return new Vector3(size.Z, size.X, size.Y);
+
+                        case Base6Directions.Up:
+                        case Base6Directions.Down:
+                            return new Vector3(size.Z, size.Y, size.X);
+                    }
+                    break;
+                case Base6Directions.Up:
+                case Base6Directions.Down:
+                    switch (Up)
+                    {
+                        case Base6Directions.Forward:
+                        case Base6Directions.Backward:
+                            return new Vector3(size.X, size.Z, size.Y);
+
+                        case Base6Directions.Left:
+                        case Base6Directions.Right:
+                            return new Vector3(size.Y, size.Z, size.X);
+                    }
+                    break;
+            }
+            return new Vector3(size.X, size.Y, size.Z);//InvalidOrientation;
+        }
+    }
+    public enum Base6Directions : byte
+    {
+        Forward, Backward, 
+        Left, Right,
+        Up, Down
     }
     public enum ArmorType
     {

@@ -52,7 +52,10 @@ namespace BlueprintEditor2
             if (WorkshopCache.ModNames != null)
                 foreach (var xe in WorkshopCache.ModNames)
                 {
-                    Mods.Add(xe.Key, new MyModSwitch(xe.Value, xe.Key));
+                    if (MyGameData.ModCubeBlocks.ContainsKey(xe.Key) || MyGameData.ModRecipies.ContainsKey(xe.Key))
+                    {
+                        Mods.Add(xe.Key, new MyModSwitch(xe.Value, xe.Key));
+                    }
                     //ModsList.Items.Add(xe);
                 }
             if (MySettings.Current.ModSwitches == null)
@@ -154,11 +157,36 @@ namespace BlueprintEditor2
                 if (calc != null)
                 {
                     calc.Mods = modse;
+                    Vector3 Size = Vector3.Zero;
+                    string sizes = "", sizez = "";
                     foreach (MyXmlGrid Gr in EdBlueprint.Grids)
                     {
+                        Vector3 Min = new Vector3(100, 100, 100);
+                        Vector3 Max = new Vector3(-100, -100, -100);
+                        float blockLength = Gr.GridSize == GridSizes.Small ? 0.5f : 2.5f;
                         foreach (MyXmlBlock Bl in Gr.Blocks)
                         {
-                            calc.AddBlock(Bl);
+                            var xx = calc.AddBlock(Bl);
+                            Vector3 Bp = Bl.Position;
+                            if (Bp.X < Min.X) Min.X = Bp.X;
+                            if (Bp.Y < Min.Y) Min.Y = Bp.Y;
+                            if (Bp.Z < Min.Z) Min.Z = Bp.Z;
+                            BlockOrientation blockOrientation = Bl.Orientation;
+                            Vector3 BpM = xx == null?new Vector3(1,1,1) :(blockOrientation == null? new Vector3(xx.Size.X, xx.Size.Y, xx.Size.Z) : blockOrientation.SizeToPos(xx.Size));
+                            BpM.X += Bp.X;
+                            BpM.Y += Bp.Y;
+                            BpM.Z += Bp.Z;
+                            if (BpM.X > Max.X) Max.X = BpM.X;
+                            if (BpM.Y > Max.Y) Max.Y = BpM.Y;
+                            if (BpM.Z > Max.Z) Max.Z = BpM.Z;
+                        }
+                       
+                        Vector3 SizeX = new Vector3(Max.X - Min.X, Max.Y - Min.Y, Max.Z - Min.Z);
+                        if(SizeX.X > Size.X && SizeX.Y > Size.Y && SizeX.Z > Size.Z)
+                        {
+                            Size = SizeX;
+                            sizes = $"{Size.X * blockLength} x {Size.Y * blockLength} x {Size.Z * blockLength} m³";
+                            sizez = $"{Size.X} x {Size.Y} x {Size.Z}";
                         }
                     }
                     calc.CalculateIngots();
@@ -179,6 +207,14 @@ namespace BlueprintEditor2
                             Logger.Add("Undefined types message show");
                             new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
                         }
+                        InfoList.ItemsSource = new string[]
+                        {
+                            $"{Lang.Size}: {sizes.Replace(',','.')}",
+                            $"{Lang.Size_Blocks}: {sizez}",
+                            $"{Lang.Mass}: {calc.Mass} kg",
+                            $"PCU: {calc.PCU}",
+                            $"{Lang.BlockCount}: {calc.Blocks}",
+                        };
                     });
                 }
                 else
@@ -275,10 +311,16 @@ namespace BlueprintEditor2
                 if (x.Enabled)
                     Modsss += x.ID + " - " + x.Name + "\r\n";
             }
+            string Infooo = "";
+            foreach (string x in InfoList.Items)
+            {
+                    Infooo += x+"\r\n";
+            }
             string undef = calc.GetUndefined();
             string[] hh = Lang.StoneAmount.Split('(');
             Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
-                Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n\r\n" +
+                Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n" + 
+                Infooo + "\r\n" +
 
                 Lang.AssemblerEfficiency + " - " + AssembleEffic.Value.ToString("0") + "x\r\n" +
                 (ModulesYield.IsChecked.Value ?
@@ -476,6 +518,27 @@ namespace BlueprintEditor2
                 MySettings.Current.ModSwitchesPatterns.Remove(key);
             }
             UpdatePatterns();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void InfoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(InfoList.SelectedIndex != 0)
+            {
+                string Infooo = "";
+                foreach (string x in InfoList.Items)
+                {
+                    Infooo += x + "\r\n";
+                }
+                Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
+                Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n" +
+                Infooo);
+            }
+            InfoList.SelectedIndex = -1;
         }
     }
 }

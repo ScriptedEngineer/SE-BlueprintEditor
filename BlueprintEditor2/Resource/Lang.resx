@@ -449,6 +449,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="MaintainAspectRatio" xml:space="preserve">
     <value>Maintain aspect ratio</value>
   </data>
+  <data name="Mass" xml:space="preserve">
+    <value>Mass</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
@@ -650,6 +653,12 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="ShowBlocks" xml:space="preserve">
     <value>Show blocks</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Size_Blocks" xml:space="preserve">
+    <value>Size in blocks</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>

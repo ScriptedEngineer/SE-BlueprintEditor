@@ -8,15 +8,21 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Threading;
+using System.ComponentModel;
 
 namespace BlueprintEditor2
 {
     static class MyGameData
     {
-        public static Dictionary<string, Dictionary<string, int>> CubeBlocks = new Dictionary<string, Dictionary<string, int>>();
-        public static Dictionary<string, Dictionary<string, Dictionary<string, int>>> ModCubeBlocks = new Dictionary<string, Dictionary<string, Dictionary<string, int>>>();
+        public static Dictionary<string, MyBlockRecipie> CubeBlocks = new Dictionary<string, MyBlockRecipie>();
+        public static Dictionary<string, Dictionary<string, MyBlockRecipie>> ModCubeBlocks = new Dictionary<string, Dictionary<string, MyBlockRecipie>>();
+        
         public static Dictionary<string, Dictionary<string, double>> Recipies = new Dictionary<string, Dictionary<string, double>>();
         public static Dictionary<string, Dictionary<string, Dictionary<string, double>>> ModRecipies = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
+        
+        public static Dictionary<string, MyComponentInfo> Components = new Dictionary<string, MyComponentInfo>();
+        public static Dictionary<string, Dictionary<string, MyComponentInfo>> ModComponents = new Dictionary<string, Dictionary<string, MyComponentInfo>>();
+
         public static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
         public static bool IsInitialized = false;
@@ -36,6 +42,14 @@ namespace BlueprintEditor2
                     {
                         AddRecipiesInfo(x);
                     }
+                    foreach (var x in Directory.GetFiles(gamePatch + @"Content\Data", "Components*"))
+                    {
+                        AddComponentsInfo(x);
+                    }
+                    foreach (var x in Directory.GetFiles(gamePatch + @"Content\Data", "PhysicalItems*"))
+                    {
+                        AddComponentsInfo(x);
+                    }
                 }
                 //Mods
                 try
@@ -52,9 +66,20 @@ namespace BlueprintEditor2
                                 File.Load(x);
                                 AddBlocksInfo(x, File, true, modid);
                                 AddRecipiesInfo(x, File, true, modid);
-                                AddNames(x, File);
-                            }catch { }
+                                AddComponentsInfo(x, File, true, modid);
+                            }
+                            catch { }
                         }
+                    }
+                    foreach (var key in ModCubeBlocks.Keys)
+                    {
+                        if (ModCubeBlocks[key].Count == 0)
+                            ModCubeBlocks.Remove(key);
+                    }
+                    foreach (var key in ModRecipies.Keys)
+                    {
+                        if (ModRecipies[key].Count == 0)
+                            ModRecipies.Remove(key);
                     }
                 }
                 finally
@@ -74,6 +99,8 @@ namespace BlueprintEditor2
             {
                 string name = "";
                 Dictionary<string, int> components = new Dictionary<string, int>();
+                int PCU = 0;
+                Vector3 Size = new Vector3(1,1,1);
                 foreach (XmlNode z in y.ChildNodes)
                 {
                     switch (z.Name)
@@ -108,27 +135,55 @@ namespace BlueprintEditor2
                                 }
                             }
                             break;
+                        case "PCU":
+                            int.TryParse(z.InnerText, out PCU);
+                            break;
+                        case "Size":
+                            try
+                            {
+                                var Atrs = z.Attributes;
+                                int.TryParse(Atrs.GetNamedItem("x").Value, out int X);
+                                int.TryParse(Atrs.GetNamedItem("y").Value, out int Y);
+                                int.TryParse(Atrs.GetNamedItem("z").Value, out int Z);
+                                Size = new Vector3(X, Y, Z);
+                            }
+                            catch
+                            {
+                                int X = 1, Y = 1, Z = 1;
+                                foreach (XmlNode s in z.ChildNodes)
+                                    switch (s.Name)
+                                    {
+                                        case "X": int.TryParse(s.InnerText, out X); break;
+                                        case "Y": int.TryParse(s.InnerText, out Y); break;
+                                        case "Z": int.TryParse(s.InnerText, out Z); break;
+                                    }
+                                Size = new Vector3(X, Y, Z);
+                            }
+                            break;
+
                     }
                 }
                 name = name.Replace("MyObjectBuilder_", "");
-                if (mods)
-                {
-                    if (ModCubeBlocks.ContainsKey(modid))
+                if (components.Count > 0)
+                    if (mods)
                     {
-                        if (ModCubeBlocks[modid].ContainsKey(name))
-                            ModCubeBlocks[modid][name] = components;
+                        if (ModCubeBlocks.ContainsKey(modid))
+                        {
+                            if (ModCubeBlocks[modid].ContainsKey(name))
+                                ModCubeBlocks[modid][name] = new MyBlockRecipie(name, components, PCU, Size);
+                            else
+                                ModCubeBlocks[modid].Add(name, new MyBlockRecipie(name, components, PCU, Size));
+                        }
                         else
-                            ModCubeBlocks[modid].Add(name, components);
-                    }else
-                        ModCubeBlocks.Add(modid, new Dictionary<string, Dictionary<string, int>>() { [name]=components });
-                }
-                else
-                {
-                    if (CubeBlocks.ContainsKey(name))
-                        CubeBlocks[name] = components;
+                            ModCubeBlocks.Add(modid, new Dictionary<string, MyBlockRecipie>() { [name] = new MyBlockRecipie(name, components, PCU, Size) });
+                    }
                     else
-                        CubeBlocks.Add(name, components);
-                }
+                    {
+                        if (CubeBlocks.ContainsKey(name))
+                            CubeBlocks[name] = new MyBlockRecipie(name, components, PCU, Size);
+                        else
+                            CubeBlocks.Add(name, new MyBlockRecipie(name, components, PCU, Size));
+                    }
             }
         }
         private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
@@ -217,9 +272,9 @@ namespace BlueprintEditor2
                             resultse.Add(key, results[key] / requares.First().Value);
                         }
                         StoneRicipie = resultse;
-                        
+
                         goto default;
-                        //break;
+                    //break;
                     default:
                         foreach (var d in results)
                         {
@@ -230,36 +285,38 @@ namespace BlueprintEditor2
                             {
                                 requared.Add(key, requares[key] / d.Value);
                             }
-                            if (requares.First().Key.EndsWith("/Scrap") || 
+                            if (requares.First().Key.EndsWith("/Scrap") ||
                                 requared.ContainsKey(d.Key) ||
                                 requared.ContainsKey("Ore/Ice"))
                             {
                                 continue;
                             }
-                            if (mods)
-                            {
-                                if (ModRecipies.ContainsKey(modid))
+                            if (requared.Count > 0)
+                                if (mods)
                                 {
-                                    if (!ModRecipies[modid].ContainsKey(d.Key))
-                                        ModRecipies[modid].Add(d.Key, requared);
+                                    if (ModRecipies.ContainsKey(modid))
+                                    {
+                                        if (!ModRecipies[modid].ContainsKey(d.Key))
+                                            ModRecipies[modid].Add(d.Key, requared);
+                                        else
+                                            ModRecipies[modid][d.Key] = requared;
+                                    }
                                     else
-                                        ModRecipies[modid][d.Key] = requared;
-                                }else
-                                    ModRecipies.Add(modid, new Dictionary<string, Dictionary<string, double>>() { [d.Key] = requared });
-                            }
-                            else
-                            {
-                                if (!Recipies.ContainsKey(d.Key))
-                                    Recipies.Add(d.Key, requared);
-                                else if(requared.Count != 0 && d.Key != "Ingot/Stone")
-                                    Recipies[d.Key] = requared;
-                            }
+                                        ModRecipies.Add(modid, new Dictionary<string, Dictionary<string, double>>() { [d.Key] = requared });
+                                }
+                                else
+                                {
+                                    if (!Recipies.ContainsKey(d.Key))
+                                        Recipies.Add(d.Key, requared);
+                                    else if (requared.Count != 0 && d.Key != "Ingot/Stone")
+                                        Recipies[d.Key] = requared;
+                                }
                         }
                         break;
                 }
             }
         }
-        private static void AddNames(string file, XmlDocument File = null)
+        private static void AddComponentsInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
         {
             if (File == null)
             {
@@ -269,6 +326,7 @@ namespace BlueprintEditor2
             foreach (XmlNode y in File.GetElementsByTagName("Component"))
             {
                 string name = "", type = "";
+                float mass = 0, volume = 0;
                 foreach (XmlNode z in y.ChildNodes)
                 {
                     switch (z.Name)
@@ -290,17 +348,44 @@ namespace BlueprintEditor2
                         case "DisplayName":
                             name += z.InnerText;
                             break;
+                        case "Mass":
+                            float.TryParse(z.InnerText.Replace('.', ','), out mass);
+                            break;
+                        case "Volume":
+                            float.TryParse(z.InnerText.Replace('.', ','), out volume);
+                            break;
                     }
                 }
                 //name = name.Replace("MyObjectBuilder_", "");
-                if (Names.ContainsKey(type))
-                    Names[type] = name;
+                if (mods)
+                {
+                    if (Names.ContainsKey(type))
+                        Names[type] = name;
+                    else
+                        Names.Add(type, name);
+
+                    if (ModComponents.ContainsKey(modid))
+                    {
+                        if (ModComponents[modid].ContainsKey(type))
+                            ModComponents[modid][type] = new MyComponentInfo(name, type, mass, volume);
+                        else
+                            ModComponents[modid].Add(type, new MyComponentInfo(name, type, mass, volume));
+                    }
+                    else
+                        ModComponents.Add(modid, new Dictionary<string, MyComponentInfo>() { [type] = new MyComponentInfo(name, type, mass, volume) });
+                }
                 else
-                    Names.Add(type, name);
+                {
+                    if (Components.ContainsKey(type))
+                        Components[type] = new MyComponentInfo(name, type, mass, volume);
+                    else
+                        Components.Add(type, new MyComponentInfo(name, type, mass, volume));
+                }
             }
             foreach (XmlNode y in File.GetElementsByTagName("PhysicalItem"))
             {
                 string name = "", type = "";
+                float mass = 0, volume = 0;
                 foreach (XmlNode z in y.ChildNodes)
                 {
                     switch (z.Name)
@@ -322,14 +407,68 @@ namespace BlueprintEditor2
                         case "DisplayName":
                             name += z.InnerText;
                             break;
+                        case "Mass":
+                            float.TryParse(z.InnerText.Replace('.',','), out mass);
+                            break;
+                        case "Volume":
+                            float.TryParse(z.InnerText.Replace('.', ','), out volume);
+                            break;
                     }
                 }
                 //name = name.Replace("MyObjectBuilder_", "");
-                if (Names.ContainsKey(type))
-                    Names[type] = name;
+                if (mods)
+                {
+                    if (Names.ContainsKey(type))
+                        Names[type] = name;
+                    else
+                        Names.Add(type, name);
+                    if (ModComponents.ContainsKey(modid))
+                    {
+                        if (ModComponents[modid].ContainsKey(type))
+                            ModComponents[modid][type] = new MyComponentInfo(name, type, mass, volume);
+                        else
+                            ModComponents[modid].Add(type, new MyComponentInfo(name, type, mass, volume));
+                    }
+                    else
+                        ModComponents.Add(modid, new Dictionary<string, MyComponentInfo>() { [type] = new MyComponentInfo(name, type, 0, 0) });
+                }
                 else
-                    Names.Add(type, name);
+                {
+                    if (Components.ContainsKey(type))
+                        Components[type] = new MyComponentInfo(name, type, 0, 0);
+                    else
+                        Components.Add(type, new MyComponentInfo(name, type, 0, 0));
+                }
+
             }
+        }
+    }
+    public class MyBlockRecipie
+    {
+        public readonly string Name;
+        public readonly Dictionary<string, int> Components;
+        public readonly int PCU;
+        public readonly Vector3 Size;
+        public MyBlockRecipie(string name, Dictionary<string, int> components, int pcu, Vector3 size)
+        {
+            Name = name;
+            Components = components;
+            PCU = pcu;
+            Size = size;
+        }
+    }
+    public class MyComponentInfo
+    {
+        public readonly string Type;
+        public readonly string Name;
+        public readonly float Mass;
+        public readonly float Volume;
+        public MyComponentInfo(string name, string type, float mass, float volume)
+        {
+            Name = name;
+            Type = type;
+            Mass = mass;
+            Volume = volume;
         }
     }
 }

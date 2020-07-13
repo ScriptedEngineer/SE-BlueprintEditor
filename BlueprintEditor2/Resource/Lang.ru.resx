@@ -449,6 +449,9 @@
   <data name="MaintainAspectRatio" xml:space="preserve">
     <value>Сохранять пропорции</value>
   </data>
+  <data name="Mass" xml:space="preserve">
+    <value>Масса</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
   </data>
@@ -650,6 +653,12 @@
   </data>
   <data name="ShowBlocks" xml:space="preserve">
     <value>Показывать блоки</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="Size_Blocks" xml:space="preserve">
+    <value>Размер в блоках</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>

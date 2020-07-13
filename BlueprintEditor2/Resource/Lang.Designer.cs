@@ -1047,6 +1047,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Mass.
+        /// </summary>
+        public static string Mass {
+            get {
+                return ResourceManager.GetString("Mass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Menu.
         /// </summary>
         public static string Menu {
@@ -1641,6 +1650,24 @@ namespace BlueprintEditor2.Resource {
         public static string ShowBlocks {
             get {
                 return ResourceManager.GetString("ShowBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Size in blocks.
+        /// </summary>
+        public static string Size_Blocks {
+            get {
+                return ResourceManager.GetString("Size_Blocks", resourceCulture);
             }
         }
         

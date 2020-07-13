@@ -17,10 +17,12 @@ namespace BlueprintEditor2
         private double SelfStoneAmount;
         public bool Mods = true;
         public bool OffStone = true;
+        public int PCU = 0, Blocks = 0;
+        public float Mass = 0;
 
-        public Dictionary<string, Dictionary<string, int>> ModCubeBlocks = new Dictionary<string, Dictionary<string, int>>();
+        public Dictionary<string, MyBlockRecipie> ModCubeBlocks = new Dictionary<string, MyBlockRecipie>();
         public Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
-
+        public Dictionary<string, MyComponentInfo> ModComponents = new Dictionary<string, MyComponentInfo>();
 
         Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
         Dictionary<string, double> Requared = new Dictionary<string, double>();
@@ -46,6 +48,7 @@ namespace BlueprintEditor2
         {
             ModCubeBlocks.Clear();
             ModRecipies.Clear();
+            ModComponents.Clear();
             foreach (var x in MyGameData.ModCubeBlocks)
             {
                 if(Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
@@ -56,6 +59,11 @@ namespace BlueprintEditor2
                 if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
                     ModRecipies = ModRecipies.Concat(x.Value.Where(n => !ModRecipies.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
             }
+            foreach (var x in MyGameData.ModComponents)
+            {
+                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
+                    ModComponents = ModComponents.Concat(x.Value.Where(n => !ModComponents.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
         }
 
         public void Clear()
@@ -64,6 +72,9 @@ namespace BlueprintEditor2
             RequaredBuidComp.Clear();
             UndefinedTypes = new List<string>();
             SelfStoneAmount = 0;
+            PCU = 0;
+            Blocks = 0;
+            Mass = 0;
         }
 
         public void SetYieldEffect(double yieldEffect)
@@ -204,15 +215,16 @@ namespace BlueprintEditor2
             return outer;
         }
 
-        public void AddBlock(MyXmlBlock block)
+        public MyBlockRecipie AddBlock(MyXmlBlock block)
         {
-            Dictionary<string,int> xx = null;
+            MyBlockRecipie xx = null;
             if (Mods && ModCubeBlocks.ContainsKey(block.DisplayType))
                xx = ModCubeBlocks[block.DisplayType];
             else if (MyGameData.CubeBlocks.ContainsKey(block.DisplayType))
                 xx = MyGameData.CubeBlocks[block.DisplayType];
             if (xx != null)
-                foreach (var x in xx)
+            {
+                foreach (var x in xx.Components)
                 {
                     if (Requared.ContainsKey(x.Key))
                     {
@@ -230,11 +242,20 @@ namespace BlueprintEditor2
                     {
                         RequaredBuidComp.Add(x.Key, x.Value);
                     }
+                    if (Mods && ModComponents.ContainsKey(x.Key))
+                        Mass += ModComponents[x.Key].Mass * x.Value;
+                    else if (MyGameData.Components.ContainsKey(x.Key))
+                        Mass += MyGameData.Components[x.Key].Mass * x.Value;
+                    else Console.WriteLine(x.Key);
                 }
+                PCU += xx.PCU;
+                Blocks++;
+            }
             else if (!UndefinedTypes.Contains(block.DisplayType))
             {
                 UndefinedTypes.Add(block.DisplayType);
             }
+            return xx;
         }
         public void CalculateIngots(Dictionary<string, double> ToRecalce = null, bool update = false)
         {

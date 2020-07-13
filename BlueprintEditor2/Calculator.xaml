@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:Resource="clr-namespace:BlueprintEditor2.Resource" x:Class="BlueprintEditor2.Calculator"
         mc:Ignorable="d"
-        Title="Calculator" Height="500" Width="1100" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" MinWidth="1100" MinHeight="400">
+        Title="Calculator" Height="500" Width="1100" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" MinWidth="1100" MinHeight="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="128*"/>
@@ -47,9 +47,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="StoneAmountText" Grid.Column="3" Height="23" Margin="0,0,4,10" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" TextChanged="TextBox_TextChanged" IsEnabled="False" Opacity="0.01"/>
-        <Label Content="{x:Static Resource:Lang.StoneAmount}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,33" VerticalAlignment="Bottom" Padding="0" Height="16" Width="131" IsEnabled="False" Opacity="0.01"/>
-        <Button Content="{x:Static Resource:Lang.CopyToClipboard}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,10,4,0" VerticalAlignment="Top" Width="191" Click="Button_Click" Height="20"/>
+        <TextBox x:Name="StoneAmountText" Grid.Column="3" Height="23" Margin="0,0,4,7" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" TextChanged="TextBox_TextChanged" IsEnabled="False" Opacity="0"/>
+        <Label Content="{x:Static Resource:Lang.StoneAmount}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,30" VerticalAlignment="Bottom" Padding="0" Height="16" Width="131" IsEnabled="False" Opacity="0"/>
         <Slider x:Name="AssembleEffic" Grid.Column="2" Margin="10,26,0,0" VerticalAlignment="Top" Minimum="1" SmallChange="1" TickPlacement="BottomRight" Value="1" LargeChange="2" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Left" Width="185" Height="24"/>
         <Label Content="{x:Static Resource:Lang.AssemblerEfficiency}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="144"/>
         <Label Content="1x" Grid.Column="2" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="12"/>
@@ -62,7 +61,7 @@
         <TextBox x:Name="YieldProcentage" Grid.Column="1" Height="23" Margin="0,94,20,0" TextWrapping="Wrap" Text="100%" VerticalAlignment="Top" TextChanged="YieldProcentage_TextChanged"/>
         <RadioButton x:Name="ProcentageYield" Content="{x:Static Resource:Lang.YieldProcentage}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,79,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1" Height="15" Width="130"/>
         <RadioButton x:Name="ModulesYield" Content="{x:Static Resource:Lang.YieldModules}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" IsChecked="True" Height="15" Width="126"/>
-        <CheckBox x:Name="OffStone" Content="{x:Static Resource:Lang.OffStone}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,54" VerticalAlignment="Bottom" Click="CheckBox_Click" Height="15" Width="153" IsEnabled="False" IsChecked="True" Opacity="0.01"/>
+        <CheckBox x:Name="OffStone" Content="{x:Static Resource:Lang.OffStone}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,51" VerticalAlignment="Bottom" Click="CheckBox_Click" Height="15" Width="153" IsEnabled="False" IsChecked="True" Opacity="0"/>
         <CheckBox x:Name="WithMods" Content="{x:Static Resource:Lang.WithMods}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="WithMods_Click" IsChecked="True" Height="15" Width="74"/>
         <CheckBox x:Name="OnlyForBuild" Content="{x:Static Resource:Lang.OnlyForBuild}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,30" VerticalAlignment="Bottom" Height="15" Click="OnlyForBuild_Click" Width="143"/>
         <ListView x:Name="ModsList" Margin="10,37,10,10" Grid.RowSpan="3" Grid.Column="4">
@@ -86,6 +85,8 @@
         <Button Content="{x:Static Resource:Lang.Save}" Grid.Column="4" HorizontalAlignment="Left" Margin="205,10,0,0" VerticalAlignment="Top" Width="81" Height="22" Click="Button_Click_1"/>
         <Button Content="{x:Static Resource:Lang.Delete}" Grid.Column="4" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="65" Height="22" Click="Button_Click_3"/>
         <Rectangle x:Name="Preloader" Visibility="Collapsed" Fill="#FFF4F4F5" Stroke="Black" Grid.ColumnSpan="5" Grid.RowSpan="3" Opacity="0.505"/>
+        <Button Content="{x:Static Resource:Lang.CopyToClipboard}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,4,8" VerticalAlignment="Bottom" Width="191" Click="Button_Click" Height="20"/>
+        <ListBox x:Name="InfoList" Grid.Column="3" Margin="0,10,4,35" SelectionChanged="InfoList_SelectionChanged"/>
 
     </Grid>
 </Window>
