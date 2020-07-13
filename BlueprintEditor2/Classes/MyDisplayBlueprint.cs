@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace BlueprintEditor2
         public DateTime LastEditTime { get; private set; }
         public string LastEditTimeText => LastEditTime.ToString("d");
         public int BlockCount { get; private set; }
-        public string BlockCountText => BlockCount.ToString();
+        public string BlockCountText => BlockCount.ToString("N0", CultureInfo.InvariantCulture);
         public int GridCount { get; private set; }
-        public string GridCountText => GridCount.ToString();
+        public string GridCountText => GridCount.ToString("N0", CultureInfo.InvariantCulture);
 
         private MyDisplayBlueprint()
         {

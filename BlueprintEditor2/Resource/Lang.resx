@@ -658,7 +658,7 @@ Cancel - Don't set default thumbnail</value>
     <value>Size</value>
   </data>
   <data name="Size_Blocks" xml:space="preserve">
-    <value>Size in blocks</value>
+    <value>Size (Large block)</value>
   </data>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>

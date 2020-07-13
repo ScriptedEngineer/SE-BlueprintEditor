@@ -1663,7 +1663,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Size in blocks.
+        ///   Ищет локализованную строку, похожую на Size (Large block).
         /// </summary>
         public static string Size_Blocks {
             get {

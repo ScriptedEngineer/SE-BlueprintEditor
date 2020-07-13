@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -186,7 +187,7 @@ namespace BlueprintEditor2
                         {
                             Size = SizeX;
                             sizes = $"{Size.X * blockLength} x {Size.Y * blockLength} x {Size.Z * blockLength} m³";
-                            sizez = $"{Size.X} x {Size.Y} x {Size.Z}";
+                            sizez = $"{Size.X * blockLength / 2.5} x {Size.Y * blockLength / 2.5} x {Size.Z * blockLength/2.5}";
                         }
                     }
                     calc.CalculateIngots();
@@ -210,10 +211,10 @@ namespace BlueprintEditor2
                         InfoList.ItemsSource = new string[]
                         {
                             $"{Lang.Size}: {sizes.Replace(',','.')}",
-                            $"{Lang.Size_Blocks}: {sizez}",
-                            $"{Lang.Mass}: {calc.Mass} kg",
-                            $"PCU: {calc.PCU}",
-                            $"{Lang.BlockCount}: {calc.Blocks}",
+                            $"{Lang.Size_Blocks}: {sizez.Replace(',','.')}",
+                            $"{Lang.Mass}: {calc.Mass.ToString("N0", CultureInfo.InvariantCulture)} kg",
+                            $"PCU: {calc.PCU.ToString("N0", CultureInfo.InvariantCulture)}",
+                            $"{Lang.BlockCount}: {calc.Blocks.ToString("N0", CultureInfo.InvariantCulture)}",
                         };
                     });
                 }

@@ -27,7 +27,7 @@
             <ListView.View>
                 <GridView x:Name="BlockListColumns">
                     <GridViewColumn DisplayMemberBinding="{Binding Type}" Header="{x:Static Resource:Lang.Components}" Width="200"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="{x:Static Resource:Lang.Amount}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Count}" Header="{x:Static Resource:Lang.Amount}"/>
                 </GridView>
             </ListView.View>
         </ListView>

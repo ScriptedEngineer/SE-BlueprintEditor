@@ -1,6 +1,7 @@
 ﻿using BlueprintEditor2.Resource;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -103,11 +104,11 @@ namespace BlueprintEditor2
         }
         string AddWeightCounters(double Num)
         {
-            string Oute = Num.ToString("0.00") + " Kg";
-            if (Num > 10000000000) Oute = (Num / 1000000000).ToString("0.00") + " MT";
-            else if (Num > 10000000) Oute = (Num / 1000000).ToString("0.00") + " KT";
-            else if (Num > 10000) Oute = (Num / 1000).ToString("0.00") + " T";
-            else if (Num < 0.1) Oute = (Num * 1000).ToString("0.00") + " g";
+            string Oute = Num.ToString("N2", CultureInfo.InvariantCulture) + " kg";
+            if (Num > 10000000000) Oute = (Num / 1000000000).ToString("N2", CultureInfo.InvariantCulture) + " MT";
+            else if (Num > 10000000) Oute = (Num / 1000000).ToString("N2", CultureInfo.InvariantCulture) + " KT";
+            else if (Num > 10000) Oute = (Num / 1000).ToString("N2", CultureInfo.InvariantCulture) + " T";
+            else if (Num < 0.1) Oute = (Num * 1000).ToString("N2", CultureInfo.InvariantCulture) + " g";
             return Oute;
         }
 
@@ -197,6 +198,7 @@ namespace BlueprintEditor2
             }
             return outer;
         }
+        //public string GetMass() => AddWeightCounters(Mass);
 
         public string GetUndefined()
         {
@@ -405,7 +407,7 @@ namespace BlueprintEditor2
         public MyResourceInfo(string t, int ci)
         {
             Type = t;
-            Count = ci.ToString();
+            Count = ci.ToString("N0", CultureInfo.InvariantCulture);
             Amount = ci;
         }
     }
