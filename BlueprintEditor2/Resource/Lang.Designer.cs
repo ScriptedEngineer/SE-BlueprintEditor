@@ -82,6 +82,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Add item.
+        /// </summary>
+        public static string AddItem {
+            get {
+                return ResourceManager.GetString("AddItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на All.
         /// </summary>
         public static string All {
@@ -642,6 +651,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete block(s).
+        /// </summary>
+        public static string DeleteBlock {
+            get {
+                return ResourceManager.GetString("DeleteBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete mods from workshop cache.
         /// </summary>
         public static string DeleteModCache {
@@ -971,6 +989,24 @@ namespace BlueprintEditor2.Resource {
         public static string Interface {
             get {
                 return ResourceManager.GetString("Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Inventory.
+        /// </summary>
+        public static string Inventory {
+            get {
+                return ResourceManager.GetString("Inventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Item.
+        /// </summary>
+        public static string Item {
+            get {
+                return ResourceManager.GetString("Item", resourceCulture);
             }
         }
         
@@ -1337,6 +1373,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Orientation.
+        /// </summary>
+        public static string Orientation {
+            get {
+                return ResourceManager.GetString("Orientation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Author.
         /// </summary>
         public static string Owner {
@@ -1355,7 +1400,7 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Settings saved! For apply settings need to restart app,you want to restart the app?.
+        ///   Ищет локализованную строку, похожую на Settings saved! For apply settings need to restart app, you want to restart the app?.
         /// </summary>
         public static string PleaseRestartApp {
             get {
@@ -1378,6 +1423,15 @@ namespace BlueprintEditor2.Resource {
         public static string Previous {
             get {
                 return ResourceManager.GetString("Previous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Program.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
             }
         }
         
@@ -1450,6 +1504,15 @@ namespace BlueprintEditor2.Resource {
         public static string RemLater {
             get {
                 return ResourceManager.GetString("RemLater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Remove item.
+        /// </summary>
+        public static string RemoveItem {
+            get {
+                return ResourceManager.GetString("RemoveItem", resourceCulture);
             }
         }
         
@@ -1718,6 +1781,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Storage.
+        /// </summary>
+        public static string Storage {
+            get {
+                return ResourceManager.GetString("Storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на System.
         /// </summary>
         public static string System {
@@ -1804,6 +1876,15 @@ namespace BlueprintEditor2.Resource {
         public static string UpdateNow {
             get {
                 return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Save backups.
+        /// </summary>
+        public static string UseBackups {
+            get {
+                return ResourceManager.GetString("UseBackups", resourceCulture);
             }
         }
         

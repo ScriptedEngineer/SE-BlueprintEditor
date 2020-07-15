@@ -16,12 +16,14 @@ namespace BlueprintEditor2
     {
         public static Dictionary<string, MyBlockRecipie> CubeBlocks = new Dictionary<string, MyBlockRecipie>();
         public static Dictionary<string, Dictionary<string, MyBlockRecipie>> ModCubeBlocks = new Dictionary<string, Dictionary<string, MyBlockRecipie>>();
-        
+        public static List<string> BlockTypes = new List<string>();
+
         public static Dictionary<string, Dictionary<string, double>> Recipies = new Dictionary<string, Dictionary<string, double>>();
         public static Dictionary<string, Dictionary<string, Dictionary<string, double>>> ModRecipies = new Dictionary<string, Dictionary<string, Dictionary<string, double>>>();
         
         public static Dictionary<string, MyComponentInfo> Components = new Dictionary<string, MyComponentInfo>();
         public static Dictionary<string, Dictionary<string, MyComponentInfo>> ModComponents = new Dictionary<string, Dictionary<string, MyComponentInfo>>();
+        public static List<string> ItemTypes = new List<string>();
 
         public static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
@@ -50,6 +52,10 @@ namespace BlueprintEditor2
                     {
                         AddComponentsInfo(x);
                     }
+                    foreach (var x in Directory.GetFiles(gamePatch + @"Content\Data", "AmmoMagazines*"))
+                    {
+                        AddAmmoInfo(x);
+                    }
                 }
                 //Mods
                 try
@@ -67,6 +73,7 @@ namespace BlueprintEditor2
                                 AddBlocksInfo(x, File, true, modid);
                                 AddRecipiesInfo(x, File, true, modid);
                                 AddComponentsInfo(x, File, true, modid);
+                                AddAmmoInfo(x, File, true, modid);
                             }
                             catch { }
                         }
@@ -163,7 +170,7 @@ namespace BlueprintEditor2
 
                     }
                 }
-                name = name.Replace("MyObjectBuilder_", "");
+                //name = name.Replace("MyObjectBuilder_", "");
                 if (components.Count > 0)
                     if (mods)
                     {
@@ -184,6 +191,8 @@ namespace BlueprintEditor2
                         else
                             CubeBlocks.Add(name, new MyBlockRecipie(name, components, PCU, Size));
                     }
+                if (!BlockTypes.Contains(name))
+                    BlockTypes.Add(name);
             }
         }
         private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
@@ -381,6 +390,8 @@ namespace BlueprintEditor2
                     else
                         Components.Add(type, new MyComponentInfo(name, type, mass, volume));
                 }
+                if (!ItemTypes.Contains(type))
+                    ItemTypes.Add(type);
             }
             foreach (XmlNode y in File.GetElementsByTagName("PhysicalItem"))
             {
@@ -439,7 +450,77 @@ namespace BlueprintEditor2
                     else
                         Components.Add(type, new MyComponentInfo(name, type, 0, 0));
                 }
+                if (!ItemTypes.Contains(type))
+                    ItemTypes.Add(type);
+            }
+        }
+        private static void AddAmmoInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
+        {
+            if (File == null)
+            {
+                File = new XmlDocument();
+                File.Load(file);
+            }
+            foreach (XmlNode y in File.GetElementsByTagName("AmmoMagazine"))
+            {
+                string name = "", type = "";
+                float mass = 0, volume = 0;
+                foreach (XmlNode z in y.ChildNodes)
+                {
+                    switch (z.Name)
+                    {
+                        case "Id":
+                            foreach (XmlNode h in z.ChildNodes)
+                            {
+                                switch (h.Name)
+                                {
+                                    case "TypeId":
+                                        type = h.InnerText + type;
+                                        break;
+                                    case "SubtypeId":
+                                        type += "/" + h.InnerText;
+                                        break;
+                                }
+                            }
+                            break;
+                        case "DisplayName":
+                            name += z.InnerText;
+                            break;
+                        case "Mass":
+                            float.TryParse(z.InnerText.Replace('.', ','), out mass);
+                            break;
+                        case "Volume":
+                            float.TryParse(z.InnerText.Replace('.', ','), out volume);
+                            break;
+                    }
+                }
+                //name = name.Replace("MyObjectBuilder_", "");
+                if (mods)
+                {
+                    if (Names.ContainsKey(type))
+                        Names[type] = name;
+                    else
+                        Names.Add(type, name);
 
+                    if (ModComponents.ContainsKey(modid))
+                    {
+                        if (ModComponents[modid].ContainsKey(type))
+                            ModComponents[modid][type] = new MyComponentInfo(name, type, mass, volume);
+                        else
+                            ModComponents[modid].Add(type, new MyComponentInfo(name, type, mass, volume));
+                    }
+                    else
+                        ModComponents.Add(modid, new Dictionary<string, MyComponentInfo>() { [type] = new MyComponentInfo(name, type, mass, volume) });
+                }
+                else
+                {
+                    if (Components.ContainsKey(type))
+                        Components[type] = new MyComponentInfo(name, type, mass, volume);
+                    else
+                        Components.Add(type, new MyComponentInfo(name, type, mass, volume));
+                }
+                if (!ItemTypes.Contains(type))
+                    ItemTypes.Add(type);
             }
         }
     }

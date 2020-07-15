@@ -24,7 +24,7 @@ namespace BlueprintEditor2
     {
         static internal Settings LastWindow;
         readonly int[] Langs = new int[] {9, 1049};
-        bool hasChanged = false;
+        bool RestartApp = false;
         public Settings()
         {
             int _indexLCID = Array.IndexOf(Langs, MySettings.Current.LangCultureID);
@@ -38,7 +38,8 @@ namespace BlueprintEditor2
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
             DOBSBox.IsChecked = MySettings.Current.DontOpenBlueprintsOnScan;
             NickName.Text = MySettings.Current.UserName;
-            hasChanged = false;
+            SaveBackups.IsChecked = MySettings.Current.SaveBackups;
+            RestartApp = false;
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -49,7 +50,7 @@ namespace BlueprintEditor2
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (hasChanged)
+            if (RestartApp)
             {
                 Logger.Add("Show restart dialog");
                 MySettings.Serialize();
@@ -65,6 +66,7 @@ namespace BlueprintEditor2
                     {
                         SelectBlueprint.window.SetLock(false, null);
                         LastWindow = null;
+                        MySettings.Current.ApplySettings();
                     }
                 }).Show();
             }
@@ -72,19 +74,20 @@ namespace BlueprintEditor2
             {
                 LastWindow = null;
             }
+            SelectBlueprint.window.SettingsUpdated();
         }
 
         private void MultiWindowCheckBox_Click(object sender, RoutedEventArgs e)
         {
             MySettings.Current.MultiWindow = MultiWindowCheckBox.IsChecked.Value;
-            hasChanged = true;
+            //RestartApp = true;
         }
 
         private void LangSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LangSelect.SelectedIndex == -1) return;
             MySettings.Current.LangCultureID = Langs[LangSelect.SelectedIndex];
-            hasChanged = true;
+            RestartApp = true;
         }
 
         private void BlueprintFolderSetting_TextChanged(object sender, TextChangedEventArgs e)
@@ -92,7 +95,7 @@ namespace BlueprintEditor2
             if (Directory.Exists(BlueprintFolderSetting.Text))
             {
                 MySettings.Current.BlueprintPatch = BlueprintFolderSetting.Text;
-                hasChanged = true;
+                RestartApp = true;
             }
         }
 
@@ -108,7 +111,7 @@ namespace BlueprintEditor2
                 if (result.Equals(System.Windows.Forms.DialogResult.OK))
                 {
                     BlueprintFolderSetting.Text = dialog.SelectedPath + "\\";
-                    hasChanged = true;
+                    RestartApp = true;
                 }
             }
         }
@@ -118,7 +121,7 @@ namespace BlueprintEditor2
             if (Directory.Exists(GameFolderSetting.Text))
             {
                 MySettings.Current.GamePatch = GameFolderSetting.Text;
-                hasChanged = true;
+                RestartApp = true;
             }
         }
 
@@ -134,7 +137,7 @@ namespace BlueprintEditor2
                 if (result.Equals(System.Windows.Forms.DialogResult.OK))
                 {
                     GameFolderSetting.Text = dialog.SelectedPath + "\\";
-                    hasChanged = true;
+                    RestartApp = true;
                 }
             }
         }
@@ -142,13 +145,13 @@ namespace BlueprintEditor2
         private void DOBSBox_Click(object sender, RoutedEventArgs e)
         {
             MySettings.Current.DontOpenBlueprintsOnScan = DOBSBox.IsChecked.Value;
-            hasChanged = true;
+            //hasChanged = true;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MySettings.Current.UserName = NickName.Text;
-            hasChanged = true;
+            //hasChanged = true;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -163,7 +166,7 @@ namespace BlueprintEditor2
                 if (result.Equals(System.Windows.Forms.DialogResult.OK))
                 {
                     SavesFolderSetting.Text = dialog.SelectedPath + "\\";
-                    hasChanged = true;
+                    RestartApp = true;
                 }
             }
         }
@@ -173,7 +176,7 @@ namespace BlueprintEditor2
             if (Directory.Exists(WorkshopFolderSetting.Text))
             {
                 MySettings.Current.SteamWorkshopPatch = WorkshopFolderSetting.Text;
-                hasChanged = true;
+                RestartApp = true;
             }
         }
 
@@ -182,7 +185,7 @@ namespace BlueprintEditor2
             if (Directory.Exists(SavesFolderSetting.Text))
             {
                 MySettings.Current.SavesPatch = SavesFolderSetting.Text;
-                hasChanged = true;
+                RestartApp = true;
             }
         }
 
@@ -197,9 +200,15 @@ namespace BlueprintEditor2
                 if (result.Equals(System.Windows.Forms.DialogResult.OK))
                 {
                     WorkshopFolderSetting.Text = dialog.SelectedPath + "\\";
-                    hasChanged = true;
+                    RestartApp = true;
                 }
             }
+        }
+
+        private void SaveBackups_Click(object sender, RoutedEventArgs e)
+        {
+            MySettings.Current.SaveBackups = SaveBackups.IsChecked.Value;
+            //hasChanged = true;
         }
     }
 }

@@ -51,6 +51,7 @@
                                     <Button Content="{Binding Edit.Content}" Visibility="{Binding Edit.ButtonVisible}"/>
                                     <TextBox Text="{Binding Edit.Content}" Visibility="{Binding Edit.IntTextboxVisible}" TextChanged="TextBox_TextChanged"/>
                                     <TextBox Text="{Binding Edit.Content}" Visibility="{Binding Edit.FloatTextboxVisible}" TextChanged="TextBox_TextChanged_1"/>
+                                    <TextBox Text="{Binding Edit.Content}" Visibility="{Binding Edit.TextTextboxVisible}" TextChanged="TextBox_TextChanged_4" MinWidth="50"/>
                                     <Label Content="{Binding Edit.Content}" Visibility="{Binding Edit.LabelVisible}" Padding="0"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -69,41 +70,39 @@
         </ComboBox>
         <TextBox x:Name="BlockNameBox" HorizontalAlignment="Left" Height="23" Margin="0,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" Grid.Column="2" Grid.Row="1" IsEnabled="False" TextChanged="BlockNameBox_TextChanged"/>
         <Label Content="{x:Static res:Lang.BlockName}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
-        <TextBox x:Name="BlockTypeBox" HorizontalAlignment="Left" Height="23" Margin="0,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False" TextChanged="BlockTypeBox_TextChanged"/>
+        <ComboBox IsTextSearchEnabled="False" IsEditable="True" x:Name="BlockTypeBox" HorizontalAlignment="Left" Height="23" Margin="0,60,0,0" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False" TextBoxBase.TextChanged="BlockTypeBox_TextChanged" DropDownOpened="BlockTypeBox_DropDownOpened"/>
         <Label Content="{x:Static res:Lang.BlockType}" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
-        <TextBox x:Name="BlockSubtypeBox" HorizontalAlignment="Left" Height="23" Margin="0,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.Column="2" Grid.Row="1" IsEnabled="False" TextChanged="BlockSubtypeBox_TextChanged"/>
-        <Label Content="{x:Static res:Lang.BlockSubtype}" HorizontalAlignment="Left" Margin="0,88,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
         <Button Content="{x:Static res:Lang.SaveClose}" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="142" Click="Button_Click" Grid.Row="1"/>
         <Rectangle x:Name="BlockColorBox" HorizontalAlignment="Left" Height="23" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="277,16,0,0" Grid.Row="1" MouseUp="BlockColorBox_MouseUp" IsEnabled="False">
             <Rectangle.Fill>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <ComboBox x:Name="ShareBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="0,148,0,0" Grid.Row="1" IsEnabled="False" SelectionChanged="ShareBox_SelectionChanged">
+        <ComboBox x:Name="ShareBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Grid.Column="2" Margin="0,104,0,0" Grid.Row="1" IsEnabled="False" SelectionChanged="ShareBox_SelectionChanged">
             <ComboBoxItem Content="{x:Static res:Lang.All}"/>
             <ComboBoxItem Content="{x:Static res:Lang.Faction}"/>
             <ComboBoxItem Content="{x:Static res:Lang.Nobody}"/>
         </ComboBox>
-        <Label Content="{x:Static res:Lang.ShareMode}" HorizontalAlignment="Left" Margin="0,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="120"/>
+        <Label Content="{x:Static res:Lang.ShareMode}" HorizontalAlignment="Left" Margin="0,88,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="120"/>
         <TextBox x:Name="Search" Grid.Column="1" Height="22" Margin="1,0,176,10" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         <ComboBox x:Name="SearchBy" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,78,10" Grid.Row="1" VerticalAlignment="Bottom" Width="93" SelectedIndex="0">
             <ComboBoxItem Content="{x:Static res:Lang.BlockType}"/>
             <ComboBoxItem Content="{x:Static res:Lang.Name}"/>
         </ComboBox>
         <Button Content="{x:Static res:Lang.Search}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="1" VerticalAlignment="Bottom" Width="63" RenderTransformOrigin="0.086,0.8" Height="22" Click="Button_Click_1"/>
-        <Button x:Name="DeleteButton" Content="{x:Static res:Lang.Delete}" Grid.Column="2" HorizontalAlignment="Left" Margin="226,175,0,0" Grid.Row="1" VerticalAlignment="Top" Width="74" Click="Button_Click_2" Height="22" IsEnabled="False"/>
+        <Button x:Name="DeleteButton" Content="{x:Static res:Lang.DeleteBlock}" Grid.Column="2" HorizontalAlignment="Left" Margin="180,131,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Click="Button_Click_2" Height="22" IsEnabled="False"/>
         <ComboBox x:Name="GridArmourType" Grid.Column="1" HorizontalAlignment="Right" Margin="0,117,10,0" VerticalAlignment="Top" Width="126" RenderTransformOrigin="0.5,0.5" SelectionChanged="GridArmourType_SelectionChanged" IsEnabled="False">
             <ComboBoxItem Content="{x:Static res:Lang.HeavyArmor}"/>
             <ComboBoxItem Content="{x:Static res:Lang.LightArmor}"/>
         </ComboBox>
         <Label Content="{x:Static res:Lang.GridArmorType}" Grid.Column="1" HorizontalAlignment="Right" Margin="0,101,45,0" VerticalAlignment="Top" Padding="0"/>
-        <TextBox x:Name="BlockZ" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="265,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
-        <TextBox x:Name="BlockX" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="163,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
-        <TextBox x:Name="BlockY" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="214,148,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" Text="0" IsEnabled="False"/>
-        <Label Content="{x:Static res:Lang.BlockPosition}" HorizontalAlignment="Left" Margin="152,132,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="148" HorizontalContentAlignment="Right"/>
-        <Label Content="X" HorizontalAlignment="Left" Margin="152,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
-        <Label Content="Y" HorizontalAlignment="Left" Margin="203,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
-        <Label Content="Z" HorizontalAlignment="Left" Margin="254,149,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <TextBox x:Name="BlockZ" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="265,104,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
+        <TextBox x:Name="BlockX" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="163,104,0,0" Grid.Row="1" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" IsEnabled="False"/>
+        <TextBox x:Name="BlockY" Grid.Column="2" HorizontalAlignment="Left" Height="22" Margin="214,104,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="35" TextChanged="BlockXYZ_TextChanged" Text="0" IsEnabled="False"/>
+        <Label Content="{x:Static res:Lang.BlockPosition}" HorizontalAlignment="Left" Margin="152,88,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1" Width="148" HorizontalContentAlignment="Right"/>
+        <Label Content="X" HorizontalAlignment="Left" Margin="152,105,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <Label Content="Y" HorizontalAlignment="Left" Margin="203,105,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
+        <Label Content="Z" HorizontalAlignment="Left" Margin="254,105,0,0" VerticalAlignment="Top" Padding="2,0,2,1" Grid.Column="2" Height="16" Grid.Row="1"/>
         <ComboBox x:Name="ShowType" Grid.Column="1" HorizontalAlignment="Left" Margin="1,117,0,0" VerticalAlignment="Top" Width="140" SelectionChanged="ComboBox_SelectionChanged" SelectedIndex="0">
             <ComboBoxItem Content="{x:Static res:Lang.AllBlocks}"/>
             <ComboBoxItem Content="{x:Static res:Lang.HideArmor}"/>
@@ -112,7 +111,7 @@
             <ComboBoxItem Content="{x:Static res:Lang.OnlyTerminal}"/>
         </ComboBox>
         <Label Content="{x:Static res:Lang.ShowBlocks}" Grid.Column="1" HorizontalAlignment="Left" Margin="1,101,0,0" VerticalAlignment="Top" Padding="0"/>
-        <TabControl x:Name="Specials" Grid.Column="2" HorizontalAlignment="Left" Margin="0,202,0,35" Grid.Row="1" Width="300" SelectedIndex="0" IsEnabled="False">
+        <TabControl x:Name="Specials" Grid.Column="2" HorizontalAlignment="Left" Margin="0,158,0,35" Grid.Row="1" Width="300" SelectedIndex="0" IsEnabled="False">
             <TabItem Header="" Width="0" Height="0">
                 <Grid Background="#FFE5E5E5">
                     <Label Content="This feature still in developing" Margin="0,10,0,0" Padding="2,1,5,0" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center"/>
@@ -129,7 +128,49 @@
                     <TextBox x:Name="PannelText" TextWrapping="Wrap" AcceptsReturn="True" TextChanged="PannelText_TextChanged"/>
                 </Grid>
             </TabItem>
-
+            <TabItem Visibility="Collapsed" Header="{x:Static res:Lang.Inventory}" Height="20" Width="Auto">
+                <Grid Background="#FFE5E5E5">
+                    <ListView x:Name="InventoryItems" Margin="0,24,0,0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{x:Static res:Lang.Item}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <ComboBox Text="{Binding Type}" IsTextSearchEnabled="False" IsEditable="True" Width="180" TextBoxBase.TextChanged="InventoryItem_TextChanged" DropDownOpened="BlockTypeBox_DropDownOpened"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static res:Lang.Amount}" Width="60">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBox Text="{Binding Amount}" TextChanged="TextBox_TextChanged_3"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="{x:Static res:Lang.AddItem}" HorizontalAlignment="Right" Margin="0,2,95,0" VerticalAlignment="Top" Width="88" Click="Button_Click_5"/>
+                    <ComboBox x:Name="InventoryNum" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="20" SelectedIndex="0" Margin="2,2,0,0" SelectionChanged="InventoryNum_SelectionChanged">
+                        <System:String>#1</System:String>
+                    </ComboBox>
+                    <Button Content="{x:Static res:Lang.RemoveItem}" HorizontalAlignment="Right" Margin="0,2,2,0" VerticalAlignment="Top" Width="88" Click="Button_Click_6"/>
+                </Grid>
+            </TabItem>
+            <TabItem Visibility="Collapsed" Header="{x:Static res:Lang.Program}" Height="20" Width="Auto">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Program" TextWrapping="Wrap" AcceptsReturn="True" TextChanged="Program_TextChanged"/>
+                </Grid>
+            </TabItem>
+            <TabItem Visibility="Collapsed" Header="{x:Static res:Lang.Storage}" Height="20" Width="Auto">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="Storage" TextWrapping="Wrap" AcceptsReturn="True" TextChanged="Storage_TextChanged"/>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Rectangle x:Name="GridColorExist" HorizontalAlignment="Left" Height="22" Stroke="Black" VerticalAlignment="Top" Width="23" Grid.Column="2" Margin="135,26,0,0">
             <Rectangle.Fill>

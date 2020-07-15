@@ -126,6 +126,9 @@ Developed by clan "Andromeda"</value>
   <data name="AboutProg" xml:space="preserve">
     <value>About program</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Add item</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
@@ -314,6 +317,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Delete all backups of all blueprints in this directory</value>
   </data>
+  <data name="DeleteBlock" xml:space="preserve">
+    <value>Delete block(s)</value>
+  </data>
   <data name="DeleteModCache" xml:space="preserve">
     <value>Delete mods from workshop cache</value>
   </data>
@@ -424,6 +430,12 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Interface</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>Inventory</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
   </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>This action will delete the current blueprint file, do you really want to do this?</value>
@@ -547,6 +559,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="Ores" xml:space="preserve">
     <value>Ores</value>
   </data>
+  <data name="Orientation" xml:space="preserve">
+    <value>Orientation</value>
+  </data>
   <data name="Owner" xml:space="preserve">
     <value>Author</value>
   </data>
@@ -554,13 +569,16 @@ Cancel - Don't set default thumbnail</value>
     <value>Picture</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
-    <value>Settings saved! For apply settings need to restart app,you want to restart the app?</value>
+    <value>Settings saved! For apply settings need to restart app, you want to restart the app?</value>
   </data>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Please wait,  it's just that our servers work on potato electricity</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>Properties</value>
@@ -585,6 +603,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="RemLater" xml:space="preserve">
     <value>Remind me later</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Remove item</value>
   </data>
   <data name="RepairTheGrid" xml:space="preserve">
     <value>Repair the grid</value>
@@ -676,6 +697,9 @@ Please set this in the settings.</value>
   <data name="StoneAmount" xml:space="preserve">
     <value>Stone amount (kg)</value>
   </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Storage</value>
+  </data>
   <data name="System" xml:space="preserve">
     <value>System</value>
   </data>
@@ -705,6 +729,9 @@ Please set this in the settings.</value>
   </data>
   <data name="UpdateNow" xml:space="preserve">
     <value>Update now (auto)</value>
+  </data>
+  <data name="UseBackups" xml:space="preserve">
+    <value>Save backups</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

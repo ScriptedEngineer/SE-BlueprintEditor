@@ -92,6 +92,10 @@ namespace BlueprintEditor2
         {
             if (Directory.Exists(Patch))
             {
+                foreach (var gr in Grids)
+                    foreach (var bl in gr.Blocks)
+                        foreach (var inv in bl.Inventories)
+                            inv.Save();
                 BlueprintXml.Save(Patch + "\\bp.sbc");
             }
         }

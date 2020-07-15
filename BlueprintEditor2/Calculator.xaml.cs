@@ -172,7 +172,7 @@ namespace BlueprintEditor2
                             if (Bp.X < Min.X) Min.X = Bp.X;
                             if (Bp.Y < Min.Y) Min.Y = Bp.Y;
                             if (Bp.Z < Min.Z) Min.Z = Bp.Z;
-                            BlockOrientation blockOrientation = Bl.Orientation;
+                            MyBlockOrientation blockOrientation = Bl.Orientation;
                             Vector3 BpM = xx == null?new Vector3(1,1,1) :(blockOrientation == null? new Vector3(xx.Size.X, xx.Size.Y, xx.Size.Z) : blockOrientation.SizeToPos(xx.Size));
                             BpM.X += Bp.X;
                             BpM.Y += Bp.Y;

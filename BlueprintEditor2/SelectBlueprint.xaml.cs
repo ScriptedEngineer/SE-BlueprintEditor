@@ -183,6 +183,10 @@ namespace BlueprintEditor2
                 });
             }).Start();
         }
+        public void SettingsUpdated()
+        {
+            Welcome.Content = Lang.Welcome + " " + MySettings.Current.UserName.Replace("_", "__");
+        }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MyDisplayBlueprint Selected = (MyDisplayBlueprint)BlueList.SelectedItem;
@@ -257,11 +261,14 @@ namespace BlueprintEditor2
                     //Left = 0;
                     //Top = SystemParameters.PrimaryScreenHeight / 2 - (Height / 2);
                 }
-                CurrentBlueprint.SaveBackup();
+                if (MySettings.Current.SaveBackups)
+                {
+                    CurrentBlueprint.SaveBackup();
+                    BackupButton.IsEnabled = true;
+                }
                 Logger.Add($"Open editor for [{CurrentBlueprint.Name}]");
                 EditBlueprint Form = new EditBlueprint(File.Create(CurrentBlueprint.Patch + "/~lock.dat", 256, FileOptions.DeleteOnClose), CurrentBlueprint);
                 Form.Show();
-                BackupButton.IsEnabled = true;
             }
             else
             {

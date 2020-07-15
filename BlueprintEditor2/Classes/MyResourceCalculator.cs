@@ -220,10 +220,10 @@ namespace BlueprintEditor2
         public MyBlockRecipie AddBlock(MyXmlBlock block)
         {
             MyBlockRecipie xx = null;
-            if (Mods && ModCubeBlocks.ContainsKey(block.DisplayType))
-               xx = ModCubeBlocks[block.DisplayType];
-            else if (MyGameData.CubeBlocks.ContainsKey(block.DisplayType))
-                xx = MyGameData.CubeBlocks[block.DisplayType];
+            if (Mods && ModCubeBlocks.ContainsKey(block.Type))
+               xx = ModCubeBlocks[block.Type];
+            else if (MyGameData.CubeBlocks.ContainsKey(block.Type))
+                xx = MyGameData.CubeBlocks[block.Type];
             if (xx != null)
             {
                 foreach (var x in xx.Components)
@@ -253,9 +253,9 @@ namespace BlueprintEditor2
                 PCU += xx.PCU;
                 Blocks++;
             }
-            else if (!UndefinedTypes.Contains(block.DisplayType))
+            else if (!UndefinedTypes.Contains(block.Type))
             {
-                UndefinedTypes.Add(block.DisplayType);
+                UndefinedTypes.Add(block.Type);
             }
             return xx;
         }

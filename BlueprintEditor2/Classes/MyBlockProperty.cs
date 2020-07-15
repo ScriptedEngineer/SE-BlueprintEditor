@@ -64,6 +64,14 @@ namespace BlueprintEditor2
                 Edit.FloatTextboxVisible = Visibility.Visible;
                 //Title = _PropertyXml.InnerText;
             }
+            /*else if (!string.IsNullOrEmpty(_PropertyXml.InnerText) && _PropertyXml.InnerText == _PropertyXml.InnerXml)
+            {
+                Edit = new EditorData();
+                Edit.Content = _PropertyXml.InnerText;
+                //_Edit.IsChecked = Test;
+                Edit.TextTextboxVisible = Visibility.Visible;
+                //Title = _PropertyXml.InnerText;
+            }*/
             else
             {
                 EditorData box = new EditorData();
@@ -83,6 +91,7 @@ namespace BlueprintEditor2
             public Visibility CheckboxVisible { get; set; } = Visibility.Collapsed;
             public Visibility IntTextboxVisible { get; set; } = Visibility.Collapsed;
             public Visibility FloatTextboxVisible { get; set; } = Visibility.Collapsed;
+            public Visibility TextTextboxVisible { get; set; } = Visibility.Collapsed;
             public Visibility LabelVisible { get; set; } = Visibility.Collapsed;
             public string Content { get; set; }
             public bool IsChecked { get; set; }

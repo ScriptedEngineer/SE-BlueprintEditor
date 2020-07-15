@@ -19,6 +19,9 @@ namespace BlueprintEditor2
         public ShareMode? Share;
         public Vector3 Position;
         public List<MyBlockProperty> Properties = new List<MyBlockProperty>();
+        public List<MyBlockInventory> Inventories = new List<MyBlockInventory>();
+        public string Program;
+        public string Storage;
 
         internal MyXmlBlockEqualer(MyXmlBlock block)
         {
@@ -31,11 +34,16 @@ namespace BlueprintEditor2
             if (block.ShareMode.HasValue) Share = block.ShareMode;
             foreach (var x in block.Properties)
                 Properties.Add(x);
+            Inventories = block.Inventories;
+            Program = block.Program;
+            Storage = block.Storage;
         }
 
         public void Equalize(MyXmlBlock block)
         {
             Position = Vector3.Zero;
+            Inventories = new List<MyBlockInventory>();
+            Program = Storage = null;
             if (block.Type != Type) Type = null;
             if (Name != null && block.Name != Name)
                 if (block.Name == null)

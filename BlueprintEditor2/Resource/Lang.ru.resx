@@ -126,6 +126,9 @@
   <data name="AboutProg" xml:space="preserve">
     <value>О программе</value>
   </data>
+  <data name="AddItem" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>Всем</value>
   </data>
@@ -314,6 +317,9 @@
   <data name="DeleteAllBackups" xml:space="preserve">
     <value>Удалить все резервные копии всех чертежей в этой папке</value>
   </data>
+  <data name="DeleteBlock" xml:space="preserve">
+    <value>Удалить блок(и)</value>
+  </data>
   <data name="DeleteModCache" xml:space="preserve">
     <value>Удалить моды из кэша мастерской</value>
   </data>
@@ -424,6 +430,12 @@
   </data>
   <data name="Interface" xml:space="preserve">
     <value>Интерфейс</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>Инвентарь</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Предмет</value>
   </data>
   <data name="ItWillDelete" xml:space="preserve">
     <value>Это действие приведет к удалению текущего файла чертежа, вы действительно хотите это сделать?</value>
@@ -547,6 +559,9 @@
   <data name="Ores" xml:space="preserve">
     <value>Руды</value>
   </data>
+  <data name="Orientation" xml:space="preserve">
+    <value>Ориентация</value>
+  </data>
   <data name="Owner" xml:space="preserve">
     <value>Автор</value>
   </data>
@@ -561,6 +576,9 @@
   </data>
   <data name="Previous" xml:space="preserve">
     <value>Предыдущий</value>
+  </data>
+  <data name="Program" xml:space="preserve">
+    <value>Программа</value>
   </data>
   <data name="Properties" xml:space="preserve">
     <value>Свойства</value>
@@ -585,6 +603,9 @@
   </data>
   <data name="RemLater" xml:space="preserve">
     <value>Напомнить позже</value>
+  </data>
+  <data name="RemoveItem" xml:space="preserve">
+    <value>Удалить</value>
   </data>
   <data name="RepairTheGrid" xml:space="preserve">
     <value>Починить сетку</value>
@@ -675,6 +696,9 @@
   <data name="StoneAmount" xml:space="preserve">
     <value>Колличество камня (kg)</value>
   </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Хранилище</value>
+  </data>
   <data name="System" xml:space="preserve">
     <value>Система</value>
   </data>
@@ -704,6 +728,9 @@
   </data>
   <data name="UpdateNow" xml:space="preserve">
     <value>Обновить сейчас (автоматически)</value>
+  </data>
+  <data name="UseBackups" xml:space="preserve">
+    <value>Сохранять резервные копии</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Версия</value>

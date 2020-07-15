@@ -35,8 +35,10 @@ namespace BlueprintEditor2
         public bool MultiWindow = false;
         [DataMember(Name = "DontOpenBlueprintsOnScan")]
         public bool DontOpenBlueprintsOnScan = false;
+        [DataMember(Name = "SaveBackups")]
+        public bool SaveBackups = true;
         [DataMember(Name = "LangCultureID")]
-        public int LangCultureID = 0;
+        public int LangCultureID = 9;
         [DataMember(Name = "UserSteamID")]
         public string SteamID = "";
         [DataMember(Name = "UserName")]
@@ -141,7 +143,13 @@ namespace BlueprintEditor2
         }
         public void ApplySettings()
         {
-            if(LangCultureID != 0) Thread.CurrentThread.CurrentUICulture = new CultureInfo(LangCultureID);
+            if (LangCultureID != 0)
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(LangCultureID);
+            else
+            {
+                LangCultureID = 9;
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(LangCultureID);
+            }
         }
         public static void Serialize()
         {

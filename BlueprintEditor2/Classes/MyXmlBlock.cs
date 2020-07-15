@@ -19,24 +19,25 @@ namespace BlueprintEditor2
         private readonly XmlNode _CustomDataNode;
         private readonly XmlNode _PublicTextNode;
         private readonly XmlNode _SkinNode;
+        private readonly XmlNode _ProgramNode;
+        private readonly XmlNode _StorageNode;
         private Dictionary<string,MyBlockProperty> _Properties = new Dictionary<string, MyBlockProperty>();
-
         public string Type
         {
-            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value + "/" + _SubTypeNode.InnerText;
+            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode.InnerText;
             set
             {
                 string[] types = value.Split('/');
-                if (types.Length != 2) return;
+                if (types.Length < 2) return;
+                types[0] = "MyObjectBuilder_" + types[0];
                 if (_BlockXml.Attributes != default(XmlAttributeCollection))
                     _BlockXml.Attributes.GetNamedItem("xsi:type").Value = types[0];
-                _SubTypeNode.InnerText = types[1];
+                if (string.IsNullOrEmpty(types[1]))
+                    (_SubTypeNode as XmlElement).IsEmpty = true;
+                else _SubTypeNode.InnerText = types[1];
             }
         }
-        public string DisplayType
-        {
-            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode.InnerText;
-        }
+        public string DisplayType => Type;
         public string Name
         {
             get => _NameNode?.InnerText;
@@ -163,11 +164,30 @@ namespace BlueprintEditor2
                 if (_SkinNode != null) _SkinNode.InnerText = value;
             }
         }
-        public BlockOrientation Orientation { get; set; }
+        public MyBlockOrientation Orientation { get; set; }
+        public List<MyBlockInventory> Inventories { get; set; }
+
+        public string Program
+        {
+            get => _ProgramNode?.InnerText;
+            set
+            {
+                if (_ProgramNode != null) _ProgramNode.InnerText = value;
+            }
+        }
+        public string Storage
+        {
+            get => _StorageNode?.InnerText;
+            set
+            {
+                if (_StorageNode != null) _StorageNode.InnerText = value;
+            }
+        }
 
         internal MyXmlBlock(XmlNode block)
         {
             _BlockXml = block;
+            Inventories = new List<MyBlockInventory>();
             foreach (XmlNode child in block.ChildNodes)
                 switch (child.Name)
                 {
@@ -195,6 +215,20 @@ namespace BlueprintEditor2
                                 case "MyModStorageComponent":
                                     _CustomDataNode = node.LastChild.LastChild.LastChild.LastChild.LastChild;
                                     break;
+                                case "MyInventoryBase":
+                                    switch (node.LastChild.Attributes?.GetNamedItem("xsi:type").Value)
+                                    {
+                                        case "MyObjectBuilder_Inventory":
+                                            Inventories.Add(new MyBlockInventory(node.LastChild));
+                                            break;
+                                        case "MyObjectBuilder_InventoryAggregate":
+                                            foreach (XmlNode inode in node.LastChild.LastChild.ChildNodes)
+                                            {
+                                                Inventories.Add(new MyBlockInventory(inode));
+                                            }
+                                            break;
+                                    }
+                                    break;
                             }
                         }
                         break;
@@ -205,12 +239,23 @@ namespace BlueprintEditor2
                         _SkinNode = child;
                         break;
                     case "BlockOrientation":
-                        Orientation = new BlockOrientation(child);
+                        Orientation = new MyBlockOrientation(child);
+                        break;
+                    case "Program":
+                        _ProgramNode = child;
+                        break;
+                    case "Storage":
+                        _StorageNode = child;
                         break;
                     default:
                         var prop = new MyBlockProperty(child);
                         _Properties.Add(prop.PropertyName, prop);
                         continue;
+                    //Ignore
+                    case "EntityId":
+                        break;
+
+
                 }
         }
         public void Delete()
@@ -234,7 +279,7 @@ namespace BlueprintEditor2
             }
         }
     }
-    public class BlockOrientation
+    public class MyBlockOrientation
     {
         private readonly XmlNode _OrientationNode;
         private Base6Directions _Forward, _Up;
@@ -259,7 +304,7 @@ namespace BlueprintEditor2
                 Atrs.GetNamedItem("Up").Value = _Up.ToString();
             }
         }
-        public BlockOrientation(XmlNode Onode)
+        public MyBlockOrientation(XmlNode Onode)
         {
             _OrientationNode = Onode;
             var Atrs = _OrientationNode.Attributes;
@@ -311,6 +356,96 @@ namespace BlueprintEditor2
                     break;
             }
             return new Vector3(size.X, size.Y, size.Z);//InvalidOrientation;
+        }
+    }
+    public class MyBlockInventory
+    {
+        private readonly XmlNode InventoryNode;
+        private readonly XmlNode ItemsNode;
+        private readonly XmlNode NextIDNode;
+        private readonly XmlNode VolumeNode;
+        private List<MyItem> _Items = new List<MyItem>();
+        public IEnumerable<MyItem> Items
+        {
+            get => _Items; 
+            set
+            {
+                _Items = new List<MyItem>(value);
+                string Inventoryed = "";
+                int Couner = 0;
+                foreach (MyItem inv in _Items)
+                {
+                    string[] Type = inv.Type.Split('/');
+                    if (Type.Length > 1)
+                        Inventoryed += $"<MyObjectBuilder_InventoryItem><Amount>{inv.Count.ToString().Replace(",", ".")}</Amount><PhysicalContent xsi:type=\"MyObjectBuilder_{Type[0]}\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><SubtypeName>{Type[1]}</SubtypeName>{(Type[0] == "AmmoMagazine" ? "<ProjectilesCount>0</ProjectilesCount>":"")}</PhysicalContent><ItemId>" + Couner + "</ItemId></MyObjectBuilder_InventoryItem>";
+                    Couner++;
+                }
+                ItemsNode.InnerXml = Inventoryed;
+                NextIDNode.InnerText = Couner.ToString();
+            }
+        }
+        public MyBlockInventory(XmlNode inventoryNode)
+        {
+            InventoryNode = inventoryNode;
+            foreach (XmlNode Xms in InventoryNode.ChildNodes)
+            {
+                switch (Xms.Name)
+                {
+                    case "Items":
+                        ItemsNode = Xms;
+                        foreach (XmlNode Xm in Xms.ChildNodes)
+                        {
+                            XmlNode Type = Xm.ChildNodes[1];
+                            double.TryParse(Xm.FirstChild.InnerText, out double count);
+                            _Items.Add(new MyItem(Type.Attributes.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_", "") + "/" + Type.FirstChild.InnerText, count));
+                        }
+                        break;
+                    case "nextItemId":
+                        NextIDNode = Xms;
+                        break;
+                    case "Volume":
+                        VolumeNode = Xms;
+                        break;
+                    case "Mass":
+                        Xms.InnerText = "9223372036854.775807";
+                        break;
+                }
+                
+            }
+        }
+
+        public void Save()
+        {
+            string Inventoryed = "";
+            int Couner = 0;
+            foreach (MyItem inv in _Items)
+            {
+                string[] Type = inv.Type.Split('/');
+                if (Type.Length > 1)
+                    Inventoryed += $"<MyObjectBuilder_InventoryItem><Amount>{inv.Count.ToString().Replace(",", ".")}</Amount><PhysicalContent xsi:type=\"MyObjectBuilder_{Type[0]}\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><SubtypeName>{Type[1]}</SubtypeName>{(Type[0] == "AmmoMagazine" ? "<ProjectilesCount>0</ProjectilesCount>" : "")}</PhysicalContent><ItemId>" + Couner + "</ItemId></MyObjectBuilder_InventoryItem>";
+                Couner++;
+            }
+            ItemsNode.InnerXml = Inventoryed;
+            NextIDNode.InnerText = Couner.ToString();
+        }
+        public class MyItem
+        {
+            public string Type { get; set; }
+            public double Count { get; set; }
+            public string Amount
+            {
+                get => Count.ToString("F18").TrimEnd('0').TrimEnd(',');
+                set
+                {
+                    double.TryParse(value, out double intres);
+                    Count = intres;
+                }
+            }
+            public MyItem(string type, double amount)
+            {
+                Type = type;
+                Count = amount;
+            }
         }
     }
     public enum Base6Directions : byte

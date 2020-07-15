@@ -44,6 +44,8 @@
                     <TextBox x:Name="WorkshopFolderSetting" Height="23" Margin="133,94,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="SavesFolder_Copy_TextChanged"/>
                     <Label Content="{x:Static res:Lang.WorkshopFolder}" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_3"/>
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,123,0,0" Stroke="Black" VerticalAlignment="Top" Width="190"/>
+                    <CheckBox x:Name="SaveBackups" Content="{x:Static res:Lang.UseBackups}" HorizontalAlignment="Left" Margin="13,127,0,0" VerticalAlignment="Top" Height="16" Click="SaveBackups_Click"/>
                 </Grid>
             </TabItem>
 

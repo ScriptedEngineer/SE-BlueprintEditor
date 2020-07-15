@@ -34,6 +34,7 @@ namespace BlueprintEditor2
             OpenCount++;
         }
 
+        bool ProgEditing = false;
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Logger.Add("Grid changing");
@@ -139,6 +140,7 @@ namespace BlueprintEditor2
         private void BlockList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             Logger.Add("Block changed");
+            ProgEditing = true;
             if (BlockList.SelectedItem != null)
             {
                 DeleteButton.IsEnabled = true;
@@ -164,9 +166,9 @@ namespace BlueprintEditor2
                 }
                 //SetTextBox(CustomData, MasterBlock.Name);
                 SetTextBox(BlockNameBox, MasterBlock.Name);
-                string[] Str = MasterBlock.Type?.Split('/');
-                SetTextBox(BlockTypeBox, Str != null && Str.Length > 0 && Str[0] != "" ? Str[0] : null);
-                SetTextBox(BlockSubtypeBox, Str != null && Str.Length > 0 && Str[1] != "" ? Str[1] : null);
+                SetTextBox(BlockTypeBox, MasterBlock.Type);
+                //BlockTypeBox.ItemsSource = MyGameData.CubeBlocks.Keys;
+               
                 BlockColorBox.Fill = new SolidColorBrush(MasterBlock.Mask.ToMediaColor());
                 BlockColorBox.IsEnabled = true;
                 if(MasterBlock.Position != Vector3.Zero)
@@ -209,12 +211,12 @@ namespace BlueprintEditor2
                 PropertyList.ItemsSource = null;
                 SetTextBox(BlockNameBox, null);
                 SetTextBox(BlockTypeBox, null);
-                SetTextBox(BlockSubtypeBox, null);
+                BlockTypeBox.ItemsSource = null;
                 SetSpecials(null);
                 BlockColorBox.Fill = new SolidColorBrush(Colors.White);
                 BlockColorBox.IsEnabled = false;
             }
-                
+            ProgEditing = false;
         }
         private void PropertyList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -260,14 +262,52 @@ namespace BlueprintEditor2
                 Box.IsEnabled = false;
             }
         }
+        private void SetTextBox(ComboBox Box, string Text)
+        {
+            if (Text != null)
+            {
+                Box.IsEnabled = true;
+                Box.Text = Text;
+            }
+            else
+            {
+                Box.Text = "";
+                Box.IsEnabled = false;
+            }
+        }
         private void SetSpecials(MyXmlBlockEqualer MasterBlock)
         {
             Specials.SelectedIndex = 0;
             Specials.IsEnabled = false;
-            (Specials.Items[1] as TabItem).Visibility = Visibility.Collapsed;
-            (Specials.Items[2] as TabItem).Visibility = Visibility.Collapsed;
+            foreach(TabItem item in Specials.Items)
+                item.Visibility = Visibility.Collapsed;
             if (MasterBlock != null)
             {
+                if (MasterBlock.Storage != null)
+                {
+                    Specials.SelectedIndex = 5;
+                    Specials.IsEnabled = true;
+                    (Specials.Items[5] as TabItem).Visibility = Visibility.Visible;
+                    Storage.Text = MasterBlock.Storage;
+                }
+                if (MasterBlock.Program != null)
+                {
+                    Specials.SelectedIndex = 4;
+                    Specials.IsEnabled = true;
+                    (Specials.Items[4] as TabItem).Visibility = Visibility.Visible;
+                    Program.Text = MasterBlock.Program;
+                }
+                if (MasterBlock.Inventories.Count > 0)
+                {
+                    Specials.SelectedIndex = 3;
+                    Specials.IsEnabled = true;
+                    (Specials.Items[3] as TabItem).Visibility = Visibility.Visible;
+                    InventoryNum.Items.Clear();
+                    for (int i = 1; i <= MasterBlock.Inventories.Count; i++)
+                        InventoryNum.Items.Add($"#{i}");
+                    InventoryItems.ItemsSource = MasterBlock.Inventories[0].Items;
+                    InventoryNum.SelectedIndex = 0;
+                }
                 if (MasterBlock.PublicText != null)
                 {
                     Specials.SelectedIndex = 2;
@@ -282,8 +322,6 @@ namespace BlueprintEditor2
                     (Specials.Items[1] as TabItem).Visibility = Visibility.Visible;
                     CustomData.Text = MasterBlock.CustomData;
                 }
-
-
             }
         }
 
@@ -321,20 +359,34 @@ namespace BlueprintEditor2
         }
         private void BlockTypeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (!ProgEditing && BlockTypeBox.Text != "")
+            {
+                var tb = (TextBox)e.OriginalSource;
+                BlockTypeBox.Items.Clear();
+                foreach (var s in MyGameData.BlockTypes)
+                {
+                    if (s.IndexOf(BlockTypeBox.Text, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        BlockTypeBox.Items.Add(s);
+                    if (BlockTypeBox.Items.Count >= 30)
+                        break;
+                }
+                if (BlockTypeBox.Items.Count == 0)
+                    BlockTypeBox.IsDropDownOpen = false;
+                else
+                {
+                    BlockTypeBox.IsDropDownOpen = true;
+                    tb.SelectionStart = BlockTypeBox.Text.Length;
+                }
+            }
+            else
+            {
+                BlockTypeBox.Items.Clear();
+                BlockTypeBox.IsDropDownOpen = false;
+            }
             if (BlockTypeBox.Text == "") return;
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
-                SelectedBlk.Type = BlockTypeBox.Text+"/"+ BlockSubtypeBox.Text;
-            }
-            GoSort(OldSortBy, null);
-            BlockList.ScrollIntoView(BlockList.SelectedItem);
-        }
-        private void BlockSubtypeBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (BlockSubtypeBox.Text == "") return;
-            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
-            {
-                SelectedBlk.Type = BlockTypeBox.Text + "/" + BlockSubtypeBox.Text;
+                SelectedBlk.Type = BlockTypeBox.Text;
             }
             GoSort(OldSortBy, null);
             BlockList.ScrollIntoView(BlockList.SelectedItem);
@@ -497,7 +549,6 @@ namespace BlueprintEditor2
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-            
             TextBox Sender = (TextBox)sender;
             if (Sender.Visibility == Visibility.Collapsed)
                 return;
@@ -619,6 +670,121 @@ namespace BlueprintEditor2
             SlectedGrd.FixVisualDamage();
             if(Sender != null) Sender.IsEnabled = false;
             BlockList_SelectionChanged_1(null, null);
+        }
+
+        private void BlockTypeBox_DropDownOpened(object sender, EventArgs e)
+        {
+            ComboBox Sender = (ComboBox)sender;
+            if (ProgEditing || Sender.Text == "" || Sender.Items.Count == 0)
+                Sender.IsDropDownOpen = false;
+        }
+        private void InventoryItem_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ComboBox Sender = (ComboBox)sender;
+            if (Sender.Text != "")
+            {
+                var tb = (TextBox)e.OriginalSource;
+                Sender.Items.Clear();
+                foreach (var s in MyGameData.ItemTypes)
+                {
+                    if (s.IndexOf(Sender.Text, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                        Sender.Items.Add(s);
+                    if (Sender.Items.Count >= 30)
+                        break;
+                }
+                if (Sender.Items.Count == 0 || (Sender.Items.Count == 1 && !Sender.IsDropDownOpen))
+                    Sender.IsDropDownOpen = false;
+                else
+                {
+                    Sender.IsDropDownOpen = true;
+                    Sender.MaxDropDownHeight = 120;
+                    tb.SelectionStart = Sender.Text.Length;
+                }
+            }
+            else
+            {
+                Sender.Items.Clear();
+                Sender.IsDropDownOpen = false;
+            }
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            if(InventoryItems.ItemsSource != null)
+                Block.Inventories[InventoryNum.SelectedIndex].Items = InventoryItems.ItemsSource.OfType<MyBlockInventory.MyItem>();
+        }
+
+        private void TextBox_TextChanged_3(object sender, TextChangedEventArgs e)
+        {
+            TextBox Sender = (TextBox)sender;
+            string top = Sender.Text.Replace(".", ",");
+            if (top.EndsWith(","))
+                return;
+            double.TryParse(top, out double intres);
+            int cind = Sender.CaretIndex;
+            string TxtVle = intres.ToString("F18").TrimEnd('0').TrimEnd(',');
+            Sender.Text = TxtVle;
+            Sender.CaretIndex = cind;
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            if (InventoryItems.ItemsSource != null)
+                Block.Inventories[InventoryNum.SelectedIndex].Items = InventoryItems.ItemsSource.OfType<MyBlockInventory.MyItem>();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            List<MyBlockInventory.MyItem> items = new List<MyBlockInventory.MyItem>(Block.Inventories[InventoryNum.SelectedIndex].Items);
+            items.Add(new MyBlockInventory.MyItem("None",1));
+            InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items = items;
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            List<MyBlockInventory.MyItem> items = new List<MyBlockInventory.MyItem>(Block.Inventories[InventoryNum.SelectedIndex].Items);
+            if (InventoryItems.SelectedIndex != -1)
+            {
+                items.Remove((MyBlockInventory.MyItem)InventoryItems.SelectedItem);
+            }
+            else
+            {
+                items.Remove(items.Last());
+            }
+            InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items = items;
+        }
+
+        private void Program_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            Block.Program = Program.Text;
+        }
+
+        private void Storage_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            Block.Storage = Storage.Text;
+        }
+
+        private void TextBox_TextChanged_4(object sender, TextChangedEventArgs e)
+        {
+            TextBox Sender = (TextBox)sender;
+            if (Sender.Visibility == Visibility.Collapsed)
+                return;
+            StackPanel X = (StackPanel)Sender.Parent;
+            CheckBox Tender = (CheckBox)X.Children[0];
+            string PropName = Tender.CommandParameter.ToString();
+            foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
+            {
+                MyBlockProperty Change = SelectedBlk.Properties.FirstOrDefault(x => x.PropertyName == PropName);
+                if (Change != null)
+                {
+                    Change.TextValue = Sender.Text;
+                }
+            }
+        }
+
+        private void InventoryNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            if (InventoryNum.SelectedIndex != -1 && Block != null && Block.Inventories.Count > InventoryNum.SelectedIndex)
+                InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items;
         }
     }
 }
