@@ -16,6 +16,9 @@ using System.Net;
 using System.Threading;
 using System.Text;
 using System.Globalization;
+using System.Resources;
+using System.Windows.Documents;
+using System.Windows.Navigation;
 
 namespace BlueprintEditor2
 {
@@ -179,13 +182,14 @@ namespace BlueprintEditor2
                 Logger.Add("Game data parse end");
                 MyExtensions.AsyncWorker(() => { 
                 CalculateButton.IsEnabled = BlueList.SelectedIndex != -1;
-                LoadingCalcLabel.Visibility = Visibility.Collapsed;
+                CalculateButton.Content = Lang.Calculate;
                 });
             }).Start();
         }
         public void SettingsUpdated()
         {
             Welcome.Content = Lang.Welcome + " " + MySettings.Current.UserName.Replace("_", "__");
+            //ResourceManager.Refresh();
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -203,16 +207,28 @@ namespace BlueprintEditor2
                 Logger.Add("Load picture");
                 BluePicture.Source = CurrentBlueprint.GetPic();
                 Logger.Add("Write blueprint info");
-                string Owner = Selected.Owner + "(" + CurrentBlueprint.Owner + ")";
-                if (CurrentBlueprint.Owner == MySettings.Current.SteamID)
-                    Owner = MySettings.Current.UserName + "(You)";
-                BlueText.Text = Lang.Blueprint + ": " + Selected.Name + "\n" +
-                    Lang.Name + ": " + CurrentBlueprint.Name + "\n" +
-                    Lang.Created + ": " + Selected.CreationTimeText + "\n" +
-                    Lang.Changed + ": " + Selected.LastEditTimeText + "\n" +
-                    Lang.GridCount + ": " + Selected.GridCountText + "\n" +
-                    Lang.BlockCount + ": " + Selected.BlockCountText + "\n" +
-                    Lang.Owner + ": " + Owner + "\n";
+
+                BlueText.Inlines.Clear();
+                BlueText.Inlines.Add($"{Lang.Blueprint}: {Selected.Name}\r\n" +
+                    $"{Lang.Name}: {CurrentBlueprint.Name}\r\n" +
+                    $"{Lang.Created}: {Selected.CreationTimeText}\r\n" +
+                    $"{Lang.Changed}: {Selected.LastEditTimeText}\r\n" +
+                    $"{Lang.GridCount}: {Selected.GridCountText}\r\n" +
+                    $"{Lang.BlockCount }: {Selected.BlockCountText}\r\n" +
+                    $"{Lang.Owner}: ");
+                if (CurrentBlueprint.Owner != "0")
+                {
+                    Hyperlink Owner = new Hyperlink(new Run(Selected.Owner));
+                    if (CurrentBlueprint.Owner == MySettings.Current.SteamID)
+                        Owner = new Hyperlink(new Run(MySettings.Current.UserName));
+                    Owner.NavigateUri = new Uri("steam://url/SteamIDPage/" + CurrentBlueprint.Owner);
+                    Owner.RequestNavigate += Hyperlink_RequestNavigate;
+                    BlueText.Inlines.Add(Owner);
+                }
+                else
+                {
+                    BlueText.Inlines.Add(Selected.Owner);
+                }
                 Logger.Add("Buttons enabling");
                 CalculateButton.IsEnabled = MyGameData.IsInitialized;
                 EditButton.IsEnabled = true;
@@ -249,7 +265,11 @@ namespace BlueprintEditor2
             Logger.Add("Update form");
             Height++; Height--;
         }
-
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(CurrentBlueprint.Patch + "/~lock.dat"))

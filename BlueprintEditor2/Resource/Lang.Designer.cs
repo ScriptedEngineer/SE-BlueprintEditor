@@ -163,6 +163,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Backward.
+        /// </summary>
+        public static string Backward {
+            get {
+                return ResourceManager.GetString("Backward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Block color.
         /// </summary>
         public static string BlockColor {
@@ -732,6 +741,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Down.
+        /// </summary>
+        public static string Down {
+            get {
+                return ResourceManager.GetString("Down", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Downloading new version.
         /// </summary>
         public static string DownNewVer {
@@ -746,6 +764,24 @@ namespace BlueprintEditor2.Resource {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Energy generation.
+        /// </summary>
+        public static string EnergyGeneration {
+            get {
+                return ResourceManager.GetString("EnergyGeneration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Energy storage.
+        /// </summary>
+        public static string EnergyStorage {
+            get {
+                return ResourceManager.GetString("EnergyStorage", resourceCulture);
             }
         }
         
@@ -773,6 +809,15 @@ namespace BlueprintEditor2.Resource {
         public static string Faction {
             get {
                 return ResourceManager.GetString("Faction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Forward.
+        /// </summary>
+        public static string Forward {
+            get {
+                return ResourceManager.GetString("Forward", resourceCulture);
             }
         }
         
@@ -1056,6 +1101,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Left.
+        /// </summary>
+        public static string Left {
+            get {
+                return ResourceManager.GetString("Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Light armor.
         /// </summary>
         public static string LightArmor {
@@ -1088,6 +1142,15 @@ namespace BlueprintEditor2.Resource {
         public static string Mass {
             get {
                 return ResourceManager.GetString("Mass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Max jump distance.
+        /// </summary>
+        public static string MaxJumpD {
+            get {
+                return ResourceManager.GetString("MaxJumpD", resourceCulture);
             }
         }
         
@@ -1391,11 +1454,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Max output.
+        /// </summary>
+        public static string PeakOutput {
+            get {
+                return ResourceManager.GetString("PeakOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Picture.
         /// </summary>
         public static string Picture {
             get {
                 return ResourceManager.GetString("Picture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Acceleration on planet.
+        /// </summary>
+        public static string PlanetAcc {
+            get {
+                return ResourceManager.GetString("PlanetAcc", resourceCulture);
             }
         }
         
@@ -1540,6 +1621,15 @@ namespace BlueprintEditor2.Resource {
         public static string Restore {
             get {
                 return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Right.
+        /// </summary>
+        public static string Right {
+            get {
+                return ResourceManager.GetString("Right", resourceCulture);
             }
         }
         
@@ -1744,6 +1834,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Acceleration in space.
+        /// </summary>
+        public static string SpaceAcc {
+            get {
+                return ResourceManager.GetString("SpaceAcc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Split.
         /// </summary>
         public static string Split {
@@ -1849,6 +1948,15 @@ namespace BlueprintEditor2.Resource {
         public static string UnsafeAction {
             get {
                 return ResourceManager.GetString("UnsafeAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Up.
+        /// </summary>
+        public static string Up {
+            get {
+                return ResourceManager.GetString("Up", resourceCulture);
             }
         }
         

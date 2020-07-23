@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -19,11 +20,16 @@ namespace BlueprintEditor2
         public bool Mods = true;
         public bool OffStone = true;
         public int PCU = 0, Blocks = 0;
-        public float Mass = 0;
+        public float Mass = 0, Storage = 0, PeakOut = 0, GenOut = 0;
+        List<MyEnergyBlockInfo> JumpDrives = new List<MyEnergyBlockInfo>();
+
+        public Dictionary<Base6Directions, MyForceInfo> Forces = new Dictionary<Base6Directions, MyForceInfo>();
 
         public Dictionary<string, MyBlockRecipie> ModCubeBlocks = new Dictionary<string, MyBlockRecipie>();
         public Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string, MyComponentInfo> ModComponents = new Dictionary<string, MyComponentInfo>();
+        public static Dictionary<string, MyThrustInfo> ModThrustTypes = new Dictionary<string, MyThrustInfo>();
+        public static Dictionary<string, MyEnergyBlockInfo> ModEnergyTypes = new Dictionary<string, MyEnergyBlockInfo>();
 
         Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
         Dictionary<string, double> Requared = new Dictionary<string, double>();
@@ -50,6 +56,8 @@ namespace BlueprintEditor2
             ModCubeBlocks.Clear();
             ModRecipies.Clear();
             ModComponents.Clear();
+            ModThrustTypes.Clear();
+            ModEnergyTypes.Clear();
             foreach (var x in MyGameData.ModCubeBlocks)
             {
                 if(Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
@@ -64,6 +72,16 @@ namespace BlueprintEditor2
             {
                 if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
                     ModComponents = ModComponents.Concat(x.Value.Where(n => !ModComponents.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
+            foreach (var x in MyGameData.ModThrustTypes)
+            {
+                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
+                    ModThrustTypes = ModThrustTypes.Concat(x.Value.Where(n => !ModThrustTypes.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
+            }
+            foreach (var x in MyGameData.ModEnergyTypes)
+            {
+                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
+                    ModEnergyTypes = ModEnergyTypes.Concat(x.Value.Where(n => !ModEnergyTypes.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
             }
         }
 
@@ -199,6 +217,23 @@ namespace BlueprintEditor2
             return outer;
         }
         //public string GetMass() => AddWeightCounters(Mass);
+        public double GetJumpDistance()
+        {
+            double JumpDistance = 0;
+            foreach(var x in JumpDrives)
+            {
+                if (x.Storage < Mass)
+                {
+                    double jumpDistance = (x.Output * x.Storage) / Mass;
+                    if (jumpDistance > x.Output) 
+                        jumpDistance = x.Output;
+                    JumpDistance += jumpDistance;
+                }
+                else
+                    JumpDistance += x.Output;
+            }
+            return JumpDistance;
+        }
 
         public string GetUndefined()
         {
@@ -256,6 +291,45 @@ namespace BlueprintEditor2
             else if (!UndefinedTypes.Contains(block.Type))
             {
                 UndefinedTypes.Add(block.Type);
+            }
+            MyThrustInfo Thrust = null;
+            if (Mods && ModThrustTypes.ContainsKey(block.Type))
+                Thrust = ModThrustTypes[block.Type];
+            else if (MyGameData.ThrustTypes.ContainsKey(block.Type))
+                Thrust = MyGameData.ThrustTypes[block.Type];
+            if (Thrust != null)
+            {
+                MyBlockOrientation orient = block.Orientation == null?new MyBlockOrientation(): block.Orientation;
+                if (Forces.ContainsKey(orient.Forward))
+                {
+                    Forces[orient.Forward].Space += Thrust.Force * Thrust.SpaceEffectiveness;
+                    Forces[orient.Forward].Planetary += Thrust.Force * Thrust.PlanetaryEffectiveness;
+                }
+                else
+                {
+                    Forces.Add(orient.Forward, new MyForceInfo(Thrust.Force * Thrust.SpaceEffectiveness, Thrust.Force * Thrust.PlanetaryEffectiveness));
+                }
+            }
+            MyEnergyBlockInfo EnergyBlock = null;
+            if (Mods && ModEnergyTypes.ContainsKey(block.Type))
+                EnergyBlock = ModEnergyTypes[block.Type];
+            else if (MyGameData.EnergyTypes.ContainsKey(block.Type))
+                EnergyBlock = MyGameData.EnergyTypes[block.Type];
+            if (EnergyBlock != null)
+            {
+                if (EnergyBlock.IsJumpDrive)
+                {
+                    JumpDrives.Add(EnergyBlock);
+                }
+                else
+                {
+                    Storage += EnergyBlock.Storage;
+                    PeakOut += EnergyBlock.Output;
+                    if (EnergyBlock.IsGenerator)
+                    {
+                        GenOut += EnergyBlock.Output;
+                    }
+                }
             }
             return xx;
         }
@@ -409,6 +483,16 @@ namespace BlueprintEditor2
             Type = t;
             Count = ci.ToString("N0", CultureInfo.InvariantCulture);
             Amount = ci;
+        }
+    }
+    public class MyForceInfo
+    {
+        public double Space;
+        public double Planetary;
+        public MyForceInfo(double space, double planetary)
+        {
+            Space = space;
+            Planetary = planetary;
         }
     }
 }

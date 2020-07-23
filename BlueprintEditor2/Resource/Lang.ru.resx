@@ -153,6 +153,9 @@
   <data name="Backups" xml:space="preserve">
     <value>Резервные копии</value>
   </data>
+  <data name="Backward" xml:space="preserve">
+    <value>Назад</value>
+  </data>
   <data name="BlockColor" xml:space="preserve">
     <value>Цвет блока</value>
   </data>
@@ -344,11 +347,20 @@
   <data name="DowLangPack" xml:space="preserve">
     <value>Загружаем локализацию для новой версии</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Вниз</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Скачиваем новую версию</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="EnergyGeneration" xml:space="preserve">
+    <value>Генерация энергии</value>
+  </data>
+  <data name="EnergyStorage" xml:space="preserve">
+    <value>Хранилище энергии</value>
   </data>
   <data name="EnterPatternName" xml:space="preserve">
     <value>Введите имя шаблона</value>
@@ -358,6 +370,9 @@
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Фракция</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Вперед</value>
   </data>
   <data name="GameFolder" xml:space="preserve">
     <value>Папка с игрой</value>
@@ -452,6 +467,9 @@
   <data name="LargeGrid" xml:space="preserve">
     <value>Большая сетка</value>
   </data>
+  <data name="Left" xml:space="preserve">
+    <value>Влево</value>
+  </data>
   <data name="LightArmor" xml:space="preserve">
     <value>Легкая броня</value>
   </data>
@@ -463,6 +481,9 @@
   </data>
   <data name="Mass" xml:space="preserve">
     <value>Масса</value>
+  </data>
+  <data name="MaxJumpD" xml:space="preserve">
+    <value>Макс. дальность прыжка</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
@@ -565,8 +586,14 @@
   <data name="Owner" xml:space="preserve">
     <value>Автор</value>
   </data>
+  <data name="PeakOutput" xml:space="preserve">
+    <value>Макс. отдача</value>
+  </data>
   <data name="Picture" xml:space="preserve">
     <value>Изображение</value>
+  </data>
+  <data name="PlanetAcc" xml:space="preserve">
+    <value>Ускорения на планете</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение. вы хотите перезагрузить приложение сейчас?</value>
@@ -615,6 +642,9 @@
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Вправо</value>
   </data>
   <data name="Rows" xml:space="preserve">
     <value>Строки</value>
@@ -684,6 +714,9 @@
   <data name="SmallGrid" xml:space="preserve">
     <value>Малая сетка</value>
   </data>
+  <data name="SpaceAcc" xml:space="preserve">
+    <value>Ускорения в космосе</value>
+  </data>
   <data name="Split" xml:space="preserve">
     <value>Разделить</value>
   </data>
@@ -719,6 +752,9 @@
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Небезопастное действие</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Вверх</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Обновить</value>

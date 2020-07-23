@@ -38,7 +38,7 @@ namespace BlueprintEditor2
         private void GridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Logger.Add("Grid changing");
-            BlockList.Items.Clear();
+            //BlockList.Items.Clear();
             GridArmourType.IsEnabled = true;
             initGAT = false;
             if (GridList.SelectedIndex == -1) return;
@@ -47,11 +47,12 @@ namespace BlueprintEditor2
             List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
             int Heavy = 0,Light = 0;
             ExistedColors.Items.Clear();
+            List<MyXmlBlock> BlocksToAdd = new List<MyXmlBlock>();
             for (int i = 0; i < TheBlocks.Count; i++)
             {
                 MyXmlBlock thatBlock = TheBlocks[i];
                 if (DasShowIt(thatBlock))
-                    BlockList.Items.Add(thatBlock);
+                    BlocksToAdd.Add(thatBlock);
                 if (thatBlock.IsArmor)
                 {
                     if (thatBlock.Armor == ArmorType.Heavy)
@@ -69,6 +70,7 @@ namespace BlueprintEditor2
                     }
                 }
             }
+            BlockList.ItemsSource = BlocksToAdd;
             if (ExistedColors.Items.Count > 0)
             {
                 ExistedColors.SelectedIndex = 0;
@@ -224,30 +226,38 @@ namespace BlueprintEditor2
         }
 
         GridViewColumn OldSortBy;
+        ListSortDirection OldDirection = ListSortDirection.Descending;
         private void GoSort(object sender, RoutedEventArgs e)
         {
-            if (sender.ToString() == Lang.Property) return;
             if (sender == null) return;
+            if (sender.ToString() == Lang.Property) return;
             GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
-            if(SortBy == null) SortBy = (sender as GridViewColumn);
+            if (SortBy == null) SortBy = (sender as GridViewColumn);
             string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding)?.Path.Path.Replace("Text", "");
             if (PropertyPatch == "PropertyName") return;
             if (PropertyPatch == null) return;
             if (OldSortBy != null)
                 OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
-            ListSortDirection OldDirection = ListSortDirection.Descending;
+            /*ListSortDirection OldDirection = ListSortDirection.Descending;
             if (BlockList.Items.SortDescriptions.Count > 0 && BlockList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
-                OldDirection = BlockList.Items.SortDescriptions[0].Direction;
-            ListSortDirection NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                OldDirection = BlockList.Items.SortDescriptions[0].Direction;*/
+            ListSortDirection NewDirection;// = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             if (e != null)
                 NewDirection = OldDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             else
                 NewDirection = OldDirection;
             Logger.Add($"Sort Blocks by {PropertyPatch} in {NewDirection}");
-            BlockList.Items.SortDescriptions.Clear();
-            BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
+            List<MyXmlBlock> Blocks = new List<MyXmlBlock>();
+            Blocks.AddRange(BlockList.ItemsSource.OfType<MyXmlBlock>());
+            if(NewDirection == ListSortDirection.Ascending)
+                BlockList.ItemsSource = Blocks.OrderBy(x => PropertyPatch == "Name"?x.Name:x.DisplayType).ToArray();
+            else
+                BlockList.ItemsSource = Blocks.OrderByDescending(x => PropertyPatch == "Name" ? x.Name : x.DisplayType).ToArray();
+            //BlockList.Items.SortDescriptions.Clear();
+            //BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
+            OldDirection = NewDirection;
         }
         private void SetTextBox(TextBox Box, string Text)
         {
@@ -350,15 +360,25 @@ namespace BlueprintEditor2
         private void BlockNameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (BlockNameBox.Text == "" || BlockNameBox.Text == "-") return;
+            bool Update = false;
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
-                SelectedBlk.Name = BlockNameBox.Text;
+                if (SelectedBlk.Name != BlockNameBox.Text)
+                {
+                    SelectedBlk.Name = BlockNameBox.Text;
+                    Update = true;
+                }
+               
             }
-            GoSort(OldSortBy,null);
-            BlockList.ScrollIntoView(BlockList.SelectedItem);
+            if (Update)
+            {
+                GoSort(OldSortBy, null);
+                BlockList.ScrollIntoView(BlockList.SelectedItem);
+            }
         }
         private void BlockTypeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            bool Update = false;
             if (!ProgEditing && BlockTypeBox.Text != "")
             {
                 var tb = (TextBox)e.OriginalSource;
@@ -384,12 +404,21 @@ namespace BlueprintEditor2
                 BlockTypeBox.IsDropDownOpen = false;
             }
             if (BlockTypeBox.Text == "") return;
+            string[] types = BlockTypeBox.Text.Split('/');
+            if (types.Length < 2) return;
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
-                SelectedBlk.Type = BlockTypeBox.Text;
+                if (SelectedBlk.Type != BlockTypeBox.Text)
+                {
+                    SelectedBlk.Type = BlockTypeBox.Text;
+                    Update = true;
+                }
             }
-            GoSort(OldSortBy, null);
-            BlockList.ScrollIntoView(BlockList.SelectedItem);
+            if (Update)
+            {
+                GoSort(OldSortBy, null);
+                BlockList.ScrollIntoView(BlockList.SelectedItem);
+            }
         }
         private void BlockColorBox_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -681,7 +710,7 @@ namespace BlueprintEditor2
         private void InventoryItem_TextChanged(object sender, TextChangedEventArgs e)
         {
             ComboBox Sender = (ComboBox)sender;
-            if (Sender.Text != "")
+            if (!ProgEditing && Sender.Text != "" && e.Changes.Count == 1 && e.Changes.FirstOrDefault().AddedLength == 1)
             {
                 var tb = (TextBox)e.OriginalSource;
                 Sender.Items.Clear();
@@ -782,9 +811,11 @@ namespace BlueprintEditor2
 
         private void InventoryNum_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ProgEditing = true;
             MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
             if (InventoryNum.SelectedIndex != -1 && Block != null && Block.Inventories.Count > InventoryNum.SelectedIndex)
                 InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items;
+            ProgEditing = false;
         }
     }
 }

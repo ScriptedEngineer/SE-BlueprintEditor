@@ -153,6 +153,9 @@ Developed by clan "Andromeda"</value>
   <data name="Backups" xml:space="preserve">
     <value>Backups</value>
   </data>
+  <data name="Backward" xml:space="preserve">
+    <value>Backward</value>
+  </data>
   <data name="BlockColor" xml:space="preserve">
     <value>Block color</value>
   </data>
@@ -344,11 +347,20 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="DowLangPack" xml:space="preserve">
     <value>Do empty work</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Downloading new version</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EnergyGeneration" xml:space="preserve">
+    <value>Energy generation</value>
+  </data>
+  <data name="EnergyStorage" xml:space="preserve">
+    <value>Energy storage</value>
   </data>
   <data name="EnterPatternName" xml:space="preserve">
     <value>Enter pattern name</value>
@@ -358,6 +370,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Faction</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Forward</value>
   </data>
   <data name="GameFolder" xml:space="preserve">
     <value>Game directory</value>
@@ -452,6 +467,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="LargeGrid" xml:space="preserve">
     <value>Large grid</value>
   </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
   <data name="LightArmor" xml:space="preserve">
     <value>Light armor</value>
   </data>
@@ -463,6 +481,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Mass" xml:space="preserve">
     <value>Mass</value>
+  </data>
+  <data name="MaxJumpD" xml:space="preserve">
+    <value>Max jump distance</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -565,8 +586,14 @@ Cancel - Don't set default thumbnail</value>
   <data name="Owner" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="PeakOutput" xml:space="preserve">
+    <value>Max output</value>
+  </data>
   <data name="Picture" xml:space="preserve">
     <value>Picture</value>
+  </data>
+  <data name="PlanetAcc" xml:space="preserve">
+    <value>Acceleration on planet</value>
   </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Settings saved! For apply settings need to restart app, you want to restart the app?</value>
@@ -615,6 +642,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
   </data>
   <data name="Rows" xml:space="preserve">
     <value>Rows</value>
@@ -684,6 +714,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="SmallGrid" xml:space="preserve">
     <value>Small grid</value>
   </data>
+  <data name="SpaceAcc" xml:space="preserve">
+    <value>Acceleration in space</value>
+  </data>
   <data name="Split" xml:space="preserve">
     <value>Split</value>
   </data>
@@ -720,6 +753,9 @@ Please set this in the settings.</value>
   </data>
   <data name="UnsafeAction" xml:space="preserve">
     <value>Unsafe action</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>

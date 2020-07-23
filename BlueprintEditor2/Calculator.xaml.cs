@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -173,7 +174,7 @@ namespace BlueprintEditor2
                             if (Bp.Y < Min.Y) Min.Y = Bp.Y;
                             if (Bp.Z < Min.Z) Min.Z = Bp.Z;
                             MyBlockOrientation blockOrientation = Bl.Orientation;
-                            Vector3 BpM = xx == null?new Vector3(1,1,1) :(blockOrientation == null? new Vector3(xx.Size.X, xx.Size.Y, xx.Size.Z) : blockOrientation.SizeToPos(xx.Size));
+                            Vector3 BpM = xx == null ? new Vector3(1, 1, 1) : (blockOrientation == null ? new Vector3(xx.Size.X, xx.Size.Y, xx.Size.Z) : blockOrientation.SizeToPos(xx.Size));
                             BpM.X += Bp.X;
                             BpM.Y += Bp.Y;
                             BpM.Z += Bp.Z;
@@ -181,13 +182,13 @@ namespace BlueprintEditor2
                             if (BpM.Y > Max.Y) Max.Y = BpM.Y;
                             if (BpM.Z > Max.Z) Max.Z = BpM.Z;
                         }
-                       
+
                         Vector3 SizeX = new Vector3(Max.X - Min.X, Max.Y - Min.Y, Max.Z - Min.Z);
-                        if(SizeX.X > Size.X && SizeX.Y > Size.Y && SizeX.Z > Size.Z)
+                        if (SizeX.X > Size.X && SizeX.Y > Size.Y && SizeX.Z > Size.Z)
                         {
                             Size = SizeX;
                             sizes = $"{Size.X * blockLength} x {Size.Y * blockLength} x {Size.Z * blockLength} m³";
-                            sizez = $"{Size.X * blockLength / 2.5} x {Size.Y * blockLength / 2.5} x {Size.Z * blockLength/2.5}";
+                            sizez = $"{Size.X * blockLength / 2.5} x {Size.Y * blockLength / 2.5} x {Size.Z * blockLength / 2.5}";
                         }
                     }
                     calc.CalculateIngots();
@@ -208,14 +209,60 @@ namespace BlueprintEditor2
                             Logger.Add("Undefined types message show");
                             new MessageDialog(DialogPicture.attention, "Attention", Lang.UndefinedTypesExists + "\r\n" + undef, null, DialogType.Message).Show();
                         }
-                        InfoList.ItemsSource = new string[]
+                        StringBuilder shipInfo = new StringBuilder();
+                        shipInfo.Append(Lang.Size).Append(": ").Append(sizes.Replace(',', '.')).Append("\r\n")
+                           .Append(Lang.Size_Blocks).Append(": ").Append(sizez.Replace(',', '.')).Append("\r\n")
+                            .Append(Lang.Mass).Append(": ").Append(calc.Mass.ToString("N0", CultureInfo.InvariantCulture)).Append(" kg\r\n")
+                            .Append("PCU: ").Append(calc.PCU.ToString("N0", CultureInfo.InvariantCulture)).Append(" \r\n")
+                            .Append(Lang.BlockCount).Append(": ").Append(calc.Blocks.ToString("N0", CultureInfo.InvariantCulture)).Append(" \r\n\r\n");
+                        double Jump = calc.GetJumpDistance() / 1000;
+                        if (Jump != 0)
                         {
-                            $"{Lang.Size}: {sizes.Replace(',','.')}",
-                            $"{Lang.Size_Blocks}: {sizez.Replace(',','.')}",
-                            $"{Lang.Mass}: {calc.Mass.ToString("N0", CultureInfo.InvariantCulture)} kg",
-                            $"PCU: {calc.PCU.ToString("N0", CultureInfo.InvariantCulture)}",
-                            $"{Lang.BlockCount}: {calc.Blocks.ToString("N0", CultureInfo.InvariantCulture)}",
-                        };
+                            shipInfo.Append($"{Lang.MaxJumpD}: {Jump.ToString("N0", CultureInfo.InvariantCulture)} km\r\n\r\n");
+                        }
+                        if (calc.Storage != 0)
+                        {
+                            shipInfo.Append($"{Lang.EnergyStorage}: {calc.Storage.ToString("N2", CultureInfo.InvariantCulture)} MWh\r\n");
+                        }
+                        if (calc.GenOut != 0)
+                        {
+                            shipInfo.Append($"{Lang.EnergyGeneration}: {calc.GenOut.ToString("N2", CultureInfo.InvariantCulture)} MW\r\n");
+                        }
+                        if (calc.PeakOut != calc.GenOut)
+                        {
+                            shipInfo.Append($"{Lang.PeakOutput}: {calc.PeakOut.ToString("N2", CultureInfo.InvariantCulture)} MW\r\n\r\n");
+                        }
+                        StringBuilder SpaceAcc = new StringBuilder(),
+                                    PlanetaryAcc = new StringBuilder();
+                        double ospaceAcc = -1, oplannetAcc = -1;
+                        double pmax = 0, smax = 0;
+                        foreach (var Force in calc.Forces)
+                        {
+                            double spaceAcc = Force.Value.Space / calc.Mass;
+                            double plannetAcc = Force.Value.Planetary / calc.Mass;
+                            if (spaceAcc != ospaceAcc)
+                            {
+                                SpaceAcc.Append(" ~")
+                                .Append(spaceAcc.ToString("N2", CultureInfo.InvariantCulture))
+                                .Append("m/s² ");
+                                ospaceAcc = spaceAcc;
+                                if (smax < spaceAcc) smax = spaceAcc;
+                            }
+                            if (plannetAcc != oplannetAcc)
+                            {
+                                PlanetaryAcc.Append(" ~")
+                                .Append(plannetAcc.ToString("N2", CultureInfo.InvariantCulture))
+                                .Append("m/s² ");
+                                oplannetAcc = plannetAcc;
+                                if (pmax < plannetAcc) pmax = plannetAcc;
+                            }
+                        }
+                        if(smax > 0) 
+                            shipInfo.Append(Lang.SpaceAcc).Append(": \r\n").Append(SpaceAcc).Append("\r\n");
+                        if(pmax > 9.81) 
+                            shipInfo.Append(Lang.PlanetAcc).Append(": \r\n").Append(PlanetaryAcc).Append("\r\n");
+                        ShipInfo.Text = shipInfo.ToString();
+                       
                     });
                 }
                 else
@@ -312,16 +359,11 @@ namespace BlueprintEditor2
                 if (x.Enabled)
                     Modsss += x.ID + " - " + x.Name + "\r\n";
             }
-            string Infooo = "";
-            foreach (string x in InfoList.Items)
-            {
-                    Infooo += x+"\r\n";
-            }
             string undef = calc.GetUndefined();
             string[] hh = Lang.StoneAmount.Split('(');
             Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
                 Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n" + 
-                Infooo + "\r\n" +
+                ShipInfo.Text + "\r\n" +
 
                 Lang.AssemblerEfficiency + " - " + AssembleEffic.Value.ToString("0") + "x\r\n" +
                 (ModulesYield.IsChecked.Value ?
@@ -462,10 +504,11 @@ namespace BlueprintEditor2
         {
             Patterns.Items.Clear();
             Patterns.Items.Add(Lang.Current);
-            foreach (var x in MySettings.Current.ModSwitchesPatterns)
-            {
-                Patterns.Items.Add(x.Key);
-            }
+            if(MySettings.Current.ModSwitchesPatterns != null)
+                foreach (var x in MySettings.Current.ModSwitchesPatterns)
+                {
+                    Patterns.Items.Add(x.Key);
+                }
             Patterns.SelectedIndex = 0;
         }
 
@@ -524,22 +567,6 @@ namespace BlueprintEditor2
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void InfoList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(InfoList.SelectedIndex != 0)
-            {
-                string Infooo = "";
-                foreach (string x in InfoList.Items)
-                {
-                    Infooo += x + "\r\n";
-                }
-                Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
-                Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n" +
-                Infooo);
-            }
-            InfoList.SelectedIndex = -1;
         }
     }
 }

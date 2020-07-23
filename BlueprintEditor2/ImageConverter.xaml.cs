@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -269,6 +270,37 @@ namespace BlueprintEditor2
             //DitherPic.Source = SEImageConverter.ToSource(Resul);
             System.Windows.Clipboard.SetText(Monospace);
             NormalizeForm();
+        }
+
+        private void Button_Click_10(object sender, RoutedEventArgs e)
+        {
+            Bitmap Pic = new Bitmap(SEImageConverter.FromSource(DitherPic.Source as BitmapSource),150,150);
+            string directory = MySettings.Current.BlueprintPatch + @"PixelArt\";
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            Pic.Save(directory + "thumb.png");
+            StringBuilder file = new StringBuilder();
+            file.Append("<?xml version=\"1.0\"?><Definitions xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><ShipBlueprints><ShipBlueprint xsi:type=\"MyObjectBuilder_ShipBlueprintDefinition\"><Id Type=\"MyObjectBuilder_ShipBlueprintDefinition\" Subtype=\"PixelArt\" /><DisplayName>Blueprint Editor</DisplayName><CubeGrids><CubeGrid><SubtypeName /><EntityId>116848042166223950</EntityId><PersistentFlags>CastShadows InScene</PersistentFlags><PositionAndOrientation><Position x=\"104305.64930469102\" y=\"-53695.018532900613\" z=\"24977.389949701621\" /><Forward x=\"-0\" y=\"-0\" z=\"-1\" /><Up x=\"0\" y=\"1\" z=\"0\" /><Orientation><X>0</X><Y>0</Y><Z>0</Z><W>1</W></Orientation></PositionAndOrientation><LocalPositionAndOrientation xsi:nil=\"true\" /><GridSizeEnum>Small</GridSizeEnum><CubeBlocks>");
+            for (int y = 0; y < Pic.Height; y++)
+                for (int x = 0; x < Pic.Width; x++)
+                {
+                    System.Drawing.Color pixel = Pic.GetPixel(x, y);
+                    if (pixel.A > 178)
+                    {
+                        file.Append("<MyObjectBuilder_CubeBlock xsi:type=\"MyObjectBuilder_CubeBlock\"><SubtypeName>HalfArmorBlock</SubtypeName>");
+                        if (x != 0 || y != 0)
+                            file.Append("<Min x=\"").Append(x).Append("\" y=\"").Append(y).Append("\" z=\"0\" />");
+                        file.Append("<BlockOrientation Forward=\"Backward\" Up=\"Down\" />");
+                        SE_ColorConverter.ColorToSE_HSV(pixel, out double mx, out double my, out double mz);
+                        file.Append("<ColorMaskHSV x=\"").Append(mx.ToString().Replace(',', '.'))
+                            .Append("\" y=\"").Append(my.ToString().Replace(',', '.'))
+                            .Append("\" z=\"").Append(mz.ToString().Replace(',', '.'))
+                            .Append("\" />")
+                            .Append("<SkinSubtypeId>Clean_Armor</SkinSubtypeId><BuiltBy>144115188075855895</BuiltBy></MyObjectBuilder_CubeBlock>");
+                    }
+                }
+            file.Append("</CubeBlocks><DisplayName>PixelArt</DisplayName><DestructibleBlocks>true</DestructibleBlocks><IsRespawnGrid>false</IsRespawnGrid><LocalCoordSys>0</LocalCoordSys><TargetingTargets /></CubeGrid></CubeGrids><EnvironmentType>None</EnvironmentType><WorkshopId>0</WorkshopId><OwnerSteamId>0</OwnerSteamId><Points>0</Points></ShipBlueprint></ShipBlueprints></Definitions>");
+            File.WriteAllText(directory + "bp.sbc", file.ToString());
         }
     }
 }

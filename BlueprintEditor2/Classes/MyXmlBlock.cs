@@ -254,9 +254,8 @@ namespace BlueprintEditor2
                     //Ignore
                     case "EntityId":
                         break;
-
-
                 }
+            if (Orientation == null) Orientation = new MyBlockOrientation();
         }
         public void Delete()
         {
@@ -279,6 +278,7 @@ namespace BlueprintEditor2
             }
         }
     }
+    
     public class MyBlockOrientation
     {
         private readonly XmlNode _OrientationNode;
@@ -289,9 +289,11 @@ namespace BlueprintEditor2
             set
             {
                 _Forward = value;
-                var Atrs = _OrientationNode.Attributes;
-                Atrs.GetNamedItem("Forward").Value = _Forward.ToString();
-                
+                if (_OrientationNode != null)
+                {
+                    var Atrs = _OrientationNode.Attributes;
+                    Atrs.GetNamedItem("Forward").Value = _Forward.ToString();
+                }
             }
         }
         public Base6Directions Up
@@ -300,8 +302,11 @@ namespace BlueprintEditor2
             set
             {
                 _Up = value;
-                var Atrs = _OrientationNode.Attributes;
-                Atrs.GetNamedItem("Up").Value = _Up.ToString();
+                if (_OrientationNode != null)
+                {
+                    var Atrs = _OrientationNode.Attributes;
+                    Atrs.GetNamedItem("Up").Value = _Up.ToString();
+                }
             }
         }
         public MyBlockOrientation(XmlNode Onode)
@@ -310,6 +315,12 @@ namespace BlueprintEditor2
             var Atrs = _OrientationNode.Attributes;
             Enum.TryParse(Atrs.GetNamedItem("Forward").Value, out _Forward);
             Enum.TryParse(Atrs.GetNamedItem("Up").Value, out _Up);
+        }
+        public MyBlockOrientation()
+        {
+            _OrientationNode = null;
+            Forward = Base6Directions.Forward;
+            Up = Base6Directions.Up;
         }
         public Vector3 SizeToPos(Vector3 size)
         {

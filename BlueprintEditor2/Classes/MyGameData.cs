@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using System.Threading;
 using System.ComponentModel;
+using System.Management;
 
 namespace BlueprintEditor2
 {
@@ -24,6 +25,11 @@ namespace BlueprintEditor2
         public static Dictionary<string, MyComponentInfo> Components = new Dictionary<string, MyComponentInfo>();
         public static Dictionary<string, Dictionary<string, MyComponentInfo>> ModComponents = new Dictionary<string, Dictionary<string, MyComponentInfo>>();
         public static List<string> ItemTypes = new List<string>();
+
+        public static Dictionary<string, MyThrustInfo> ThrustTypes = new Dictionary<string, MyThrustInfo>();
+        public static Dictionary<string, Dictionary<string, MyThrustInfo>> ModThrustTypes = new Dictionary<string, Dictionary<string, MyThrustInfo>>();
+        public static Dictionary<string, MyEnergyBlockInfo> EnergyTypes = new Dictionary<string, MyEnergyBlockInfo>();
+        public static Dictionary<string, Dictionary<string, MyEnergyBlockInfo>> ModEnergyTypes = new Dictionary<string, Dictionary<string, MyEnergyBlockInfo>>();
 
         public static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
@@ -104,7 +110,8 @@ namespace BlueprintEditor2
             }
             foreach (XmlNode y in File.GetElementsByTagName("Definition"))
             {
-                string name = "";
+                Dictionary<string, XmlNode> blockInfo = new Dictionary<string, XmlNode>();
+                string name = ""; string resGroup = null;
                 Dictionary<string, int> components = new Dictionary<string, int>();
                 int PCU = 0;
                 Vector3 Size = new Vector3(1,1,1);
@@ -118,7 +125,7 @@ namespace BlueprintEditor2
                                 switch (h.Name)
                                 {
                                     case "TypeId":
-                                        name = h.InnerText + name;
+                                        name = h.InnerText.Replace("MyObjectBuilder_","") + name;
                                         break;
                                     case "SubtypeId":
                                         name += "/" + h.InnerText;
@@ -167,7 +174,17 @@ namespace BlueprintEditor2
                                 Size = new Vector3(X, Y, Z);
                             }
                             break;
-
+                        case "ResourceSinkGroup":
+                            if(string.IsNullOrEmpty(resGroup)) 
+                                resGroup = z.InnerText;
+                            break;
+                        case "ResourceSourceGroup":
+                            resGroup = z.InnerText;
+                            break;
+                        default:
+                            if (!blockInfo.ContainsKey(z.Name))
+                                blockInfo.Add(z.Name, z);
+                            break;
                     }
                 }
                 //name = name.Replace("MyObjectBuilder_", "");
@@ -193,6 +210,87 @@ namespace BlueprintEditor2
                     }
                 if (!BlockTypes.Contains(name))
                     BlockTypes.Add(name);
+                switch (resGroup)
+                {
+                    case "Thrust":
+                        try
+                        {
+                            float sEf = 1 ,pEf = 1;
+                            float.TryParse(blockInfo["ForceMagnitude"]?.InnerText.Replace(".", ","), out float force);
+                            if (blockInfo.ContainsKey("EffectivenessAtMinInfluence"))
+                                float.TryParse(blockInfo["EffectivenessAtMinInfluence"]?.InnerText.Replace(".",","), out sEf);
+                            if (blockInfo.ContainsKey("EffectivenessAtMaxInfluence"))
+                                float.TryParse(blockInfo["EffectivenessAtMaxInfluence"]?.InnerText.Replace(".", ","), out pEf);
+                            bool nAt = false;
+                            if(blockInfo.ContainsKey("NeedsAtmosphereForInfluence")) 
+                                bool.TryParse(blockInfo["NeedsAtmosphereForInfluence"]?.InnerText, out nAt);
+                            if (mods)
+                            {
+                                if (ModThrustTypes.ContainsKey(modid))
+                                {
+                                    if (ModThrustTypes[modid].ContainsKey(name))
+                                        ModThrustTypes[modid][name] = new MyThrustInfo(force, sEf, pEf, nAt);
+                                    else
+                                        ModThrustTypes[modid].Add(name, new MyThrustInfo(force, sEf, pEf, nAt));
+                                }
+                                else
+                                    ModThrustTypes.Add(modid, new Dictionary<string, MyThrustInfo>() { [name] = new MyThrustInfo(force, sEf, pEf, nAt) });
+                            }
+                            else
+                            {
+                                if (ThrustTypes.ContainsKey(name))
+                                    ThrustTypes[name] = new MyThrustInfo(force, sEf, pEf, nAt);
+                                else
+                                    ThrustTypes.Add(name, new MyThrustInfo(force, sEf, pEf, nAt));
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
+                    case "SolarPanels":
+                    case "Battery":
+                    case "Reactors":
+                    case "Charging":
+                        float storage = 0, output = 0;
+                        if (blockInfo.ContainsKey("MaxPowerOutput"))
+                            float.TryParse(blockInfo["MaxPowerOutput"]?.InnerText.Replace(".", ","), out output);
+                        if (blockInfo.ContainsKey("MaxStoredPower"))
+                            float.TryParse(blockInfo["MaxStoredPower"]?.InnerText.Replace(".", ","), out storage);
+                        if (resGroup == "Charging")
+                        {
+                            if (blockInfo.ContainsKey("MaxJumpDistance"))
+                                float.TryParse(blockInfo["MaxJumpDistance"]?.InnerText.Replace(".", ","), out output);
+                            if (blockInfo.ContainsKey("MaxJumpMass"))
+                                float.TryParse(blockInfo["MaxJumpMass"]?.InnerText.Replace(".", ","), out storage);
+                        }
+                        if (output != 0 || resGroup == "Charging")
+                        {
+                            MyEnergyBlockInfo EnBlinf = new MyEnergyBlockInfo(!blockInfo.ContainsKey("RequiredPowerInput"), output, storage, resGroup == "Charging");
+                            if (mods)
+                            {
+                                if (ModEnergyTypes.ContainsKey(modid))
+                                {
+                                    if (ModEnergyTypes[modid].ContainsKey(name))
+                                        ModEnergyTypes[modid][name] = EnBlinf;
+                                    else
+                                        ModEnergyTypes[modid].Add(name, EnBlinf);
+                                }
+                                else
+                                    ModEnergyTypes.Add(modid, new Dictionary<string, MyEnergyBlockInfo>() { [name] = EnBlinf });
+                            }
+                            else
+                            {
+                                if (EnergyTypes.ContainsKey(name))
+                                    EnergyTypes[name] = EnBlinf;
+                                else
+                                    EnergyTypes.Add(name, EnBlinf);
+                            }
+
+                        }
+                        break;
+                }
             }
         }
         private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
@@ -552,4 +650,33 @@ namespace BlueprintEditor2
             Volume = volume;
         }
     }
+    public class MyThrustInfo
+    {
+        public readonly float Force;
+        public readonly float SpaceEffectiveness;
+        public readonly float PlanetaryEffectiveness;
+        public readonly bool NeedAtmosphere;
+        public MyThrustInfo(float force, float spaceEffectiveness, float planetaryEffectiveness, bool needAtmosphere)
+        {
+            Force = force;
+            SpaceEffectiveness = spaceEffectiveness;
+            PlanetaryEffectiveness = planetaryEffectiveness;
+            NeedAtmosphere = needAtmosphere;
+        }
+    }
+    public class MyEnergyBlockInfo
+    {
+        public readonly bool IsGenerator;
+        public readonly bool IsJumpDrive;
+        public readonly float Output;
+        public readonly float Storage;
+        public MyEnergyBlockInfo(bool isGenerator, float output, float storage = 0, bool isJump = false)
+        {
+            IsGenerator = isGenerator;
+            IsJumpDrive = isJump;
+            Output = output;
+            Storage = storage;
+        }
+    }
+    
 }
