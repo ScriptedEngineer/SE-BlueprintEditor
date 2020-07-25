@@ -102,6 +102,33 @@ namespace BlueprintEditor2
 
             return new StreamReader(response.GetResponseStream()).ReadToEnd();
         }
+        public static void quickSort<T>(ref T[] a, Func<T, T, int> comparer) => quickSort(ref a, 0, a.Length, comparer);
+        public static void quickSort<T>(ref T[] a, int l, int r, Func<T,T,int> comparer)
+        {
+            T temp;
+            var x = a[l + (r - l) / 2];
+            int i = l;
+            int j = r-1;
+
+            while (i <= j)
+            {
+                while (comparer(a[i], x) < 0) i++;
+                while (comparer(a[j], x) > 0) j--;
+                if (i <= j)
+                {
+                    temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                    i++;
+                    j--;
+                }
+            }
+            if (i < r)
+                quickSort(ref a, i, r, comparer);
+
+            if (l < j)
+                quickSort(ref a, l, j, comparer);
+        }
     }
     public static class SE_ColorConverter
     {

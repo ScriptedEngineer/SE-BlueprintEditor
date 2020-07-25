@@ -15,8 +15,8 @@ namespace BlueprintEditor2
 {
     static class MyGameData
     {
-        public static Dictionary<string, MyBlockRecipie> CubeBlocks = new Dictionary<string, MyBlockRecipie>();
-        public static Dictionary<string, Dictionary<string, MyBlockRecipie>> ModCubeBlocks = new Dictionary<string, Dictionary<string, MyBlockRecipie>>();
+        public static Dictionary<string, MyBlockInfo> CubeBlocks = new Dictionary<string, MyBlockInfo>();
+        public static Dictionary<string, Dictionary<string, MyBlockInfo>> ModCubeBlocks = new Dictionary<string, Dictionary<string, MyBlockInfo>>();
         public static List<string> BlockTypes = new List<string>();
 
         public static Dictionary<string, Dictionary<string, double>> Recipies = new Dictionary<string, Dictionary<string, double>>();
@@ -25,11 +25,6 @@ namespace BlueprintEditor2
         public static Dictionary<string, MyComponentInfo> Components = new Dictionary<string, MyComponentInfo>();
         public static Dictionary<string, Dictionary<string, MyComponentInfo>> ModComponents = new Dictionary<string, Dictionary<string, MyComponentInfo>>();
         public static List<string> ItemTypes = new List<string>();
-
-        public static Dictionary<string, MyThrustInfo> ThrustTypes = new Dictionary<string, MyThrustInfo>();
-        public static Dictionary<string, Dictionary<string, MyThrustInfo>> ModThrustTypes = new Dictionary<string, Dictionary<string, MyThrustInfo>>();
-        public static Dictionary<string, MyEnergyBlockInfo> EnergyTypes = new Dictionary<string, MyEnergyBlockInfo>();
-        public static Dictionary<string, Dictionary<string, MyEnergyBlockInfo>> ModEnergyTypes = new Dictionary<string, Dictionary<string, MyEnergyBlockInfo>>();
 
         public static Dictionary<string, double> StoneRicipie = new Dictionary<string, double>();
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
@@ -188,63 +183,27 @@ namespace BlueprintEditor2
                     }
                 }
                 //name = name.Replace("MyObjectBuilder_", "");
-                if (components.Count > 0)
-                    if (mods)
-                    {
-                        if (ModCubeBlocks.ContainsKey(modid))
-                        {
-                            if (ModCubeBlocks[modid].ContainsKey(name))
-                                ModCubeBlocks[modid][name] = new MyBlockRecipie(name, components, PCU, Size);
-                            else
-                                ModCubeBlocks[modid].Add(name, new MyBlockRecipie(name, components, PCU, Size));
-                        }
-                        else
-                            ModCubeBlocks.Add(modid, new Dictionary<string, MyBlockRecipie>() { [name] = new MyBlockRecipie(name, components, PCU, Size) });
-                    }
-                    else
-                    {
-                        if (CubeBlocks.ContainsKey(name))
-                            CubeBlocks[name] = new MyBlockRecipie(name, components, PCU, Size);
-                        else
-                            CubeBlocks.Add(name, new MyBlockRecipie(name, components, PCU, Size));
-                    }
                 if (!BlockTypes.Contains(name))
                     BlockTypes.Add(name);
+                MyBlockInfo BlInf = new MyBlockInfo(name, components, PCU, Size);
                 switch (resGroup)
                 {
                     case "Thrust":
                         try
                         {
-                            float sEf = 1 ,pEf = 1;
+                            float sEf = 1, pEf = 1;
                             float.TryParse(blockInfo["ForceMagnitude"]?.InnerText.Replace(".", ","), out float force);
                             if (blockInfo.ContainsKey("EffectivenessAtMinInfluence"))
-                                float.TryParse(blockInfo["EffectivenessAtMinInfluence"]?.InnerText.Replace(".",","), out sEf);
+                                float.TryParse(blockInfo["EffectivenessAtMinInfluence"]?.InnerText.Replace(".", ","), out sEf);
                             if (blockInfo.ContainsKey("EffectivenessAtMaxInfluence"))
                                 float.TryParse(blockInfo["EffectivenessAtMaxInfluence"]?.InnerText.Replace(".", ","), out pEf);
                             bool nAt = false;
-                            if(blockInfo.ContainsKey("NeedsAtmosphereForInfluence")) 
+                            if (blockInfo.ContainsKey("NeedsAtmosphereForInfluence"))
                                 bool.TryParse(blockInfo["NeedsAtmosphereForInfluence"]?.InnerText, out nAt);
-                            if (mods)
-                            {
-                                if (ModThrustTypes.ContainsKey(modid))
-                                {
-                                    if (ModThrustTypes[modid].ContainsKey(name))
-                                        ModThrustTypes[modid][name] = new MyThrustInfo(force, sEf, pEf, nAt);
-                                    else
-                                        ModThrustTypes[modid].Add(name, new MyThrustInfo(force, sEf, pEf, nAt));
-                                }
-                                else
-                                    ModThrustTypes.Add(modid, new Dictionary<string, MyThrustInfo>() { [name] = new MyThrustInfo(force, sEf, pEf, nAt) });
-                            }
-                            else
-                            {
-                                if (ThrustTypes.ContainsKey(name))
-                                    ThrustTypes[name] = new MyThrustInfo(force, sEf, pEf, nAt);
-                                else
-                                    ThrustTypes.Add(name, new MyThrustInfo(force, sEf, pEf, nAt));
-                            }
+                            BlInf = new MyThrustBlockInfo(BlInf,force, sEf, pEf, nAt);
+
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine(e.Message);
                         }
@@ -267,30 +226,30 @@ namespace BlueprintEditor2
                         }
                         if (output != 0 || resGroup == "Charging")
                         {
-                            MyEnergyBlockInfo EnBlinf = new MyEnergyBlockInfo(!blockInfo.ContainsKey("RequiredPowerInput"), output, storage, resGroup == "Charging");
-                            if (mods)
-                            {
-                                if (ModEnergyTypes.ContainsKey(modid))
-                                {
-                                    if (ModEnergyTypes[modid].ContainsKey(name))
-                                        ModEnergyTypes[modid][name] = EnBlinf;
-                                    else
-                                        ModEnergyTypes[modid].Add(name, EnBlinf);
-                                }
-                                else
-                                    ModEnergyTypes.Add(modid, new Dictionary<string, MyEnergyBlockInfo>() { [name] = EnBlinf });
-                            }
-                            else
-                            {
-                                if (EnergyTypes.ContainsKey(name))
-                                    EnergyTypes[name] = EnBlinf;
-                                else
-                                    EnergyTypes.Add(name, EnBlinf);
-                            }
-
+                            BlInf = new MyEnergyBlockInfo(BlInf,!blockInfo.ContainsKey("RequiredPowerInput"), output, storage, resGroup == "Charging");
                         }
                         break;
                 }
+                if (components.Count > 0)
+                    if (mods)
+                    {
+                        if (ModCubeBlocks.ContainsKey(modid))
+                        {
+                            if (ModCubeBlocks[modid].ContainsKey(name))
+                                ModCubeBlocks[modid][name] = BlInf;
+                            else
+                                ModCubeBlocks[modid].Add(name, BlInf);
+                        }
+                        else
+                            ModCubeBlocks.Add(modid, new Dictionary<string, MyBlockInfo>() { [name] = BlInf });
+                    }
+                    else
+                    {
+                        if (CubeBlocks.ContainsKey(name))
+                            CubeBlocks[name] = BlInf;
+                        else
+                            CubeBlocks.Add(name, BlInf);
+                    }
             }
         }
         private static void AddRecipiesInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")
@@ -622,18 +581,25 @@ namespace BlueprintEditor2
             }
         }
     }
-    public class MyBlockRecipie
+    public class MyBlockInfo
     {
         public readonly string Name;
         public readonly Dictionary<string, int> Components;
         public readonly int PCU;
         public readonly Vector3 Size;
-        public MyBlockRecipie(string name, Dictionary<string, int> components, int pcu, Vector3 size)
+        public MyBlockInfo(string name, Dictionary<string, int> components, int pcu, Vector3 size)
         {
             Name = name;
             Components = components;
             PCU = pcu;
             Size = size;
+        }
+        public MyBlockInfo(MyBlockInfo oldovio)
+        {
+            Name = oldovio.Name;
+            Components = oldovio.Components;
+            PCU = oldovio.PCU;
+            Size = oldovio.Size;
         }
     }
     public class MyComponentInfo
@@ -650,13 +616,26 @@ namespace BlueprintEditor2
             Volume = volume;
         }
     }
-    public class MyThrustInfo
+    public class MyThrustBlockInfo : MyBlockInfo
     {
         public readonly float Force;
         public readonly float SpaceEffectiveness;
         public readonly float PlanetaryEffectiveness;
         public readonly bool NeedAtmosphere;
-        public MyThrustInfo(float force, float spaceEffectiveness, float planetaryEffectiveness, bool needAtmosphere)
+        public MyThrustBlockInfo(
+            string name, Dictionary<string, int> components, int pcu, Vector3 size, 
+            float force, float spaceEffectiveness, float planetaryEffectiveness, bool needAtmosphere)
+        :base(name, components, pcu, size)
+        {
+            Force = force;
+            SpaceEffectiveness = spaceEffectiveness;
+            PlanetaryEffectiveness = planetaryEffectiveness;
+            NeedAtmosphere = needAtmosphere;
+        }
+        public MyThrustBlockInfo(
+            MyBlockInfo info,
+            float force, float spaceEffectiveness, float planetaryEffectiveness, bool needAtmosphere)
+        : base(info)
         {
             Force = force;
             SpaceEffectiveness = spaceEffectiveness;
@@ -664,13 +643,26 @@ namespace BlueprintEditor2
             NeedAtmosphere = needAtmosphere;
         }
     }
-    public class MyEnergyBlockInfo
+    public class MyEnergyBlockInfo : MyBlockInfo
     {
         public readonly bool IsGenerator;
         public readonly bool IsJumpDrive;
         public readonly float Output;
         public readonly float Storage;
-        public MyEnergyBlockInfo(bool isGenerator, float output, float storage = 0, bool isJump = false)
+        public MyEnergyBlockInfo(
+            string name, Dictionary<string, int> components, int pcu, Vector3 size, 
+            bool isGenerator, float output, float storage = 0, bool isJump = false)
+        : base(name, components, pcu, size)
+        {
+            IsGenerator = isGenerator;
+            IsJumpDrive = isJump;
+            Output = output;
+            Storage = storage;
+        }
+        public MyEnergyBlockInfo(
+            MyBlockInfo info,
+            bool isGenerator, float output, float storage = 0, bool isJump = false)
+        : base(info)
         {
             IsGenerator = isGenerator;
             IsJumpDrive = isJump;

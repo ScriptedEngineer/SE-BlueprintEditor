@@ -214,15 +214,15 @@ namespace BlueprintEditor2
                            .Append(Lang.Size_Blocks).Append(": ").Append(sizez.Replace(',', '.')).Append("\r\n")
                             .Append(Lang.Mass).Append(": ").Append(calc.Mass.ToString("N0", CultureInfo.InvariantCulture)).Append(" kg\r\n")
                             .Append("PCU: ").Append(calc.PCU.ToString("N0", CultureInfo.InvariantCulture)).Append(" \r\n")
-                            .Append(Lang.BlockCount).Append(": ").Append(calc.Blocks.ToString("N0", CultureInfo.InvariantCulture)).Append(" \r\n\r\n");
+                            .Append(Lang.BlockCount).Append(": ").Append(calc.Blocks.ToString("N0", CultureInfo.InvariantCulture)).Append(" \r\n");
                         double Jump = calc.GetJumpDistance() / 1000;
                         if (Jump != 0)
                         {
-                            shipInfo.Append($"{Lang.MaxJumpD}: {Jump.ToString("N0", CultureInfo.InvariantCulture)} km\r\n\r\n");
+                            shipInfo.Append($"\r\n{Lang.MaxJumpD}: {Jump.ToString("N0", CultureInfo.InvariantCulture)} km\r\n");
                         }
                         if (calc.Storage != 0)
                         {
-                            shipInfo.Append($"{Lang.EnergyStorage}: {calc.Storage.ToString("N2", CultureInfo.InvariantCulture)} MWh\r\n");
+                            shipInfo.Append($"\r\n{Lang.EnergyStorage}: {calc.Storage.ToString("N2", CultureInfo.InvariantCulture)} MWh\r\n");
                         }
                         if (calc.GenOut != 0)
                         {
@@ -230,7 +230,7 @@ namespace BlueprintEditor2
                         }
                         if (calc.PeakOut != calc.GenOut)
                         {
-                            shipInfo.Append($"{Lang.PeakOutput}: {calc.PeakOut.ToString("N2", CultureInfo.InvariantCulture)} MW\r\n\r\n");
+                            shipInfo.Append($"{Lang.PeakOutput}: {calc.PeakOut.ToString("N2", CultureInfo.InvariantCulture)} MW\r\n");
                         }
                         StringBuilder SpaceAcc = new StringBuilder(),
                                     PlanetaryAcc = new StringBuilder();
@@ -258,7 +258,7 @@ namespace BlueprintEditor2
                             }
                         }
                         if(smax > 0) 
-                            shipInfo.Append(Lang.SpaceAcc).Append(": \r\n").Append(SpaceAcc).Append("\r\n");
+                            shipInfo.Append("\r\n").Append(Lang.SpaceAcc).Append(": \r\n").Append(SpaceAcc).Append("\r\n");
                         if(pmax > 9.81) 
                             shipInfo.Append(Lang.PlanetAcc).Append(": \r\n").Append(PlanetaryAcc).Append("\r\n");
                         ShipInfo.Text = shipInfo.ToString();

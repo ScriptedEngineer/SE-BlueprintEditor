@@ -25,11 +25,9 @@ namespace BlueprintEditor2
 
         public Dictionary<Base6Directions, MyForceInfo> Forces = new Dictionary<Base6Directions, MyForceInfo>();
 
-        public Dictionary<string, MyBlockRecipie> ModCubeBlocks = new Dictionary<string, MyBlockRecipie>();
+        public Dictionary<string, MyBlockInfo> ModCubeBlocks = new Dictionary<string, MyBlockInfo>();
         public Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string, MyComponentInfo> ModComponents = new Dictionary<string, MyComponentInfo>();
-        public static Dictionary<string, MyThrustInfo> ModThrustTypes = new Dictionary<string, MyThrustInfo>();
-        public static Dictionary<string, MyEnergyBlockInfo> ModEnergyTypes = new Dictionary<string, MyEnergyBlockInfo>();
 
         Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
         Dictionary<string, double> Requared = new Dictionary<string, double>();
@@ -56,8 +54,6 @@ namespace BlueprintEditor2
             ModCubeBlocks.Clear();
             ModRecipies.Clear();
             ModComponents.Clear();
-            ModThrustTypes.Clear();
-            ModEnergyTypes.Clear();
             foreach (var x in MyGameData.ModCubeBlocks)
             {
                 if(Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
@@ -72,16 +68,6 @@ namespace BlueprintEditor2
             {
                 if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
                     ModComponents = ModComponents.Concat(x.Value.Where(n => !ModComponents.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
-            }
-            foreach (var x in MyGameData.ModThrustTypes)
-            {
-                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
-                    ModThrustTypes = ModThrustTypes.Concat(x.Value.Where(n => !ModThrustTypes.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
-            }
-            foreach (var x in MyGameData.ModEnergyTypes)
-            {
-                if (Switches.ContainsKey(x.Key) && Switches[x.Key].Enabled)
-                    ModEnergyTypes = ModEnergyTypes.Concat(x.Value.Where(n => !ModEnergyTypes.ContainsKey(n.Key))).ToDictionary(h => h.Key, h => h.Value); ;
             }
         }
 
@@ -252,9 +238,9 @@ namespace BlueprintEditor2
             return outer;
         }
 
-        public MyBlockRecipie AddBlock(MyXmlBlock block)
+        public MyBlockInfo AddBlock(MyXmlBlock block)
         {
-            MyBlockRecipie xx = null;
+            MyBlockInfo xx = null;
             if (Mods && ModCubeBlocks.ContainsKey(block.Type))
                xx = ModCubeBlocks[block.Type];
             else if (MyGameData.CubeBlocks.ContainsKey(block.Type))
@@ -292,11 +278,7 @@ namespace BlueprintEditor2
             {
                 UndefinedTypes.Add(block.Type);
             }
-            MyThrustInfo Thrust = null;
-            if (Mods && ModThrustTypes.ContainsKey(block.Type))
-                Thrust = ModThrustTypes[block.Type];
-            else if (MyGameData.ThrustTypes.ContainsKey(block.Type))
-                Thrust = MyGameData.ThrustTypes[block.Type];
+            MyThrustBlockInfo Thrust = xx as MyThrustBlockInfo;
             if (Thrust != null)
             {
                 MyBlockOrientation orient = block.Orientation == null?new MyBlockOrientation(): block.Orientation;
@@ -310,11 +292,7 @@ namespace BlueprintEditor2
                     Forces.Add(orient.Forward, new MyForceInfo(Thrust.Force * Thrust.SpaceEffectiveness, Thrust.Force * Thrust.PlanetaryEffectiveness));
                 }
             }
-            MyEnergyBlockInfo EnergyBlock = null;
-            if (Mods && ModEnergyTypes.ContainsKey(block.Type))
-                EnergyBlock = ModEnergyTypes[block.Type];
-            else if (MyGameData.EnergyTypes.ContainsKey(block.Type))
-                EnergyBlock = MyGameData.EnergyTypes[block.Type];
+            MyEnergyBlockInfo EnergyBlock = xx as MyEnergyBlockInfo;
             if (EnergyBlock != null)
             {
                 if (EnergyBlock.IsJumpDrive)

@@ -247,12 +247,38 @@ namespace BlueprintEditor2
             else
                 NewDirection = OldDirection;
             Logger.Add($"Sort Blocks by {PropertyPatch} in {NewDirection}");
-            List<MyXmlBlock> Blocks = new List<MyXmlBlock>();
-            Blocks.AddRange(BlockList.ItemsSource.OfType<MyXmlBlock>());
-            if(NewDirection == ListSortDirection.Ascending)
-                BlockList.ItemsSource = Blocks.OrderBy(x => PropertyPatch == "Name"?x.Name:x.DisplayType).ToArray();
-            else
-                BlockList.ItemsSource = Blocks.OrderByDescending(x => PropertyPatch == "Name" ? x.Name : x.DisplayType).ToArray();
+            MyXmlBlock[] Sort = BlockList.ItemsSource.OfType<MyXmlBlock>().ToArray();
+            if (NewDirection != OldDirection || OldSortBy != SortBy)
+            {
+                if (NewDirection == ListSortDirection.Ascending)
+                {
+                    switch (PropertyPatch)
+                    {
+                        case "Name":
+                            BlockList.ItemsSource = Sort.OrderBy(x => x.Name);
+                            //MyExtensions.quickSort(ref Sort, (x, y) => string.CompareOrdinal(x.Name, y.Name));
+                            break;
+                        case "DisplayType":
+                            BlockList.ItemsSource = Sort.OrderBy(x => x.DisplayType);
+                            //MyExtensions.quickSort(ref Sort, (x, y) => string.CompareOrdinal(x.DisplayType, y.DisplayType));
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (PropertyPatch)
+                    {
+                        case "Name":
+                            BlockList.ItemsSource = Sort.OrderByDescending(x => x.Name);
+                            //MyExtensions.quickSort(ref Sort, (x, y) => -string.CompareOrdinal(x.Name, y.Name));
+                            break;
+                        case "DisplayType":
+                            BlockList.ItemsSource = Sort.OrderByDescending(x => x.DisplayType);
+                            //MyExtensions.quickSort(ref Sort, (x, y) => -string.CompareOrdinal(x.DisplayType, y.DisplayType));
+                            break;
+                    }
+                }
+            }else BlockList.ItemsSource = Sort;
             //BlockList.Items.SortDescriptions.Clear();
             //BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
@@ -504,10 +530,12 @@ namespace BlueprintEditor2
                 EdBlueprint.Grids[GridList.SelectedIndex].RemoveBlock(SelectedBlk);
                 Blocks.Add(SelectedBlk);
             }
+            var Sort = BlockList.ItemsSource.OfType<MyXmlBlock>().ToList();
             foreach (MyXmlBlock SelectedBlk in Blocks)
             {
-                BlockList.Items.Remove(SelectedBlk);
+                Sort.Remove(SelectedBlk);
             }
+            BlockList.ItemsSource = Sort;
             GoSort(OldSortBy, null);
             BlockList.ScrollIntoView(BlockList.SelectedItem);
         }

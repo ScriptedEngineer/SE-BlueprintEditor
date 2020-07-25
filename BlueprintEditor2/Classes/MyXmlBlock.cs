@@ -24,7 +24,7 @@ namespace BlueprintEditor2
         private Dictionary<string,MyBlockProperty> _Properties = new Dictionary<string, MyBlockProperty>();
         public string Type
         {
-            get => _BlockXml.Attributes?.GetNamedItem("xsi:type").Value.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode.InnerText;
+            get => _BlockXml.Attributes?.GetNamedItem("xsi:type")?.Value?.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode?.InnerText;
             set
             {
                 string[] types = value.Split('/');
