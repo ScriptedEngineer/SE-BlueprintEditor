@@ -28,7 +28,7 @@ See [Releases](https://github.com/ScriptedEngineer/SE-BlueprintEditor/releases)
 - Automatic backup before editing
 - Included image converter
 - Blueprint calculator with mods
-- Blueprint Size/Mass/PCU calculate
+- Blueprint Size/Mass/PCU/JumpDrive/Energy/Acceleration calculate
 - Copy workshop blueprints to local
 - Create world with mods from cache
 
