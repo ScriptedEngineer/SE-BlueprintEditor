@@ -10,6 +10,7 @@ using System.Collections;
 using System.Threading;
 using System.ComponentModel;
 using System.Management;
+using System.Numerics;
 
 namespace BlueprintEditor2
 {

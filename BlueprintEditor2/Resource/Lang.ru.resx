@@ -165,6 +165,9 @@
   <data name="BlockName" xml:space="preserve">
     <value>Имя блока</value>
   </data>
+  <data name="BlockOrientation" xml:space="preserve">
+    <value>Ориентация блока</value>
+  </data>
   <data name="BlockPosition" xml:space="preserve">
     <value>Позиция блока</value>
   </data>
@@ -197,6 +200,9 @@
   </data>
   <data name="Color" xml:space="preserve">
     <value>Цвет</value>
+  </data>
+  <data name="ColorReplace" xml:space="preserve">
+    <value>Замена цвета</value>
   </data>
   <data name="Columns" xml:space="preserve">
     <value>Столбцы</value>
@@ -314,6 +320,12 @@
   <data name="CustomData" xml:space="preserve">
     <value>Свои данные</value>
   </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Темная</value>
+  </data>
+  <data name="DefaultTheme" xml:space="preserve">
+    <value>Стандартная</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
   </data>
@@ -336,7 +348,7 @@
     <value>Папки</value>
   </data>
   <data name="Dithering" xml:space="preserve">
-    <value>Смешение</value>
+    <value>Сглаживание</value>
   </data>
   <data name="DontOpenAllBlue" xml:space="preserve">
     <value>Не открывать чертежи при сканировании</value>
@@ -349,6 +361,9 @@
   </data>
   <data name="Down" xml:space="preserve">
     <value>Вниз</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Загрузить</value>
   </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Скачиваем новую версию</value>
@@ -368,8 +383,14 @@
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Введите название мира! Остальные настройки редактируются из игры.</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Произошла ошибка</value>
+  </data>
   <data name="Faction" xml:space="preserve">
     <value>Фракция</value>
+  </data>
+  <data name="FileFromAnnotherGame" xml:space="preserve">
+    <value>Этот файл из другой игры</value>
   </data>
   <data name="Forward" xml:space="preserve">
     <value>Вперед</value>
@@ -466,6 +487,9 @@
   </data>
   <data name="LargeGrid" xml:space="preserve">
     <value>Большая сетка</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Последнее изменение</value>
   </data>
   <data name="Left" xml:space="preserve">
     <value>Влево</value>
@@ -595,6 +619,9 @@
   <data name="PlanetAcc" xml:space="preserve">
     <value>Ускорения на планете</value>
   </data>
+  <data name="PleasePasteLink" xml:space="preserve">
+    <value>Пожалуйста, вставьте ссылку для просмотра информации</value>
+  </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение. вы хотите перезагрузить приложение сейчас?</value>
   </data>
@@ -639,6 +666,9 @@
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Заменить на текущий</value>
+  </data>
+  <data name="ReplaceMode" xml:space="preserve">
+    <value>Режим замены</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
@@ -726,6 +756,9 @@
   <data name="SPNF" xml:space="preserve">
     <value>Директория сохранений не была найдена! Пожалуйста установите это в настройках.</value>
   </data>
+  <data name="SteamSync" xml:space="preserve">
+    <value>Синхронизация c Steam</value>
+  </data>
   <data name="StoneAmount" xml:space="preserve">
     <value>Колличество камня (kg)</value>
   </data>
@@ -741,8 +774,14 @@
   <data name="Text" xml:space="preserve">
     <value>Текст</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Тема</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Инструменты</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Тип</value>
   </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Неопознанные типы</value>

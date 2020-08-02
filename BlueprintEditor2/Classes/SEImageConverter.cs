@@ -230,7 +230,7 @@ namespace BlueprintEditor2
                 b = (int)(((float)pr / 7) * 255);
                 return Color.FromArgb(r, g, b);
             }
-            private static bool[] GetBinaryRepresentation(int i)
+            /*private static bool[] GetBinaryRepresentation(int i)
             {
                 List<bool> result = new List<bool>();
                 while (i > 0)
@@ -241,15 +241,14 @@ namespace BlueprintEditor2
                 }
                 result.Reverse();
                 return result.ToArray();
-            }
+            }*/
             public static char CharRGB(byte r = 7, byte g = 7, byte b = 7)
             {
                 return (char)(0xe100 + (r << 6) + (g << 3) + b);
             }
             public static Color ColorFromHSV(double H, double S, double V)
             {
-                int r, g, b;
-                HsvToRgb(H, S, V, out r, out g, out b);
+                HsvToRgb(H, S, V, out int r, out int g, out int b);
                 return Color.FromArgb(r, g, b);
             }
             /// <summary>

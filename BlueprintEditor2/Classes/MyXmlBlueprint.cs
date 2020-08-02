@@ -19,7 +19,7 @@ namespace BlueprintEditor2
     public class MyXmlBlueprint
     {
         public string Patch;
-        private XmlDocument BlueprintXml = new XmlDocument();
+        private readonly XmlDocument BlueprintXml = new XmlDocument();
         public MyXmlGrid[] Grids;
         public string Name
         {
@@ -88,7 +88,7 @@ namespace BlueprintEditor2
                 }
             }
         }
-        public void Save(bool forced = false)
+        public void Save()//bool forced = false)
         {
             if (Directory.Exists(Patch))
             {
@@ -119,7 +119,8 @@ namespace BlueprintEditor2
                         LastestName = file;
                         continue;
                     }
-                    DateTime FileDate = DateTime.FromFileTimeUtc(long.Parse(file.Split('\\').Last().Replace(".sbc", "")));
+
+                    //_ = DateTime.FromFileTimeUtc(long.Parse(file.Split('\\').Last().Replace(".sbc", "")));
                     if (Files.Contains(File.ReadAllText(file)))
                     {
                         File.Delete(file);
@@ -155,9 +156,11 @@ namespace BlueprintEditor2
                                 switch (Dial)
                                 {
                                     case DialоgResult.Yes:
-                                        Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-                                        dlg.DefaultExt = ".png";
-                                        dlg.Filter = Lang.ImFiles + "|*.png;*.jpeg;*.jpg";
+                                        Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
+                                        {
+                                            DefaultExt = ".png",
+                                            Filter = Lang.ImFiles + "|*.png;*.jpeg;*.jpg"
+                                        };
                                         bool? result = dlg.ShowDialog();
                                         if (result == true)
                                         {
@@ -204,12 +207,14 @@ namespace BlueprintEditor2
         {
             Bitmap bmpPic = new Bitmap(imgPic.Width, imgPic.Height);
             Graphics gfxPic = Graphics.FromImage(bmpPic);
-            ColorMatrix cmxPic = new ColorMatrix();
-            cmxPic.Matrix33 = imgOpac;
-            cmxPic.Matrix23 = imgOpac;
-            cmxPic.Matrix13 = imgOpac;
-            cmxPic.Matrix03 = imgOpac;
-            cmxPic.Matrix43 = imgOpac;
+            ColorMatrix cmxPic = new ColorMatrix
+            {
+                Matrix33 = imgOpac,
+                Matrix23 = imgOpac,
+                Matrix13 = imgOpac,
+                Matrix03 = imgOpac,
+                Matrix43 = imgOpac
+            };
             ImageAttributes iaPic = new ImageAttributes();
             iaPic.SetColorMatrix(cmxPic, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
             gfxPic.DrawImage(imgPic, new Rectangle(0, 0, bmpPic.Width, bmpPic.Height), 0, 0, imgPic.Width, imgPic.Height, GraphicsUnit.Pixel, iaPic);

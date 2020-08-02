@@ -39,29 +39,34 @@ namespace BlueprintEditor2
         internal MyBlockProperty(XmlNode Node)
         {
             _PropertyXml = Node;
-            bool Test;
-            if(bool.TryParse(_PropertyXml.InnerText,out Test))
+            if (bool.TryParse(_PropertyXml.InnerText, out bool Test))
             {
-                Edit = new EditorData();
-                Edit.Content = Test?Lang.Yes:Lang.No;
-                Edit.IsChecked = Test;
-                Edit.CheckboxVisible = Visibility.Visible;
+                Edit = new EditorData
+                {
+                    Content = Test ? Lang.Yes : Lang.No,
+                    IsChecked = Test,
+                    CheckboxVisible = Visibility.Visible
+                };
                 //Title = _PropertyXml.InnerText;
             }
             else if (long.TryParse(_PropertyXml.InnerText, out long Testint))
             {
-                Edit = new EditorData();
-                Edit.Content = Testint.ToString();
-                //_Edit.IsChecked = Test;
-                Edit.IntTextboxVisible = Visibility.Visible;
+                Edit = new EditorData
+                {
+                    Content = Testint.ToString(),
+                    //_Edit.IsChecked = Test;
+                    IntTextboxVisible = Visibility.Visible
+                };
                 //Title = _PropertyXml.InnerText;
             }
             else if (double.TryParse(_PropertyXml.InnerText.Replace(".", ","), out double Testfl))
             {
-                Edit = new EditorData();
-                Edit.Content = Testfl.ToString("F18").TrimEnd('0').TrimEnd(',');
-                //_Edit.IsChecked = Test;
-                Edit.FloatTextboxVisible = Visibility.Visible;
+                Edit = new EditorData
+                {
+                    Content = Testfl.ToString("F18").TrimEnd('0').TrimEnd(','),
+                    //_Edit.IsChecked = Test;
+                    FloatTextboxVisible = Visibility.Visible
+                };
                 //Title = _PropertyXml.InnerText;
             }
             /*else if (!string.IsNullOrEmpty(_PropertyXml.InnerText) && _PropertyXml.InnerText == _PropertyXml.InnerXml)
@@ -74,9 +79,11 @@ namespace BlueprintEditor2
             }*/
             else
             {
-                EditorData box = new EditorData();
-                box.Content = "Not performed";
-                box.LabelVisible = Visibility.Visible;
+                EditorData box = new EditorData
+                {
+                    Content = "Not performed",
+                    LabelVisible = Visibility.Visible
+                };
                 Edit = box;
             }
         }

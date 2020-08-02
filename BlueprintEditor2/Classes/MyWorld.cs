@@ -11,11 +11,11 @@ namespace BlueprintEditor2
     {
         public static void Create(string Name, string Mods)
         {
-            string Patch = MySettings.Current.SavesPatch + @"\" + Name;
+            string Patch = MySettings.Current.SavesPatch.TrimEnd('\\') + @"\" + Name;
             int cntr = 1;
             while (Directory.Exists(Patch))
             {
-                Patch = MySettings.Current.SavesPatch + @"\" + Name + cntr;
+                Patch = MySettings.Current.SavesPatch.TrimEnd('\\') + @"\" + Name + cntr;
                 cntr++;
             }
             Directory.CreateDirectory(Patch);

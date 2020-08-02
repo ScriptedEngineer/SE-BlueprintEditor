@@ -25,7 +25,8 @@ namespace BlueprintEditor2
     {
         static public UpdateAvailable window;
         static internal bool last_open = false;
-        string UpdateLink,UpdLoge;
+        private readonly string UpdateLink, UpdLoge;
+
         public UpdateAvailable(string NewestVer,string updateLink)
         {
             InitializeComponent();

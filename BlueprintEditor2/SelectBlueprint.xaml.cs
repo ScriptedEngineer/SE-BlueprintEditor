@@ -30,6 +30,7 @@ namespace BlueprintEditor2
         public static SelectBlueprint window;
         internal MyXmlBlueprint CurrentBlueprint;
         string currentBluePatch;
+
         public SelectBlueprint()
         {
 #if DEBUG
@@ -172,7 +173,8 @@ namespace BlueprintEditor2
                 MenuItem_1_3.IsEnabled = false;
                 MenuItem_2_3.IsEnabled = false;
             }
-            Welcome.Content = Lang.Welcome+" "+MySettings.Current.UserName.Replace("_", "__");
+            Random rnd = new Random();
+            Welcome.Content = Lang.Welcome+" "+ (MyExtensions.CheckGameLicense() ?MySettings.Current.UserName.Replace("_", "__") : "Pirate#"+ rnd.Next(90,9999));
             //MessageBox.Show("Hello "+MySettings.Current.UserName);
             Logger.Add("GUI Loaded");
             new Task(() => {
@@ -190,6 +192,7 @@ namespace BlueprintEditor2
         {
             Welcome.Content = Lang.Welcome + " " + MySettings.Current.UserName.Replace("_", "__");
             //ResourceManager.Refresh();
+            //MyExtensions.ThemeChange("Dark");
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -202,7 +205,7 @@ namespace BlueprintEditor2
                 if (MySettings.Current.DontOpenBlueprintsOnScan)
                 {
                     Logger.Add("Adding inblueprint data to list");
-                    Selected.addXmlData(CurrentBlueprint);
+                    Selected.AddXmlData(CurrentBlueprint);
                 }
                 Logger.Add("Load picture");
                 BluePicture.Source = CurrentBlueprint.GetPic();
@@ -531,19 +534,23 @@ namespace BlueprintEditor2
             if (currentBluePatch != MySettings.Current.BlueprintPatch)
             {
                 Logger.Add("Add back and home buttons to folder menu");
-                MenuItem Fldr = new MenuItem();
-                Fldr.Header = Lang.GoBack;
-                Fldr.Icon = new Image
+                MenuItem Fldr = new MenuItem
                 {
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_354138.png"))
+                    Header = Lang.GoBack,
+                    Icon = new Image
+                    {
+                        Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_354138.png"))
+                    }
                 };
                 Fldr.Click += MenuBackItem_Click;
                 FoldersItem.Items.Add(Fldr);
-                MenuItem Fldr2 = new MenuItem();
-                Fldr2.Header = Lang.GoHome;
-                Fldr2.Icon = new Image
+                MenuItem Fldr2 = new MenuItem
                 {
-                    Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_144440.png"))
+                    Header = Lang.GoHome,
+                    Icon = new Image
+                    {
+                        Source = new BitmapImage(new Uri("pack://application:,,,/Resource/img_144440.png"))
+                    }
                 };
                 Fldr2.Click += MenuHomeItem_Click;
                 FoldersItem.Items.Add(Fldr2);
@@ -562,7 +569,7 @@ namespace BlueprintEditor2
                 {
                     string feld = Path.GetFileNameWithoutExtension(x);
                     Logger.Add($"init \"{feld}\" and send to Main thread");
-                    MyDisplayBlueprint Elem = MyDisplayBlueprint.fromBlueprint(x);
+                    MyDisplayBlueprint Elem = MyDisplayBlueprint.FromBlueprint(x);
                     if (Elem is null)
                     {
                         MyExtensions.AsyncWorker(() =>
@@ -575,11 +582,13 @@ namespace BlueprintEditor2
                             }
                             First = false;
                             FoldersItem.IsEnabled = true;
-                            MenuItem Fldr = new MenuItem();
-                            Fldr.Header = feld;
-                            Fldr.Icon = new Image
+                            MenuItem Fldr = new MenuItem
                             {
-                                Source = fldicn
+                                Header = feld,
+                                Icon = new Image
+                                {
+                                    Source = fldicn
+                                }
                             };
                             Fldr.Click += MenuFolderItem_Click;
                             foldrmenu.Add(Fldr);
@@ -636,11 +645,13 @@ namespace BlueprintEditor2
         private void GoSort(object sender, RoutedEventArgs e)
         {
             Logger.Add("Sotring algoritm start");
-            GridViewColumn SortBy = sender as GridViewColumn;
-            if(SortBy == null) SortBy = ((GridViewColumnHeader)sender).Column;
+            if (!(sender is GridViewColumn SortBy)) SortBy = ((GridViewColumnHeader)sender).Column;
+            if (SortBy == null) return;
             string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding).Path.Path.Replace("Text", "");
-            if (OldSortBy != null)
-                OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
+            if (OldSortBy != null) {
+                if (OldSortBy.Header is GridViewColumnHeader cHead)
+                    cHead.Content = cHead.Content.ToString().Trim('↓', '↑', ' ');
+            }
             ListSortDirection OldDirection = ListSortDirection.Ascending;
             if (BlueList.Items.SortDescriptions.Count > 0 && BlueList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
                 OldDirection = BlueList.Items.SortDescriptions[0].Direction;
@@ -653,7 +664,8 @@ namespace BlueprintEditor2
             BlueList.Items.SortDescriptions.Clear();
             BlueList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
             //BlueList.Items.SortDescriptions.Add(new SortDescription("Name", NewDirection));
-            SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
+            if (SortBy.Header is GridViewColumnHeader cvHead)
+                cvHead.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
         }
 
@@ -747,6 +759,15 @@ namespace BlueprintEditor2
                 ImageConverter.Opened.Focus();
             else
                 new ImageConverter().Show();
+        }
+
+        private void MenuItem_Click_7(object sender, RoutedEventArgs e)
+        {
+            Logger.Add("Open workshop downloader");
+            if (WorkshopDownloader.Opened != null)
+                WorkshopDownloader.Opened.Focus();
+            else
+                new WorkshopDownloader().Show();
         }
     }
 }

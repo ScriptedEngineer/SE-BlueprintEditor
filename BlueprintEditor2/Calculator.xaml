@@ -49,21 +49,21 @@
         </ListView>
         <TextBox x:Name="StoneAmountText" Grid.Column="3" Height="23" Margin="0,0,4,7" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" TextChanged="TextBox_TextChanged" IsEnabled="False" Opacity="0"/>
         <Label Content="{x:Static Resource:Lang.StoneAmount}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,30" VerticalAlignment="Bottom" Padding="0" Height="16" Width="131" IsEnabled="False" Opacity="0"/>
-        <Slider x:Name="AssembleEffic" Grid.Column="2" Margin="10,26,0,0" VerticalAlignment="Top" Minimum="1" SmallChange="1" TickPlacement="BottomRight" Value="1" LargeChange="2" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Left" Width="185" Height="24"/>
+        <Slider x:Name="AssembleEffic" Grid.Column="2" Margin="10,28,0,0" VerticalAlignment="Top" Minimum="1" SmallChange="1" TickPlacement="BottomRight" Value="1" LargeChange="2" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Left" Width="185" Height="24"/>
         <Label Content="{x:Static Resource:Lang.AssemblerEfficiency}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="144"/>
         <Label Content="1x" Grid.Column="2" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="12"/>
         <Label Content="3x" Grid.Column="2" Margin="49,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" HorizontalAlignment="Left" Width="12"/>
         <Label Content="10x" Grid.Column="2" HorizontalAlignment="Left" Margin="181,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="18"/>
-        <Slider x:Name="YieldCount" Grid.Column="1" Margin="0,26,0,0" VerticalAlignment="Top" SmallChange="1" TickPlacement="BottomRight" LargeChange="2" ValueChanged="Slider_ValueChanged" Maximum="4" HorizontalAlignment="Left" Width="129" Height="24"/>
+        <Slider x:Name="YieldCount" Grid.Column="1" Margin="0,28,0,0" VerticalAlignment="Top" SmallChange="1" TickPlacement="BottomRight" LargeChange="2" ValueChanged="Slider_ValueChanged" Maximum="4" HorizontalAlignment="Left" Width="129" Height="24"/>
         <Label Content="0" Grid.Column="1" HorizontalAlignment="Left" Margin="3,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="6"/>
         <Label Content="2" Grid.Column="1" Margin="61,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" HorizontalAlignment="Left" Width="6"/>
         <Label Content="4" Grid.Column="1" HorizontalAlignment="Left" Margin="120,50,0,0" VerticalAlignment="Top" Padding="0" Height="16" Width="6"/>
         <TextBox x:Name="YieldProcentage" Grid.Column="1" Height="23" Margin="0,94,20,0" TextWrapping="Wrap" Text="100%" VerticalAlignment="Top" TextChanged="YieldProcentage_TextChanged"/>
-        <RadioButton x:Name="ProcentageYield" Content="{x:Static Resource:Lang.YieldProcentage}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,79,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1" Height="15" Width="130"/>
+        <RadioButton x:Name="ProcentageYield" Content="{x:Static Resource:Lang.YieldProcentage}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,77,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_1" Height="15" Width="130"/>
         <RadioButton x:Name="ModulesYield" Content="{x:Static Resource:Lang.YieldModules}" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked" IsChecked="True" Height="15" Width="126"/>
         <CheckBox x:Name="OffStone" Content="{x:Static Resource:Lang.OffStone}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,51" VerticalAlignment="Bottom" Click="CheckBox_Click" Height="15" Width="153" IsEnabled="False" IsChecked="True" Opacity="0"/>
-        <CheckBox x:Name="WithMods" Content="{x:Static Resource:Lang.WithMods}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Click="WithMods_Click" IsChecked="True" Height="15" Width="74"/>
-        <CheckBox x:Name="OnlyForBuild" Content="{x:Static Resource:Lang.OnlyForBuild}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,30" VerticalAlignment="Bottom" Height="15" Click="OnlyForBuild_Click" Width="143"/>
+        <CheckBox x:Name="WithMods" Content="{x:Static Resource:Lang.WithMods}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,8" VerticalAlignment="Bottom" Click="WithMods_Click" IsChecked="True" Height="18" Width="74"/>
+        <CheckBox x:Name="OnlyForBuild" Content="{x:Static Resource:Lang.OnlyForBuild}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Height="20" Click="OnlyForBuild_Click" Width="143"/>
         <ListView x:Name="ModsList" Margin="10,37,10,10" Grid.RowSpan="3" Grid.Column="4">
             <ListView.View>
                 <GridView x:Name="BlockListColumns3">

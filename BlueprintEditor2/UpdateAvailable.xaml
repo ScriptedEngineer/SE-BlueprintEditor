@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="UpdateAvailable - SE BlueprintEditor" Height="250" Width="400" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="400" MinHeight="250">
+        Title="Update available - SE BlueprintEditor" Height="250" Width="400" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="400" MinHeight="250">
     <Grid>
         <Label Content="{x:Static res:Lang.UpdateAvailable}" x:Name="AvailableVer" Margin="10,10,10,0" VerticalAlignment="Top"/>
         <Label x:Name="CurrentVer" Content="{x:Static res:Lang.CurrentVer}" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>

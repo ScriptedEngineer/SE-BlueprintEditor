@@ -32,6 +32,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -84,6 +86,7 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -132,7 +135,6 @@
     <Compile Include="Classes\MyWorld.cs" />
     <Compile Include="Classes\MyXmlBlock.cs" />
     <Compile Include="Classes\MyXmlBlockEqualer.cs" />
-    <Compile Include="Classes\Vector3.cs" />
     <Compile Include="Classes\WorkshopCache.cs" />
     <Compile Include="Dialogs\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
@@ -161,6 +163,9 @@
     </Compile>
     <Compile Include="UpdateAvailable.xaml.cs">
       <DependentUpon>UpdateAvailable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WorkshopDownloader.xaml.cs">
+      <DependentUpon>WorkshopDownloader.xaml</DependentUpon>
     </Compile>
     <Page Include="About.xaml">
       <SubType>Designer</SubType>
@@ -208,7 +213,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Light.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UpdateAvailable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WorkshopDownloader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,7 +265,9 @@
     <Resource Include="Resource\img_292121.png" />
     <Resource Include="Resource\img_1610640.png" />
     <Resource Include="Resource\img_100000.png" />
-    <Resource Include="Resource\gyZddYCd3a8.jpg" />
+    <Resource Include="Resource\steam_icon_135152.png" />
+    <Resource Include="Resource\setts.png" />
+    <Resource Include="Resource\gyZddYCd3a8.png" />
     <Content Include="SESave\Sandbox.txt" />
     <Content Include="SESave\SANDBOX_0_0_0_.txt" />
     <Content Include="SESave\Sandbox_config.txt" />
@@ -287,9 +306,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\WhiteDot.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Setts.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\img_354138.png" />

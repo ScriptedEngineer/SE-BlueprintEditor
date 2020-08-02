@@ -20,7 +20,7 @@ namespace BlueprintEditor2
     public partial class MessageDialog : Window
     {
         private Action<DialоgResult> OnClick;
-        private Action<string> OnInput;
+        private readonly Action<string> OnInput;
         internal static MessageDialog Last;
         public MessageDialog(DialogPicture Pic, string _Title, string Text, Action<DialоgResult> _Run = null, DialogType Type = DialogType.Normal, int _Width = 300, int _Height = 200)
         {

@@ -27,7 +27,7 @@ namespace BlueprintEditor2
     {
         public static ImageConverter Opened;
         string Monospace = "";
-        bool DontNormalize = false;
+        readonly bool DontNormalize = false;
         public ImageConverter()
         {
             Opened = this;
@@ -78,8 +78,10 @@ namespace BlueprintEditor2
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files(*.bmp;*.jpg;*.png)|*.BMP;*.JPG;*.PNG";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files(*.bmp;*.jpg;*.png)|*.BMP;*.JPG;*.PNG"
+            };
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //Monospace = SEImageConverter.ConvertToMonospace(Image.FromFile(openFileDialog.FileName), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,out Image Resul);
@@ -90,8 +92,10 @@ namespace BlueprintEditor2
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.DefaultExt = "png";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                DefaultExt = "png"
+            };
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 SEImageConverter.FromSource(DitherPic.Source as BitmapSource).Save(saveFileDialog.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
@@ -132,7 +136,7 @@ namespace BlueprintEditor2
             }
         }
 
-        List<Bitmap> MemImages = new List<Bitmap>();
+        readonly List<Bitmap> MemImages = new List<Bitmap>();
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             try
@@ -258,7 +262,7 @@ namespace BlueprintEditor2
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
             //Monospace = SEImageConverter.ConvertToMonospace(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
-            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, true, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, true, SaveAspect.IsChecked.Value, out _);
             //DitherPic.Source = SEImageConverter.ToSource(Resul);
             System.Windows.Clipboard.SetText(Monospace);
             NormalizeForm();
@@ -266,7 +270,7 @@ namespace BlueprintEditor2
 
         private void Button_Click_9(object sender, RoutedEventArgs e)
         {
-            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, false, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
+            Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, false, SaveAspect.IsChecked.Value, out _);
             //DitherPic.Source = SEImageConverter.ToSource(Resul);
             System.Windows.Clipboard.SetText(Monospace);
             NormalizeForm();

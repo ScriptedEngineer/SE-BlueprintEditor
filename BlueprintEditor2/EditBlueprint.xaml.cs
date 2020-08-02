@@ -19,8 +19,8 @@ namespace BlueprintEditor2
     public partial class EditBlueprint : Window
     {
         static public int OpenCount;
-        FileStream _Lock;
-        MyXmlBlueprint EdBlueprint;
+        readonly FileStream _Lock;
+        readonly MyXmlBlueprint EdBlueprint;
         public EditBlueprint(FileStream Lock, MyXmlBlueprint Blueprint)
         {
             _Lock = Lock;
@@ -105,7 +105,7 @@ namespace BlueprintEditor2
             DestructibleGridBox.IsChecked = SlectedGrd.Destructible;
             GridSizeBox.SelectedIndex = (int)SlectedGrd.GridSize;
             DamageFixer.IsEnabled = SlectedGrd.IsDamaged;
-            GoSort(BlockListColumns.Columns[1],null);
+            GoSort(BlockListColumns.Columns[1],null,true);
         }
         private bool DasShowIt(MyXmlBlock block)
         {
@@ -204,10 +204,23 @@ namespace BlueprintEditor2
                     ShareBox.IsEnabled = false;
                     ShareBox.SelectedIndex = -1;
                 }
+                if(MasterBlock.Orientation != null)
+                {
+                    ForwardBox.SelectedIndex = (int)MasterBlock.Orientation.Forward;
+                    UpBox.SelectedIndex = (int)MasterBlock.Orientation.Up;
+                    UpBox.IsEnabled = ForwardBox.IsEnabled = true;
+                }
+                else
+                {
+                    UpBox.SelectedIndex = ForwardBox.SelectedIndex = -1;
+                    UpBox.IsEnabled = ForwardBox.IsEnabled = false;
+                }
                 SetSpecials(MasterBlock);
             }
             else
             {
+                UpBox.SelectedIndex = ForwardBox.SelectedIndex = -1;
+                UpBox.IsEnabled = ForwardBox.IsEnabled = false;
                 DeleteButton.IsEnabled = false;
                 PropertyList.IsEnabled = false;
                 PropertyList.ItemsSource = null;
@@ -227,12 +240,14 @@ namespace BlueprintEditor2
 
         GridViewColumn OldSortBy;
         ListSortDirection OldDirection = ListSortDirection.Descending;
-        private void GoSort(object sender, RoutedEventArgs e)
+        private void GoSort(object sender, RoutedEventArgs e) => GoSort(sender, e, false);
+        private void GoSort(object sender, RoutedEventArgs e, bool Resort)
         {
             if (sender == null) return;
             if (sender.ToString() == Lang.Property) return;
             GridViewColumn SortBy = (sender as GridViewColumnHeader)?.Column;
             if (SortBy == null) SortBy = (sender as GridViewColumn);
+            if (SortBy == null) return;
             string PropertyPatch = ((Binding)SortBy.DisplayMemberBinding)?.Path.Path.Replace("Text", "");
             if (PropertyPatch == "PropertyName") return;
             if (PropertyPatch == null) return;
@@ -248,7 +263,7 @@ namespace BlueprintEditor2
                 NewDirection = OldDirection;
             Logger.Add($"Sort Blocks by {PropertyPatch} in {NewDirection}");
             MyXmlBlock[] Sort = BlockList.ItemsSource.OfType<MyXmlBlock>().ToArray();
-            if (NewDirection != OldDirection || OldSortBy != SortBy)
+            if (NewDirection != OldDirection || OldSortBy != SortBy || Resort)
             {
                 if (NewDirection == ListSortDirection.Ascending)
                 {
@@ -448,10 +463,12 @@ namespace BlueprintEditor2
         }
         private void BlockColorBox_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Forms.ColorDialog MyDialog = new Forms.ColorDialog();
-            MyDialog.AllowFullOpen = true;
-            MyDialog.ShowHelp = false;
-            MyDialog.Color = ((SolidColorBrush)BlockColorBox.Fill).Color.ToDrawingColor();
+            Forms.ColorDialog MyDialog = new Forms.ColorDialog
+            {
+                AllowFullOpen = true,
+                ShowHelp = false,
+                Color = ((SolidColorBrush)BlockColorBox.Fill).Color.ToDrawingColor()
+            };
             if (MyDialog.ShowDialog() == Forms.DialogResult.OK)
             {
                 foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
@@ -536,7 +553,7 @@ namespace BlueprintEditor2
                 Sort.Remove(SelectedBlk);
             }
             BlockList.ItemsSource = Sort;
-            GoSort(OldSortBy, null);
+            GoSort(OldSortBy, null, true);
             BlockList.ScrollIntoView(BlockList.SelectedItem);
         }
         bool initGAT = false;
@@ -679,10 +696,12 @@ namespace BlueprintEditor2
 
         private void GridColorChange_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Forms.ColorDialog MyDialog = new Forms.ColorDialog();
-            MyDialog.AllowFullOpen = true;
-            MyDialog.ShowHelp = false;
-            MyDialog.Color = ((SolidColorBrush)GridColorChange.Fill).Color.ToDrawingColor();
+            Forms.ColorDialog MyDialog = new Forms.ColorDialog
+            {
+                AllowFullOpen = true,
+                ShowHelp = false,
+                Color = ((SolidColorBrush)GridColorChange.Fill).Color.ToDrawingColor()
+            };
             if (MyDialog.ShowDialog() == Forms.DialogResult.OK)
             {
                 GridColorChange.Fill = new SolidColorBrush(MyDialog.Color.ToMediaColor());
@@ -716,7 +735,6 @@ namespace BlueprintEditor2
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            Button Sender = sender as Button;
             if (!initGAT) return;
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
             foreach (MyXmlBlock block in SlectedGrd.Blocks)
@@ -725,7 +743,7 @@ namespace BlueprintEditor2
                 block.SetPropertyIfExists("IntegrityPercent", bp != null? bp.TextValue: "1");
             }
             SlectedGrd.FixVisualDamage();
-            if(Sender != null) Sender.IsEnabled = false;
+            if(sender is Button Sender) Sender.IsEnabled = false;
             BlockList_SelectionChanged_1(null, null);
         }
 
@@ -787,8 +805,10 @@ namespace BlueprintEditor2
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
             MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
-            List<MyBlockInventory.MyItem> items = new List<MyBlockInventory.MyItem>(Block.Inventories[InventoryNum.SelectedIndex].Items);
-            items.Add(new MyBlockInventory.MyItem("None",1));
+            List<MyBlockInventory.MyItem> items = new List<MyBlockInventory.MyItem>(Block.Inventories[InventoryNum.SelectedIndex].Items)
+            {
+                new MyBlockInventory.MyItem("None", 1)
+            };
             InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items = items;
         }
 
@@ -844,6 +864,24 @@ namespace BlueprintEditor2
             if (InventoryNum.SelectedIndex != -1 && Block != null && Block.Inventories.Count > InventoryNum.SelectedIndex)
                 InventoryItems.ItemsSource = Block.Inventories[InventoryNum.SelectedIndex].Items;
             ProgEditing = false;
+        }
+
+        private void ForwardBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ForwardBox.SelectedIndex == -1) return;
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            Block.Orientation.Forward = (Base6Directions)ForwardBox.SelectedIndex;
+            Block.Orientation.Up = MyBlockOrientation.Reorient(Block.Orientation.Forward, Block.Orientation.Up);
+            UpBox.SelectedIndex = (int)Block.Orientation.Up;
+        }
+
+        private void UpBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (UpBox.SelectedIndex == -1) return;
+            MyXmlBlock Block = (MyXmlBlock)BlockList.SelectedItem;
+            Block.Orientation.Up = (Base6Directions)UpBox.SelectedIndex;
+            Block.Orientation.Forward = MyBlockOrientation.Reorient(Block.Orientation.Up, Block.Orientation.Forward);
+            ForwardBox.SelectedIndex = (int)Block.Orientation.Forward;
         }
     }
 }

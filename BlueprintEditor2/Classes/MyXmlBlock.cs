@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Numerics;
 
 namespace BlueprintEditor2
 {
@@ -21,7 +22,7 @@ namespace BlueprintEditor2
         private readonly XmlNode _SkinNode;
         private readonly XmlNode _ProgramNode;
         private readonly XmlNode _StorageNode;
-        private Dictionary<string,MyBlockProperty> _Properties = new Dictionary<string, MyBlockProperty>();
+        private readonly Dictionary<string,MyBlockProperty> _Properties = new Dictionary<string, MyBlockProperty>();
         public string Type
         {
             get => _BlockXml.Attributes?.GetNamedItem("xsi:type")?.Value?.Replace("MyObjectBuilder_", "") + "/" + _SubTypeNode?.InnerText;
@@ -51,17 +52,15 @@ namespace BlueprintEditor2
             get
             {
                 if (_ColorMaskNode == null) return new Color();
-                double x, y, z;
-                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.', ','), out x);
-                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("y").Value.Replace('.', ','), out y);
-                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("z").Value.Replace('.', ','), out z);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("x").Value.Replace('.', ','), out double x);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("y").Value.Replace('.', ','), out double y);
+                double.TryParse(_ColorMaskNode.Attributes.GetNamedItem("z").Value.Replace('.', ','), out double z);
                 return SE_ColorConverter.ColorFromSE_HSV(x, y, z);
             }
             set
             {
                 if (_ColorMaskNode == null) return;
-                double x, y, z;
-                SE_ColorConverter.ColorToSE_HSV(value, out x, out y, out z);
+                SE_ColorConverter.ColorToSE_HSV(value, out double x, out double y, out double z);
                 _ColorMaskNode.Attributes.GetNamedItem("x").Value = x.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("y").Value = y.ToString().Replace(',', '.');
                 _ColorMaskNode.Attributes.GetNamedItem("z").Value = z.ToString().Replace(',', '.');
@@ -71,8 +70,7 @@ namespace BlueprintEditor2
         {
             get
             {
-                ShareMode Mode;
-                if (_ShareModeNode != null && Enum.TryParse(_ShareModeNode.InnerText, out Mode))
+                if (_ShareModeNode != null && Enum.TryParse(_ShareModeNode.InnerText, out ShareMode Mode))
                     return Mode;
                 else
                     return null;
@@ -322,6 +320,67 @@ namespace BlueprintEditor2
             Forward = Base6Directions.Forward;
             Up = Base6Directions.Up;
         }
+        public static Base6Directions Reorient(Base6Directions Dir, Base6Directions Annother)
+        {
+            switch (Dir)
+            {
+                case Base6Directions.Forward:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Forward:
+                            return Base6Directions.Up;
+                        case Base6Directions.Backward:
+                            return Base6Directions.Down;
+                    }
+                    break;
+                case Base6Directions.Backward:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Forward:
+                            return Base6Directions.Down;
+                        case Base6Directions.Backward:
+                            return Base6Directions.Up;
+                    }
+                    break;
+                case Base6Directions.Left:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Left:
+                            return Base6Directions.Forward;
+                        case Base6Directions.Right:
+                            return Base6Directions.Backward;
+                    }
+                    break;
+                case Base6Directions.Right:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Left:
+                            return Base6Directions.Backward;
+                        case Base6Directions.Right:
+                            return Base6Directions.Forward;
+                    }
+                    break;
+                case Base6Directions.Up:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Up:
+                            return Base6Directions.Left;
+                        case Base6Directions.Down:
+                            return Base6Directions.Right;
+                    }
+                    break;
+                case Base6Directions.Down:
+                    switch (Annother)
+                    {
+                        case Base6Directions.Up:
+                            return Base6Directions.Right;
+                        case Base6Directions.Down:
+                            return Base6Directions.Left;
+                    }
+                    break;
+            }
+            return Annother;
+        }
         public Vector3 SizeToPos(Vector3 size)
         {
             switch (Forward)
@@ -374,7 +433,7 @@ namespace BlueprintEditor2
         private readonly XmlNode InventoryNode;
         private readonly XmlNode ItemsNode;
         private readonly XmlNode NextIDNode;
-        private readonly XmlNode VolumeNode;
+        //private readonly XmlNode VolumeNode;
         private List<MyItem> _Items = new List<MyItem>();
         public IEnumerable<MyItem> Items
         {
@@ -415,7 +474,7 @@ namespace BlueprintEditor2
                         NextIDNode = Xms;
                         break;
                     case "Volume":
-                        VolumeNode = Xms;
+                        //VolumeNode = Xms;
                         break;
                     case "Mass":
                         Xms.InnerText = "9223372036854.775807";
@@ -461,9 +520,9 @@ namespace BlueprintEditor2
     }
     public enum Base6Directions : byte
     {
-        Forward, Backward, 
-        Left, Right,
-        Up, Down
+        Forward=0, Backward=1, 
+        Left=2, Right=3,
+        Up=4, Down=5
     }
     public enum ArmorType
     {

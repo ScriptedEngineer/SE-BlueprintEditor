@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Xml;
+using System.Numerics;
 
 namespace BlueprintEditor2
 {
     public class MyXmlGrid
     {
         public XmlNode GridXml;
-        public List<MyXmlBlock> Blocks;
-        private XmlNode NameNode;
-        private XmlNode GridSizeNode;
-        private XmlNode DestructibleNode;
-        private XmlNode DeformationsNode;
+        private Dictionary<Vector3, MyXmlBlock> _Blocks;
+        private readonly XmlNode NameNode;
+        private readonly XmlNode GridSizeNode;
+        private readonly XmlNode DestructibleNode;
+        private readonly XmlNode DeformationsNode;
 
+        public List<MyXmlBlock> Blocks
+        {
+            get => _Blocks.Values.ToList();
+            set => _Blocks = value.ToDictionary(x => x.Position);
+        }
         public bool IsDamaged { get; private set; }
         public string Name
         {
@@ -53,7 +60,7 @@ namespace BlueprintEditor2
                         NameNode = child;
                         break;
                     case "CubeBlocks":
-                        Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => {
+                        _Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => {
                             var xmlB = new MyXmlBlock(x);
                             if (!IsDamaged) {
                                 var xp = xmlB.GetProperty("IntegrityPercent");
@@ -62,7 +69,7 @@ namespace BlueprintEditor2
                                     IsDamaged = true;
                             }
                             return xmlB;
-                        }).ToList();
+                        }).ToDictionary<MyXmlBlock,Vector3>(x=> x.Position);
                         break;
                     case "GridSizeEnum":
                         GridSizeNode = child;
@@ -86,10 +93,20 @@ namespace BlueprintEditor2
             }
             IsDamaged = false;
         }
+        public MyXmlBlock GetBlockByPos(Vector3 pos)
+        {
+            if (_Blocks.ContainsKey(pos))
+            {
+                return _Blocks[pos];
+            }
+            return null;
+        }
         public void RemoveBlock(MyXmlBlock Block)
         {
-            Block.Delete();
-            Blocks.Remove(Block);
+            if (_Blocks.Remove(Block.Position))
+            {
+                Block.Delete();
+            }
         }
     }
     public enum GridSizes

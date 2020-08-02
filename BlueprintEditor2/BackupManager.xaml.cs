@@ -21,9 +21,9 @@ namespace BlueprintEditor2
     /// </summary>
     public partial class BackupManager : Window
     {
-        string Patch;
-        FileStream _lock;
-        MyXmlBlueprint Blueprint;
+        readonly string Patch;
+        readonly FileStream _lock;
+        readonly MyXmlBlueprint Blueprint;
         public BackupManager(FileStream Lock, MyXmlBlueprint _blueprint)
         {
             if (!MySettings.Current.MultiWindow) SelectBlueprint.window.SetLock(true, this);
@@ -36,7 +36,7 @@ namespace BlueprintEditor2
             {
                 BackupList.Items.Add(file.Split('\\').Last());   
             }
-            Title = "[" + Blueprint.Patch.Split('\\').Last() + "] BackupManager - SE BlueprintEditor";
+            Title = "[" + Blueprint.Patch.Split('\\').Last() + "] Backup manager - SE BlueprintEditor";
         }
 
         private void BackupList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Numerics;
 
 namespace BlueprintEditor2
 {
@@ -25,9 +26,9 @@ namespace BlueprintEditor2
     public partial class Calculator : Window
     {
         MyResourceCalculator calc;
-        FileStream _lock;
-        MyXmlBlueprint EdBlueprint;
-        Dictionary<string, MyModSwitch> Mods = new Dictionary<string, MyModSwitch>();
+        readonly FileStream _lock;
+        readonly MyXmlBlueprint EdBlueprint;
+        readonly Dictionary<string, MyModSwitch> Mods = new Dictionary<string, MyModSwitch>();
         public Calculator(FileStream Lock, MyXmlBlueprint Blueprint)
         {
             _lock = Lock;
@@ -175,15 +176,13 @@ namespace BlueprintEditor2
                             if (Bp.Z < Min.Z) Min.Z = Bp.Z;
                             MyBlockOrientation blockOrientation = Bl.Orientation;
                             Vector3 BpM = xx == null ? new Vector3(1, 1, 1) : (blockOrientation == null ? new Vector3(xx.Size.X, xx.Size.Y, xx.Size.Z) : blockOrientation.SizeToPos(xx.Size));
-                            BpM.X += Bp.X;
-                            BpM.Y += Bp.Y;
-                            BpM.Z += Bp.Z;
+                            BpM += Bp;
                             if (BpM.X > Max.X) Max.X = BpM.X;
                             if (BpM.Y > Max.Y) Max.Y = BpM.Y;
                             if (BpM.Z > Max.Z) Max.Z = BpM.Z;
                         }
 
-                        Vector3 SizeX = new Vector3(Max.X - Min.X, Max.Y - Min.Y, Max.Z - Min.Z);
+                        Vector3 SizeX = Max - Min;
                         if (SizeX.X > Size.X && SizeX.Y > Size.Y && SizeX.Z > Size.Z)
                         {
                             Size = SizeX;

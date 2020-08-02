@@ -43,6 +43,10 @@ namespace BlueprintEditor2
         public string SteamID = "";
         [DataMember(Name = "UserName")]
         public string UserName = "";
+        [DataMember(Name = "SyncNickName")]
+        public bool SyncNickName = true;
+        [DataMember(Name = "Theme")]
+        public MyThemeEnum Theme = MyThemeEnum.Default;
 
         [DataMember(Name = "ModSwitches")]
         public string ModSwitches = "";
@@ -127,7 +131,7 @@ namespace BlueprintEditor2
                         if (ID.Success)
                         {
                             SteamID = ID.Groups[1].Value;
-                            string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + SteamID;
+                            string SavesHmm = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Saves\" + SteamID + @"\";
                             if (Directory.Exists(SavesHmm))
                                 SavesPatch = SavesHmm;
                         }
@@ -150,6 +154,7 @@ namespace BlueprintEditor2
                 LangCultureID = 9;
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(LangCultureID);
             }
+            MyExtensions.ThemeChange(MySettings.Current.Theme.ToString());
         }
         public static void Serialize()
         {
@@ -202,6 +207,8 @@ namespace BlueprintEditor2
                             if (Directory.Exists(SavesHmm))
                                 Current.SavesPatch = SavesHmm;
                         }
+                        if (Current.SyncNickName)
+                            Current.UserName = MyExtensions.GetSteamLastGameNameUsed();
                     }
                 }
                 else if (File.Exists("settings.xml"))
@@ -312,5 +319,12 @@ namespace BlueprintEditor2
                 writer.WriteEndElement();
             }
         }
+    }
+
+
+    public enum MyThemeEnum
+    {
+        Default = 0,
+        Dark = 1
     }
 }

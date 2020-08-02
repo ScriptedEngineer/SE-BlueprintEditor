@@ -199,6 +199,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Block orientation.
+        /// </summary>
+        public static string BlockOrientation {
+            get {
+                return ResourceManager.GetString("BlockOrientation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Block position.
         /// </summary>
         public static string BlockPosition {
@@ -294,6 +303,15 @@ namespace BlueprintEditor2.Resource {
         public static string Color {
             get {
                 return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Replace color.
+        /// </summary>
+        public static string ColorReplace {
+            get {
+                return ResourceManager.GetString("ColorReplace", resourceCulture);
             }
         }
         
@@ -642,6 +660,24 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Dark.
+        /// </summary>
+        public static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Default.
+        /// </summary>
+        public static string DefaultTheme {
+            get {
+                return ResourceManager.GetString("DefaultTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Delete.
         /// </summary>
         public static string Delete {
@@ -750,6 +786,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Download.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Downloading new version.
         /// </summary>
         public static string DownNewVer {
@@ -804,11 +849,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Faction.
         /// </summary>
         public static string Faction {
             get {
                 return ResourceManager.GetString("Faction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на This file is from another game.
+        /// </summary>
+        public static string FileFromAnnotherGame {
+            get {
+                return ResourceManager.GetString("FileFromAnnotherGame", resourceCulture);
             }
         }
         
@@ -1097,6 +1160,15 @@ namespace BlueprintEditor2.Resource {
         public static string LargeGrid {
             get {
                 return ResourceManager.GetString("LargeGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Last update.
+        /// </summary>
+        public static string LastUpdate {
+            get {
+                return ResourceManager.GetString("LastUpdate", resourceCulture);
             }
         }
         
@@ -1481,6 +1553,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Please paste a link to view the information.
+        /// </summary>
+        public static string PleasePasteLink {
+            get {
+                return ResourceManager.GetString("PleasePasteLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Settings saved! For apply settings need to restart app, you want to restart the app?.
         /// </summary>
         public static string PleaseRestartApp {
@@ -1612,6 +1693,15 @@ namespace BlueprintEditor2.Resource {
         public static string ReplaceByCurrent {
             get {
                 return ResourceManager.GetString("ReplaceByCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Replace mode.
+        /// </summary>
+        public static string ReplaceMode {
+            get {
+                return ResourceManager.GetString("ReplaceMode", resourceCulture);
             }
         }
         
@@ -1871,6 +1961,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Sync with Steam.
+        /// </summary>
+        public static string SteamSync {
+            get {
+                return ResourceManager.GetString("SteamSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Stone amount (kg).
         /// </summary>
         public static string StoneAmount {
@@ -1916,11 +2015,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tools.
         /// </summary>
         public static string Tools {
             get {
                 return ResourceManager.GetString("Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

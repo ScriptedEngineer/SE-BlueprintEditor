@@ -71,7 +71,7 @@ namespace BlueprintEditor2
             ManagementObjectCollection oCollection = oSearcher.Get();
 
             long MemSize = 0;
-            long mCap = 0;
+            long mCap;
 
             // In case more than one Memory sticks are installed
             foreach (ManagementObject obj in oCollection)

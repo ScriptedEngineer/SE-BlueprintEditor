@@ -21,16 +21,16 @@ namespace BlueprintEditor2
         public bool OffStone = true;
         public int PCU = 0, Blocks = 0;
         public float Mass = 0, Storage = 0, PeakOut = 0, GenOut = 0;
-        List<MyEnergyBlockInfo> JumpDrives = new List<MyEnergyBlockInfo>();
+        readonly List<MyEnergyBlockInfo> JumpDrives = new List<MyEnergyBlockInfo>();
 
         public Dictionary<Base6Directions, MyForceInfo> Forces = new Dictionary<Base6Directions, MyForceInfo>();
 
         public Dictionary<string, MyBlockInfo> ModCubeBlocks = new Dictionary<string, MyBlockInfo>();
         public Dictionary<string, Dictionary<string, double>> ModRecipies = new Dictionary<string, Dictionary<string, double>>();
         public Dictionary<string, MyComponentInfo> ModComponents = new Dictionary<string, MyComponentInfo>();
-
-        Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
-        Dictionary<string, double> Requared = new Dictionary<string, double>();
+        
+        readonly Dictionary<string, double> RequaredBuidComp = new Dictionary<string, double>();
+        readonly Dictionary<string, double> Requared = new Dictionary<string, double>();
         List<string> UndefinedTypes = new List<string>();
         public MyResourceCalculator()
         {
@@ -278,10 +278,9 @@ namespace BlueprintEditor2
             {
                 UndefinedTypes.Add(block.Type);
             }
-            MyThrustBlockInfo Thrust = xx as MyThrustBlockInfo;
-            if (Thrust != null)
+            if (xx is MyThrustBlockInfo Thrust)
             {
-                MyBlockOrientation orient = block.Orientation == null?new MyBlockOrientation(): block.Orientation;
+                MyBlockOrientation orient = block.Orientation ?? new MyBlockOrientation();
                 if (Forces.ContainsKey(orient.Forward))
                 {
                     Forces[orient.Forward].Space += Thrust.Force * Thrust.SpaceEffectiveness;
@@ -292,8 +291,7 @@ namespace BlueprintEditor2
                     Forces.Add(orient.Forward, new MyForceInfo(Thrust.Force * Thrust.SpaceEffectiveness, Thrust.Force * Thrust.PlanetaryEffectiveness));
                 }
             }
-            MyEnergyBlockInfo EnergyBlock = xx as MyEnergyBlockInfo;
-            if (EnergyBlock != null)
+            if (xx is MyEnergyBlockInfo EnergyBlock)
             {
                 if (EnergyBlock.IsJumpDrive)
                 {

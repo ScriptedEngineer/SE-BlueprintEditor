@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:BlueprintEditor2"
              StartupUri="SelectBlueprint.xaml">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="Themes\Dark.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

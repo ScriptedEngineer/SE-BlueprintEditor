@@ -38,7 +38,10 @@ namespace BlueprintEditor2
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
             DOBSBox.IsChecked = MySettings.Current.DontOpenBlueprintsOnScan;
             NickName.Text = MySettings.Current.UserName;
+            NickName.IsEnabled = !MySettings.Current.SyncNickName;
             SaveBackups.IsChecked = MySettings.Current.SaveBackups;
+            SteamSync.IsChecked = MySettings.Current.SyncNickName;
+            Themes.SelectedIndex = (int)MySettings.Current.Theme;
             RestartApp = false;
         }
 
@@ -209,6 +212,24 @@ namespace BlueprintEditor2
         {
             MySettings.Current.SaveBackups = SaveBackups.IsChecked.Value;
             //hasChanged = true;
+        }
+
+        private void SteamSync_Click(object sender, RoutedEventArgs e)
+        {
+            MySettings.Current.SyncNickName = SteamSync.IsChecked.Value;
+            NickName.IsEnabled = !MySettings.Current.SyncNickName;
+            if (MySettings.Current.SyncNickName)
+            {
+                MySettings.Current.UserName = MyExtensions.GetSteamLastGameNameUsed();
+                NickName.Text = MySettings.Current.UserName;
+            }
+        }
+
+        private void Themes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Themes.SelectedIndex == -1) return;
+            MySettings.Current.Theme = (MyThemeEnum)Themes.SelectedIndex;
+            MyExtensions.ThemeChange(MySettings.Current.Theme.ToString());
         }
     }
 }

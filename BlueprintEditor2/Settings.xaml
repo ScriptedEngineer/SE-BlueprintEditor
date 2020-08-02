@@ -10,42 +10,53 @@
     <Grid>
         <TabControl>
             <TabItem Header="{x:Static res:Lang.Interface}">
-                <Grid Background="#FFE5E5E5">
-                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,37,0,0" Stroke="Black" VerticalAlignment="Top" Width="130"/>
-                    <Rectangle HorizontalAlignment="Right" Height="22" Margin="0,10,10,0" Stroke="Black" VerticalAlignment="Top" Width="180"/>
-                    <Rectangle Height="22" Margin="10,64,10,0" Stroke="Black" VerticalAlignment="Top"/>
-                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="100" SelectedIndex="1" SelectionChanged="LangSelect_SelectionChanged">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="397*"/>
+                        <ColumnDefinition Width="190"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Height="22" Margin="0,37,10,0" Stroke="Gray" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,37,0,0" Stroke="Gray" VerticalAlignment="Top" Width="130"/>
+                    <Rectangle HorizontalAlignment="Right" Height="22" Margin="0,10,10,0" Stroke="Gray" VerticalAlignment="Top" Width="180" Grid.ColumnSpan="2"/>
+                    <Rectangle Height="22" Margin="10,64,10,0" Stroke="Gray" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <ComboBox x:Name="LangSelect" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="100" SelectedIndex="1" SelectionChanged="LangSelect_SelectionChanged" Grid.Column="1">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Русский"/>
                     </ComboBox>
-                    <Label Content="{x:Static res:Lang.Language}" HorizontalAlignment="Right" Margin="0,8,110,0" VerticalAlignment="Top" Width="80"/>
-                    <CheckBox x:Name="MultiWindowCheckBox" Content="{x:Static res:Lang.MultiWindow}" HorizontalAlignment="Left" Margin="13,41,0,0" VerticalAlignment="Top" Height="16" Click="MultiWindowCheckBox_Click"/>
-                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="270"/>
-                    <CheckBox x:Name="DOBSBox" Content="{x:Static res:Lang.DontOpenAllBlue}" HorizontalAlignment="Left" Margin="13,14,0,0" VerticalAlignment="Top" Height="16" Click="DOBSBox_Click"/>
+                    <Label Content="{x:Static res:Lang.Language}" HorizontalAlignment="Right" Margin="0,8,110,0" VerticalAlignment="Top" Width="80" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="MultiWindowCheckBox" Content="{x:Static res:Lang.MultiWindow}" HorizontalAlignment="Left" Margin="13,40,0,0" VerticalAlignment="Top" Height="16" Click="MultiWindowCheckBox_Click"/>
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,10,0,0" Stroke="Gray" VerticalAlignment="Top" Width="270"/>
+                    <CheckBox x:Name="DOBSBox" Content="{x:Static res:Lang.DontOpenAllBlue}" HorizontalAlignment="Left" Margin="13,13,0,0" VerticalAlignment="Top" Height="16" Click="DOBSBox_Click"/>
                     <Label Content="{x:Static res:Lang.NickName}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="86"/>
-                    <TextBox x:Name="NickName" Height="22" Margin="101,64,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
+                    <TextBox x:Name="NickName" Height="22" Margin="101,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
+                    <CheckBox x:Name="SteamSync" Content="{x:Static res:Lang.SteamSync}" HorizontalAlignment="Left" Margin="5,67,0,0" VerticalAlignment="Top" UseLayoutRounding="False" Grid.Column="1" Click="SteamSync_Click"/>
+                    <ComboBox x:Name="Themes" HorizontalAlignment="Right" Margin="0,37,10,0" VerticalAlignment="Top" Width="100" Grid.Column="1" SelectionChanged="Themes_SelectionChanged">
+                        <ComboBoxItem Content="{x:Static res:Lang.DefaultTheme}"/>
+                        <ComboBoxItem Content="{x:Static res:Lang.DarkTheme}"/>
+                    </ComboBox>
+                    <Label Content="{x:Static res:Lang.Theme}" HorizontalAlignment="Right" Margin="0,35,110,0" VerticalAlignment="Top" Width="80" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static res:Lang.System}">
-                <Grid Background="#FFE5E5E5">
-                    <Rectangle Height="23" Margin="10,10,10,0" Stroke="Black" VerticalAlignment="Top"/>
+                <Grid>
+                    <Rectangle Height="23" Margin="10,10,10,0" Stroke="Gray" VerticalAlignment="Top"/>
                     <TextBox x:Name="BlueprintFolderSetting" Height="23" Margin="133,10,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="BlueprintFolderSetting_TextChanged"/>
                     <Label Content="{x:Static res:Lang.BlueFolder}" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click"/>
-                    <Rectangle Height="23" Margin="10,66,10,0" Stroke="Black" VerticalAlignment="Top"/>
+                    <Rectangle Height="23" Margin="10,66,10,0" Stroke="Gray" VerticalAlignment="Top"/>
                     <TextBox x:Name="GameFolderSetting" Height="23" Margin="133,66,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="GameFolderSetting_TextChanged"/>
                     <Label Content="{x:Static res:Lang.GameFolder}" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,66,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_1"/>
-                    <Rectangle Height="23" Margin="10,38,10,0" Stroke="Black" VerticalAlignment="Top"/>
+                    <Rectangle Height="23" Margin="10,38,10,0" Stroke="Gray" VerticalAlignment="Top"/>
                     <TextBox x:Name="SavesFolderSetting" Height="23" Margin="133,38,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="SavesFolder_TextChanged"/>
                     <Label Content="{x:Static res:Lang.SavesFolder}" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,38,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_2"/>
-                    <Rectangle Height="23" Margin="10,94,10,0" Stroke="Black" VerticalAlignment="Top"/>
+                    <Rectangle Height="23" Margin="10,94,10,0" Stroke="Gray" VerticalAlignment="Top"/>
                     <TextBox x:Name="WorkshopFolderSetting" Height="23" Margin="133,94,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="SavesFolder_Copy_TextChanged"/>
                     <Label Content="{x:Static res:Lang.WorkshopFolder}" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_3"/>
-                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,123,0,0" Stroke="Black" VerticalAlignment="Top" Width="190"/>
-                    <CheckBox x:Name="SaveBackups" Content="{x:Static res:Lang.UseBackups}" HorizontalAlignment="Left" Margin="13,127,0,0" VerticalAlignment="Top" Height="16" Click="SaveBackups_Click"/>
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,123,0,0" Stroke="Gray" VerticalAlignment="Top" Width="190"/>
+                    <CheckBox x:Name="SaveBackups" Content="{x:Static res:Lang.UseBackups}" HorizontalAlignment="Left" Margin="13,126,0,0" VerticalAlignment="Top" Height="16" Click="SaveBackups_Click"/>
                 </Grid>
             </TabItem>
 

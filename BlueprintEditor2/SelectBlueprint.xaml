@@ -7,11 +7,6 @@
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
         Title="SE BlueprintEditor" Width="920" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinHeight="500" MinWidth="920" SizeChanged="Window_SizeChanged">
-    <Window.Resources>
-        <Style TargetType="GridViewColumnHeader">
-            <EventSetter Event="MouseUp" Handler="GoSort"/>
-        </Style>
-    </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="{x:Static res:Lang.Update}" Click="MenuItem_Click_1">
@@ -72,11 +67,16 @@
                         <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="Steam Workshop Downloader" Click="MenuItem_Click_7" >
+                    <MenuItem.Icon>
+                        <Image Source="Resource\steam_icon_135152.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <Separator/>
             <MenuItem Header="{x:Static res:Lang.Settings}" Click="MenuItem_Click">
                 <MenuItem.Icon>
-                    <Image Source="Resource\Setts.jpg" Width="16" Height="16"/>
+                    <Image Source="Resource\setts.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click">
@@ -101,18 +101,30 @@
         <Image x:Name="BluePicture" Margin="10,26,10,5" Source="Resource/blueprints-textures_00394054.jpg" Grid.Column="1" Grid.Row="1"/>
 
         <TextBlock x:Name="BlueText" Text="{x:Static res:Lang.SelectBlue}" Margin="10,11,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2"/>
-        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Click="EditButton_Click" Grid.Column="1" Height="20" Grid.Row="3"/>
+        <Button x:Name="EditButton" Content="{x:Static res:Lang.Edit}" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="94" Click="EditButton_Click" Grid.Column="1" Height="20" Grid.Row="3" IsEnabled="False"/>
         <Button x:Name="BackupButton" Content="{x:Static res:Lang.Backups}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="107" Margin="0,0,109,10" IsEnabled="False" Click="BackupButton_Click" Grid.Column="1" Height="20" Grid.Row="3"/>
         <Button x:Name="CalculateButton" Content="{x:Static res:Lang.Loading}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,221,10" IsEnabled="False" Click="CalculateButton_Click" Height="20" Grid.Row="3" Grid.Column="1"/>
         <ListView x:Name="BlueList" Margin="10,26,2,37" SelectionChanged="BlueList_SelectionChanged" SelectionMode="Single" Grid.RowSpan="3" Grid.Row="1" VirtualizingStackPanel.IsVirtualizing="True">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn x:Name="FirstSorter" DisplayMemberBinding="{Binding Path=Name}" Header="{x:Static res:Lang.Blueprint}" Width="170"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Header="{x:Static res:Lang.Owner}" Width="130"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Header="{x:Static res:Lang.GridCount}" Width="40"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Header="{x:Static res:Lang.BlockCount}" Width="60"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Header="{x:Static res:Lang.Created}" Width="75"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastEditTimeText}" Header="{x:Static res:Lang.Changed}" Width="75"/>
+                    <GridViewColumn x:Name="FirstSorter" DisplayMemberBinding="{Binding Path=Name}" Width="170">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.Blueprint}" Click="GoSort"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Owner}" Width="120">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.Owner}" Click="GoSort"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=GridCountText}" Width="50">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.GridCount}" Click="GoSort"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=BlockCountText}" Width="60">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.BlockCount}" Click="GoSort"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationTimeText}" Width="75">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.Created}" Click="GoSort"/>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=LastEditTimeText}" Width="75">
+                        <GridViewColumnHeader Content="{x:Static res:Lang.Changed}" Click="GoSort"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -173,7 +185,12 @@
                 </MenuItem>
                 <MenuItem Header="{x:Static res:Lang.ImageConverter}" Click="MenuItem_Click_6" >
                     <MenuItem.Icon>
-                        <Image Source="Resource\img_284032.png" Width="16" Height="16"/>
+                        <Image Source="Resource\img_284032.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Steam Workshop Downloader" Click="MenuItem_Click_7" >
+                    <MenuItem.Icon>
+                        <Image Source="Resource\steam_icon_135152.png"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>

@@ -13,7 +13,7 @@ namespace BlueprintEditor2
 {
     public static class Logger
     {
-        static StringBuilder Log = new StringBuilder();
+        static readonly StringBuilder Log = new StringBuilder();
         static int LogLenght = 0; 
         public static void HandleUnhandledException()
         {

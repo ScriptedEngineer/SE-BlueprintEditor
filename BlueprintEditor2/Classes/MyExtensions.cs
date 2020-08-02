@@ -15,6 +15,7 @@ using DColor = System.Drawing.Color;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net;
+using Microsoft.Win32;
 
 namespace BlueprintEditor2
 {
@@ -73,7 +74,7 @@ namespace BlueprintEditor2
                 }
             }
         }
-        public static string checkMD5(string filename)
+        public static string CheckMD5(string filename)
         {
             using (var md5 = MD5.Create())
             {
@@ -102,8 +103,8 @@ namespace BlueprintEditor2
 
             return new StreamReader(response.GetResponseStream()).ReadToEnd();
         }
-        public static void quickSort<T>(ref T[] a, Func<T, T, int> comparer) => quickSort(ref a, 0, a.Length, comparer);
-        public static void quickSort<T>(ref T[] a, int l, int r, Func<T,T,int> comparer)
+        public static void QuickSort<T>(ref T[] a, Func<T, T, int> comparer) => QuickSort(ref a, 0, a.Length, comparer);
+        public static void QuickSort<T>(ref T[] a, int l, int r, Func<T,T,int> comparer)
         {
             T temp;
             var x = a[l + (r - l) / 2];
@@ -124,10 +125,37 @@ namespace BlueprintEditor2
                 }
             }
             if (i < r)
-                quickSort(ref a, i, r, comparer);
+                QuickSort(ref a, i, r, comparer);
 
             if (l < j)
-                quickSort(ref a, l, j, comparer);
+                QuickSort(ref a, l, j, comparer);
+        }
+
+        public static bool CheckGameLicense()
+        {
+            return (Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam\Apps\244850", "Installed", -1) as int?) >= 0;
+        }
+        public static string GetSteamLastGameNameUsed()
+        {
+            return Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam", "LastGameNameUsed", MySettings.Current.UserName) as string;
+        }
+        public static void ThemeChange(string style)
+        {
+            if (style == "Default")
+                Application.Current.Resources.MergedDictionaries.Clear();
+            else
+            {
+                var uri = new Uri("Themes/" + style + ".xaml", UriKind.Relative);
+                ResourceDictionary resourceDict = Application.LoadComponent(uri) as ResourceDictionary;
+                Application.Current.Resources.MergedDictionaries.Clear();
+                Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+            }
+        }
+        public static DateTime UnixTimestampToDateTime(double unixTime)
+        {
+            DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            long unixTimeStampInTicks = (long)(unixTime * TimeSpan.TicksPerSecond);
+            return new DateTime(unixStart.Ticks + unixTimeStampInTicks, System.DateTimeKind.Utc);
         }
     }
     public static class SE_ColorConverter
@@ -160,8 +188,7 @@ namespace BlueprintEditor2
         {
             try
             {
-                double H, S, V;
-                ColorToHSV(color, out H, out S, out V);
+                ColorToHSV(color, out double H, out double S, out double V);
                 x = H / 360;
                 y = S - 0.8;
                 z = V - 0.45;
@@ -189,7 +216,7 @@ namespace BlueprintEditor2
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
             double f = hue / 60 - Math.Floor(hue / 60);
 
-            value = value * 255;
+            value *= 255;
             int v = Convert.ToInt32(value);
             int p = Convert.ToInt32(value * (1 - saturation));
             int q = Convert.ToInt32(value * (1 - f * saturation));
@@ -215,7 +242,9 @@ namespace BlueprintEditor2
         CheckVersion,
         GetUpdateLog,
         GetCustomData,
-        Report
+        Report, 
+        SteamApiGetPlayerSummaries,
+        SteamApiGetPublishedFileDetails
     }
     public enum ApiServerOutFormat
     {

@@ -18,6 +18,7 @@ namespace BlueprintEditor2
         public Color Mask;
         public ShareMode? Share;
         public Vector3 Position;
+        public MyBlockOrientation Orientation;
         public List<MyBlockProperty> Properties = new List<MyBlockProperty>();
         public List<MyBlockInventory> Inventories = new List<MyBlockInventory>();
         public string Program;
@@ -31,6 +32,7 @@ namespace BlueprintEditor2
             Position = block.Position;
             CustomData = block.CustomData;
             PublicText = block.PublicText;
+            Orientation = block.Orientation;
             if (block.ShareMode.HasValue) Share = block.ShareMode;
             foreach (var x in block.Properties)
                 Properties.Add(x);
@@ -42,6 +44,7 @@ namespace BlueprintEditor2
         public void Equalize(MyXmlBlock block)
         {
             Position = Vector3.Zero;
+            Orientation = null;
             Inventories = new List<MyBlockInventory>();
             Program = Storage = null;
             if (block.Type != Type) Type = null;

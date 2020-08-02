@@ -165,6 +165,9 @@ Developed by clan "Andromeda"</value>
   <data name="BlockName" xml:space="preserve">
     <value>Block name</value>
   </data>
+  <data name="BlockOrientation" xml:space="preserve">
+    <value>Block orientation</value>
+  </data>
   <data name="BlockPosition" xml:space="preserve">
     <value>Block position</value>
   </data>
@@ -197,6 +200,9 @@ Developed by clan "Andromeda"</value>
   </data>
   <data name="Color" xml:space="preserve">
     <value>Color</value>
+  </data>
+  <data name="ColorReplace" xml:space="preserve">
+    <value>Replace color</value>
   </data>
   <data name="Columns" xml:space="preserve">
     <value>Columns</value>
@@ -314,6 +320,12 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="CustomData" xml:space="preserve">
     <value>Custom data</value>
   </data>
+  <data name="DarkTheme" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DefaultTheme" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -350,6 +362,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="Down" xml:space="preserve">
     <value>Down</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
     <value>Downloading new version</value>
   </data>
@@ -368,8 +383,14 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Enter world name! Other settings are edited from the game.</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="Faction" xml:space="preserve">
     <value>Faction</value>
+  </data>
+  <data name="FileFromAnnotherGame" xml:space="preserve">
+    <value>This file is from another game</value>
   </data>
   <data name="Forward" xml:space="preserve">
     <value>Forward</value>
@@ -466,6 +487,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="LargeGrid" xml:space="preserve">
     <value>Large grid</value>
+  </data>
+  <data name="LastUpdate" xml:space="preserve">
+    <value>Last update</value>
   </data>
   <data name="Left" xml:space="preserve">
     <value>Left</value>
@@ -595,6 +619,9 @@ Cancel - Don't set default thumbnail</value>
   <data name="PlanetAcc" xml:space="preserve">
     <value>Acceleration on planet</value>
   </data>
+  <data name="PleasePasteLink" xml:space="preserve">
+    <value>Please paste a link to view the information</value>
+  </data>
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Settings saved! For apply settings need to restart app, you want to restart the app?</value>
   </data>
@@ -639,6 +666,9 @@ Cancel - Don't set default thumbnail</value>
   </data>
   <data name="ReplaceByCurrent" xml:space="preserve">
     <value>Replace by current</value>
+  </data>
+  <data name="ReplaceMode" xml:space="preserve">
+    <value>Replace mode</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
@@ -727,6 +757,9 @@ Cancel - Don't set default thumbnail</value>
     <value>The saves patch not found! 
 Please set this in the settings.</value>
   </data>
+  <data name="SteamSync" xml:space="preserve">
+    <value>Sync with Steam</value>
+  </data>
   <data name="StoneAmount" xml:space="preserve">
     <value>Stone amount (kg)</value>
   </data>
@@ -742,8 +775,14 @@ Please set this in the settings.</value>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
   <data name="Tools" xml:space="preserve">
     <value>Tools</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
   </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Undefined types</value>
