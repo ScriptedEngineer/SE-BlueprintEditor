@@ -31,6 +31,7 @@ See [Releases](https://github.com/ScriptedEngineer/SE-BlueprintEditor/releases)
 - Blueprint Size/Mass/PCU/JumpDrive/Energy/Acceleration calculate
 - Copy workshop blueprints to local
 - Create world with mods from cache
+- Steam Workshop Downloader for blueprints and worlds
 
 ## Prewiew
 
