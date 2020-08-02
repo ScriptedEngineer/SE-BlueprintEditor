@@ -64,7 +64,7 @@
         <CheckBox x:Name="OffStone" Content="{x:Static Resource:Lang.OffStone}" Grid.Column="3" HorizontalAlignment="Left" Margin="0,0,0,51" VerticalAlignment="Bottom" Click="CheckBox_Click" Height="15" Width="153" IsEnabled="False" IsChecked="True" Opacity="0"/>
         <CheckBox x:Name="WithMods" Content="{x:Static Resource:Lang.WithMods}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,8" VerticalAlignment="Bottom" Click="WithMods_Click" IsChecked="True" Height="18" Width="74"/>
         <CheckBox x:Name="OnlyForBuild" Content="{x:Static Resource:Lang.OnlyForBuild}" Grid.Column="2" HorizontalAlignment="Left" Margin="10,0,0,26" VerticalAlignment="Bottom" Height="20" Click="OnlyForBuild_Click" Width="143"/>
-        <ListView x:Name="ModsList" Margin="10,37,10,10" Grid.RowSpan="3" Grid.Column="4">
+        <ListView x:Name="ModsList" Margin="10,37,10,35" Grid.RowSpan="3" Grid.Column="4">
             <ListView.View>
                 <GridView x:Name="BlockListColumns3">
                     <GridViewColumn Header="{x:Static Resource:Lang.Mods}" Width="220">
@@ -87,6 +87,9 @@
         <Rectangle x:Name="Preloader" Visibility="Collapsed" Fill="#FFF4F4F5" Stroke="Black" Grid.ColumnSpan="5" Grid.RowSpan="3" Opacity="0.505"/>
         <Button Content="{x:Static Resource:Lang.CopyToClipboard}" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,4,8" VerticalAlignment="Bottom" Width="191" Click="Button_Click" Height="20"/>
         <TextBox x:Name="ShipInfo" Grid.Column="3" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Height="83" Margin="0,10,0,0" TextWrapping="Wrap" Text="Error" VerticalAlignment="Top" HorizontalAlignment="Left" Width="223"/>
+        <Button Content="{x:Static Resource:Lang.SelectAll}" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,194,10" Grid.Row="2" VerticalAlignment="Bottom" Width="92" Click="Button_Click_4"/>
+        <Button Content="{x:Static Resource:Lang.InvertAll}" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,10,10" Grid.Row="2" VerticalAlignment="Bottom" Width="99" Click="Button_Click_6"/>
+        <Button Content="{x:Static Resource:Lang.DeselectAll}" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,114,10" Grid.Row="2" VerticalAlignment="Bottom" Width="75" Click="Button_Click_5"/>
 
     </Grid>
 </Window>

@@ -285,7 +285,12 @@ namespace BlueprintEditor2
                 //SelectBlueprint.window.Top = SystemParameters.PrimaryScreenHeight / 2 - SelectBlueprint.window.Height / 2;
                 //SelectBlueprint.window.Left = SystemParameters.PrimaryScreenWidth / 2 - SelectBlueprint.window.Width / 2;
             }
-            if (!MySettings.Current.MultiWindow) SelectBlueprint.window.Show();
+            if (!MySettings.Current.MultiWindow) 
+                try
+                {
+                    SelectBlueprint.window.Show();
+                }
+                catch { }
             if (calc != null) calc.Clear();
             Logger.Add("Calculator closed");
         }
@@ -566,6 +571,54 @@ namespace BlueprintEditor2
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            foreach(var x in Mods)
+            {
+                x.Value.Enabled = true;
+            }
+            if (ModsList != null)
+            {
+                ModsList.ItemsSource = null;
+                ModsList.ItemsSource = Mods.Values;
+            }
+            calc.ModReEnable(Mods);
+            Calculate();
+            SaveSwitches();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            foreach (var x in Mods)
+            {
+                x.Value.Enabled = false;
+            }
+            if (ModsList != null)
+            {
+                ModsList.ItemsSource = null;
+                ModsList.ItemsSource = Mods.Values;
+            }
+            calc.ModReEnable(Mods);
+            Calculate();
+            SaveSwitches();
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            foreach (var x in Mods)
+            {
+                x.Value.Enabled = !x.Value.Enabled;
+            }
+            if (ModsList != null)
+            {
+                ModsList.ItemsSource = null;
+                ModsList.ItemsSource = Mods.Values;
+            }
+            calc.ModReEnable(Mods);
+            Calculate();
+            SaveSwitches();
         }
     }
 }

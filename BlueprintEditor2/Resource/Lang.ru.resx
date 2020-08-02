@@ -341,6 +341,9 @@
   <data name="DeleteThisBackup" xml:space="preserve">
     <value>Удалить все резервные копии выбранного чертежа</value>
   </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Снять все</value>
+  </data>
   <data name="DestructibleGrid" xml:space="preserve">
     <value>Разрушаемая сетка</value>
   </data>
@@ -470,6 +473,9 @@
   <data name="Inventory" xml:space="preserve">
     <value>Инвентарь</value>
   </data>
+  <data name="InvertAll" xml:space="preserve">
+    <value>Инвертировать</value>
+  </data>
   <data name="Item" xml:space="preserve">
     <value>Предмет</value>
   </data>
@@ -514,6 +520,9 @@
   </data>
   <data name="Mods" xml:space="preserve">
     <value>Моды</value>
+  </data>
+  <data name="ModsFolder" xml:space="preserve">
+    <value>Папка с модами</value>
   </data>
   <data name="Monospace" xml:space="preserve">
     <value>Monospace</value>
@@ -625,6 +634,9 @@
   <data name="PleaseRestartApp" xml:space="preserve">
     <value>Настройки сохранены! Для применения настроек необходимо перезагрузить приложение. вы хотите перезагрузить приложение сейчас?</value>
   </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Пожалуйста подождите...</value>
+  </data>
   <data name="PleaseWaitServers" xml:space="preserve">
     <value>Пожалуйста ждите, наши сервера работают от картошки</value>
   </data>
@@ -694,8 +706,14 @@
   <data name="SavesFolder" xml:space="preserve">
     <value>Папка сохранений</value>
   </data>
+  <data name="ScriptsFolder" xml:space="preserve">
+    <value>Папка со скриптами</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Выбрать все</value>
   </data>
   <data name="SelectBlue" xml:space="preserve">
     <value>Пожалуйста, выберите четреж для отображения информации</value>

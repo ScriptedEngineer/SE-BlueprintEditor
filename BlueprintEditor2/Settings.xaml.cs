@@ -34,6 +34,8 @@ namespace BlueprintEditor2
             GameFolderSetting.Text = MySettings.Current.GamePatch;
             SavesFolderSetting.Text = MySettings.Current.SavesPatch;
             WorkshopFolderSetting.Text = MySettings.Current.SteamWorkshopPatch;
+            ScriptsFolderSetting.Text = MySettings.Current.ScriptsPatch;
+            ModsFolderSetting.Text = MySettings.Current.ModsPatch;
             LangSelect.SelectedIndex = _indexLCID;
             MultiWindowCheckBox.IsChecked = MySettings.Current.MultiWindow;
             DOBSBox.IsChecked = MySettings.Current.DontOpenBlueprintsOnScan;
@@ -230,6 +232,56 @@ namespace BlueprintEditor2
             if (Themes.SelectedIndex == -1) return;
             MySettings.Current.Theme = (MyThemeEnum)Themes.SelectedIndex;
             MyExtensions.ThemeChange(MySettings.Current.Theme.ToString());
+        }
+
+        private void ScriptsFolderSetting_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Directory.Exists(WorkshopFolderSetting.Text))
+            {
+                MySettings.Current.ScriptsPatch = ScriptsFolderSetting.Text;
+                RestartApp = true;
+            }
+        }
+
+        private void ModsFolderSetting_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Directory.Exists(WorkshopFolderSetting.Text))
+            {
+                MySettings.Current.ModsPatch = ModsFolderSetting.Text;
+                RestartApp = true;
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.SelectedPath = ScriptsFolderSetting.Text;
+                dialog.Description = Lang.OnlyPro;
+                dialog.ShowNewFolderButton = false;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    ScriptsFolderSetting.Text = dialog.SelectedPath + "\\";
+                    RestartApp = true;
+                }
+            }
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                dialog.SelectedPath = ModsFolderSetting.Text;
+                dialog.Description = Lang.OnlyPro;
+                dialog.ShowNewFolderButton = false;
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.Equals(System.Windows.Forms.DialogResult.OK))
+                {
+                    ModsFolderSetting.Text = dialog.SelectedPath + "\\";
+                    RestartApp = true;
+                }
+            }
         }
     }
 }

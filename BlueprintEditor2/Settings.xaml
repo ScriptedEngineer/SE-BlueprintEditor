@@ -55,8 +55,16 @@
                     <TextBox x:Name="WorkshopFolderSetting" Height="23" Margin="133,94,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="SavesFolder_Copy_TextChanged"/>
                     <Label Content="{x:Static res:Lang.WorkshopFolder}" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
                     <Button Content="..." HorizontalAlignment="Right" Margin="0,94,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_3"/>
-                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,123,0,0" Stroke="Gray" VerticalAlignment="Top" Width="190"/>
-                    <CheckBox x:Name="SaveBackups" Content="{x:Static res:Lang.UseBackups}" HorizontalAlignment="Left" Margin="13,126,0,0" VerticalAlignment="Top" Height="16" Click="SaveBackups_Click"/>
+                    <Rectangle HorizontalAlignment="Left" Height="22" Margin="10,0,0,10" Stroke="Gray" VerticalAlignment="Bottom" Width="190"/>
+                    <CheckBox x:Name="SaveBackups" Content="{x:Static res:Lang.UseBackups}" HorizontalAlignment="Left" Margin="13,0,0,10" VerticalAlignment="Bottom" Height="16" Click="SaveBackups_Click"/>
+                    <Rectangle Height="23" Margin="10,122,10,0" Stroke="Gray" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ScriptsFolderSetting" Height="23" Margin="133,122,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="ScriptsFolderSetting_TextChanged"/>
+                    <Label Content="{x:Static res:Lang.ScriptsFolder}" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+                    <Button Content="..." HorizontalAlignment="Right" Margin="0,122,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_4"/>
+                    <Rectangle Height="23" Margin="10,150,10,0" Stroke="Gray" VerticalAlignment="Top"/>
+                    <TextBox x:Name="ModsFolderSetting" Height="23" Margin="133,150,35,0" TextWrapping="NoWrap" Text="С:/" VerticalAlignment="Top" TextChanged="ModsFolderSetting_TextChanged"/>
+                    <Label Content="{x:Static res:Lang.ModsFolder}" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top"/>
+                    <Button Content="..." HorizontalAlignment="Right" Margin="0,150,10,0" VerticalAlignment="Top" Width="25" Height="23" Click="Button_Click_5"/>
                 </Grid>
             </TabItem>
 

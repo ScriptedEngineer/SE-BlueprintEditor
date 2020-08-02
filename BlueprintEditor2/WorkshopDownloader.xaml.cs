@@ -49,12 +49,13 @@ namespace BlueprintEditor2
                 return;
             }
             Title = "Workshop downloader - SE BlueprintEditor loading...";
-            ItemTitle.Content = "Please wait...";
+            ItemTitle.Content = Lang.PleaseWait;
             StatusLabel.Content = "loading file info";
             ItemInfo.Content = "";
             FilePicture.Source = new BitmapImage(new Uri("https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png", UriKind.RelativeOrAbsolute));
             DownloadProgress.IsIndeterminate = true;
             DownloadProgress.Value = 0;
+            DownloadButton.IsEnabled = false;
             LoadFolder = LoadLink = null;
             string text = SteamLink.Text;
             new Task(() =>
@@ -63,7 +64,9 @@ namespace BlueprintEditor2
                 string Type = "Undefined";
                 try
                 {
-                    FileID = text.Split(new string[] { "id=" }, StringSplitOptions.RemoveEmptyEntries).Last();
+                    FileID = text.Split(new string[] { "id=" }, StringSplitOptions.RemoveEmptyEntries).Last().Split('&').First();
+                    if (!long.TryParse(FileID, out long xss)) 
+                        throw new Exception();
                     string backData = MyExtensions.ApiServer(
                         ApiServerAct.SteamApiGetPublishedFileDetails,
                         ApiServerOutFormat.@string,
@@ -88,9 +91,11 @@ namespace BlueprintEditor2
                                         Type = "World";
                                         break;
                                     case "ingameScript":
+                                        LoadFolder = MySettings.Current.ScriptsPatch;
                                         Type = "Script";
                                         break;
                                     case "mod":
+                                        LoadFolder = MySettings.Current.ModsPatch;
                                         Type = "Mod";
                                         break;
                                     case "Scenario":

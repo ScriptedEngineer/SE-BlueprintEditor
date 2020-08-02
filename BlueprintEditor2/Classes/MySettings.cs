@@ -27,6 +27,10 @@ namespace BlueprintEditor2
         public string BlueprintPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Blueprints\local\";
         [DataMember(Name = "SavesMainFolder")]
         public string SavesPatch = null;
+        [DataMember(Name = "ScriptsMainFolder")]
+        public string ScriptsPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\IngameScripts\local\";
+        [DataMember(Name = "ModsMainFolder")]
+        public string ModsPatch = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SpaceEngineers\Mods\";
         [DataMember(Name = "GameFolder")]
         public string GamePatch = null;
         [DataMember(Name = "SteamWorkshopCacheFolder")]
@@ -75,6 +79,10 @@ namespace BlueprintEditor2
                                 Application.Current.Shutdown();
                         }
                     }
+                    if (!Directory.Exists(ScriptsPatch)) 
+                        ScriptsPatch = "";
+                    if (!Directory.Exists(ModsPatch)) 
+                        ModsPatch = "";
                     string Steam = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Valve\Steam", "SteamPath", "false").ToString();
                     GetGameFolder(Steam);
                     GetSteamAccount(Steam);

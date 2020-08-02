@@ -723,6 +723,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Deselect all.
+        /// </summary>
+        public static string DeselectAll {
+            get {
+                return ResourceManager.GetString("DeselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Destructible grid.
         /// </summary>
         public static string DestructibleGrid {
@@ -1110,6 +1119,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Invert all.
+        /// </summary>
+        public static string InvertAll {
+            get {
+                return ResourceManager.GetString("InvertAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Item.
         /// </summary>
         public static string Item {
@@ -1241,6 +1259,15 @@ namespace BlueprintEditor2.Resource {
         public static string Mods {
             get {
                 return ResourceManager.GetString("Mods", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Mods directory.
+        /// </summary>
+        public static string ModsFolder {
+            get {
+                return ResourceManager.GetString("ModsFolder", resourceCulture);
             }
         }
         
@@ -1571,6 +1598,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Please wait....
+        /// </summary>
+        public static string PleaseWait {
+            get {
+                return ResourceManager.GetString("PleaseWait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Please wait,  it&apos;s just that our servers work on potato electricity.
         /// </summary>
         public static string PleaseWaitServers {
@@ -1778,11 +1814,29 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Scripts directory.
+        /// </summary>
+        public static string ScriptsFolder {
+            get {
+                return ResourceManager.GetString("ScriptsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Search.
         /// </summary>
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Select all.
+        /// </summary>
+        public static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
             }
         }
         
