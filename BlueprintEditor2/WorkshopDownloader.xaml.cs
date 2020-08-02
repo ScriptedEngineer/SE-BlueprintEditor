@@ -52,7 +52,7 @@ namespace BlueprintEditor2
             ItemTitle.Content = "Please wait...";
             StatusLabel.Content = "loading file info";
             ItemInfo.Content = "";
-            FilePicture.Source = new BitmapImage(new Uri("pack://application:,,,/Resource/blueprints-textures_00394054.jpg"));
+            FilePicture.Source = new BitmapImage(new Uri("https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png", UriKind.RelativeOrAbsolute));
             DownloadProgress.IsIndeterminate = true;
             DownloadProgress.Value = 0;
             LoadFolder = LoadLink = null;
@@ -106,7 +106,8 @@ namespace BlueprintEditor2
                     {
                         Title = "Workshop downloader - SE BlueprintEditor";
                         StatusLabel.Content = "";
-                        if (aResponse == null || Type == "Undefined")
+                        if (aResponse == null
+                        || string.IsNullOrEmpty(aResponse?.publishedfiledetails?.publishedfile?.title))
                         {
                             ItemTitle.Content = Lang.Error;
                             DownloadProgress.IsIndeterminate = false;
@@ -123,15 +124,9 @@ namespace BlueprintEditor2
                             ItemInfo.Content = $"{Lang.Type}: {Type}\r\n{Lang.Size}: {fleinfod.file_size / 1024}kb\r\n{Lang.LastUpdate}: {MyExtensions.UnixTimestampToDateTime(fleinfod.time_updated)}";
                         }
                         ItemTitle.Content = FileTitle = fleinfod.title;
-                        if (fleinfod.preview_url != null)
-                        {
-                            BitmapImage bi3 = new BitmapImage();
-                            bi3.BeginInit();
-                            bi3.UriSource = new Uri(fleinfod.preview_url, UriKind.RelativeOrAbsolute);
-                            bi3.CacheOption = BitmapCacheOption.OnLoad;
-                            bi3.EndInit();
-                            FilePicture.Source = bi3;
-                        }
+                        if (string.IsNullOrEmpty(fleinfod.preview_url))
+                            fleinfod.preview_url = "https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png";
+                        FilePicture.Source = new BitmapImage(new Uri(fleinfod.preview_url, UriKind.RelativeOrAbsolute));
                         DownloadButton.IsEnabled = !string.IsNullOrEmpty(LoadFolder);
                         if (!DownloadButton.IsEnabled)
                         {

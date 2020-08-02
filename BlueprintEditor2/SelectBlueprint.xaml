@@ -197,7 +197,7 @@
             <MenuItem Header="{x:Static res:Lang.AboutProg}" Click="WindowsMenuItemAbout_Click"/>
 
         </Menu>
-        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
+        
         <TextBox x:Name="Search" Height="22" Margin="10,0,197,10" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Bottom" TextChanged="Search_TextChanged"/>
         <ComboBox x:Name="SearchBy" HorizontalAlignment="Right" Margin="0,0,79,10" Grid.Row="3" VerticalAlignment="Bottom" Width="113" SelectedIndex="0">
             <ComboBoxItem Content="{x:Static res:Lang.Blueprint}"/>
@@ -208,6 +208,6 @@
         <Button Content="{x:Static res:Lang.Search}" Margin="0,0,2,10" Grid.Row="3" VerticalAlignment="Bottom" Height="22" Click="Button_Click" HorizontalAlignment="Right" Width="72"/>
         <Label x:Name="Welcome" Content="Welcome" Grid.Column="1" HorizontalAlignment="Right" Margin="0,1,6,0" Grid.Row="1" VerticalAlignment="Top" Padding="0" HorizontalContentAlignment="Right"/>
         <Button Visibility="Hidden" x:Name="PrefabButton" Content="To__prefab" HorizontalAlignment="Right" Margin="0,0,10,35" VerticalAlignment="Bottom" Width="94" IsEnabled="False" Grid.Column="1" Height="20" Grid.Row="3" Click="PrefabButton_Click"/>
-
+        <Image x:Name="Lock" OpacityMask="White" Source="Resource/WhiteDot.jpg" Stretch="Fill" Opacity="0.4" Height="0" VerticalAlignment="Top" MouseDown="Lock_MouseDown" Grid.ColumnSpan="2" Grid.RowSpan="4"/>
     </Grid>
 </Window>
