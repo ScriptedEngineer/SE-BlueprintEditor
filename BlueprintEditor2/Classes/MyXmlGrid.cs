@@ -12,7 +12,7 @@ namespace BlueprintEditor2
     public class MyXmlGrid
     {
         public XmlNode GridXml;
-        private Dictionary<Vector3, MyXmlBlock> _Blocks;
+        private Dictionary<Vector3, MyXmlBlock> _Blocks = new Dictionary<Vector3, MyXmlBlock>();
         private readonly XmlNode NameNode;
         private readonly XmlNode GridSizeNode;
         private readonly XmlNode DestructibleNode;
@@ -60,7 +60,7 @@ namespace BlueprintEditor2
                         NameNode = child;
                         break;
                     case "CubeBlocks":
-                        _Blocks = child.ChildNodes.Cast<XmlNode>().Select(x => {
+                        foreach (XmlNode x in child.ChildNodes){
                             var xmlB = new MyXmlBlock(x);
                             if (!IsDamaged) {
                                 var xp = xmlB.GetProperty("IntegrityPercent");
@@ -68,8 +68,9 @@ namespace BlueprintEditor2
                                 if (xp != null && (xb == null || xp.TextValue != xb.TextValue) && xp.TextValue != "1")
                                     IsDamaged = true;
                             }
-                            return xmlB;
-                        }).ToDictionary<MyXmlBlock,Vector3>(x=> x.Position);
+                            if(!_Blocks.ContainsKey(xmlB.Position))
+                                _Blocks.Add(xmlB.Position, xmlB);
+                        }
                         break;
                     case "GridSizeEnum":
                         GridSizeNode = child;
@@ -101,12 +102,14 @@ namespace BlueprintEditor2
             }
             return null;
         }
-        public void RemoveBlock(MyXmlBlock Block)
+        public bool RemoveBlock(MyXmlBlock Block)
         {
             if (_Blocks.Remove(Block.Position))
             {
                 Block.Delete();
+                return true;
             }
+            return false;
         }
     }
     public enum GridSizes

@@ -553,6 +553,9 @@
 Вы хотите установить миниатюру? 
 Отмена - Не устанавливать стандартную миниатюру</value>
   </data>
+  <data name="NoReplace" xml:space="preserve">
+    <value>Не заменять</value>
+  </data>
   <data name="Normal" xml:space="preserve">
     <value>Нормальная</value>
   </data>

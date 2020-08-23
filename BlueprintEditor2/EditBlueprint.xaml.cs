@@ -45,7 +45,7 @@ namespace BlueprintEditor2
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
             Logger.Add($"Grid changed to {SlectedGrd.Name}");
             List<MyXmlBlock> TheBlocks = SlectedGrd.Blocks;
-            int Heavy = 0,Light = 0;
+            int ArmorCount = 0;
             ExistedColors.Items.Clear();
             List<MyXmlBlock> BlocksToAdd = new List<MyXmlBlock>();
             for (int i = 0; i < TheBlocks.Count; i++)
@@ -53,13 +53,8 @@ namespace BlueprintEditor2
                 MyXmlBlock thatBlock = TheBlocks[i];
                 if (DasShowIt(thatBlock))
                     BlocksToAdd.Add(thatBlock);
-                if (thatBlock.IsArmor)
-                {
-                    if (thatBlock.Armor == ArmorType.Heavy)
-                        Heavy++;
-                    else if (thatBlock.Armor == ArmorType.Light)
-                        Light++;
-                }
+                if (thatBlock.IsArmor) 
+                    ArmorCount++;
                 string argb = thatBlock.ColorMask.ToArgb().ToString("X");
                 if (argb != "0")
                 {
@@ -88,15 +83,11 @@ namespace BlueprintEditor2
                 GridColorChange.IsEnabled = false;
                 GridColorExist.IsEnabled = false;
             }
-            if(Heavy != Light)
-                GridArmourType.SelectedIndex = Heavy > Light?0:1;
-            else
+            if(sender != null)
+                GridArmourType.SelectedIndex = 0;
+            if (ArmorCount == 0)
             {
-                GridArmourType.SelectedIndex = -1;
-                if (Heavy == 0)
-                {
-                    GridArmourType.IsEnabled = false;
-                }
+                GridArmourType.IsEnabled = false;
             }
             initGAT = true;
             //BlockList.Items.SortDescriptions.Clear();
@@ -252,7 +243,8 @@ namespace BlueprintEditor2
             if (PropertyPatch == "PropertyName") return;
             if (PropertyPatch == null) return;
             if (OldSortBy != null)
-                OldSortBy.Header = OldSortBy.Header.ToString().Trim('↓', '↑', ' ');
+                if (OldSortBy.Header is GridViewColumnHeader cHead)
+                    cHead.Content = cHead.Content.ToString().Trim('↓', '↑', ' ');
             /*ListSortDirection OldDirection = ListSortDirection.Descending;
             if (BlockList.Items.SortDescriptions.Count > 0 && BlockList.Items.SortDescriptions[0].PropertyName == PropertyPatch)
                 OldDirection = BlockList.Items.SortDescriptions[0].Direction;*/
@@ -296,7 +288,8 @@ namespace BlueprintEditor2
             }else BlockList.ItemsSource = Sort;
             //BlockList.Items.SortDescriptions.Clear();
             //BlockList.Items.SortDescriptions.Add(new SortDescription(PropertyPatch, NewDirection));
-            SortBy.Header += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
+            if (SortBy.Header is GridViewColumnHeader cvHead)
+                cvHead.Content += NewDirection == ListSortDirection.Ascending ? " ↓" : " ↑";
             OldSortBy = SortBy;
             OldDirection = NewDirection;
         }
@@ -544,8 +537,8 @@ namespace BlueprintEditor2
             List<MyXmlBlock> Blocks = new List<MyXmlBlock>();
             foreach (MyXmlBlock SelectedBlk in BlockList.SelectedItems)
             {
-                EdBlueprint.Grids[GridList.SelectedIndex].RemoveBlock(SelectedBlk);
-                Blocks.Add(SelectedBlk);
+                if (EdBlueprint.Grids[GridList.SelectedIndex].RemoveBlock(SelectedBlk))
+                    Blocks.Add(SelectedBlk);
             }
             var Sort = BlockList.ItemsSource.OfType<MyXmlBlock>().ToList();
             foreach (MyXmlBlock SelectedBlk in Blocks)
@@ -564,13 +557,16 @@ namespace BlueprintEditor2
             ArmorType type = (ArmorType)GridArmourType.SelectedIndex;
             foreach (MyXmlBlock block in SlectedGrd.Blocks)
             {
-                block.Armor = type;
+                if(block.IsArmor)
+                    block.Type = ArmorReplaceClass.Replace(block.Type, type.ToString());
+                //block.Armor = type;
             }
             GridList_SelectionChanged(null,null);
         }
 
         private void BlockXYZ_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (BlockList.SelectedItems.Count > 1) return;
             TextBox Sender = (TextBox)sender;
             int.TryParse(Sender.Text,out int UnknownCoord);
             Sender.Text = UnknownCoord.ToString();

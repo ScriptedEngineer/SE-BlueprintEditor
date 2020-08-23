@@ -16,6 +16,7 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Net;
 using Microsoft.Win32;
+using System.Text.RegularExpressions;
 
 namespace BlueprintEditor2
 {
@@ -156,6 +157,12 @@ namespace BlueprintEditor2
             DateTime unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
             long unixTimeStampInTicks = (long)(unixTime * TimeSpan.TicksPerSecond);
             return new DateTime(unixStart.Ticks + unixTimeStampInTicks, System.DateTimeKind.Utc);
+        }
+        public static string RegexMatch(string source, string regex)
+        {
+            Match Mxx = Regex.Match(source, regex);
+            if (Mxx.Success) return Mxx.Groups[1].Value;
+            else return null;
         }
     }
     public static class SE_ColorConverter

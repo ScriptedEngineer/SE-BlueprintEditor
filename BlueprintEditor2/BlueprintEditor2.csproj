@@ -123,6 +123,7 @@
     <Compile Include="Calculator.xaml.cs">
       <DependentUpon>Calculator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MyBlockTypeReplacer.cs" />
     <Compile Include="Classes\SEImageConverter.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\MyBlockProperty.cs" />

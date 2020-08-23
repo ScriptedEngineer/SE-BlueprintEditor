@@ -95,6 +95,13 @@ namespace BlueprintEditor2
                 {
                     IsInitialized = true;
                 }
+                StringBuilder xsfdsf = new StringBuilder();
+                foreach(var ss in CubeBlocks)
+                {
+                    if (ss.Key.Contains("Armor")) 
+                        xsfdsf.Append(ss.Key).Append("\n");
+                }
+                Console.WriteLine(xsfdsf);
             }
         }
         private static void AddBlocksInfo(string file, XmlDocument File = null, bool mods = false, string modid = "0")

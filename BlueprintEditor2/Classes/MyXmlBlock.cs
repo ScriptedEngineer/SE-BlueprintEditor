@@ -82,6 +82,7 @@ namespace BlueprintEditor2
             }
         }
         public MyBlockProperty[] Properties { get => _Properties.Values.ToArray(); }
+        /*
         public ArmorType Armor
         {
             get
@@ -116,7 +117,7 @@ namespace BlueprintEditor2
                     }
                 }
             }
-        }
+        }*/
         public Vector3 Position
         {
             get
@@ -186,12 +187,12 @@ namespace BlueprintEditor2
         {
             _BlockXml = block;
             Inventories = new List<MyBlockInventory>();
+            IsArmor = true;
             foreach (XmlNode child in block.ChildNodes)
                 switch (child.Name)
                 {
                     case "SubtypeName":
                         _SubTypeNode = child;
-                        IsArmor = _SubTypeNode.InnerText.Contains("Armor");
                         continue;
                     case "CustomName":
                         _NameNode = child;
@@ -251,6 +252,7 @@ namespace BlueprintEditor2
                         continue;
                     //Ignore
                     case "EntityId":
+                        IsArmor = false;
                         break;
                 }
             if (Orientation == null) Orientation = new MyBlockOrientation();
@@ -526,9 +528,9 @@ namespace BlueprintEditor2
     }
     public enum ArmorType
     {
-        Heavy,
+        None,
         Light,
-        None
+        Heavy
     }
     public enum ShareMode
     {

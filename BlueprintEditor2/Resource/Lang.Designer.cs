@@ -1355,6 +1355,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Don&apos;t replace.
+        /// </summary>
+        public static string NoReplace {
+            get {
+                return ResourceManager.GetString("NoReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Normal.
         /// </summary>
         public static string Normal {

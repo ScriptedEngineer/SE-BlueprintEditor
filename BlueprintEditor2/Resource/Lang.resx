@@ -553,6 +553,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
 Do you want set a thumbnail?
 Cancel - Don't set default thumbnail</value>
   </data>
+  <data name="NoReplace" xml:space="preserve">
+    <value>Don't replace</value>
+  </data>
   <data name="Normal" xml:space="preserve">
     <value>Normal</value>
   </data>

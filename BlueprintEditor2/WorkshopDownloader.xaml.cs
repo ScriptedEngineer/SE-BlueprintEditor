@@ -49,7 +49,7 @@ namespace BlueprintEditor2
                 return;
             }
             Title = "Workshop downloader - SE BlueprintEditor loading...";
-            ItemTitle.Content = Lang.PleaseWait;
+            ItemTitle.Text = Lang.PleaseWait;
             StatusLabel.Content = "loading file info";
             ItemInfo.Content = "";
             FilePicture.Source = new BitmapImage(new Uri("https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png", UriKind.RelativeOrAbsolute));
@@ -60,50 +60,46 @@ namespace BlueprintEditor2
             string text = SteamLink.Text;
             new Task(() =>
             {
-                response aResponse = null;
+                string aResponse = null;
                 string Type = "Undefined";
                 try
                 {
                     FileID = text.Split(new string[] { "id=" }, StringSplitOptions.RemoveEmptyEntries).Last().Split('&').First();
-                    if (!long.TryParse(FileID, out long xss)) 
+                    if (!long.TryParse(FileID, out long xss))
                         throw new Exception();
-                    string backData = MyExtensions.ApiServer(
+                    aResponse = MyExtensions.ApiServer(
                         ApiServerAct.SteamApiGetPublishedFileDetails,
                         ApiServerOutFormat.@string,
                         $",\"fileid\":\"{FileID}\",\"format\":\"xml\"");
-                    XmlSerializer formatter = new XmlSerializer(typeof(response));
-                    using (var reader = new StringReader(backData))
-                    {
-                        aResponse = (response)formatter.Deserialize(reader);
-                        LoadLink = aResponse.publishedfiledetails.publishedfile.file_url;
-                        FileID = aResponse.publishedfiledetails.publishedfile.publishedfileid.ToString();
-                        if (aResponse.publishedfiledetails.publishedfile.tags != null)
-                            foreach (var x in aResponse.publishedfiledetails.publishedfile.tags)
+                    LoadLink = MyExtensions.RegexMatch(aResponse, @"<file_url>([^<]*)<\/file_url>");
+                    FileID = MyExtensions.RegexMatch(aResponse, @"<publishedfileid>([^<]*)<\/publishedfileid>");
+                    MatchCollection Tags = Regex.Matches(aResponse, @"<tag>([^<]*)<\/tag>");
+                    if (Tags.Count > 0) 
+                        foreach (Match x in Tags)
+                        {
+                            switch (x.Groups[1].Value)
                             {
-                                switch (x.tag)
-                                {
-                                    case "blueprint":
-                                        LoadFolder = MySettings.Current.BlueprintPatch;
-                                        Type = "Blueprint";
-                                        break;
-                                    case "world":
-                                        LoadFolder = MySettings.Current.SavesPatch;
-                                        Type = "World";
-                                        break;
-                                    case "ingameScript":
-                                        LoadFolder = MySettings.Current.ScriptsPatch;
-                                        Type = "Script";
-                                        break;
-                                    case "mod":
-                                        LoadFolder = MySettings.Current.ModsPatch;
-                                        Type = "Mod";
-                                        break;
-                                    case "Scenario":
-                                        Type = "Scenario";
-                                        break;
-                                }
+                                case "blueprint":
+                                    LoadFolder = MySettings.Current.BlueprintPatch;
+                                    Type = "Blueprint";
+                                    break;
+                                case "world":
+                                    LoadFolder = MySettings.Current.SavesPatch;
+                                    Type = "World";
+                                    break;
+                                case "ingameScript":
+                                    LoadFolder = MySettings.Current.ScriptsPatch;
+                                    Type = "Script";
+                                    break;
+                                case "mod":
+                                    LoadFolder = MySettings.Current.ModsPatch;
+                                    Type = "Mod";
+                                    break;
+                                case "Scenario":
+                                    Type = "Scenario";
+                                    break;
                             }
-                    }
+                        }
                 }
                 finally
                 {
@@ -111,33 +107,35 @@ namespace BlueprintEditor2
                     {
                         Title = "Workshop downloader - SE BlueprintEditor";
                         StatusLabel.Content = "";
+                        FileTitle = MyExtensions.RegexMatch(aResponse, @"<title>([^<]*)<\/title>");
                         if (aResponse == null
-                        || string.IsNullOrEmpty(aResponse?.publishedfiledetails?.publishedfile?.title))
+                        || string.IsNullOrEmpty(FileTitle))
                         {
-                            ItemTitle.Content = Lang.Error;
+                            ItemTitle.Text = Lang.Error;
                             DownloadProgress.IsIndeterminate = false;
                             return;
                         }
-                        var fleinfod = aResponse.publishedfiledetails.publishedfile;
-                        if (fleinfod.consumer_app_id != 244850)
+                        long.TryParse(MyExtensions.RegexMatch(aResponse, @"<file_size>([^<]*)<\/file_size>"), out long file_size);
+                        if (MyExtensions.RegexMatch(aResponse, @"<consumer_app_id>([^<]*)<\/consumer_app_id>") != "244850")
                         {
                             ItemInfo.Content = Lang.FileFromAnnotherGame;
-
                         }
                         else
                         {
-                            ItemInfo.Content = $"{Lang.Type}: {Type}\r\n{Lang.Size}: {fleinfod.file_size / 1024}kb\r\n{Lang.LastUpdate}: {MyExtensions.UnixTimestampToDateTime(fleinfod.time_updated)}";
+                            double.TryParse(MyExtensions.RegexMatch(aResponse, @"<time_updated>([^<]*)<\/time_updated>"), out double time_updated);
+                            ItemInfo.Content = $"{Lang.Type}: {Type}\r\n{Lang.Size}: {file_size / 1024}kb\r\n{Lang.LastUpdate}: {MyExtensions.UnixTimestampToDateTime(time_updated)}";
                         }
-                        ItemTitle.Content = FileTitle = fleinfod.title;
-                        if (string.IsNullOrEmpty(fleinfod.preview_url))
-                            fleinfod.preview_url = "https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png";
-                        FilePicture.Source = new BitmapImage(new Uri(fleinfod.preview_url, UriKind.RelativeOrAbsolute));
+                        ItemTitle.Text = FileTitle;
+                        string preview = MyExtensions.RegexMatch(aResponse, @"<preview_url>([^<]*)<\/preview_url>");
+                        if (string.IsNullOrEmpty(preview))
+                            preview = "https://steamcommunity-a.akamaihd.net/public/images/sharedfiles/steam_workshop_default_image.png";
+                        FilePicture.Source = new BitmapImage(new Uri(preview, UriKind.RelativeOrAbsolute));
                         DownloadButton.IsEnabled = !string.IsNullOrEmpty(LoadFolder);
                         if (!DownloadButton.IsEnabled)
                         {
                             StatusLabel.Content = "downloading is not possible";
                         }
-                        DownloadProgress.Maximum = fleinfod.file_size;
+                        DownloadProgress.Maximum = file_size;
                         DownloadProgress.IsIndeterminate = false;
                     });
                 }
@@ -219,128 +217,6 @@ namespace BlueprintEditor2
             StatusLabel.Content = $"downloading...";
             DownloadProgress.Value = e.BytesReceived;
             DownloadProgress.IsIndeterminate = false;
-        }
-
-        // Примечание. Для запуска созданного кода может потребоваться NET Framework версии 4.5 или более поздней версии и .NET Core или Standard версии 2.0 или более поздней.
-        /// <remarks/>
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-        public partial class response
-        {
-
-            /// <remarks/>
-            public byte result { get; set; }
-
-            /// <remarks/>
-            public byte resultcount { get; set; }
-
-            /// <remarks/>
-            public responsePublishedfiledetails publishedfiledetails { get; set; }
-        }
-
-        /// <remarks/>
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        public partial class responsePublishedfiledetails
-        {
-
-            /// <remarks/>
-            public responsePublishedfiledetailsPublishedfile publishedfile { get; set; }
-        }
-
-        /// <remarks/>
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        public partial class responsePublishedfiledetailsPublishedfile
-        {
-
-            /// <remarks/>
-            public uint publishedfileid { get; set; }
-
-            /// <remarks/>
-            public byte result { get; set; }
-
-            /// <remarks/>
-            public ulong creator { get; set; }
-
-            /// <remarks/>
-            public uint creator_app_id { get; set; }
-
-            /// <remarks/>
-            public uint consumer_app_id { get; set; }
-
-            /// <remarks/>
-            public object filename { get; set; }
-
-            /// <remarks/>
-            public uint file_size { get; set; }
-
-            /// <remarks/>
-            public string file_url { get; set; }
-
-            /// <remarks/>
-            public ulong hcontent_file { get; set; }
-
-            /// <remarks/>
-            public string preview_url { get; set; }
-
-            /// <remarks/>
-            public ulong hcontent_preview { get; set; }
-
-            /// <remarks/>
-            public string title { get; set; }
-
-            /// <remarks/>
-            public string description { get; set; }
-
-            /// <remarks/>
-            public long time_created { get; set; }
-
-            /// <remarks/>
-            public long time_updated { get; set; }
-
-            /// <remarks/>
-            public byte visibility { get; set; }
-
-            /// <remarks/>
-            public byte banned { get; set; }
-
-            /// <remarks/>
-            public object ban_reason { get; set; }
-
-            /// <remarks/>
-            public ushort subscriptions { get; set; }
-
-            /// <remarks/>
-            public byte favorited { get; set; }
-
-            /// <remarks/>
-            public ushort lifetime_subscriptions { get; set; }
-
-            /// <remarks/>
-            public byte lifetime_favorited { get; set; }
-
-            /// <remarks/>
-            public ushort views { get; set; }
-
-            /// <remarks/>
-            [System.Xml.Serialization.XmlArrayItemAttribute("tag", IsNullable = false)]
-            public responsePublishedfiledetailsPublishedfileTag[] tags { get; set; }
-        }
-
-        /// <remarks/>
-        [System.SerializableAttribute()]
-        [System.ComponentModel.DesignerCategoryAttribute("code")]
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        public partial class responsePublishedfiledetailsPublishedfileTag
-        {
-
-            /// <remarks/>
-            public string tag { get; set; }
         }
 
         private void Hyperlink_Click(object sender, RoutedEventArgs e) => Process.Start(((Hyperlink)sender).NavigateUri.ToString());
