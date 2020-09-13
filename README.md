@@ -7,7 +7,6 @@ English and Russian localization!
 
 ## Download
 
-[Google Drive (you will need to update)](https://drive.google.com/open?id=1Qbb7uP-8tP_nVKJK5G-arw16t3Q5QzX6)<br>
 [GitHub Releases (lastest version)](https://github.com/ScriptedEngineer/SE-BlueprintEditor/releases)
 
 ## Updates
