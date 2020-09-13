@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:BlueprintEditor2"
         xmlns:res="clr-namespace:BlueprintEditor2.Resource"
         mc:Ignorable="d"
-        Title="Update available - SE BlueprintEditor" Height="250" Width="400" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="400" MinHeight="250">
+        Title="Update available - SE BlueprintEditor" Height="300" Width="500" WindowStartupLocation="CenterScreen" Closing="Window_Closing" MinWidth="400" MinHeight="250">
     <Grid>
         <Label Content="{x:Static res:Lang.UpdateAvailable}" x:Name="AvailableVer" Margin="10,10,10,0" VerticalAlignment="Top"/>
         <Label x:Name="CurrentVer" Content="{x:Static res:Lang.CurrentVer}" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-        <TextBox x:Name="UpdLog" Margin="10,62,10,41" TextWrapping="Wrap" IsReadOnlyCaretVisible="True" TextChanged="UpdLog_TextChanged"/>
+        <TextBox x:Name="UpdLog" Margin="10,62,10,41" IsReadOnly="True" TextWrapping="Wrap" IsReadOnlyCaretVisible="True" TextChanged="UpdLog_TextChanged"/>
         <Label Content="{x:Static res:Lang.WhatNew}" Margin="10,36,0,0" VerticalAlignment="Top"/>
         <Button Content="{x:Static res:Lang.UpdateNow}" Width="219" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="Button_Click_1" HorizontalAlignment="Right"/>
         <Button Content="{x:Static res:Lang.RemLater}" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="135" Click="Button_Click"/>

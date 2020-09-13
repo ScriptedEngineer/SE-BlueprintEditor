@@ -33,6 +33,7 @@ namespace BlueprintEditor2
 
         public SelectBlueprint()
         {
+            Logger.Add("Startup");
 #if DEBUG
             System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
 #endif
@@ -60,7 +61,7 @@ namespace BlueprintEditor2
                             Hide();
                             return;
 #endif
-                        case "Debug":
+                        case "-debug":
                             ConsoleManager.Show();
                             break;
                     }
@@ -68,86 +69,32 @@ namespace BlueprintEditor2
             }
             Logger.Add("Handle unhandled");
             Logger.HandleUnhandledException();
-           
-            Logger.Add("Startup"); 
-            if (File.Exists("update.vbs")) File.Delete("update.vbs");
-            if (File.Exists("upd.bat")) File.Delete("upd.bat");
-            if (File.Exists("Updater.exe"))
-            {
-                try
-                {
-                    Logger.Add("Cleanup update files");
-                    File.Delete("Updater.exe");
-                }
-                catch 
-                {
-                    
-                }
-            }
-            /*if (File.Exists("lang.txt"))
-                try
-                {
-                    Logger.Add("Post update language pack init");
-                    string langfold = File.ReadAllText("lang.txt");
-                    File.Delete("./" + langfold + "/SE-BlueprintEditor.resources.dll");
-                    File.Move("./" + langfold + "/SE-BlueprintEditor.resources.dll.upd", "./" + langfold + "/SE-BlueprintEditor.resources.dll");
-                    File.Delete("lang.txt");
-                    /*FileStream Batch = File.Create("update.vbs");
-                    byte[] Data = Encoding.Default.GetBytes("WScript.Sleep(2000)"
-        + "\r\nOn Error Resume next"
-        + "\r\nSet WshShell = WScript.CreateObject(\"WScript.Shell\")"
-        + "\r\n     WshShell.Run \"" + MyExtensions.AppFile + "\""
-        + "\r\nOn Error GoTo 0");
-                    Batch.Write(Data, 0, Data.Length);
-                    Batch.Close();*//*
-                    Process.Start(MyExtensions.AppFile);
-                    Application.Current.Shutdown();
-                }
-                catch(Exception e)
-                {
-                    Logger.Add($"Error {e.Message}");
-                }*/
-            Logger.Add("language pack check");
-            if (MySettings.Current.LangCultureID == 1049 && !Directory.Exists("ru"))
-                try
-                {
-                    Logger.Add("language pack not exists. language pack downloading");
-                    string langpackfolder = Path.GetDirectoryName(MyExtensions.AppFile) + "/ru/";
-                    if (!Directory.Exists(langpackfolder))
-                        Directory.CreateDirectory(langpackfolder);
-                    WebClient web = new WebClient();
-                    Logger.Add("Download language pack starting");
-                    web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/SE-BlueprintEditor.resources.dll"), langpackfolder + "SE-BlueprintEditor.resources.dll");
-                    Logger.Add("Shitdown");
-                    Process.Start(MyExtensions.AppFile);
-                    Application.Current.Shutdown();
-                }
-                catch (Exception e)
-                {
-                    Logger.Add($"Error {e.Message}");
-                }
+
             Logger.Add("Init GUI");
             InitializeComponent();
             currentBluePatch = MySettings.Current.BlueprintPatch;
+            Logger.Add("Init blueprints");
             InitBlueprints();
-#if DEBUG
+#if false
 #else
             new Task(() =>
             {
                 Thread.CurrentThread.Name = "Updating";
                 Logger.Add("Check Update");
-                string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
-                if (Vers.Length == 3) {
-                    if (Vers[0] == "0")
+                string downloadURL = null, lastVersion, git_ingo;
+                using (var client = new System.Net.WebClient())
+                {
+                    client.Headers.Add("User-Agent","SE-BlueprintEditor");
+                    client.Encoding = Encoding.UTF8;
+                    git_ingo = client.DownloadString("https://api.github.com/repos/ScriptedEngineer/SE-BlueprintEditor/releases");
+                    lastVersion = MyExtensions.RegexMatch(git_ingo, @"""tag_name"":""([^""]*)""");
+                    downloadURL = MyExtensions.RegexMatch(git_ingo, @"""browser_download_url"":""([^""]*)""");
+                }
+                if (!string.IsNullOrEmpty(downloadURL)) {
+                    if (MyExtensions.CheckVersion(lastVersion, MyExtensions.Version))
                     { 
                         Logger.Add("Update found");
-                        MyExtensions.AsyncWorker(() => new UpdateAvailable(Vers[2], Vers[1]).Show());
-                        if (!File.Exists("Updater.exe"))
-                        {
-                            WebClient web = new WebClient();
-                            Logger.Add("Download updater");
-                            web.DownloadFile(new Uri(@"https://wsxz.ru/downloads/Updater.exe"), "Updater.exe");
-                        }
+                        MyExtensions.AsyncWorker(() => new UpdateAvailable(lastVersion, downloadURL, git_ingo).Show());
                     }
                     else
                     {
@@ -182,20 +129,23 @@ namespace BlueprintEditor2
                 Logger.Add("Game data parse start");
                 MyGameData.Init();
                 Logger.Add("Game data parse end");
-                MyExtensions.AsyncWorker(() => { 
-                CalculateButton.IsEnabled = BlueList.SelectedIndex != -1;
-                CalculateButton.Content = Lang.Calculate;
+                MyExtensions.AsyncWorker(() => {
+                    Logger.Add("Enabling features that use game data");
+                    CalculateButton.IsEnabled = BlueList.SelectedIndex != -1;
+                    CalculateButton.Content = Lang.Calculate;
                 });
             }).Start();
         }
         public void SettingsUpdated()
         {
+            Logger.Add("Settings updated(update welcome content)");
             Welcome.Content = Lang.Welcome + " " + MySettings.Current.UserName.Replace("_", "__");
             //ResourceManager.Refresh();
             //MyExtensions.ThemeChange("Dark");
         }
         internal void BlueList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Logger.Add("Blueprint list selected changed");
             MyDisplayBlueprint Selected = (MyDisplayBlueprint)BlueList.SelectedItem;
             if (Selected != null && File.Exists(currentBluePatch + Selected.Name + "\\bp.sbc"))
             {
@@ -270,7 +220,7 @@ namespace BlueprintEditor2
         }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            Process.Start(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
         private void EditButton_Click(object sender, RoutedEventArgs e)

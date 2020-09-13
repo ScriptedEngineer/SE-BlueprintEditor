@@ -65,13 +65,12 @@ namespace BlueprintEditor2.Properties {
         ///&lt;MyObjectBuilder_Checkpoint xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
         ///  &lt;CurrentSector x=&quot;0&quot; y=&quot;0&quot; z=&quot;0&quot; /&gt;
         ///  &lt;ElapsedGameTime&gt;1380320000&lt;/ElapsedGameTime&gt;
-        ///  &lt;SessionName&gt;TEST&lt;/SessionName&gt;
+        ///  &lt;SessionName&gt;&lt;!--NameHere--&gt;&lt;/SessionName&gt;
         ///  &lt;SpectatorPosition&gt;
         ///    &lt;Position x=&quot;1000000&quot; y=&quot;1000000&quot; z=&quot;1000000.0000000002&quot; /&gt;
         ///    &lt;Forward x=&quot;0.145073712&quot; y=&quot;0.6612421&quot; z=&quot;-0.7360112&quot; /&gt;
         ///    &lt;Up x=&quot;0.668944657&quot; y=&quot;0.482549965&quot; z=&quot;0.565383554&quot; /&gt;
-        ///    &lt;Orientation&gt;
-        ///      &lt;X [остаток строки не уместился]&quot;;.
+        ///    &lt;Orientation [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string Sandbox {
             get {

@@ -75,11 +75,16 @@ namespace BlueprintEditor2
         {
             Requared.Clear();
             RequaredBuidComp.Clear();
+            JumpDrives.Clear();
+            Forces.Clear();
             UndefinedTypes = new List<string>();
             SelfStoneAmount = 0;
             PCU = 0;
             Blocks = 0;
             Mass = 0;
+            Storage = 0;
+            PeakOut = 0;
+            GenOut = 0;
         }
 
         public void SetYieldEffect(double yieldEffect)

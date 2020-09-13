@@ -777,15 +777,6 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Do empty work.
-        /// </summary>
-        public static string DowLangPack {
-            get {
-                return ResourceManager.GetString("DowLangPack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Down.
         /// </summary>
         public static string Down {
@@ -804,7 +795,16 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Downloading new version.
+        ///   Ищет локализованную строку, похожую на Downloading update.
+        /// </summary>
+        public static string DownloadUpdate {
+            get {
+                return ResourceManager.GetString("DownloadUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Downloading new updater.
         /// </summary>
         public static string DownNewVer {
             get {
@@ -863,6 +863,15 @@ namespace BlueprintEditor2.Resource {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Extracting update.
+        /// </summary>
+        public static string ExtractingUpdate {
+            get {
+                return ResourceManager.GetString("ExtractingUpdate", resourceCulture);
             }
         }
         

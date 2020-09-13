@@ -359,17 +359,17 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="DontSend" xml:space="preserve">
     <value>Don't send</value>
   </data>
-  <data name="DowLangPack" xml:space="preserve">
-    <value>Do empty work</value>
-  </data>
   <data name="Down" xml:space="preserve">
     <value>Down</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="DownloadUpdate" xml:space="preserve">
+    <value>Downloading update</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
-    <value>Downloading new version</value>
+    <value>Downloading new updater</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -388,6 +388,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ExtractingUpdate" xml:space="preserve">
+    <value>Extracting update</value>
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Faction</value>

@@ -25,50 +25,47 @@ namespace BlueprintEditor2
     {
         static public UpdateAvailable window;
         static internal bool last_open = false;
-        private readonly string UpdateLink, UpdLoge;
+        private readonly string UpdateLink;
 
-        public UpdateAvailable(string NewestVer,string updateLink)
+        public UpdateAvailable(string NewestVer,string updateLink, string git_ingo)
         {
+            Logger.Add("Update available show");
             InitializeComponent();
             window = this;
             UpdateLink = updateLink;
             AvailableVer.Content = Resource.Lang.UpdateAvailable+" - " +NewestVer;
             CurrentVer.Content = Resource.Lang.CurrentVer + " - " + MyExtensions.Version;
-            UpdLoge = PrepareLog(MyExtensions.ApiServer(ApiServerAct.GetUpdateLog),Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName ,true);
-            UpdLog.Text = UpdLoge;
-        }
-
-        string PrepareLog(string log, string Lid = "en", bool cut = false)
-        {
-            string[] Versions = log.Split('*');
-            string Backlog = "";
-            foreach (var version in Versions)
-            {
-                if (version == "") continue;
-                bool breaked = false;
-                //string[] versio = version.Split(':');
-                string[] Strings = version.Split(new string[] { ":", "\n", "\r", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var stringe in Strings)
+            //UpdLoge = PrepareLog(MyExtensions.ApiServer(ApiServerAct.GetUpdateLog),Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName ,true);
+            string updLog = "";
+            string[] gVersions = git_ingo.Split(new string[] { @"},{""url"":" }, StringSplitOptions.RemoveEmptyEntries);
+            Logger.Add("Parse GitHub log");
+            foreach (string gVer in gVersions) {
+                string vsi = MyExtensions.RegexMatch(gVer, @"""tag_name"":""([^""]*)""");
+                if (vsi == MyExtensions.Version) break;
+                string[] Lines = MyExtensions.RegexMatch(gVer, @"""body"":""([^""]*)""").Split(new string[]{"\\r\\n"}, StringSplitOptions.RemoveEmptyEntries);
+                bool writes = !(MySettings.Current.LangCultureID == 1049);
+                foreach (var Line in Lines)
                 {
-                    if (stringe == "") continue;
-                    string[] langs = stringe.Split('|');
-                    if (langs.Length > 1)
-                        Backlog += (langs[Lid == "ru" ? 1 : 0]) + "\r\n";
+                    if(Line.StartsWith("# "))
+                    {
+                        string[] lang = Line.Split(']');
+                        if (lang[0] == "# [RU") writes = !writes;
+                        if (lang.Length == 1) writes = true;
+                        if (writes) updLog += "\r\n" + Line + "\r\n";
+                    }
+                    else
+                    if (Line.StartsWith("### "))
+                    {
+                        //Ingore
+                    }
                     else
                     {
-                        if (cut && langs[0] == MyExtensions.Version)
-                        {
-                            breaked = true;
-                            break;
-                        }
-                        //Backlog += langs[0] + "\r\n";
+                        if(writes) updLog += Line + "\r\n";
                     }
-
                 }
-                if (breaked) break;
+                //Console.WriteLine(gVer);
             }
-
-            return Backlog;
+            UpdLog.Text = updLog.Trim();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -89,23 +86,12 @@ namespace BlueprintEditor2
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MyExtensions.CloseAllWindows();
-            //File.Copy(MyExtensions.AppFile, "Updater.exe", true);
-            File.WriteAllText("upd",UpdateLink);
-            //Process.Start("cmd", "/c start Updater.exe");
-            if(File.Exists("Updater.exe"))
-                Process.Start("cmd", "/c start Updater.exe");
-            else
-            {
-                new MessageDialog(DialogPicture.attention, "Attention", "File Updater.exe not found", null, DialogType.Message).Show();
-                return;
-            }
-            Application.Current.Shutdown();
-            //new Updater(UpdateLink).Show();
+            new Updater(UpdateLink).Show();
         }
 
         private void UpdLog_TextChanged(object sender, TextChangedEventArgs e)
         {
-            UpdLog.Text = UpdLoge;
+            //UpdLog.Text = UpdLoge;
         }
     }
 }

@@ -22,16 +22,20 @@ namespace BlueprintEditor2
         }
         public static void Add(string log)
         {
-            StringBuilder Lgo = new StringBuilder();
-            Lgo.Append("[").Append(DateTime.UtcNow).Append("] ");
-            if (string.IsNullOrEmpty(Thread.CurrentThread.Name))
-                Lgo.Append("Thread").Append(Thread.CurrentThread.ManagedThreadId);
-            else
-                Lgo.Append(Thread.CurrentThread.Name);
-            Lgo.Append(": ").Append(log).Append('\n');
-            Log.Append(Lgo);
-            //string logf = $"[{DateTime.UtcNow}] {(string.IsNullOrEmpty(Thread.CurrentThread.Name) ? "Thread" + Thread.CurrentThread.ManagedThreadId : Thread.CurrentThread.Name)}: {log}";
-#if DEBUG
+            string ThreadName = Thread.CurrentThread.Name;
+            new Task(() =>
+            {
+                StringBuilder Lgo = new StringBuilder();
+                Lgo.Append("[").Append(DateTime.UtcNow).Append("] ");
+                if (string.IsNullOrEmpty(ThreadName))
+                    Lgo.Append("Thread").Append(Thread.CurrentThread.ManagedThreadId);
+                else
+                    Lgo.Append(ThreadName);
+                Lgo.Append(": ").Append(log).Append('\n');
+                Log.Append(Lgo);
+                Console.WriteLine(Lgo.ToString().Trim());
+                //string logf = $"[{DateTime.UtcNow}] {(string.IsNullOrEmpty(Thread.CurrentThread.Name) ? "Thread" + Thread.CurrentThread.ManagedThreadId : Thread.CurrentThread.Name)}: {log}";
+#if false
             new Task(() =>
             {
                 if (ConsoleManager.HasConsole)
@@ -39,11 +43,12 @@ namespace BlueprintEditor2
             }).Start();
 #endif
 
-            LogLenght++;
-            if (LogLenght > 1000)
-            {
-                Log.Remove(0, Convert.ToString(Log).Split('\n').FirstOrDefault().Length + 1);
-            }
+                LogLenght++;
+                if (LogLenght > 1000)
+                {
+                    Log.Remove(0, Convert.ToString(Log).Split('\n').FirstOrDefault().Length + 1);
+                }
+            }).Start();
         }
         private static void CrashHappens(object sende, UnhandledExceptionEventArgs UhEx)
         {

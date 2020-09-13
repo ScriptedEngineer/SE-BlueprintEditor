@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 
 namespace BlueprintEditor2
 {
-    class MyBlockTypeReplacer
+    public class MyBlockTypeReplacer
     {
         public string GroupName { get; private set; }
         public readonly string ReplaceType = "CubeBlock";
@@ -79,7 +79,8 @@ namespace BlueprintEditor2
     }
     public static class ArmorReplaceClass
     {
-        static Dictionary<string, MyBlockTypeReplacer> Replacers = new Dictionary<string,MyBlockTypeReplacer>() {
+        static public readonly List<string> Baze;
+        static public Dictionary<string, MyBlockTypeReplacer> Replacers = new Dictionary<string, MyBlockTypeReplacer>() {
             {"Heavy",
             new MyBlockTypeReplacer("Armor","CubeBlock") {
             Replace = {
@@ -126,6 +127,9 @@ namespace BlueprintEditor2
             }
             }
         };
+        static ArmorReplaceClass(){
+            Baze = Replacers["Heavy"].Replace.Keys.ToList();
+        }
         public static string Replace(string input, string toType)
         {
             string pre_replace = input.Replace("CubeBlock/", "");

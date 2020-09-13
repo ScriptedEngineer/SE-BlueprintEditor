@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 
 namespace BlueprintEditor2
 {
-    class MyExtensions
+    static class MyExtensions
     {
         public static string Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public static void AsyncWorker(Action act) => Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, act);
@@ -41,7 +41,7 @@ namespace BlueprintEditor2
                 return "Error(Api unavailable)";
             }
         }
-        public static string AppFile = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        public static string AppFile = System.Windows.Forms.Application.ExecutablePath;
         public static void CloseAllWindows()
         {
             for (int intCounter = Application.Current.Windows.Count - 1; intCounter >= 0; intCounter--)
@@ -134,7 +134,7 @@ namespace BlueprintEditor2
 
         public static bool CheckGameLicense()
         {
-            return (Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam\Apps\244850", "Installed", -1) as int?) >= 0;
+            return Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\Valve\Steam\Apps\244850", "Installed", -1) as int? >= 0;
         }
         public static string GetSteamLastGameNameUsed()
         {
@@ -163,6 +163,23 @@ namespace BlueprintEditor2
             Match Mxx = Regex.Match(source, regex);
             if (Mxx.Success) return Mxx.Groups[1].Value;
             else return null;
+        }
+        public static bool CheckVersion(string newest, string current)
+        {
+            if (string.IsNullOrEmpty(current)) return true;
+            string[] VFc = current.Split('.');
+            string[] VFl = newest.Split('.');
+            bool oldVer = false;
+            for (int i = 0; i < VFc.Length; i++)
+            {
+                if (VFc[i] != VFl[i])
+                {
+                    int.TryParse(VFc[i], out int VFci);
+                    int.TryParse(VFl[i], out int VFli);
+                    if (VFli > VFci) oldVer = true;
+                }
+            }
+            return oldVer;
         }
     }
     public static class SE_ColorConverter

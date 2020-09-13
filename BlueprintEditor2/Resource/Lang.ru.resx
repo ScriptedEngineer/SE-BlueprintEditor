@@ -359,17 +359,17 @@
   <data name="DontSend" xml:space="preserve">
     <value>Не отправлять</value>
   </data>
-  <data name="DowLangPack" xml:space="preserve">
-    <value>Загружаем локализацию для новой версии</value>
-  </data>
   <data name="Down" xml:space="preserve">
     <value>Вниз</value>
   </data>
   <data name="Download" xml:space="preserve">
     <value>Загрузить</value>
   </data>
+  <data name="DownloadUpdate" xml:space="preserve">
+    <value>Загружаем обновление</value>
+  </data>
   <data name="DownNewVer" xml:space="preserve">
-    <value>Скачиваем новую версию</value>
+    <value>Скачиваем новый модуль обновления</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
@@ -388,6 +388,9 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Произошла ошибка</value>
+  </data>
+  <data name="ExtractingUpdate" xml:space="preserve">
+    <value>Распаковка обновления</value>
   </data>
   <data name="Faction" xml:space="preserve">
     <value>Фракция</value>

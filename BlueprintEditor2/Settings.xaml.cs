@@ -59,11 +59,13 @@ namespace BlueprintEditor2
             {
                 Logger.Add("Show restart dialog");
                 MySettings.Serialize();
+                MySettings.Current.ApplySettings();
                 SelectBlueprint.window.SetLock(true, 0);
                 new MessageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>
                 {
                     if (Dial == DialоgResult.Yes)
                     {
+                        //Console.WriteLine(MyExtensions.AppFile);
                         Process.Start(MyExtensions.AppFile);
                         Application.Current.Shutdown();
                     }
