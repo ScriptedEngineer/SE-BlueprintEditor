@@ -383,6 +383,9 @@ If you click the "Do not send" button, we will not be able to fix the problem th
   <data name="EnterPatternName" xml:space="preserve">
     <value>Enter pattern name</value>
   </data>
+  <data name="EnterTypeName" xml:space="preserve">
+    <value>Enter name of new type</value>
+  </data>
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Enter world name! Other settings are edited from the game.</value>
   </data>
@@ -807,6 +810,12 @@ Please set this in the settings.</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="TypeAlreadyExists" xml:space="preserve">
+    <value>Type name already exists</value>
+  </data>
+  <data name="Types" xml:space="preserve">
+    <value>Types</value>
   </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Undefined types</value>

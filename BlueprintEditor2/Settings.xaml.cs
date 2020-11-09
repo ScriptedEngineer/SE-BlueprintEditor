@@ -59,6 +59,7 @@ namespace BlueprintEditor2
             {
                 Logger.Add("Show restart dialog");
                 MySettings.Serialize();
+                ArmorReplaceClass.Serialize();
                 MySettings.Current.ApplySettings();
                 SelectBlueprint.window.SetLock(true, 0);
                 new MessageDialog(DialogPicture.question, Lang.Settings, Lang.PleaseRestartApp, (Dial) =>

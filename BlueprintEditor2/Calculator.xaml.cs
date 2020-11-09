@@ -365,7 +365,7 @@ namespace BlueprintEditor2
             }
             string undef = calc.GetUndefined();
             string[] hh = Lang.StoneAmount.Split('(');
-            Clipboard.SetText("SE BlueprintEditor - Calculator\r\n" +
+            Clipboard.SetDataObject("SE BlueprintEditor - Calculator\r\n" +
                 Lang.Blueprint + " - " + EdBlueprint.Patch.Split('\\').Last() + "\r\n" + 
                 ShipInfo.Text + "\r\n" +
 

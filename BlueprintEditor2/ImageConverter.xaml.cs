@@ -80,6 +80,7 @@ namespace BlueprintEditor2
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 //Monospace = SEImageConverter.ConvertToMonospace(Image.FromFile(openFileDialog.FileName), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,out Image Resul);
+                Logger.Add($"Opening image \"{openFileDialog.FileName}\"");
                 DitherPic.Source = SEImageConverter.ToSource(System.Drawing.Image.FromFile(openFileDialog.FileName));
             }
             NormalizeForm();
@@ -103,7 +104,7 @@ namespace BlueprintEditor2
             Monospace = SEImageConverter.ConvertToMonospace(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
             //Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 512 : 256, 256, SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
             DitherPic.Source = SEImageConverter.ToSource(Resul);
-            System.Windows.Clipboard.SetText(Monospace);
+            System.Windows.Clipboard.SetDataObject(Monospace);
             NormalizeForm();
         }
 
@@ -259,7 +260,7 @@ namespace BlueprintEditor2
             //Monospace = SEImageConverter.ConvertToMonospace(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 356 : 178, 178, Dithering.IsChecked.Value,SaveAspect.IsChecked.Value, out System.Drawing.Image Resul);
             Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, true, SaveAspect.IsChecked.Value, out _);
             //DitherPic.Source = SEImageConverter.ToSource(Resul);
-            System.Windows.Clipboard.SetText(Monospace);
+            System.Windows.Clipboard.SetDataObject(Monospace);
             NormalizeForm();
         }
 
@@ -267,7 +268,7 @@ namespace BlueprintEditor2
         {
             Monospace = SEImageConverter.ConvertToSuperPixel(SEImageConverter.FromSource(DitherPic.Source as BitmapSource), WideSize.IsChecked.Value ? 360 : 250, WideSize.IsChecked.Value ? 180 : 250, false, SaveAspect.IsChecked.Value, out _);
             //DitherPic.Source = SEImageConverter.ToSource(Resul);
-            System.Windows.Clipboard.SetText(Monospace);
+            System.Windows.Clipboard.SetDataObject(Monospace);
             NormalizeForm();
         }
 

@@ -383,6 +383,9 @@
   <data name="EnterPatternName" xml:space="preserve">
     <value>Введите имя шаблона</value>
   </data>
+  <data name="EnterTypeName" xml:space="preserve">
+    <value>Введите имя нового типа</value>
+  </data>
   <data name="EnterWorldNameForCreate" xml:space="preserve">
     <value>Введите название мира! Остальные настройки редактируются из игры.</value>
   </data>
@@ -806,6 +809,12 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Тип</value>
+  </data>
+  <data name="TypeAlreadyExists" xml:space="preserve">
+    <value>Имя типа уже существует</value>
+  </data>
+  <data name="Types" xml:space="preserve">
+    <value>Типы</value>
   </data>
   <data name="UndefinedTypes" xml:space="preserve">
     <value>Неопознанные типы</value>

@@ -526,12 +526,6 @@ namespace BlueprintEditor2
         Left=2, Right=3,
         Up=4, Down=5
     }
-    public enum ArmorType
-    {
-        None,
-        Light,
-        Heavy
-    }
     public enum ShareMode
     {
         All,

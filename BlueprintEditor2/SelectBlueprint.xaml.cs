@@ -40,6 +40,9 @@ namespace BlueprintEditor2
             Thread.CurrentThread.Name = "Main";
             Logger.Add("Deserializing settings");
             MySettings.Deserialize();
+            new Task(() => {
+                ArmorReplaceClass.Deserialize();
+            }).Start();
             Logger.Add("Apply culture settings");
             MySettings.Current.ApplySettings();
             window = this;
@@ -81,29 +84,38 @@ namespace BlueprintEditor2
             {
                 Thread.CurrentThread.Name = "Updating";
                 Logger.Add("Check Update");
-                string downloadURL = null, lastVersion, git_ingo;
-                using (var client = new System.Net.WebClient())
+                string[] Vers = MyExtensions.ApiServer(ApiServerAct.CheckVersion).Split(' ');
+                if (Vers.Length == 3 && Vers[0] == "0")
                 {
-                    client.Headers.Add("User-Agent","SE-BlueprintEditor");
-                    client.Encoding = Encoding.UTF8;
-                    git_ingo = client.DownloadString("https://api.github.com/repos/ScriptedEngineer/SE-BlueprintEditor/releases");
-                    lastVersion = MyExtensions.RegexMatch(git_ingo, @"""tag_name"":""([^""]*)""");
-                    downloadURL = MyExtensions.RegexMatch(git_ingo, @"""browser_download_url"":""([^""]*)""");
-                }
-                if (!string.IsNullOrEmpty(downloadURL)) {
-                    if (MyExtensions.CheckVersion(lastVersion, MyExtensions.Version))
-                    { 
-                        Logger.Add("Update found");
-                        MyExtensions.AsyncWorker(() => new UpdateAvailable(lastVersion, downloadURL, git_ingo).Show());
+                    string downloadURL = null, lastVersion, git_ingo;
+                    using (var client = new System.Net.WebClient())
+                    {
+                        client.Headers.Add("User-Agent", "SE-BlueprintEditor");
+                        client.Encoding = Encoding.UTF8;
+                        git_ingo = client.DownloadString("https://api.github.com/repos/ScriptedEngineer/SE-BlueprintEditor/releases");
+                        lastVersion = MyExtensions.RegexMatch(git_ingo, @"""tag_name"":""([^""]*)""");
+                        downloadURL = MyExtensions.RegexMatch(git_ingo, @"""browser_download_url"":""([^""]*)""");
+                    }
+                    if (!string.IsNullOrEmpty(downloadURL))
+                    {
+                        if (MyExtensions.CheckVersion(lastVersion, MyExtensions.Version))
+                        {
+                            Logger.Add("Update found");
+                            MyExtensions.AsyncWorker(() => new UpdateAvailable(lastVersion, downloadURL, git_ingo).Show());
+                        }
+                        else
+                        {
+                            Logger.Add("Update not found on GitHub");
+                        }
                     }
                     else
                     {
-                        Logger.Add("Update not found");
+                        Logger.Add("No have access to GitHub");
                     }
                 }
                 else
                 {
-                    Logger.Add("No have access to API");
+                    Logger.Add("Update not found on API");
                 }
                 //MyExtensions.AsyncWorker(() => new Dialog(x => Console.WriteLine(x), DialogPicture.attention, "TEST", "PleaseInput").Show());
             }).Start();
@@ -402,6 +414,7 @@ namespace BlueprintEditor2
             try
             {
                 MySettings.Serialize();
+                ArmorReplaceClass.Serialize();
                 if (UpdateAvailable.window != null && UpdateAvailable.window.IsLoaded)
                 {
                     Logger.Add("Update windows show");

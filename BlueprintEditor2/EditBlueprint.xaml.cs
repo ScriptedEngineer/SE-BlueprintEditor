@@ -553,12 +553,17 @@ namespace BlueprintEditor2
         private void GridArmourType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!initGAT) return;
+            if (GridArmourType.SelectedIndex <= 0) return;
             MyXmlGrid SlectedGrd = EdBlueprint.Grids[GridList.SelectedIndex];
-            ArmorType type = (ArmorType)GridArmourType.SelectedIndex;
+            string type = GridArmourType.SelectedItem.ToString();
+            if(GridArmourType.SelectedItem is ComboBoxItem)
+            {
+                type = (GridArmourType.SelectedItem as ComboBoxItem).Uid;
+            }
             foreach (MyXmlBlock block in SlectedGrd.Blocks)
             {
                 if(block.IsArmor)
-                    block.Type = ArmorReplaceClass.Replace(block.Type, type.ToString());
+                    block.Type = ArmorReplaceClass.Replace(block.Type, type);
                 //block.Armor = type;
             }
             GridList_SelectionChanged(null,null);
@@ -878,6 +883,30 @@ namespace BlueprintEditor2
             Block.Orientation.Up = (Base6Directions)UpBox.SelectedIndex;
             Block.Orientation.Forward = MyBlockOrientation.Reorient(Block.Orientation.Up, Block.Orientation.Forward);
             ForwardBox.SelectedIndex = (int)Block.Orientation.Forward;
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            new ReplacersEditor().Show();
+        }
+
+        private void GridArmourType_PreviewDrop(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void GridArmourType_DropDownOpened(object sender, EventArgs e)
+        {
+            GridArmourType.Items.Clear();
+            GridArmourType.Items.Add(new ComboBoxItem() { Content = Lang.NoReplace, Uid = "None" });
+            GridArmourType.Items.Add(new ComboBoxItem() { Content = Lang.LightArmor, Uid = "Light" });
+            GridArmourType.Items.Add(new ComboBoxItem() { Content = Lang.HeavyArmor, Uid = "Heavy" });
+            foreach (var x in ArmorReplaceClass.Replacers)
+            {
+                if (x.Key != "Heavy")
+                    GridArmourType.Items.Add(x.Key);
+            }
+            GridArmourType.SelectedIndex = 0;
         }
     }
 }

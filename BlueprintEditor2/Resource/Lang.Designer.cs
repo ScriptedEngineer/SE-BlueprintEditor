@@ -849,6 +849,15 @@ namespace BlueprintEditor2.Resource {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Enter name of new type.
+        /// </summary>
+        public static string EnterTypeName {
+            get {
+                return ResourceManager.GetString("EnterTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Enter world name! Other settings are edited from the game..
         /// </summary>
         public static string EnterWorldNameForCreate {
@@ -2110,6 +2119,24 @@ namespace BlueprintEditor2.Resource {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type name already exists.
+        /// </summary>
+        public static string TypeAlreadyExists {
+            get {
+                return ResourceManager.GetString("TypeAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Types.
+        /// </summary>
+        public static string Types {
+            get {
+                return ResourceManager.GetString("Types", resourceCulture);
             }
         }
         

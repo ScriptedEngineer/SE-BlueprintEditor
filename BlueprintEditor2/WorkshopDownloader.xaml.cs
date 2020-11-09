@@ -153,24 +153,24 @@ namespace BlueprintEditor2
                 {
                     try
                     {
-                        string ansv = MyExtensions.PostReq("https://api.steamworkshopdownloader.io/api/download/request",
+                        string ansv = MyExtensions.PostReq("https://api_02.steamworkshopdownloader.io/api/download/request",
                             $"{{\"publishedFileId\":{FileID},\"collectionId\":null,\"extract\":false,\"hidden\":false,\"direct\":false,\"autodownload\":false}}");
                         var rgx = Regex.Match(ansv, "\"uuid\":\"([^\"]*)\"");
                         string uuid = rgx.Groups[1].Value;
                         string status, anssv;
                         do
                         {
-                            anssv = MyExtensions.PostReq("https://api.steamworkshopdownloader.io/api/download/status",
+                            anssv = MyExtensions.PostReq("https://api_02.steamworkshopdownloader.io/api/download/status",
                                 $"{{\"uuids\":[\"{uuid}\"]}}");
                             status = Regex.Match(anssv, "\"status\":\"([^\"]*)\"").Groups[1].Value;
                             string statusDesc = Regex.Match(anssv, "\"progressText\":\"([^\"]*)\"").Groups[1].Value;
                             MyExtensions.AsyncWorker(() => { StatusLabel.Content = statusDesc; });
-                            Thread.Sleep(500);
+                            Thread.Sleep(2000);
                         }
                         while (status == "dequeued" || status == "retrieving");
                         Thread.Sleep(100);
                         if(!string.IsNullOrEmpty(uuid))
-                            LoadLink = "https://api.steamworkshopdownloader.io/api/download/transmit?uuid="+uuid;
+                            LoadLink = "https://api_02.steamworkshopdownloader.io/api/download/transmit?uuid=" + uuid;
                     }
                     catch { }
                 }
